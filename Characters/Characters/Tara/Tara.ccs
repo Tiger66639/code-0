@@ -1,0 +1,727 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Character xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <CharacterInfo>
+    <Name>Tara</Name>
+    <Author>Ady Di Pierro</Author>
+    <Copyright>Copyright 2011 Ady Di Pierro</Copyright>
+    <License />
+    <AuthorWebsite>http://www.laticisimagery.com.au/</AuthorWebsite>
+    <CreationDate>2011-06-21T14:43:26.602+02:00</CreationDate>
+    <LastUpdateDate>2011-06-21T14:43:26.602+02:00</LastUpdateDate>
+    <Rating>
+      <Rating>Unknown</Rating>
+      <Sexual>false</Sexual>
+      <Violence>false</Violence>
+      <Other>false</Other>
+      <Description />
+    </Rating>
+    <OnlineOptions>
+      <OnlineCharacterBaseUrl />
+      <PreferredWidth>150</PreferredWidth>
+      <PreferredHeight>150</PreferredHeight>
+    </OnlineOptions>
+  </CharacterInfo>
+  <Animations>
+    <Animation>
+      <AnimationFrames>
+	  <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace sad0.png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace sad1.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace sad2.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace sad3.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace sad4.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>50</Duration>
+          <ImageResource>images\TaraFace sad5.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace sad4.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace sad3.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace sad2.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace sad1.png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace sad0.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+      </AnimationFrames>
+      <EnableFrameSpeaking>false</EnableFrameSpeaking>
+      <HoldLastFrameForSpeak>false</HoldLastFrameForSpeak>
+      <FirstFrameUnderlay>false</FirstFrameUnderlay>
+      <Name>sad1</Name>
+    </Animation>
+  <Animation>
+      <AnimationFrames>
+	  <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace smile0.png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace smile1.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace smile2.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace smile3.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace smile4.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>50</Duration>
+          <ImageResource>images\TaraFace smile5.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace smile4.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace smile3.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace smile2.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace smile1.png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace smile0.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+      </AnimationFrames>
+      <EnableFrameSpeaking>false</EnableFrameSpeaking>
+      <HoldLastFrameForSpeak>false</HoldLastFrameForSpeak>
+      <FirstFrameUnderlay>false</FirstFrameUnderlay>
+      <Name>smile1</Name>
+    </Animation>
+  <Animation>
+      <AnimationFrames>
+	  <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace scared0.png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace scared1.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace scared2.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace scared3.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace scared4.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>50</Duration>
+          <ImageResource>images\TaraFace scared5.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace scared4.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace scared3.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace scared2.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace scared1.png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace scared0.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+      </AnimationFrames>
+      <EnableFrameSpeaking>false</EnableFrameSpeaking>
+      <HoldLastFrameForSpeak>false</HoldLastFrameForSpeak>
+      <FirstFrameUnderlay>false</FirstFrameUnderlay>
+      <Name>scared1</Name>
+    </Animation>
+	
+	
+	<Animation>
+      <AnimationFrames>
+	  <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace smile0.png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace smile1.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace smile2.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace smile3.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>60</Duration>
+          <ImageResource>images\TaraFace smile4.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace smile3.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace smile2.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace smile1.png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace smile0.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+      </AnimationFrames>
+      <EnableFrameSpeaking>false</EnableFrameSpeaking>
+      <HoldLastFrameForSpeak>false</HoldLastFrameForSpeak>
+      <FirstFrameUnderlay>false</FirstFrameUnderlay>
+      <Name>smile2</Name>
+    </Animation>
+	
+	
+  <Animation>
+      <AnimationFrames>
+	  <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace kiss0.png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace kiss1.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace kiss2.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace kiss3.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace kiss4.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>50</Duration>
+          <ImageResource>images\TaraFace kiss5.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace kiss4.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace kiss3.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace kiss2.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace kiss1.png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace kiss0.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+      </AnimationFrames>
+      <EnableFrameSpeaking>false</EnableFrameSpeaking>
+      <HoldLastFrameForSpeak>false</HoldLastFrameForSpeak>
+      <FirstFrameUnderlay>false</FirstFrameUnderlay>
+      <Name>kiss1</Name>
+    </Animation>
+  
+    <Animation>
+      <AnimationFrames>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\CBT_Eyes_Closed_Half.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\CBT_Eyes_Closed_Full.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\CBT_Eyes_Closed_Half.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>100</Duration>
+          <ImageResource />
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\CBT_Eyes_Closed_Half.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\CBT_Eyes_Closed_Full.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\CBT_Eyes_Closed_Half.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+      </AnimationFrames>
+      <EnableFrameSpeaking>true</EnableFrameSpeaking>
+      <HoldLastFrameForSpeak>false</HoldLastFrameForSpeak>
+      <FirstFrameUnderlay>false</FirstFrameUnderlay>
+      <Name>blink1</Name>
+    </Animation>
+	<Animation>
+      <AnimationFrames>
+	  <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace lwink0.png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace lwink1.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace lwink2.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace lwink3.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace lwink4.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>50</Duration>
+          <ImageResource>images\TaraFace lwink5.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace lwink4.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace lwink3.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace lwink2.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace lwink1.png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace lwink0.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+      </AnimationFrames>
+      <EnableFrameSpeaking>false</EnableFrameSpeaking>
+      <HoldLastFrameForSpeak>false</HoldLastFrameForSpeak>
+      <FirstFrameUnderlay>false</FirstFrameUnderlay>
+      <Name>lwink1</Name>
+    </Animation>
+	
+	
+	<Animation>
+      <AnimationFrames>
+	  <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace rwink0.png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace rwink1.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace rwink2.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace rwink3.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace rwink4.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>50</Duration>
+          <ImageResource>images\TaraFace rwink5.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace rwink4.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace rwink3.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace rwink2.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace rwink1.png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\TaraFace rwink0.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+      </AnimationFrames>
+      <EnableFrameSpeaking>false</EnableFrameSpeaking>
+      <HoldLastFrameForSpeak>false</HoldLastFrameForSpeak>
+      <FirstFrameUnderlay>false</FirstFrameUnderlay>
+      <Name>rwink1</Name>
+    </Animation>
+	
+	
+	
+	<Animation>
+      <AnimationFrames>
+	  <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource/>
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>34</Duration>
+          <ImageResource>images\CBT_Mouth_Frown.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+      </AnimationFrames>
+      <EnableFrameSpeaking>false</EnableFrameSpeaking>
+      <HoldLastFrameForSpeak>false</HoldLastFrameForSpeak>
+      <FirstFrameUnderlay>false</FirstFrameUnderlay>
+      <Name>frown1</Name>
+    </Animation>
+  </Animations>
+  <VisemeGroups>
+    <VisemeGroup>
+      <Name>Default</Name>
+	  <ZIndex>1</ZIndex>
+      <VisemeImages>
+        <VisemeImage>
+          <VisemeIndex>0</VisemeIndex>
+          <ImageResource>images\Tara_Base.png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>1</VisemeIndex>
+          <ImageResource>images\CBT_Visemes_AA (Odd).png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>2</VisemeIndex>
+          <ImageResource>images\CBT_Visemes_AA (Odd).png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>3</VisemeIndex>
+          <ImageResource>images\CBT_Visemes_OW (OAt).png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>4</VisemeIndex>
+          <ImageResource>images\CBT_Visemes_EH (Ed).png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>5</VisemeIndex>
+          <ImageResource>images\CBT_Visemes_ER (hURt).png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>6</VisemeIndex>
+          <ImageResource>images\CBT_Visemes_IY (Eat).png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>7</VisemeIndex>
+          <ImageResource>images\CBT_Visemes_W (We).png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>8</VisemeIndex>
+          <ImageResource>images\CBT_Visemes_OW (OAt).png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>9</VisemeIndex>
+          <ImageResource>images\CBT_Visemes_AA (Odd).png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>10</VisemeIndex>
+          <ImageResource>images\CBT_Visemes_OW (OAt).png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>11</VisemeIndex>
+          <ImageResource>images\CBT_Visemes_AA (Odd).png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>12</VisemeIndex>
+          <ImageResource>images\CBT_Visemes_AA (Odd).png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>13</VisemeIndex>
+          <ImageResource>images\CBT_Visemes_ER (hURt).png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>14</VisemeIndex>
+          <ImageResource>images\CBT_Visemes_L (Lee).png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>15</VisemeIndex>
+          <ImageResource>images\CBT_Visemes_S (Sea).png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>16</VisemeIndex>
+          <ImageResource>images\CBT_Visemes_SH (SHe).png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>17</VisemeIndex>
+          <ImageResource>images\CBT_Visemes_TH (Theta).png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>18</VisemeIndex>
+          <ImageResource>images\CBT_Visemes_F (Fee).png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>19</VisemeIndex>
+          <ImageResource>images\CBT_Visemes_T (Tea).png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>20</VisemeIndex>
+          <ImageResource>images\CBT_Visemes_K (Key).png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>21</VisemeIndex>
+          <ImageResource>images\CBT_Visemes_M (Me).png</ImageResource>
+        </VisemeImage>
+      </VisemeImages>
+    </VisemeGroup>
+  </VisemeGroups>
+  <IdleLevels>
+    <IdleLevel>
+      <MinStartDelay>2</MinStartDelay>
+      <MaxStartDelay>10</MaxStartDelay>
+      <MinDuration>5</MinDuration>
+      <MaxDuration>15</MaxDuration>
+      <MinInterval>2</MinInterval>
+      <MaxInterval>8</MaxInterval>
+      <AnimationNames>
+        <AnimationName>blink1</AnimationName>
+      </AnimationNames>
+    </IdleLevel>
+  </IdleLevels>
+  <BackgroundAnimations>
+	<Animation>
+      <AnimationFrames>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\CBT_Hair_Moving00.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\CBT_Hair_Moving01.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\CBT_Hair_Moving02.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\CBT_Hair_Moving03.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\CBT_Hair_Moving04.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\CBT_Hair_Moving05.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\CBT_Hair_Moving06.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\CBT_Hair_Moving07.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\CBT_Hair_Moving08.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\CBT_Hair_Moving09.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\CBT_Hair_Moving10.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\CBT_Hair_Moving11.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\CBT_Hair_Moving12.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\CBT_Hair_Moving13.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\CBT_Hair_Moving14.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\CBT_Hair_Moving15.png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+      </AnimationFrames>
+      <Name>hair</Name>
+	  <LoopStyle>VariableJojo</LoopStyle>
+	  <VariableSpeed>true</VariableSpeed>
+	  <ZIndex>2</ZIndex>
+    </Animation>
+  </BackgroundAnimations>
+</Character>

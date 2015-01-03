@@ -1,0 +1,388 @@
+/*
+  Used as the meanig for a link from a solvable neuron to a TextNeuron to indicate the presence of a word that was found in the dictionary (as build by a TextSin for input).
+ */
+neuron containsword_in_ : 33
+{
+   rules()
+   {
+      patternitem = GetChildren(currentto);
+      outputsin = currentsin;
+      allstatements = currentto;
+      logincomming();   //This code block will store all the clusters found in 'AllStatements' as children of the cluster that is attached to the currentSin, through the 'CurrentConversation' neuron. If no such cluster exists, one is created.    
+      Delete(currentfrom);
+      SplitWeighted(patternmatchfinished, 1, ref(patternitem), patternitem);
+      index = GetWeight();
+      index = (index + 1);
+      ResetWeight();   //We do an extra split to make certain that all items come back to 'transition' first (to get the frame of each sentence).    
+      while (index < ChildCount(currentto))
+      {
+         child = GetChildAt(currentto, index);
+         if (child == " ")
+            index = (index + 1);
+         else
+         {
+            next = GetFirstOut(patternitem, child);
+            if (Count(next) > 0)
+            {
+               index = (index + 1);
+               patternitem = next;
+               IncreaseWeight(1);
+            }
+            else
+               Break();
+         }   //Need to skip spaces (and possibly newlines as well).    
+      }
+      pattern = GetFirstOut(patternitem, rule);
+      if (Count(pattern) > 0)
+         AddSplitResult(pattern);
+   }
+}
+NeuronCluster patternmatchfinished
+{
+   this()
+   {
+      splitresults = GetMaxWeight();
+      patternthatneedsresponse = GetFirstOut(outputsin, needresponsefor);
+      RemoveLinksOut(outputsin, needresponsefor);
+      if (Count(splitresults) > 0)
+      {
+         if (Count(splitresults) > 1)
+         {
+            splitresults = GetFirst(splitresults);
+            Warning("Found mulitiple pattern matches!");
+         }
+         listtouse = GetFirstOut(GetFirstCluster(splitresults, rule), outputpatterns);
+         if (Count(patternthatneedsresponse) > 0)
+         {
+            listtouse = GetChildrenFiltered(listtouse, ref(loopvar), ref((ContainsLinksOut(loopvar, responseforoutputs) && ContainsChildren(GetFirstOut(loopvar, responseforoutputs), patternthatneedsresponse))));
+            if (Count(listtouse) == 0)
+            {
+               listtouse = GetFirstOut(patternthatneedsresponse, invalidresponsesforpattern);
+               if (Count(listtouse) == 0)
+                  listtouse = GetChildren(patternfallbackvalues);
+               else
+               {
+                  listtouse = GetChildren(listtouse);
+                  if (Count(listtouse) == 0)
+                     listtouse = GetChildren(patternfallbackvalues);
+               }
+            }
+         }
+         else
+         {
+            listtouse = GetChildrenFiltered(listtouse, ref(loopvar), ref((ContainsLinksOut(loopvar, responseforoutputs) == false)));
+            if (Count(listtouse) == 0)
+               listtouse = GetChildren(patternfallbackvalues);
+         }
+      }
+      else if(Count(patternthatneedsresponse) > 0)
+      {
+         listtouse = GetFirstOut(patternthatneedsresponse, invalidresponsesforpattern);
+         if (Count(listtouse) == 0)
+            listtouse = GetChildren(patternfallbackvalues);
+         else
+         {
+            listtouse = GetChildren(listtouse);
+            if (Count(listtouse) == 0)
+               listtouse = GetChildren(patternfallbackvalues);
+         }
+      }
+      else
+         listtouse = GetChildren(patternfallbackvalues);
+      resultpattern = GetRandom(listtouse);
+      if (Count(resultpattern) > 0)
+      {
+         if (TypeOf(resultpattern) == textneuron)
+            contenttorender = resultpattern;
+         if (ContainsLinksOut(resultpattern, invalidresponsesforpattern))
+            AddLink(outputsin, resultpattern, needresponsefor);
+      }
+      else
+      {
+         contenttorender = "No output defined!";
+         Warning("No output defined!");
+      }
+      renderresult = MakeCluster(out, contenttorender);
+      logoutgoing();
+      Output(outputsin, begintextblock, contenttorender, endtextblock);
+   }
+}
+Variable patternitem
+{
+   
+}
+/*
+  This variable provides access to the current To part of the link that is being executed (if any).
+ */
+neuron currentto : 101
+{
+   
+}
+/*
+  This global is used by the render routines (like Render Object and REnder subject) to find out which sin to send the data to. It's a global so that the actions can perform splits while retaining the info.
+ */
+Global outputsin(copy)
+{
+   
+}
+/*
+  This variable provides access to the sin that triggered the activity in the current context (if any).
+ */
+neuron currentsin : 114
+{
+   
+}
+/*
+  This global stores all the statements that have already been executed, but which still need to be asked if they have any new questions.
+ */
+Global allstatements(copy)
+{
+   
+}
+/*
+  This code block will store all the clusters found in 'AllStatements' as children of the cluster that is attached to the currentSin, through the 'CurrentConversation' neuron. If no such cluster exists, one is created.
+ */
+ExpressionsBlock logincomming
+{
+   statements()
+   {
+      log = GetFirstOut(currentsin, currentconversation);
+      if (Count(log) == 0)
+      {
+         log = New(neuroncluster);
+         AddLink(currentsin, log, currentconversation);
+         SetClusterMeaning(log, conversationlog);
+      }
+      timestamp = time;
+      foreach (knowledgeconv in allstatements)
+      {
+         SetClusterMeaning(knowledgeconv, in);   //For findResponse1: we need to tag the knowledge convertion result as 'in' so that the action can properly verify the resonse. Normally this is done the logincomming block, but it's to soon still for that, so tag manually.    For Transition: We also need to make certain that the result data is correctly tagged as incomming data, so that the convertion routines work correctly.    
+         AddChild(knowledgeconv, timestamp);
+         AddChild(log, knowledgeconv);
+      }
+   }
+}
+/*
+  This variable provides access to the current from part of the link that is being executed (if any).
+ */
+neuron currentfrom : 100
+{
+   
+}
+Variable index
+{
+   
+}
+Variable child
+{
+   
+}
+Variable next
+{
+   
+}
+Variable pattern
+{
+   
+}
+/*
+  Used as the meaning for a cluster that represents a single text pattern definition.
+ */
+neuron rule : 322
+{
+   
+}
+/*
+  Used as the meaning for a link between a neuron and a cluster containing expressions that will be executed when the link is being solved.
+ */
+neuron rules : 45
+{
+   
+}
+Variable splitresults
+{
+   
+}
+Variable patternthatneedsresponse
+{
+   
+}
+/*
+  Used as the meaning for a link from the currentsin, to an output pattern, to indicate that the output pattern is waiting for a response
+ */
+Neuron needresponsefor
+{
+   
+}
+Variable listtouse
+{
+   
+}
+/*
+  Used as the meaning for a cluster and a link from an patternRule to a cluster with this meaning, to indicate that the patternRule should use the specified outputs.
+ */
+neuron outputpatterns : 323
+{
+   
+}
+/*
+  A general purpose variable that can be used as a loop item.
+ */
+Variable loopvar
+{
+   
+}
+/*
+  Used as the meaning for a link from a textneuron (patten-output) to a cluster containing textneurons, to indicate all the valid questions for which this is a valid response.
+ */
+neuron responseforoutputs : 325
+{
+   
+}
+/*
+  Used as the meaning for a link from a text neuron to a cluster (which also has this neuron as meaning), to indicate the outputs that should be used if there was no valid response given to the output value found in 'to'.
+ */
+neuron invalidresponsesforpattern : 324
+{
+   
+}
+/*
+  Contains all the output statements that can be used when there is no valid pattern match found.
+ */
+cluster patternfallbackvalues : 335
+{
+   this()
+   {
+      
+   }
+}
+/*
+  Represents the boolean 'False' value as used by the BoolExpression.
+ */
+neuron false : 61
+{
+   
+}
+Variable resultpattern
+{
+   
+}
+/*
+  Identifies the TextNeuron type.  Used by the 'New', 'TypeOF', 'GetChildren of TypeX',... instructions.
+ */
+neuron textneuron : 90
+{
+   
+}
+Variable contenttorender
+{
+   
+}
+Variable renderresult
+{
+   
+}
+/*
+  This neuron lets the SearchExpression know that it needs to search the outgoing links list of the neuron that needs to be searched.
+Also used as the meaning for a knowledge cluster that represents an outgoing statement.
+ */
+neuron out : 80
+{
+   
+}
+ExpressionsBlock logoutgoing
+{
+   statements()
+   {
+      log = GetFirstOut(outputsin, currentconversation);
+      if (Count(log) == 0)
+      {
+         log = New(neuroncluster);
+         AddLink(currentsin, log, currentconversation);
+         SetClusterMeaning(log, conversationlog);
+      }
+      SetClusterMeaning(renderresult, out);
+      AddChild(renderresult, time);
+      AddChild(log, renderresult);
+   }
+}
+/*
+  Send this neuron to the TextSin to indicate that a new textblock should be started.  If there was a previous textblock active, this is closed first and the event is triggered.
+For as long as there is a textblock active, all neurons sent to the textsin are accumulated into a string, only when either the 'EndTextBlock' or the 'BeginTextBlock' is sent, is the event for the string raised.
+ */
+neuron begintextblock : 154
+{
+   
+}
+/*
+  Send this neuron to the TextSin to indicate that an existing textblock should be closed.  This will trigger the event.
+For as long as there is a textblock active, all neurons sent to the textsin are accumulated into a string, only when either the 'EndTextBlock' or the 'BeginTextBlock' is sent, is the event for the string raised.
+ */
+neuron endtextblock : 155
+{
+   
+}
+/*
+  Contains the cluster that is attached to the current textsin which is used as a conversation log.
+ */
+Variable log
+{
+   
+}
+/*
+  Used as the meaning for a link between a textsin and a cluster. This is used to attach a cluster to a text sin that stores all the previous statements that have been done during a single conversation with a single textsin (person, since aici 1 only supports 1 person per input channel at the same time).
+ */
+Neuron currentconversation
+{
+   
+}
+/*
+  Identifies the NeuronCluster type.  Used by the 'New', 'TypeOF', 'GetChildren of TypeX',... instructions.
+ */
+neuron neuroncluster : 87
+{
+   
+}
+/*
+  Used as the meaning for a  cluster that is used to store a conversation between the network and the other end of a textsin.
+ */
+Neuron conversationlog
+{
+   
+}
+/*
+  We use a single timesstamp for all the statements that came in the same input.
+ */
+Variable timestamp
+{
+   
+}
+/*
+  This system variable returns the current system time in the form of a cluster (with meaning 'Time'), containing an int neuron for: year, month, day, hour, minute, second. In that order.
+ */
+neuron time : 295
+{
+   
+}
+/*
+  Contains the 
+ */
+Variable knowledgeconv
+{
+   
+}
+/*
+  This neuron lets the SearchExpression know that it needs to search the incomming links list of the neuron that needs to be searched.
+Also used as the meaning for a knowledge cluster that represents an incomming statement.
+ */
+neuron in : 79
+{
+   
+}
+/*
+  Used as the meaning for a link from a code block or conditional part to a cluster containing expressions (with as meaning 'Code' = 48).
+ */
+neuron statements : 49
+{
+   
+}

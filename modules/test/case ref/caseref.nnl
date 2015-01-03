@@ -1,0 +1,38 @@
+//test refference to case items
+Cluster main
+{
+   this()
+   {
+      var indexoftext = 1;
+      var enum;
+      var test;
+:sw1      switch(indexOfText)
+      {
+         case 0:
+         {
+            foreach(test in enum)
+            {
+               sw1;
+            }
+         }
+:part    case 1: 
+         {    
+            switch(indexOfText)
+            {
+               part;
+               case 3:
+               {
+                  exitneuron();
+               }
+               default:
+               {
+                  exitneuron();
+               }
+            }
+         }        
+                    
+      }
+   }
+}
+
+

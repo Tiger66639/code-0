@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>DateTime</Name>
+  <Rules>
+    <Rule>
+      <Name>IntDayIntMonthIntYear</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^day:int/^month:int/^year:int</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.DateTime.Val = IToDT($year, $month, $day);
+#bot.mem.DateTime.Inv = L($day/$month/$year);</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>IntDayTextMonthIntYear</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^day:int [/ | , | ; | \\ ] ^month:noun.Time.Month [/ | , | ; | \\ ] ^year:int</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>^month:noun.Time.Month [/ | , | ; | \\ ] ^day:int [/ | , | ; | \\ ] ^year:int</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.DateTime.Val = IToDT($year, $month:ToNumber, $day);
+#bot.mem.DateTime.Inv = L($month $day, $year);</Expression>
+      </ToCal>
+    </Rule>
+  </Rules>
+</Topic>

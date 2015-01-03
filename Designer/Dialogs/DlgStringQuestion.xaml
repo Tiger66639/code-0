@@ -1,0 +1,49 @@
+﻿<Window x:Class="JaStDev.HAB.Designer.DlgStringQuestion"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:cf="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+        Width="386"
+        x:Name="TheWindow"
+        ShowInTaskbar="False"
+        WindowState="Normal"
+        WindowStyle="ToolWindow"
+        WindowStartupLocation="CenterOwner"
+        Topmost="True"
+        SizeToContent="Height"
+        Loaded="TheWindow_Loaded">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="DialogSettings.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Bottom">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <Button IsDefault="True"
+                        Click="OnClickOk">
+                    Ok
+                    <Button.ToolTip>
+                        Apply the changes and close the window.
+                    </Button.ToolTip>
+                </Button>
+                <Button IsCancel="True">
+                    Cancel
+                    <Button.ToolTip>
+                        Undo the changes and close the window.
+                    </Button.ToolTip>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Margin="4,0,4,0">
+            <TextBlock Text="{Binding ElementName=TheWindow, Path=Question}"
+                       HorizontalAlignment="Left" />
+            <TextBox Name="TxtAnswer"
+                     ToolTip="Enter the text here. Use the escape char followed by a number to enter ascii values. Examples: enter \13 and slash \\ "
+                     cf:FocusManager.IsFocused="True" />
+        </StackPanel>
+
+    </DockPanel>
+</Window>

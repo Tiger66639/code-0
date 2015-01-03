@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>hello</Name>
+  <Rules>
+    <Rule>
+      <Name>hello</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^h:noun.greeting</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>$h, ~(assist_you_questions):Render</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Rule>
+    <Rule>
+      <Name>HowAreYou</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>How are you [doing]</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>Excellent, and you?</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>Superb, you too?</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>Fabulisious, how about you?</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Rule>
+    <Rule>
+      <Name>new rule 3</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^whatup:interjection.whatup</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>what [are] you doing</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>what [are] you up [to]</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>nothing special.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>Not much.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>nothing at all.
+Just hanging.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Rule>
+  </Rules>
+</Topic>

@@ -1,0 +1,2244 @@
+﻿<ResourceDictionary x:Class="JaStDev.HAB.Designer.TextPatternEditorResources"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls"
+                    xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+                    xmlns:cf="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:dd="clr-namespace:DnD">
+
+    <ContextMenu x:Key="OutputContextMenu">
+        <MenuItem Header="Spelling suggestions" />
+        <MenuItem Header="Ignore all"
+                  ToolTip="Ignore any possible spelling errors in the selected word."
+                  Click="IgnoreAll_Click" />
+        <MenuItem Header="Add to dictionary"
+                  ToolTip="Add the selected word to the custom dictionary."
+                  Click="AddToDict_Click" />
+        <Separator />
+        <MenuItem Command="Cut" />
+        <MenuItem Command="Copy" />
+        <MenuItem Command="Paste" />
+        <Separator />
+        <MenuItem Command="Delete" />
+        <Separator />
+        <MenuItem Command="ApplicationCommands.SelectAll" />
+        <MenuItem Header="Find references"
+                  ToolTip="Find all references to this pattern"
+                  Click="FindReferences_Click" />
+        <MenuItem Header="_Find and replace"
+                  Command="Find">
+            <MenuItem.Icon>
+                <Image Source="/Images/Edit/Find_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+    </ContextMenu>
+
+    <ContextMenu x:Key="ResponseForContextMenu">
+        <!--<MenuItem Header="Is pattern"
+                ToolTip="Switch between a reference to another output and a pattern definition that needs to be matched against #user.topic (aiml style of pattern matching)"
+                IsCheckable="True"
+                IsChecked="{Binding Mode=TwoWay,RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.IsPatternStyle}"/>
+      <Separator/>-->
+        <MenuItem Command="Delete"
+                  CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+        <Separator />
+        <MenuItem Header="Go to output pattern"
+                  ToolTip="Go to the decleration of the selected output pattern."
+                  Click="GoToOutputOfResponse_Click" />
+        <MenuItem Header="Find all references"
+                  Click="FindRefsToResponse_Click"
+                  ToolTip="Lists all the locations that reference the selected Output pattern, including this 'Response for' item." />
+    </ContextMenu>
+
+    <ContextMenu x:Key="PatternContextMenu">
+        <MenuItem Header="Spelling suggestions" />
+        <MenuItem Header="Ignore all"
+                  ToolTip="Ignore any possible spelling errors in the selected word."
+                  Click="IgnoreAll_Click" />
+        <MenuItem Header="Add to dictionary"
+                  ToolTip="Add the selected word to the custom dictionary."
+                  Click="AddToDict_Click" />
+        <Separator />
+        <MenuItem Command="Cut" />
+        <MenuItem Command="Copy" />
+        <MenuItem Command="Paste" />
+        <Separator />
+        <MenuItem Command="Delete" />
+        <Separator />
+        <MenuItem Command="ApplicationCommands.SelectAll" />
+        <MenuItem Header="_Find and replace"
+                  Command="Find">
+            <MenuItem.Icon>
+                <Image Source="/Images/Edit/Find_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+    </ContextMenu>
+
+    <ContextMenu x:Key="NoPatternContextMenu"
+                 ContextMenuOpening="txtEdit_ContextMenuOpening">
+        <MenuItem Header="Spelling suggestions" />
+        <MenuItem Header="Ignore all"
+                  ToolTip="Ignore any possible spelling errors in the selected word."
+                  Click="IgnoreAll_Click" />
+        <MenuItem Header="Add to dictionary"
+                  ToolTip="Add the selected word to the custom dictionary."
+                  Click="AddToDict_Click" />
+        <Separator />
+        <MenuItem Command="Cut" />
+        <MenuItem Command="Copy" />
+        <MenuItem Command="Paste" />
+        <Separator />
+        <MenuItem Command="ApplicationCommands.SelectAll" />
+        <MenuItem Header="_Find and replace"
+                  Command="Find">
+            <MenuItem.Icon>
+                <Image Source="/Images/Edit/Find_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+    </ContextMenu>
+
+    <SolidColorBrush x:Key="PatternSelectedBrush" Color="#FF39628D" />
+
+    <SolidColorBrush x:Key="PatternSelectedAlternationCountBrush" Color="#FF71AB62" />
+
+    <LinearGradientBrush x:Key="PatternMouseOverBrush"
+                         StartPoint="0.5,0.0" EndPoint="0.5,1.0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#4ED7EAF6" Offset="0" />
+            <GradientStop Color="#4ECEE6F3" Offset="0.0474138" />
+            <GradientStop Color="#4ECEE6F3" Offset="0.517241" />
+            <GradientStop Color="#4EB4BCD5" Offset="1" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+
+    <LinearGradientBrush x:Key="PatternBackgroundBrush"
+                         StartPoint="0.5,0.0" EndPoint="0.5,1.0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#18D7EAF6" Offset="0" />
+            <GradientStop Color="#18CEE6F3" Offset="0.0474138" />
+            <GradientStop Color="#18CEE6F3" Offset="0.517241" />
+            <GradientStop Color="#18B4BCD5" Offset="1" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="PatternAlternationCountBrush"
+                         StartPoint="0.5,0.0" EndPoint="0.5,1.0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#18DEF6D7" Offset="0" />
+            <GradientStop Color="#18DDF3CE" Offset="0.0474138" />
+            <GradientStop Color="#18DDF3CE" Offset="0.517241" />
+            <GradientStop Color="#18B5D5B4" Offset="1" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="PatternAlternationCountMouseOverBrush"
+                         StartPoint="0.5,0.0" EndPoint="0.5,1.0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#4EDEF6D7" Offset="0" />
+            <GradientStop Color="#4EDDF3CE" Offset="0.0474138" />
+            <GradientStop Color="#4EDDF3CE" Offset="0.517241" />
+            <GradientStop Color="#4EB5D5B4" Offset="1" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+
+    <!--Vertical line checkbox to determine if output is sequenced or not.
+   This is pretty bad, better to create a custom control for doing this. and draw directly on the DrawinContext-->
+    <Style x:Key="VerLineCheckBox" TargetType="{x:Type CheckBox}" BasedOn="{StaticResource ImageCheckBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Border Name="bd"
+                            CornerRadius="2"
+                            Background="Transparent"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <DockPanel Name="IMAGE"
+                                   Visibility="Hidden">
+                            <Border Name="Arrow"
+                                    HorizontalAlignment="Center"
+                                    Width="5"
+                                    Height="5"
+                                    DockPanel.Dock="Bottom">
+                                <Border.Background>
+                                    <DrawingBrush>
+                                        <DrawingBrush.Drawing>
+                                            <GeometryDrawing Geometry="F1 M 0,22L 5,25L 10,22">
+                                                <GeometryDrawing.Pen>
+                                                    <Pen LineJoin="Round" Brush="#FF000000" />
+                                                </GeometryDrawing.Pen>
+                                            </GeometryDrawing>
+                                        </DrawingBrush.Drawing>
+                                    </DrawingBrush>
+                                </Border.Background>
+                            </Border>
+                            <Border Name="Line"
+                                    Width="1.1"
+                                    HorizontalAlignment="Center">
+                                <Border.Background>
+                                    <DrawingBrush>
+                                        <DrawingBrush.Drawing>
+                                            <GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M 5,0L 5,25">
+                                                <GeometryDrawing.Pen>
+                                                    <Pen LineJoin="Round" Brush="#FF000000" />
+                                                </GeometryDrawing.Pen>
+                                            </GeometryDrawing>
+                                        </DrawingBrush.Drawing>
+                                    </DrawingBrush>
+                                </Border.Background>
+                            </Border>
+                        </DockPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="IMAGE" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <!--<Setter Property="BorderBrush" Value="#FF7DAFD9"/>-->
+                <Setter Property="BorderThickness" Value="1" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+
+    <!--Default template for errors-->
+    <ControlTemplate x:Key="PatternValidationTemplate">
+        <DockPanel>
+            <TextBlock Foreground="Red"
+                       DockPanel.Dock="Left"
+                       FontSize="14"
+                       VerticalAlignment="Top">
+                <Bold>!</Bold>
+            </TextBlock>
+            <AdornedElementPlaceholder />
+        </DockPanel>
+    </ControlTemplate>
+
+    <LinearGradientBrush StartPoint="0.5,0.0" EndPoint="0.5,1.0"
+                         x:Key="PatternToggleButttonBorderBrush">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#FF6976A0" Offset="0" />
+            <GradientStop Color="#FFB4BCD5" Offset="0.0474138" />
+            <GradientStop Color="#FF93A7E3" Offset="0.517241" />
+            <GradientStop Color="#FF6976A0" Offset="1" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <!--style for the buttons above the groups. provides keyboard navigation.-->
+    <Style x:Key="PatternGrpButtonStyle" TargetType="Button" BasedOn="{StaticResource SimpleStyledButton}">
+        <EventSetter Event="PreviewKeyDown" Handler="NavFromButton_PreviewKeyDown" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+
+    <Style x:Key="PartialSelectToggleButton" TargetType="{x:Type ToggleButton}">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="IsThreeState" Value="True" />
+        <Setter Property="IsChecked" Value="{Binding Path=AllowDuplicate}" />
+        <Setter Property="DockPanel.Dock" Value="Left" />
+        <Setter Property="MinWidth" Value="10" />
+        <Setter Property="MinHeight" Value="10" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            ToolTip="{TemplateBinding ToolTip}"
+                            Padding="1"
+                            CornerRadius="3">
+                        <Image x:Name="ImgDuplicateMode" Stretch="None" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="{StaticResource PatternToggleButttonBorderBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="ImgDuplicateMode" Property="Source"
+                                    Value="/Images/TextPatterns/PatternPart.png" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="{x:Null}">
+                            <Setter TargetName="ImgDuplicateMode" Property="Source"
+                                    Value="/Images/TextPatterns/PatternEndPart.png" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="false">
+                            <Setter TargetName="ImgDuplicateMode" Property="Source" Value="{x:Null}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style x:Key="PatternAllowFollowQuestionToggleButton" TargetType="{x:Type ToggleButton}">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="IsThreeState" Value="false" />
+        <Setter Property="IsChecked" Value="{Binding Path=QuestionCanFollow}" />
+        <Setter Property="MinWidth" Value="10" />
+        <Setter Property="MinHeight" Value="10" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            ToolTip="{TemplateBinding ToolTip}"
+                            Padding="1"
+                            CornerRadius="3">
+                        <Image x:Name="ImgDuplicateMode" Stretch="None" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="{StaticResource PatternToggleButttonBorderBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="ImgDuplicateMode" Property="Source" Value="{x:Null}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="false">
+                            <Setter TargetName="ImgDuplicateMode" Property="Source"
+                                    Value="/Images/TextPatterns/PatternNoQuestion.png" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="PatternRequiresResponseToggleButton" TargetType="{x:Type ToggleButton}">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="IsThreeState" Value="false" />
+        <Setter Property="IsChecked" Value="{Binding Path=RequiresResponse}" />
+        <Setter Property="MinWidth" Value="10" />
+        <Setter Property="MinHeight" Value="10" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            ToolTip="{TemplateBinding ToolTip}"
+                            Padding="1"
+                            CornerRadius="3">
+                        <Image x:Name="ImgDuplicateMode" Stretch="None" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="{StaticResource PatternToggleButttonBorderBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="false">
+                            <Setter TargetName="ImgDuplicateMode" Property="Source" Value="{x:Null}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="ImgDuplicateMode" Property="Source"
+                                    Value="/Images/TextPatterns/PatternRequiresResponse.png" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style x:Key="NoBindTextPatternInputTextBox" TargetType="TextBox">
+        <EventSetter Event="PreviewKeyDown" Handler="Navigation_PreviewKeyDown" />
+        <EventSetter Event="GotKeyboardFocus" Handler="PatternEditor_GotKeyboardFocus" />
+        <EventSetter Event="Unloaded" Handler="PatterEditor_Unloaded" />
+        <EventSetter Event="ContextMenuOpening" Handler="txtEdit_ContextMenuOpening" />
+        <Setter Property="FontFamily"
+                Value="{Binding Source={x:Static self:Properties.Settings.Default}, Path=PatternEditorsFont, Mode=OneWay}" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="BorderThickness" Value="0,0,0,1" />
+        <Setter Property="AcceptsReturn" Value="True" />
+        <Setter Property="ContextMenu" Value="{StaticResource NoPatternContextMenu}" />
+        <Setter Property="SpellCheck.IsEnabled"
+                Value="{Binding Source={x:Static self:Properties.Settings.Default}, Path=EditorsUseSpellcheck, Mode=OneWay}" />
+        <!--Undo is handled by the global undo system, so that no data gets lost-->
+        <Setter Property="IsUndoEnabled" Value="false" />
+        <Setter Property="FontStyle" Value="Normal" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="MinHeight" Value="18" />
+        <Setter Property="self:CaretBehavior.ObserveCaret" Value="True" />
+    </Style>
+
+    <Style x:Key="NewItemInputTextBox" TargetType="TextBox" BasedOn="{StaticResource NoBindTextPatternInputTextBox}">
+        <Setter Property="Visibility"
+                Value="{Binding Path=Root.IsAddMode, Converter={StaticResource BoolToVisConv}, FallbackValue=Visible}" />
+    </Style>
+
+
+    <Style x:Key="TextPatternConditionInputTextBox" TargetType="TextBox"
+           BasedOn="{StaticResource NoBindTextPatternInputTextBox}">
+        <EventSetter Event="GotFocus" Handler="TxtItem_GotFocus" />
+        <EventSetter Event="TextChanged" Handler="InputBox_TextChanged" />
+        <Setter Property="ContextMenu" Value="{StaticResource PatternContextMenu}" />
+        <!--<Setter Property="Validation.ErrorTemplate" Value="{StaticResource PatternValidationTemplate}"/>-->
+        <Setter Property="BorderBrush" Value="Red" />
+        <Setter Property="ToolTip" Value="{Binding Path=ParseError, IsAsync=True}" />
+        <Setter Property="Text" Value="{Binding Path=NeuronInfo.DisplayTitle, UpdateSourceTrigger=PropertyChanged}" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Style.Triggers>
+            <!--we compare to strin.empty cause this means it's compiled-->
+            <DataTrigger Binding="{Binding Path=ParseError}" Value="{x:Static sys:String.Empty}">
+                <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorder}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Path=ParseError}" Value="{x:Null}">
+                <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorder}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Path=IsSelected}" Value="True">
+                <Setter Property="BorderThickness" Value="0,0,0,2" />
+            </DataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=IsSelected}" Value="True" />
+                    <Condition Binding="{Binding Path=ParseError}" Value="{x:Static sys:String.Empty}" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="BorderBrush" Value="DarkGray" />
+                <Setter Property="BorderThickness" Value="0,0,0,2" />
+            </MultiDataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="TextPatternInputTextBox" TargetType="TextBox"
+           BasedOn="{StaticResource TextPatternConditionInputTextBox}">
+        <EventSetter Event="PreviewLostKeyboardFocus" Handler="PatternEditor_PreviewLostFocus" />
+        <EventSetter Event="PreviewKeyDown" Handler="TxtEditItem_PreviewKeyDown" />
+    </Style>
+
+    <!-- Style for main groupboxes-->
+    <Style x:Key="PatternEditorGroupBoxStyle" TargetType="GroupBox">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Margin" Value="4,0,4,0" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="GroupBox">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <ContentPresenter Grid.Row="0"
+                                          ContentSource="Header"
+                                          RecognizesAccessKey="True" />
+
+                        <ContentPresenter Grid.Row="1" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="InputsGroupBoxStyle" TargetType="GroupBox" BasedOn="{StaticResource PatternEditorGroupBoxStyle}">
+        <Setter Property="Margin" Value="16,0,4,0" />
+    </Style>
+
+    <Style x:Key="NewDataGroupBoxStyle" TargetType="GroupBox" BasedOn="{StaticResource PatternEditorGroupBoxStyle}">
+        <Setter Property="Margin" Value="22,0,4,0" />
+    </Style>
+
+    <Style x:Key="RuleGroupBoxStyle" TargetType="GroupBox" BasedOn="{StaticResource PatternEditorGroupBoxStyle}">
+        <Setter Property="Margin" Value="4,2,4,0" />
+    </Style>
+
+    <Style x:Key="Do_CalculateGroupBoxStyle" TargetType="GroupBox"
+           BasedOn="{StaticResource PatternEditorGroupBoxStyle}">
+        <Setter Property="Margin" Value="16,0,0,0" />
+    </Style>
+
+
+    <!-- Style for sub-groupboxes-->
+    <Style x:Key="PatternEditorSubGroupBoxStyle" TargetType="GroupBox">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontStyle" Value="Italic" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="FontWeight" Value="Regular" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="GroupBox">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <ContentPresenter Grid.Row="0"
+                                          ContentSource="Header"
+                                          RecognizesAccessKey="True" />
+
+                        <ContentPresenter Grid.Row="1" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!-- Style for REsponseFor boxes: has extra border-->
+    <Style x:Key="ResponseForGroupBoxStyle" TargetType="GroupBox"
+           BasedOn="{StaticResource PatternEditorSubGroupBoxStyle}">
+        <Setter Property="BorderThickness" Value="0,0,0,1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="GroupBox">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="0,0,0,2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <ContentPresenter Grid.Row="0"
+                                              ContentSource="Header"
+                                              RecognizesAccessKey="True" />
+
+                            <ContentPresenter Grid.Row="1" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--For the textblocks of the groupboxes.-->
+    <Style x:Key="PatternEditorGrpBoxTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="DarkBlue" />
+    </Style>
+
+    <!--For the textblocks of the Name.-->
+    <Style x:Key="RuleNameTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="DarkGreen" />
+    </Style>
+
+    <!--For the textblocks of the conditionals/responsesGropu.-->
+    <Style x:Key="ConditionalTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="DarkRed" />
+    </Style>
+
+    <Style x:Key="PatternEditorVerSplitter" TargetType="GridSplitter">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Width" Value="6" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}">
+                        <Border HorizontalAlignment="Center"
+                                VerticalAlignment="Stretch"
+                                Width="1"
+                                BorderThickness="1"
+                                Margin="0,4,0,4"
+                                BorderBrush="DarkGray" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style x:Key="PatternEditorHorSplitter" TargetType="GridSplitter">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Height" Value="6" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}">
+                        <Border HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                Height="1"
+                                BorderThickness="1"
+                                Margin="4,0,4,0"
+                                BorderBrush="DarkGray" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!-- DropDownNNSelector template for project folders that can contain textpattern editors, when browsing for outputs-->
+    <HierarchicalDataTemplate DataType="{x:Type self:BrowsableOutputPatternEditorsEnumerator}"
+                              ItemsSource="{Binding}">
+        <TextBlock Text="{Binding Path=Owner.Owner.Name}" />
+    </HierarchicalDataTemplate>
+
+    <!-- DropDownNNSelector template for project folders that can contain textpattern editors, when browsing all the topic data.-->
+    <HierarchicalDataTemplate DataType="{x:Type self:BrowsableTopicsEnumerator}"
+                              ItemsSource="{Binding}">
+        <TextBlock Text="{Binding Path=Owner.Owner.Name}" />
+    </HierarchicalDataTemplate>
+
+    <!-- DropDownNNSelector template for rules list.-->
+    <HierarchicalDataTemplate DataType="{x:Type self:RulesEnumerator}"
+                              ItemsSource="{Binding}">
+        <TextBlock Text="Rules" />
+    </HierarchicalDataTemplate>
+
+    <!-- DropDownNNSelector template for a rule.-->
+    <HierarchicalDataTemplate DataType="{x:Type self:RuleEnumerator}"
+                              ItemsSource="{Binding}">
+        <TextBlock Text="{Binding Path=NeuronInfo.DisplayTitle}" />
+    </HierarchicalDataTemplate>
+
+    <!-- DropDownNNSelector template for a input patterns, outputs,...-->
+    <DataTemplate x:Key="GeneralPurposePatternBrowseTerminator">
+        <TextBlock Text="{Binding Path=Expression}" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="GeneralPurposePatternBrowseTerminator2">
+        <TextBlock Text="{Binding Path=DisplayTitle}" />
+    </DataTemplate>
+
+    <!-- DropDownNNSelector template for inputs list.-->
+    <HierarchicalDataTemplate DataType="{x:Type self:InputsEnumerator}"
+                              ItemsSource="{Binding}"
+                              ItemTemplate="{StaticResource GeneralPurposePatternBrowseTerminator2}">
+        <TextBlock Text="input" />
+    </HierarchicalDataTemplate>
+
+    <!-- DropDownNNSelector template for a rule.-->
+    <HierarchicalDataTemplate DataType="{x:Type self:DoEnumerator}"
+                              ItemsSource="{Binding}"
+                              ItemTemplate="{StaticResource GeneralPurposePatternBrowseTerminator}">
+        <TextBlock Text="{Binding Path=Title}" />
+    </HierarchicalDataTemplate>
+
+    <!-- DropDownNNSelector template for rules list.-->
+    <HierarchicalDataTemplate DataType="{x:Type self:OutputsEnumerator}"
+                              ItemsSource="{Binding}">
+        <TextBlock Text="output" />
+    </HierarchicalDataTemplate>
+
+    <!-- DropDownNNSelector template for rules list.-->
+    <HierarchicalDataTemplate DataType="{x:Type self:ConditionsEnumerator}"
+                              ItemsSource="{Binding}">
+        <TextBlock Text="When" />
+    </HierarchicalDataTemplate>
+
+
+    <!-- DropDownNNSelector template for responsesForGroups list.-->
+    <HierarchicalDataTemplate DataType="{x:Type self:ResponsesForGroupsEnumerator}"
+                              ItemsSource="{Binding}">
+        <TextBlock Text="Responses for" />
+    </HierarchicalDataTemplate>
+
+    <!-- DropDownNNSelector template for a ResponsesForGroup.-->
+    <HierarchicalDataTemplate DataType="{x:Type self:ResponsesForGroupEnumerator}"
+                              ItemsSource="{Binding}">
+        <TextBlock Text="{Binding Path=Title}" />
+    </HierarchicalDataTemplate>
+
+    <!-- DropDownNNSelector template for questions list.-->
+    <HierarchicalDataTemplate DataType="{x:Type self:QuestionsEnumerator}"
+                              ItemsSource="{Binding}">
+        <TextBlock Text="Ask" />
+    </HierarchicalDataTemplate>
+
+    <!-- DropDownNNSelector template for a condition.-->
+    <HierarchicalDataTemplate DataType="{x:Type self:ConditionEnumerator}"
+                              ItemsSource="{Binding}">
+        <TextBlock Text="{Binding Path=Title}" />
+    </HierarchicalDataTemplate>
+
+
+    <!-- DropDownNNSelector template for an output.-->
+    <HierarchicalDataTemplate DataType="{x:Type self:OutputEnumerator}"
+                              ItemsSource="{Binding}">
+        <TextBlock Text="{Binding Path=NeuronInfo.DisplayTitle}" />
+    </HierarchicalDataTemplate>
+
+    <!-- DropDownNNSelector template for outputs rendered on invlalid response.-->
+    <HierarchicalDataTemplate DataType="{x:Type self:ResponseForInvalidsEnumerator}"
+                              ItemsSource="{Binding}"
+                              ItemTemplate="{StaticResource GeneralPurposePatternBrowseTerminator}">
+        <TextBlock Text="On Invalid" />
+    </HierarchicalDataTemplate>
+
+    <!-- DropDownNNSelector template for project text pattern editors that contain outputs which can be selected.-->
+    <HierarchicalDataTemplate DataType="{x:Type self:BrowsableOutputsEnumerator}"
+                              ItemsSource="{Binding}"
+                              ItemTemplateSelector="{StaticResource NdbBrowserItemSelector}">
+        <!--We use the document title as caption, cause we can easely change this for 'objectTextPatternEditors, which are only present in the thesaurus-->
+        <TextBlock Text="{Binding Path=Editor.DocumentTitle}" />
+    </HierarchicalDataTemplate>
+
+
+    <!-- DropDownNNSelector template for thesaurus root to display available outputs.-->
+    <HierarchicalDataTemplate DataType="{x:Type self:ThesPatternEditorsEnumerator}"
+                              ItemsSource="{Binding}">
+        <TextBlock Text="Thesaurus" />
+    </HierarchicalDataTemplate>
+
+    <!-- DropDownNNSelector template for thesaurus pos values to display available outputs-->
+    <HierarchicalDataTemplate DataType="{x:Type self:ThesLinkedItemPEEnumerator}"
+                              ItemsSource="{Binding}">
+        <TextBlock Text="{Binding Path=Owner.DisplayTitle}" />
+    </HierarchicalDataTemplate>
+
+    <!-- DropDownNNSelector template for thesaurus items to display available outputs-->
+    <HierarchicalDataTemplate DataType="{x:Type self:ThesItemPEEnumerator}"
+                              ItemsSource="{Binding Path=Items, Mode=OneWay}">
+        <TextBlock Text="{Binding Path=Owner.DisplayTitle}" />
+    </HierarchicalDataTemplate>
+
+
+    <!-- DropDownNNSelector template for project text pattern editors that contain all the data .-->
+    <HierarchicalDataTemplate DataType="{x:Type self:TopicEnumerator}"
+                              ItemsSource="{Binding}">
+        <!--We use the document title as caption, cause we can easely change this for 'objectTextPatternEditors, which are only present in the thesaurus-->
+        <TextBlock Text="{Binding Path=Owner.DocumentTitle}" />
+    </HierarchicalDataTemplate>
+
+
+    <!--Input pattern template-->
+    <DataTemplate x:Key="InputPatternTemplate">
+        <DockPanel>
+            <ToggleButton Style="{StaticResource PartialSelectToggleButton}"
+                          Focusable="False"
+                          ToolTip="Select how duplicate input patterns are handled: as a partial, a fallback for a partial set, or no duplicates allowed" />
+            <!-- Note: there is a binding between tag and SelectionRange, so that we can check if we need to select a part of the text-->
+            <ctrls:PatternTextBox Style="{StaticResource TextPatternInputTextBox}"
+                                  AcceptsReturn="False"
+                                  Loaded="TxtPattern_Loaded"
+                                  Tag="{Binding Path=Selectionrange, NotifyOnTargetUpdated=True, Mode=OneWay}"
+                                  TargetUpdated="TxtPattern_SourceUpdated"
+                                  x:Name="TxtPattern"
+                                  SelectionChanged="TxtPattern_SelectionChanged"
+                                  IsVisibleChanged="TxtItem_IsVisibleChanged">
+                <ctrls:PatternTextBox.CommandBindings>
+                    <CommandBinding Command="Paste" CanExecute="NewSubPaste_CanExecute" Executed="InputPaste_Executed" />
+                </ctrls:PatternTextBox.CommandBindings>
+            </ctrls:PatternTextBox>
+        </DockPanel>
+        <!--<DataTemplate.Triggers>
+         <DataTrigger Binding="{Binding Path=IsSelected}" Value="True">
+            <Setter TargetName="TxtPattern" Property="BorderBrush" Value="DarkGray"/>
+            <Setter TargetName="TxtPattern" Property="BorderThickness" Value="0,0,0,2"/>
+         </DataTrigger>
+      </DataTemplate.Triggers>-->
+    </DataTemplate>
+
+    <!--DoPatterns datatemplate -->
+    <DataTemplate x:Key="DoPatternTemplate">
+        <!-- Note: there is a binding between tag and SelectionRange, so that we can check if we need to select a part of the text-->
+        <ctrls:CodeTextBox Style="{StaticResource TextPatternInputTextBox}"
+                           AcceptsReturn="True"
+                           Loaded="TxtDo_Loaded"
+                           SpellCheck.IsEnabled="False"
+                           HorizontalAlignment="Stretch"
+                           TextWrapping="NoWrap"
+                           Tag="{Binding Path=Selectionrange, NotifyOnTargetUpdated=True, Mode=OneWay}"
+                           TargetUpdated="TxtPattern_SourceUpdated"
+                           x:Name="TxtDo"
+                           SelectionChanged="TxtPattern_SelectionChanged"
+                           BorderThickness="1,0,0,0"
+                           IsVisibleChanged="TxtItem_IsVisibleChanged" />
+    </DataTemplate>
+
+    <!--Condition pattern datatemplate -->
+    <DataTemplate x:Key="ConditionPatternTemplate">
+        <!-- Note: there is a binding between tag and SelectionRange, so that we can check if we need to select a part of the text-->
+        <ctrls:PatternTextBox Style="{StaticResource TextPatternConditionInputTextBox}"
+                              PreviewLostKeyboardFocus="ConditionPattern_PreviewLostFocus"
+                              AcceptsReturn="False"
+                              SpellCheck.IsEnabled="False"
+                              Loaded="TxtCondition_Loaded"
+                              Tag="{Binding Path=Selectionrange, NotifyOnTargetUpdated=True, Mode=OneWay}"
+                              TargetUpdated="TxtPattern_SourceUpdated"
+                              x:Name="TxtConditional"
+                              SelectionChanged="TxtPattern_SelectionChanged"
+                              IsVisibleChanged="TxtItem_IsVisibleChanged"
+                              MinWidth="20">
+            <ctrls:PatternTextBox.CommandBindings>
+                <CommandBinding Command="Delete" CanExecute="ConditionDelete_CanExecute" />
+                <CommandBinding Command="Paste" CanExecute="NewSubPaste_CanExecute"
+                                Executed="NewConditionPaste_Executed" />
+            </ctrls:PatternTextBox.CommandBindings>
+        </ctrls:PatternTextBox>
+        <!--<DataTemplate.Triggers>
+         <DataTrigger Binding="{Binding Path=IsSelected}" Value="True">
+            <Setter TargetName="TxtConditional" Property="BorderBrush" Value="DarkGray"/>
+            <Setter TargetName="TxtConditional" Property="BorderThickness" Value="0,0,0,2"/>
+         </DataTrigger>
+      </DataTemplate.Triggers>-->
+    </DataTemplate>
+
+    <!--Topic filter template-->
+    <DataTemplate x:Key="TopicFilterTemplate">
+        <ctrls:PatternTextBox Style="{StaticResource TextPatternInputTextBox}"
+                              Loaded="TxtTopicFilter_Loaded"
+                              x:Name="TxtTopicFilter"
+                              Tag="{Binding Path=Selectionrange, NotifyOnTargetUpdated=True, Mode=OneWay}"
+                              TargetUpdated="TxtPattern_SourceUpdated"
+                              SelectionChanged="TxtPattern_SelectionChanged"
+                              IsVisibleChanged="TxtItem_IsVisibleChanged">
+            <ctrls:PatternTextBox.CommandBindings>
+                <CommandBinding Command="Paste" CanExecute="NewSubPaste_CanExecute" Executed="OutputPaste_Executed" />
+            </ctrls:PatternTextBox.CommandBindings>
+        </ctrls:PatternTextBox>
+    </DataTemplate>
+
+    <!--Invalid response item template-->
+    <DataTemplate x:Key="InvalidResponsePatternTemplate">
+        <StackPanel Orientation="Horizontal">
+            <ctrls:PatternTextBox Style="{StaticResource TextPatternInputTextBox}"
+                                  Loaded="TxtInvalid_Loaded"
+                                  x:Name="TxtInvalid"
+                                  Tag="{Binding Path=Selectionrange, NotifyOnTargetUpdated=True, Mode=OneWay}"
+                                  TargetUpdated="TxtPattern_SourceUpdated"
+                                  SelectionChanged="TxtPattern_SelectionChanged"
+                                  IsVisibleChanged="TxtItem_IsVisibleChanged">
+                <ctrls:PatternTextBox.CommandBindings>
+                    <CommandBinding Command="Paste" CanExecute="NewSubPaste_CanExecute"
+                                    Executed="InvalidPaste_Executed" />
+                </ctrls:PatternTextBox.CommandBindings>
+            </ctrls:PatternTextBox>
+            <ToggleButton Style="{StaticResource PatternRequiresResponseToggleButton}"
+                          ToolTip="When checked, the bot will remain waiting for a valid response, otherwise, any input will become allowed again." />
+        </StackPanel>
+    </DataTemplate>
+
+    <!--Conversation starts -->
+    <DataTemplate x:Key="ConvStartPatternTemplate">
+        <ctrls:PatternTextBox Style="{StaticResource TextPatternInputTextBox}"
+                              Loaded="TxtInvalid_Loaded"
+                              x:Name="TxtInvalid"
+                              Tag="{Binding Path=Selectionrange, NotifyOnTargetUpdated=True, Mode=OneWay}"
+                              TargetUpdated="TxtPattern_SourceUpdated"
+                              SelectionChanged="TxtPattern_SelectionChanged"
+                              IsVisibleChanged="TxtItem_IsVisibleChanged">
+            <ctrls:PatternTextBox.CommandBindings>
+                <CommandBinding Command="Paste" CanExecute="NewSubPaste_CanExecute" Executed="OutputPaste_Executed" />
+            </ctrls:PatternTextBox.CommandBindings>
+        </ctrls:PatternTextBox>
+    </DataTemplate>
+
+
+    <DataTemplate x:Key="ResponseForPatternTemplate">
+        <Border BorderThickness="0,0,0,1"
+                BorderBrush="Transparent">
+            <!--the tag and targetUpdated are used to put focus on the item from the code behind-->
+            <Grid>
+                <ctrls:PatternTextBox Style="{StaticResource TextPatternInputTextBox}"
+                                      AcceptsReturn="False"
+                                      Visibility="Collapsed"
+                                      Loaded="TxtResponseFor_Loaded"
+                                      Tag="{Binding Path=Selectionrange, NotifyOnTargetUpdated=True, Mode=OneWay}"
+                                      TargetUpdated="TxtPattern_SourceUpdated"
+                                      x:Name="TxtPattern"
+                                      SelectionChanged="TxtPattern_SelectionChanged"
+                                      IsVisibleChanged="TxtItem_IsVisibleChanged" />
+
+                <ctrls:DropDownNSSelector ContextMenu="{StaticResource ResponseForContextMenu}"
+                                          SelectedNeuron="{Binding Path=ResponseFor, Mode=OneWay}"
+                                          VerticalAlignment="Stretch"
+                                          CanClearValue="True"
+                                          ContentFocusable="False"
+                                          dd:DragDropManager.DropTarget="{StaticResource DDNeuronSelectorDropAdvisor}"
+                                          ShowDropDownOnMouseOver="true"
+                                          SelectedNeuronChanged="ResponseFor_SelectionChanged"
+                                          x:Name="DropResponseFor">
+                    <ctrls:DropDownNSSelector.ItemsSources>
+                        <ctrls:BrowserDataSource PageHeader="Local"
+                                                 PageToolTip="All the outputs of the current editor"
+                                                 ItemsSource="{Binding Path=Root.BrowsableOutputs, Mode=OneWay}"
+                                                 AsTree="False" />
+                        <ctrls:BrowserDataSource PageHeader="Project"
+                                                 PageToolTip="All the outputs declared in the project-topics"
+                                                 ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=Editors.BrowsableOutputs, Mode=OneWay}"
+                                                 AsTree="True" />
+                        <ctrls:BrowserDataSource PageHeader="Thesaurus"
+                                                 PageToolTip="All the outputs declared in the topics attached to thesaurus items"
+                                                 ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=Thesaurus.BrowsableTextPatterns, Mode=OneWay}"
+                                                 AsTree="True" />
+                    </ctrls:DropDownNSSelector.ItemsSources>
+                    <ctrls:DropDownNSSelector.SelectedNeuronTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource NeuronToInfoConv}}"
+                                       HorizontalAlignment="Left"
+                                       Margin="4,0,0,0" />
+                        </DataTemplate>
+                    </ctrls:DropDownNSSelector.SelectedNeuronTemplate>
+                    <ctrls:DropDownNSSelector.CommandBindings>
+                        <CommandBinding Command="Paste" Executed="PasteResponseFor_Executed"
+                                        CanExecute="PasteResponseFor_CanExecute" />
+                    </ctrls:DropDownNSSelector.CommandBindings>
+                </ctrls:DropDownNSSelector>
+            </Grid>
+        </Border>
+
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Path=IsSelected}" Value="True">
+                <Setter TargetName="DropResponseFor" Property="BorderBrush" Value="DarkGray" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Path=IsPatternStyle}" Value="True">
+                <Setter TargetName="DropResponseFor" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="TxtPattern" Property="Visibility" Value="Visible" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <!--Output-->
+    <DataTemplate x:Key="PatternOutputTemplate">
+        <GroupBox Style="{StaticResource PatternEditorSubGroupBoxStyle}"
+                  Name="GrpOutput">
+            <GroupBox.CommandBindings>
+                <CommandBinding Command="self:App.ToggleExpanderCmd" Executed="OutpuExpanderToggleCollaps_Executed" />
+                <CommandBinding Command="self:App.ToggleDoPatternCmd" Executed="OutputDoToggleCollaps_Executed" />
+            </GroupBox.CommandBindings>
+            <GroupBox.InputBindings>
+                <KeyBinding Key="OemPlus" Modifiers="Ctrl" Command="self:App.ToggleExpanderCmd"
+                            CommandTarget="{Binding ElementName=GrpOutput}" />
+                <KeyBinding Key="D" Modifiers="Ctrl" Command="self:App.ToggleDoPatternCmd"
+                            CommandTarget="{Binding ElementName=GrpOutput}" />
+            </GroupBox.InputBindings>
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <ctrls:PatternTextBox Style="{StaticResource TextPatternInputTextBox}"
+                                          ContextMenu="{StaticResource OutputContextMenu}"
+                                          Loaded="TxtOutput_Loaded"
+                                          TextWrapping="NoWrap"
+                                          x:Name="TxtOutput"
+                                          Tag="{Binding Path=Selectionrange, NotifyOnTargetUpdated=True, Mode=OneWay}"
+                                          TargetUpdated="TxtPattern_SourceUpdated"
+                                          SelectionChanged="TxtPattern_SelectionChanged"
+                                          IsVisibleChanged="TxtItem_IsVisibleChanged">
+                        <ctrls:PatternTextBox.CommandBindings>
+                            <CommandBinding Command="Paste" CanExecute="NewSubPaste_CanExecute"
+                                            Executed="OutputPaste_Executed" />
+                        </ctrls:PatternTextBox.CommandBindings>
+                    </ctrls:PatternTextBox>
+                    <ToggleButton Style="{StaticResource PatternAllowFollowQuestionToggleButton}"
+                                  ToolTip="When checked, no question will be appended." />
+                    <ToggleButton BorderThickness="0"
+                                  Name="ToggleHasInvalidResponses"
+                                  MinWidth="0"
+                                  MinHeight="0"
+                                  Visibility="Hidden"
+                                  Foreground="Blue"
+                                  IsChecked="{Binding Path=HasInvalidResponses, Mode=TwoWay}"
+                                  Style="{StaticResource SimpleExpanderDownHeaderStyle}"
+                                  Focusable="False"
+                                  HorizontalAlignment="Stretch"
+                                  ToolTip="Show/hide the list of replies to give when an invalid answer is given to this question. Press Ctrl+PLUS" />
+
+                    <ToggleButton BorderThickness="0"
+                                  Name="ToggleOutputDo"
+                                  MinWidth="0"
+                                  MinHeight="0"
+                                  Visibility="Hidden"
+                                  Foreground="Blue"
+                                  IsChecked="{Binding Path=HasDo, Mode=TwoWay}"
+                                  Style="{StaticResource SimpleExpanderDownHeaderStyle}"
+                                  Focusable="False"
+                                  HorizontalAlignment="Stretch"
+                                  ToolTip="Show/hide the do section that gets executed just before the output gets rendered. Press Ctrl+D" />
+                </StackPanel>
+            </GroupBox.Header>
+            <StackPanel Margin="16,0,0,0">
+                <GroupBox Style="{StaticResource PatternEditorSubGroupBoxStyle}"
+                          Name="GrpInvalidResponses"
+                          Visibility="{Binding Path=HasInvalidResponses, Converter={StaticResource BoolToVisConv}, Mode=OneWay}">
+                    <GroupBox.CommandBindings>
+                        <CommandBinding Command="self:App.ToggleDoPatternCmd"
+                                        Executed="InvalidResponsesVisToggleCollaps_Executed" />
+                    </GroupBox.CommandBindings>
+                    <GroupBox.InputBindings>
+                        <KeyBinding Key="D" Modifiers="Ctrl" Command="self:App.ToggleDoPatternCmd"
+                                    CommandTarget="{Binding ElementName=GrpInvalidResponses}" />
+                    </GroupBox.InputBindings>
+                    <GroupBox.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <ToggleButton BorderThickness="0"
+                                          Name="ToggleNoReplyVisibility"
+                                          MinWidth="0"
+                                          MinHeight="0"
+                                          IsChecked="{Binding Path=IsExpanded, Mode=TwoWay}"
+                                          Style="{StaticResource SimpleExpanderDownHeaderStyle}"
+                                          Focusable="False"
+                                          HorizontalAlignment="Stretch"
+                                          ToolTip="Show/hide the list of replies to give when an invalid answer is given to this question. Press Ctrl+D" />
+
+                            <Button MouseDoubleClick="GrpInvalidResponse_MouseDoubleClick"
+                                    Name="BtnGrpInvalids"
+                                    Style="{StaticResource PatternGrpButtonStyle}"
+                                    ToolTip="Use one of these outputs when an invalid answer was given to this statement (double-click to select).">
+                                <Button.CommandBindings>
+                                    <CommandBinding Command="self:App.InsertItemAfterCmd"
+                                                    Executed="AddInvalid_Executed" />
+                                </Button.CommandBindings>
+                                <Button.InputBindings>
+                                    <KeyBinding Key="Enter" Modifiers="Ctrl" Command="self:App.InsertItemAfterCmd"
+                                                CommandTarget="{Binding ElementName=BtnGrpInvalids}" />
+                                </Button.InputBindings>
+                                <TextBlock Style="{StaticResource PatternEditorGrpBoxTextBlockStyle}"
+                                           Text="When not replied" />
+                            </Button>
+                        </StackPanel>
+                    </GroupBox.Header>
+                    <DockPanel Margin="8,0,0,0"
+                               Visibility="{Binding Path=IsExpanded, Converter={StaticResource BoolToVisConv}, Mode=OneWay}">
+                        <CheckBox Style="{StaticResource VerLineCheckBox}"
+                                  IsChecked="{Binding Path=IsInvalidResponsesSequenced}"
+                                  Width="4"
+                                  ToolTip="When checked, each output will be used in sequence, otherwise an output is picked at random."
+                                  IsTabStop="false" />
+                        <StackPanel>
+                            <ItemsControl ItemsSource="{Binding Path=InvalidResponses}"
+                                          ItemTemplate="{StaticResource InvalidResponsePatternTemplate}"
+                                          IsTabStop="False"
+                                          MinWidth="40"
+                                          Background="Transparent" />
+                            <ctrls:PatternTextBox Style="{StaticResource NewItemInputTextBox}"
+                                                  GotFocus="TxtNewItem_GotFocus"
+                                                  TextChanged="TxtInvalidResponse_TextChanged">
+                                <ctrls:PatternTextBox.CommandBindings>
+                                    <CommandBinding Command="Paste" CanExecute="NewSubPaste_CanExecute"
+                                                    Executed="NewInvalidPaste_Executed" />
+                                </ctrls:PatternTextBox.CommandBindings>
+                            </ctrls:PatternTextBox>
+                        </StackPanel>
+                    </DockPanel>
+                </GroupBox>
+
+                <GroupBox Visibility="{Binding Path=HasDo, Converter={StaticResource BoolToVisConv}, Mode=OneWay}"
+                          Style="{StaticResource PatternEditorSubGroupBoxStyle}"
+                          Name="GrpOutputDo">
+                    <GroupBox.CommandBindings>
+                        <CommandBinding Command="self:App.ToggleDoPatternCmd"
+                                        Executed="OutputDoPatternsToggleCollaps_Executed" />
+                    </GroupBox.CommandBindings>
+                    <GroupBox.InputBindings>
+                        <KeyBinding Key="D" Modifiers="Ctrl" Command="self:App.ToggleDoPatternCmd"
+                                    CommandTarget="{Binding ElementName=GrpOutputDo}" />
+                    </GroupBox.InputBindings>
+                    <GroupBox.Header>
+
+                        <StackPanel Orientation="Horizontal">
+                            <ToggleButton BorderThickness="0"
+                                          Name="ToggleOutputDoVisibility"
+                                          MinWidth="0"
+                                          MinHeight="0"
+                                          IsChecked="{Binding Path=IsDoExpanded, Mode=TwoWay}"
+                                          Style="{StaticResource SimpleExpanderDownHeaderStyle}"
+                                          Focusable="False"
+                                          HorizontalAlignment="Stretch"
+                                          ToolTip="Show/hide the Do statements. Press Ctrl+D" />
+
+                            <Button MouseDoubleClick="GrpDoPatterns_MouseDoubleClick"
+                                    Name="BtnGrpDos"
+                                    Style="{StaticResource PatternGrpButtonStyle}"
+                                    ToolTip="These statements will be executed just before the output gets rendered. (double-click to select).">
+                                <TextBlock Style="{StaticResource PatternEditorGrpBoxTextBlockStyle}"
+                                           Text="Do" />
+                            </Button>
+                        </StackPanel>
+
+                    </GroupBox.Header>
+                    <Grid
+                        Visibility="{Binding Path=IsDoExpanded, Converter={StaticResource BoolToVisConv}, Mode=OneWay}"
+                        Name="GrdDo">
+                        <ContentPresenter Content="{Binding Path=Do}"
+                                          ContentTemplate="{StaticResource DoPatternTemplate}" />
+                    </Grid>
+                </GroupBox>
+
+            </StackPanel>
+        </GroupBox>
+
+
+        <DataTemplate.Triggers>
+            <Trigger SourceName="GrpOutput" Property="IsMouseOver" Value="True">
+                <Setter TargetName="ToggleHasInvalidResponses" Property="Visibility" Value="Visible" />
+                <Setter TargetName="ToggleOutputDo" Property="Visibility" Value="Visible" />
+            </Trigger>
+
+            <Trigger SourceName="GrpOutput" Property="IsKeyboardFocusWithin" Value="True">
+                <Setter TargetName="ToggleHasInvalidResponses" Property="Visibility" Value="Visible" />
+                <Setter TargetName="ToggleOutputDo" Property="Visibility" Value="Visible" />
+            </Trigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <!--question Output-->
+    <DataTemplate x:Key="PatternQuestionOutputTemplate">
+        <GroupBox Style="{StaticResource PatternEditorSubGroupBoxStyle}"
+                  ToolTip="Declare here what the bot should say. Press Ctrl+PLUS to show/hide more option."
+                  Name="GrpOutput">
+            <GroupBox.CommandBindings>
+                <CommandBinding Command="self:App.ToggleExpanderCmd" Executed="OutpuExpanderToggleCollaps_Executed" />
+            </GroupBox.CommandBindings>
+            <GroupBox.InputBindings>
+                <KeyBinding Key="OemPlus" Modifiers="Ctrl" Command="self:App.ToggleExpanderCmd"
+                            CommandTarget="{Binding ElementName=GrpOutput}" />
+            </GroupBox.InputBindings>
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <ctrls:PatternTextBox Style="{StaticResource TextPatternInputTextBox}"
+                                          ContextMenu="{StaticResource OutputContextMenu}"
+                                          Loaded="TxtOutput_Loaded"
+                                          x:Name="TxtOutput"
+                                          Tag="{Binding Path=Selectionrange, NotifyOnTargetUpdated=True, Mode=OneWay}"
+                                          TargetUpdated="TxtPattern_SourceUpdated"
+                                          SelectionChanged="TxtPattern_SelectionChanged"
+                                          IsVisibleChanged="TxtItem_IsVisibleChanged">
+                        <ctrls:PatternTextBox.CommandBindings>
+                            <CommandBinding Command="Paste" CanExecute="NewSubPaste_CanExecute"
+                                            Executed="OutputPaste_Executed" />
+                        </ctrls:PatternTextBox.CommandBindings>
+                    </ctrls:PatternTextBox>
+                    <ToggleButton BorderThickness="0"
+                                  DockPanel.Dock="Left"
+                                  Name="ToggleHasInvalidResponses"
+                                  MinWidth="0"
+                                  MinHeight="0"
+                                  Visibility="Hidden"
+                                  Foreground="Blue"
+                                  IsChecked="{Binding Path=HasInvalidResponses, Mode=TwoWay}"
+                                  Style="{StaticResource SimpleExpanderDownHeaderStyle}"
+                                  Focusable="False"
+                                  HorizontalAlignment="Stretch"
+                                  ToolTip="Show/hide the list of replies to give when an invalid answer is given to this question. Press Ctrl+PLUS" />
+
+                </StackPanel>
+            </GroupBox.Header>
+
+            <StackPanel Margin="16,0,0,0"
+                        Visibility="{Binding Path=HasInvalidResponses, Converter={StaticResource BoolToVisConv}, Mode=OneWay}">
+                <GroupBox Style="{StaticResource PatternEditorSubGroupBoxStyle}">
+                    <GroupBox.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <ToggleButton BorderThickness="0"
+                                          Name="ToggleNoReplyVisibility"
+                                          MinWidth="0"
+                                          MinHeight="0"
+                                          IsChecked="{Binding Path=IsExpanded, Mode=TwoWay}"
+                                          Style="{StaticResource SimpleExpanderDownHeaderStyle}"
+                                          Focusable="False"
+                                          HorizontalAlignment="Stretch"
+                                          ToolTip="Show/hide the list of replies to give when an invalid answer is given to this question. Press Ctrl+D" />
+
+                            <Button MouseDoubleClick="GrpInvalidResponse_MouseDoubleClick"
+                                    Style="{StaticResource PatternGrpButtonStyle}"
+                                    ToolTip="Use one of these outputs when an invalid answer was given to this statement (double-click to select).">
+                                <TextBlock Style="{StaticResource PatternEditorGrpBoxTextBlockStyle}"
+                                           Text="When not replied" />
+                            </Button>
+                        </StackPanel>
+                    </GroupBox.Header>
+                    <StackPanel
+                        Visibility="{Binding Path=IsExpanded, Converter={StaticResource BoolToVisConv}, Mode=OneWay}">
+                        <ItemsControl ItemsSource="{Binding Path=InvalidResponses}"
+                                      ItemTemplate="{StaticResource InvalidResponsePatternTemplate}"
+                                      IsTabStop="False"
+                                      MinWidth="40"
+                                      Background="Transparent" />
+                        <ctrls:PatternTextBox Style="{StaticResource NewItemInputTextBox}"
+                                              GotFocus="TxtNewItem_GotFocus"
+                                              TextChanged="TxtInvalidResponse_TextChanged">
+                            <ctrls:PatternTextBox.CommandBindings>
+                                <CommandBinding Command="Paste" CanExecute="NewSubPaste_CanExecute"
+                                                Executed="NewInvalidPaste_Executed" />
+                            </ctrls:PatternTextBox.CommandBindings>
+                        </ctrls:PatternTextBox>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </GroupBox>
+
+        <DataTemplate.Triggers>
+            <Trigger SourceName="GrpOutput" Property="IsMouseOver" Value="True">
+                <Setter TargetName="ToggleHasInvalidResponses" Property="Visibility" Value="Visible" />
+            </Trigger>
+
+            <Trigger SourceName="GrpOutput" Property="IsKeyboardFocusWithin" Value="True">
+                <Setter TargetName="ToggleHasInvalidResponses" Property="Visibility" Value="Visible" />
+            </Trigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <!--simple output-->
+    <DataTemplate x:Key="PatternSimpleOutputTemplate">
+        <ctrls:PatternTextBox Style="{StaticResource TextPatternInputTextBox}"
+                              ContextMenu="{StaticResource OutputContextMenu}"
+                              Loaded="TxtOutput_Loaded"
+                              x:Name="TxtOutput"
+                              Tag="{Binding Path=Selectionrange, NotifyOnTargetUpdated=True, Mode=OneWay}"
+                              TargetUpdated="TxtPattern_SourceUpdated"
+                              SelectionChanged="TxtPattern_SelectionChanged"
+                              IsVisibleChanged="TxtItem_IsVisibleChanged">
+            <ctrls:PatternTextBox.CommandBindings>
+                <CommandBinding Command="Paste" CanExecute="NewSubPaste_CanExecute" Executed="OutputPaste_Executed" />
+            </ctrls:PatternTextBox.CommandBindings>
+        </ctrls:PatternTextBox>
+    </DataTemplate>
+
+    <!--conditionals-->
+    <DataTemplate x:Key="PatternConditionalDataTemplate">
+        <GroupBox Style="{StaticResource PatternEditorGroupBoxStyle}"
+                  Name="GrpConditional">
+            <GroupBox.CommandBindings>
+                <CommandBinding Command="self:App.ToggleDoPatternCmd" Executed="HasDoPatterns_Executed" />
+                <CommandBinding Command="self:App.InsertConditionalCmd" Executed="InsertCondition_Executed" />
+                <CommandBinding Command="self:App.InsertItemAfterCmd" Executed="AddOutput_Executed" />
+            </GroupBox.CommandBindings>
+            <GroupBox.InputBindings>
+                <KeyBinding Key="D" Modifiers="Ctrl" Command="self:App.ToggleDoPatternCmd" />
+                <KeyBinding Key="I" Modifiers="Shift+Ctrl" Command="self:App.InsertConditionalCmd" />
+            </GroupBox.InputBindings>
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal"
+                            DockPanel.Dock="Left">
+                    <Button MouseDoubleClick="GrpOutputs_MouseDoubleClick"
+                            Name="BtnGrpOutput"
+                            Style="{StaticResource PatternGrpButtonStyle}"
+                            ToolTip="All the statements that can be used as output for the patterns to the left, when the condition is met. (DoubleClick to select all , Ctrl+Enter to add a new record)">
+                        <Button.InputBindings>
+                            <KeyBinding Key="Enter" Modifiers="Ctrl" Command="self:App.InsertItemAfterCmd"
+                                        CommandTarget="{Binding ElementName=BtnGrpOutput}" />
+                        </Button.InputBindings>
+                        <TextBlock Style="{StaticResource PatternEditorGrpBoxTextBlockStyle}"
+                                   Text="output"
+                                   Name="TxtOutputWhen" />
+                    </Button>
+                    <ToggleButton BorderThickness="0"
+                                  Name="ToggleHasDo"
+                                  MinWidth="0"
+                                  MinHeight="0"
+                                  Visibility="Hidden"
+                                  Foreground="Blue"
+                                  IsChecked="{Binding Path=HasDo, Mode=TwoWay}"
+                                  Style="{StaticResource SimpleExpanderDownHeaderStyle}"
+                                  Focusable="False"
+                                  HorizontalAlignment="Stretch"
+                                  ToolTip="Add/Remove the 'do' section (Press Ctrl+D)" />
+                    <!--put a border round the content presenter so we can hide it through a binding, otherwise the binding works on the content of the presenter, whichis not the correct data object-->
+                    <Border
+                        Visibility="{Binding Path=IsConditionVisible, Converter={StaticResource BoolToVisConv}, Mode=OneTime}">
+                        <ContentPresenter
+                            Content="{Binding Path=Condition}"
+                            ContentTemplate="{StaticResource ConditionPatternTemplate}"
+                            HorizontalAlignment="Stretch" />
+                        <Border.InputBindings>
+                            <KeyBinding Key="Enter" Modifiers="Ctrl" Command="self:App.InsertItemAfterCmd"
+                                        CommandTarget="{Binding ElementName=BtnGrpOutput}" />
+                        </Border.InputBindings>
+                    </Border>
+                    <Button Command="self:App.InsertConditionalCmd"
+                            Margin="4,0,0,0"
+                            Name="BtnInsertCond"
+                            Visibility="Collapsed"
+                            Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                            ToolTip="Add a new conditional 'output' section (Shift+Ctrl+I).">
+                        <Image Source="\Images\Edit\Add_Enabled.png" />
+                    </Button>
+                    <Button Click="BtnRemoveConditional_Click"
+                            Name="BtnRemoveCond"
+                            Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                            Visibility="Collapsed"
+                            ToolTip="Remove this conditional 'output' section.">
+                        <Image Source="\Images\Edit\DeleteSmall_Enabled.png" />
+                    </Button>
+                </StackPanel>
+            </GroupBox.Header>
+            <StackPanel Margin="0,0,0,0">
+                <GroupBox Style="{StaticResource Do_CalculateGroupBoxStyle}"
+                          Name="GrpDo"
+                          Visibility="{Binding Path=HasDo, Mode=OneWay,Converter={StaticResource BoolToVisConv}}">
+                    <GroupBox.CommandBindings>
+                        <CommandBinding Command="self:App.ToggleDoPatternCmd"
+                                        Executed="DoPatternsToggleCollaps_Executed" />
+                    </GroupBox.CommandBindings>
+                    <GroupBox.InputBindings>
+                        <KeyBinding Key="D" Modifiers="Ctrl" Command="self:App.ToggleDoPatternCmd"
+                                    CommandTarget="{Binding ElementName=GrpDo}" />
+                    </GroupBox.InputBindings>
+                    <GroupBox.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <ToggleButton BorderThickness="0"
+                                          Name="ToggleToCalculateVisibility"
+                                          MinWidth="0"
+                                          MinHeight="0"
+                                          IsChecked="{Binding Path=IsDoPatternVisible, Mode=TwoWay}"
+                                          Style="{StaticResource SimpleExpanderDownHeaderStyle}"
+                                          Focusable="False"
+                                          HorizontalAlignment="Stretch"
+                                          ToolTip="Show/hide the list of calculation statements. Press Ctrl+D" />
+
+                            <Button MouseDoubleClick="GrpDoPatterns_MouseDoubleClick"
+                                    Name="BtnGrpDo"
+                                    HorizontalAlignment="Left"
+                                    Style="{StaticResource PatternGrpButtonStyle}"
+                                    ToolTip="All the things that need to be done when this rule gets activated. (DoubleClick to select all)">
+                                <TextBlock Style="{StaticResource PatternEditorGrpBoxTextBlockStyle}"
+                                           Text="Do" />
+                            </Button>
+                        </StackPanel>
+                    </GroupBox.Header>
+                    <Grid
+                        Visibility="{Binding Path=IsDoPatternVisible, Converter={StaticResource BoolToVisConv}, Mode=OneWay}"
+                        Margin="8,0,0,0"
+                        Name="GrdDo">
+                        <ContentPresenter Content="{Binding Path=Do}"
+                                          ContentTemplate="{StaticResource DoPatternTemplate}" />
+                    </Grid>
+                </GroupBox>
+                <DockPanel>
+                    <CheckBox Style="{StaticResource VerLineCheckBox}"
+                              IsChecked="{Binding Path=IsOutputSequenced}"
+                              Width="4"
+                              ToolTip="When checked, each output will be used in sequence, otherwise an output is picked at random."
+                              IsTabStop="false" />
+                    <!--the itemscontrol gets a margin of 4,0,0,0 so that all outputs allign with new output textbox-->
+                    <ItemsControl ItemsSource="{Binding Path=Outputs}"
+                                  Margin="4,0,0,0"
+                                  ItemTemplate="{StaticResource PatternOutputTemplate}"
+                                  IsTabStop="False" />
+                </DockPanel>
+                <ctrls:PatternTextBox Style="{StaticResource NewItemInputTextBox}"
+                                      Margin="12,0,0,0"
+                                      Tag="FocusNewOut"
+                                      cf:FocusManager.IsFocused="{Binding Path=FocusNewOut, Mode=OneWay}"
+                                      GotFocus="TxtNewItem_GotFocus"
+                                      TextChanged="TxtSubOutput_TextChanged">
+                    <ctrls:PatternTextBox.CommandBindings>
+                        <CommandBinding Command="Paste" CanExecute="NewSubPaste_CanExecute"
+                                        Executed="NewCondOutputPaste_Executed" />
+                    </ctrls:PatternTextBox.CommandBindings>
+                </ctrls:PatternTextBox>
+            </StackPanel>
+        </GroupBox>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Path=IsConditionVisible, Mode=OneTime}" Value="True">
+                <Setter TargetName="TxtOutputWhen" Property="Text" Value="Output when:" />
+                <Setter TargetName="TxtOutputWhen" Property="Style" Value="{StaticResource ConditionalTextBlockStyle}" />
+            </DataTrigger>
+            <Trigger SourceName="GrpConditional" Property="IsMouseOver" Value="True">
+                <Setter TargetName="ToggleHasDo" Property="Visibility" Value="Visible" />
+                <Setter TargetName="BtnInsertCond" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger SourceName="GrpConditional" Property="IsKeyboardFocusWithin" Value="True">
+                <Setter TargetName="ToggleHasDo" Property="Visibility" Value="Visible" />
+                <Setter TargetName="BtnInsertCond" Property="Visibility" Value="Visible" />
+            </Trigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=GrpConditional, Path=IsMouseOver}" Value="True" />
+                    <Condition Binding="{Binding Path=IsConditionVisible, Mode=OneTime}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="BtnRemoveCond" Property="Visibility" Value="Visible" />
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=GrpConditional, Path=IsKeyboardFocusWithin}" Value="True" />
+                    <Condition Binding="{Binding Path=IsConditionVisible, Mode=OneTime}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="BtnRemoveCond" Property="Visibility" Value="Visible" />
+            </MultiDataTrigger>
+
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <!--ResponsesForGroup-->
+    <DataTemplate x:Key="PatternResponsesForGroupDataTemplate">
+        <StackPanel>
+            <GroupBox Style="{StaticResource ResponseForGroupBoxStyle}"
+                      Name="GrpResponsesForGroup"
+                      BorderThickness="0,0,0,1">
+                <GroupBox.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Top">
+                            <Button MouseDoubleClick="GrpResponsesFor_MouseDoubleClick"
+                                    Name="BtnGrpResponsesFor"
+                                    Style="{StaticResource PatternGrpButtonStyle}"
+                                    VerticalAlignment="Center"
+                                    ToolTip="Declare the outputs for which this section is a valid response (double-click to select).">
+                                <!--<Button.CommandBindings>
+                           <CommandBinding Command="self:App.InsertItemAfterCmd" Executed="AddResponseFor_Executed" />
+                        </Button.CommandBindings>
+                        <Button.InputBindings>
+                           <KeyBinding Key="Enter" Modifiers="Ctrl" Command="self:App.InsertItemAfterCmd" CommandTarget="{Binding ElementName=BtnGrpResponsesFor}"/>
+                        </Button.InputBindings>-->
+                                <TextBlock Style="{StaticResource ConditionalTextBlockStyle}"
+                                           Text="Responses for" />
+                            </Button>
+                            <Button Click="BtnAddResponseFor_Click"
+                                    Name="BtnAddResponseGroup"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                                    Focusable="False"
+                                    Visibility="Hidden"
+                                    ToolTip="Add a new reference to an output as a 'response for'.">
+                                <Image Source="\Images\Edit\Add_Enabled.png" />
+                            </Button>
+                        </StackPanel>
+                        <ItemsControl ItemsSource="{Binding Path=ResponseFor}"
+                                      ItemTemplate="{StaticResource ResponseForPatternTemplate}"
+                                      IsTabStop="False"
+                                      MinWidth="40" />
+
+                    </StackPanel>
+                </GroupBox.Header>
+                <ItemsControl ItemTemplate="{StaticResource PatternConditionalDataTemplate}"
+                              ItemsSource="{Binding Path=Conditionals}"
+                              IsTabStop="False"
+                              Margin="16,0,0,0" />
+            </GroupBox>
+        </StackPanel>
+        <DataTemplate.Triggers>
+            <Trigger SourceName="GrpResponsesForGroup" Property="IsMouseOver" Value="True">
+                <Setter TargetName="BtnAddResponseGroup" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger SourceName="GrpResponsesForGroup" Property="IsKeyboardFocusWithin" Value="True">
+                <Setter TargetName="BtnAddResponseGroup" Property="Visibility" Value="Visible" />
+            </Trigger>
+
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <ControlTemplate x:Key="NewResponseForTemplateStyle">
+        <ctrls:PatternTextBox Style="{StaticResource NoBindTextPatternInputTextBox}"
+                              Tag="FocusNewResponsesGroup"
+                              cf:FocusManager.IsFocused="{Binding Path=FocusNewResponsesGroup, Mode=OneWay}"
+                              GotFocus="TxtNewItem_GotFocus"
+                              TextChanged="TxtNewResponseFor_TextChanged" />
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="NewResponseForRefStyle">
+        <ctrls:DropDownNSSelector VerticalAlignment="Stretch"
+                                  CanClearValue="False"
+                                  IsTabStop="False"
+                                  ContentFocusable="False"
+                                  dd:DragDropManager.DropTarget="{StaticResource DDNeuronSelectorDropAdvisor}"
+                                  ShowDropDownOnMouseOver="true"
+                                  Height="20"
+                                  Tag="FocusNewResponsesGroup"
+                                  cf:FocusManager.IsFocused="{Binding Path=FocusNewResponsesGroup, Mode=OneWay}"
+                                  SelectedNeuronChanged="NewResponsesForGroup_SelectedNeuronChanged">
+            <!--GotFocus="TxtItem_GotFocus"-->
+            <ctrls:DropDownNSSelector.ItemsSources>
+                <ctrls:BrowserDataSource PageHeader="Local"
+                                         PageToolTip="All the outputs of the current editor"
+                                         ItemsSource="{Binding Path=Root.BrowsableOutputs, Mode=OneWay}"
+                                         AsTree="False" />
+                <ctrls:BrowserDataSource PageHeader="Project"
+                                         PageToolTip="All the outputs declared in the project-topics"
+                                         ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=Editors.BrowsableOutputs, Mode=OneWay}"
+                                         AsTree="True" />
+                <ctrls:BrowserDataSource PageHeader="Thesaurus"
+                                         PageToolTip="All the outputs declared in the topics attached to thesaurus items"
+                                         ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=Thesaurus.BrowsableTextPatterns, Mode=OneWay}"
+                                         AsTree="True" />
+            </ctrls:DropDownNSSelector.ItemsSources>
+            <ctrls:DropDownNSSelector.CommandBindings>
+                <CommandBinding Command="Paste" Executed="PasteResponseFor_Executed"
+                                CanExecute="PasteResponseFor_CanExecute" />
+            </ctrls:DropDownNSSelector.CommandBindings>
+        </ctrls:DropDownNSSelector>
+
+    </ControlTemplate>
+
+    <!--Rule.-->
+    <DataTemplate x:Key="PatternRuleTemplate">
+        <Grid Background="Transparent">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type self:TextPatternEditorView} }, Path=DataContext.AddValSplitPos, Mode=TwoWay}" />
+                <ColumnDefinition Width="6" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <!--<Grid.CommandBindings>
+            <CommandBinding Command="self:App.InsertItemCmd" Executed="InsertPatternRuleTemplate_Executed" CanExecute="InsertPatternRuleTemplate_CanExeucte"/>
+         </Grid.CommandBindings>-->
+            <GridSplitter Grid.Row="0"
+                          Grid.Column="1"
+                          Style="{StaticResource PatternEditorVerSplitter}" />
+
+            <StackPanel Grid.Row="0"
+                        Grid.Column="0">
+                <GroupBox Style="{StaticResource RuleGroupBoxStyle}"
+                          Name="GrpRuleName">
+                    <GroupBox.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel.CommandBindings>
+                                <CommandBinding Command="self:App.ToggleDoPatternCmd"
+                                                Executed="HasToEvaluateToggleCollaps_Executed" />
+                            </StackPanel.CommandBindings>
+                            <StackPanel.InputBindings>
+                                <KeyBinding Key="D" Modifiers="Ctrl" Command="self:App.ToggleDoPatternCmd" />
+                            </StackPanel.InputBindings>
+                            <TextBlock Style="{StaticResource RuleNameTextBlockStyle}"
+                                       Text="Name"
+                                       x:Name="LblName"
+                                       VerticalAlignment="Center" />
+                            <ToggleButton BorderThickness="0"
+                                          Name="ToggleHasToEvaluate"
+                                          MinWidth="0"
+                                          MinHeight="0"
+                                          Visibility="Hidden"
+                                          Foreground="Blue"
+                                          IsChecked="{Binding Path=HasToEval, Mode=TwoWay}"
+                                          Style="{StaticResource SimpleExpanderDownHeaderStyle}"
+                                          Focusable="False"
+                                          HorizontalAlignment="Stretch"
+                                          ToolTip="Add/Remove the 'evaluate' section (Press Ctrl+D)" />
+                            <ctrls:RuleNameTextBox
+                                Text="{Binding Path=NeuronInfo.DisplayTitle, UpdateSourceTrigger=PropertyChanged}"
+                                Style="{StaticResource NoBindTextPatternInputTextBox}"
+                                Tag="FocusName"
+                                cf:FocusManager.IsFocused="{Binding Path=FocusName, Mode=OneWay}"
+                                SelRange="{Binding Path=Selectionrange, NotifyOnTargetUpdated=True, Mode=OneWay}"
+                                SelectionChanged="TxtPattern_SelectionChanged"
+                                TargetUpdated="TxtPattern_SourceUpdated"
+                                GotFocus="TxtItem_GotFocus" />
+                        </StackPanel>
+                    </GroupBox.Header>
+
+                    <GroupBox Style="{StaticResource PatternEditorGroupBoxStyle}"
+                              Visibility="{Binding Path=HasToEval, Converter={StaticResource BoolToVisConv}}"
+                              Margin="16,0,0,0"
+                              Name="GrpToEval">
+                        <GroupBox.CommandBindings>
+                            <CommandBinding Command="self:App.ToggleDoPatternCmd"
+                                            Executed="ToEvaluateToggleCollaps_Executed" />
+                        </GroupBox.CommandBindings>
+                        <GroupBox.InputBindings>
+                            <KeyBinding Key="D" Modifiers="Ctrl" Command="self:App.ToggleDoPatternCmd"
+                                        CommandTarget="{Binding ElementName=GrpToEval}" />
+                        </GroupBox.InputBindings>
+                        <GroupBox.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <ToggleButton BorderThickness="0"
+                                              Name="ToggleToEvaluateVisibility"
+                                              MinWidth="0"
+                                              MinHeight="0"
+                                              IsChecked="{Binding Path=IsToEvaluateVisible, Mode=TwoWay}"
+                                              Style="{StaticResource SimpleExpanderDownHeaderStyle}"
+                                              Focusable="False"
+                                              HorizontalAlignment="Stretch"
+                                              ToolTip="Show/hide the list of evaluation statements. Press Ctrl+D" />
+                                <Button MouseDoubleClick="GrpToEvaluate_MouseDoubleClick"
+                                        Name="BtnGrpEvaluate"
+                                        HorizontalAlignment="Left"
+                                        Style="{StaticResource PatternGrpButtonStyle}"
+                                        ToolTip="Statements that help determine the weight of results that match this pattern. (DoubleClick to select all)">
+                                    <TextBlock Style="{StaticResource PatternEditorGrpBoxTextBlockStyle}"
+                                               FontStyle="Italic"
+                                               Text="Evaluate" />
+                                </Button>
+                            </StackPanel>
+                        </GroupBox.Header>
+                        <Grid
+                            Visibility="{Binding Path=IsToEvaluateVisible, Converter={StaticResource BoolToVisConv}, Mode=OneWay}"
+                            Margin="8,0,0,0">
+                            <ContentPresenter Content="{Binding Path=ToEval}"
+                                              ContentTemplate="{StaticResource DoPatternTemplate}" />
+                        </Grid>
+                    </GroupBox>
+
+
+                </GroupBox>
+                <GroupBox Name="Grpinput"
+                          Style="{StaticResource InputsGroupBoxStyle}">
+                    <GroupBox.CommandBindings>
+                        <CommandBinding Command="self:App.ToggleDoPatternCmd" Executed="TogleHasToCalculate_Executed" />
+                    </GroupBox.CommandBindings>
+                    <GroupBox.InputBindings>
+                        <KeyBinding Key="D" Modifiers="Ctrl" Command="self:App.ToggleDoPatternCmd" />
+                    </GroupBox.InputBindings>
+                    <GroupBox.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel.CommandBindings>
+                                <CommandBinding Command="self:App.ToggleDoPatternCmd"
+                                                Executed="TogleHasToCalculate_Executed" />
+                            </StackPanel.CommandBindings>
+                            <StackPanel.InputBindings>
+                                <KeyBinding Key="D" Modifiers="Ctrl" Command="self:App.ToggleDoPatternCmd" />
+                            </StackPanel.InputBindings>
+                            <Button MouseDoubleClick="GrpPatterns_MouseDoubleClick"
+                                    Name="BtnGrpInput"
+                                    Style="{StaticResource PatternGrpButtonStyle}"
+                                    HorizontalAlignment="Left"
+                                    ToolTip="All the patterns that trigger the outputs to the right. (Double-Click to select all, Ctrl+Enter to add a new record)">
+                                <Button.CommandBindings>
+                                    <CommandBinding Command="self:App.InsertItemAfterCmd" Executed="AddInput_Executed" />
+                                </Button.CommandBindings>
+                                <Button.InputBindings>
+                                    <KeyBinding Key="Enter" Modifiers="Ctrl" Command="self:App.InsertItemAfterCmd"
+                                                CommandTarget="{Binding ElementName=BtnGrpInput}" />
+                                </Button.InputBindings>
+                                <TextBlock Style="{StaticResource PatternEditorGrpBoxTextBlockStyle}"
+                                           Text="input"
+                                           x:Name="LblPatterns" />
+                            </Button>
+                            <ToggleButton BorderThickness="0"
+                                          Name="ToggleHasToCalculate"
+                                          MinWidth="0"
+                                          MinHeight="0"
+                                          Visibility="Hidden"
+                                          Foreground="Blue"
+                                          IsChecked="{Binding Path=HasToCal, Mode=TwoWay}"
+                                          Style="{StaticResource SimpleExpanderDownHeaderStyle}"
+                                          Focusable="False"
+                                          HorizontalAlignment="Stretch"
+                                          ToolTip="Add/Remove the 'calculate' section (Press Ctrl+D)" />
+                        </StackPanel>
+                    </GroupBox.Header>
+                    <StackPanel MinWidth="40"
+                                Margin="0,0,0,0">
+                        <StackPanel.CommandBindings>
+                            <CommandBinding Command="self:App.ToggleDoPatternCmd"
+                                            Executed="TogleHasToCalculate_Executed" />
+                        </StackPanel.CommandBindings>
+                        <StackPanel.InputBindings>
+                            <KeyBinding Key="D" Modifiers="Ctrl" Command="self:App.ToggleDoPatternCmd" />
+                        </StackPanel.InputBindings>
+                        <ItemsControl ItemsSource="{Binding Path=TextPatterns}"
+                                      ItemTemplate="{StaticResource InputPatternTemplate}"
+                                      BorderThickness="0"
+                                      IsTabStop="False" />
+                        <ctrls:PatternTextBox Style="{StaticResource NewItemInputTextBox}"
+                                              GotFocus="TxtNewItem_GotFocus"
+                                              Tag="FocusNewIn"
+                                              Margin="12,0,0,0"
+                                              cf:FocusManager.IsFocused="{Binding Path=FocusNewIn, Mode=OneWay}"
+                                              TextChanged="TxtSubPattern_TextChanged">
+                            <ctrls:PatternTextBox.CommandBindings>
+                                <CommandBinding Command="Paste" CanExecute="NewSubPaste_CanExecute"
+                                                Executed="NewSubInputPaste_Executed" />
+                            </ctrls:PatternTextBox.CommandBindings>
+                        </ctrls:PatternTextBox>
+
+                        <GroupBox Style="{StaticResource Do_CalculateGroupBoxStyle}"
+                                  Visibility="{Binding Path=HasToCal, Converter={StaticResource BoolToVisConv}}"
+                                  Name="GrpToCal">
+                            <GroupBox.CommandBindings>
+                                <CommandBinding Command="self:App.ToggleDoPatternCmd"
+                                                Executed="ToCalculateToggleCollaps_Executed" />
+                            </GroupBox.CommandBindings>
+                            <GroupBox.InputBindings>
+                                <KeyBinding Key="D" Modifiers="Ctrl" Command="self:App.ToggleDoPatternCmd"
+                                            CommandTarget="{Binding ElementName=GrpToCal}" />
+                            </GroupBox.InputBindings>
+                            <GroupBox.Header>
+                                <!--<GroupBox.InputBindings>
+                           <KeyBinding Key="D" Modifiers="Ctrl" Command="self:App.ToggleDoPatternCmd"/>
+                        </GroupBox.InputBindings>-->
+                                <StackPanel Orientation="Horizontal">
+                                    <ToggleButton BorderThickness="0"
+                                                  Name="ToggleToCalculateVisibility"
+                                                  MinWidth="0"
+                                                  MinHeight="0"
+                                                  IsChecked="{Binding Path=IsToCalculateVisible, Mode=TwoWay}"
+                                                  Style="{StaticResource SimpleExpanderDownHeaderStyle}"
+                                                  Focusable="False"
+                                                  HorizontalAlignment="Stretch"
+                                                  ToolTip="Show/hide the list of calculation statements. Press Ctrl+D" />
+                                    <Button MouseDoubleClick="GrpToCalculate_MouseDoubleClick"
+                                            Name="BtnGrpCalculate"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource PatternGrpButtonStyle}"
+                                            ToolTip="All the things that need to be done when one when this rule gets activated, but before any of the conditionals are calculated. (DoubleClick to select all, Ctrl+Enter to add a new record)">
+                                        <TextBlock Style="{StaticResource PatternEditorGrpBoxTextBlockStyle}"
+                                                   FontStyle="Italic"
+                                                   Text="Calculate" />
+                                    </Button>
+                                </StackPanel>
+                            </GroupBox.Header>
+                            <Grid
+                                Visibility="{Binding Path=IsToCalculateVisible, Converter={StaticResource BoolToVisConv}, Mode=OneWay}"
+                                Margin="8,0,0,0">
+                                <ContentPresenter Content="{Binding Path=ToCal}"
+                                                  ContentTemplate="{StaticResource DoPatternTemplate}" />
+                            </Grid>
+                        </GroupBox>
+
+                    </StackPanel>
+
+                </GroupBox>
+
+
+            </StackPanel>
+
+            <StackPanel Grid.Row="0"
+                        Grid.Column="2">
+
+                <Control Name="PresentNewResponseFor"
+                         Focusable="False"
+                         Template="{StaticResource NewResponseForRefStyle}" />
+
+
+                <ItemsControl ItemTemplate="{StaticResource PatternResponsesForGroupDataTemplate}"
+                              ItemsSource="{Binding Path=ResponsesFor}"
+                              IsTabStop="False" />
+
+                <ItemsControl ItemTemplate="{StaticResource PatternConditionalDataTemplate}"
+                              ItemsSource="{Binding Path=Conditionals}"
+                              IsTabStop="False" />
+
+                <ContentPresenter ContentTemplate="{StaticResource PatternConditionalDataTemplate}"
+                                  Content="{Binding Path=OutputSet}" />
+            </StackPanel>
+        </Grid>
+        <DataTemplate.Triggers>
+            <Trigger SourceName="GrpRuleName" Property="IsMouseOver" Value="True">
+                <Setter TargetName="ToggleHasToEvaluate" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger SourceName="GrpRuleName" Property="IsKeyboardFocusWithin" Value="True">
+                <Setter TargetName="ToggleHasToEvaluate" Property="Visibility" Value="Visible" />
+            </Trigger>
+
+            <Trigger SourceName="Grpinput" Property="IsMouseOver" Value="True">
+                <Setter TargetName="ToggleHasToCalculate" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger SourceName="Grpinput" Property="IsKeyboardFocusWithin" Value="True">
+                <Setter TargetName="ToggleHasToCalculate" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <DataTrigger
+                Binding="{Binding Source={x:Static self:Properties.Settings.Default}, Path=ResponseForDefaultStyleAsPattern, Mode=TwoWay}"
+                Value="True">
+                <Setter TargetName="PresentNewResponseFor" Property="Template"
+                        Value="{StaticResource NewResponseForTemplateStyle}" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <!--questions.-->
+    <DataTemplate x:Key="ConditionalQuestionsTemplate">
+        <GroupBox Style="{StaticResource PatternEditorGroupBoxStyle}"
+                  Name="GrpConditional">
+            <GroupBox.CommandBindings>
+                <CommandBinding Command="self:App.InsertItemAfterCmd" Executed="AddOutput_Executed" />
+                <CommandBinding Command="self:App.ToggleDoPatternCmd" Executed="HasDoPatterns_Executed" />
+            </GroupBox.CommandBindings>
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <Button MouseDoubleClick="GrpOutputs_MouseDoubleClick"
+                            Style="{StaticResource PatternGrpButtonStyle}"
+                            Name="BtnGrpConditional"
+                            ToolTip="All the questions that can be used when the condition is met. (DoubleClick to select all, Ctrl+Enter to add a new record)">
+                        <Button.InputBindings>
+                            <KeyBinding Key="Enter" Modifiers="Ctrl" Command="self:App.InsertItemAfterCmd"
+                                        CommandTarget="{Binding ElementName=BtnGrpConditional}" />
+                        </Button.InputBindings>
+                        <TextBlock Style="{StaticResource PatternEditorGrpBoxTextBlockStyle}"
+                                   Text="Ask when:" />
+                    </Button>
+                    <ToggleButton BorderThickness="0"
+                                  Name="ToggleHasDo"
+                                  Visibility="Hidden"
+                                  Foreground="Blue"
+                                  MinWidth="0"
+                                  MinHeight="0"
+                                  IsChecked="{Binding Path=HasDo, Mode=TwoWay}"
+                                  Style="{StaticResource SimpleExpanderDownHeaderStyle}"
+                                  Focusable="False"
+                                  HorizontalAlignment="Stretch"
+                                  ToolTip="Add/Remove the 'Do' section (Press Ctrl+D)" />
+                    <!--an extra border so we can add the keybinding.-->
+                    <Border>
+                        <ContentPresenter Content="{Binding Path=Condition}"
+                                          ContentTemplate="{StaticResource ConditionPatternTemplate}"
+                                          HorizontalAlignment="Stretch" />
+                        <Border.InputBindings>
+                            <KeyBinding Key="Enter" Modifiers="Ctrl" Command="self:App.InsertItemAfterCmd"
+                                        CommandTarget="{Binding ElementName=BtnGrpConditional}" />
+                        </Border.InputBindings>
+                    </Border>
+                    <Button Click="BtnAddCondQuestion_Click"
+                            Margin="4,0,0,0"
+                            Name="BtnAddQuestion"
+                            Visibility="Collapsed"
+                            Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                            ToolTip="Add a new conditional 'Ask' section at this location.">
+                        <Image Source="\Images\Edit\Add_Enabled.png" />
+                    </Button>
+                    <Button Click="BtnRemoveConditional_Click"
+                            Name="BtnRemoveQuestion"
+                            Visibility="Collapsed"
+                            Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                            ToolTip="Remove this conditional 'Ask' section.">
+                        <Image Source="\Images\Edit\DeleteSmall_Enabled.png" />
+                    </Button>
+                </StackPanel>
+            </GroupBox.Header>
+            <GroupBox.InputBindings>
+                <KeyBinding Key="D" Modifiers="Ctrl" Command="self:App.ToggleDoPatternCmd" />
+            </GroupBox.InputBindings>
+            <StackPanel Margin="8,0,0,0">
+                <GroupBox Style="{StaticResource Do_CalculateGroupBoxStyle}"
+                          Visibility="{Binding Path=HasDo, Mode=OneWay,Converter={StaticResource BoolToVisConv}}"
+                          Name="GrpDo">
+                    <GroupBox.CommandBindings>
+                        <CommandBinding Command="self:App.ToggleDoPatternCmd"
+                                        Executed="DoPatternsToggleCollaps_Executed" />
+                    </GroupBox.CommandBindings>
+                    <GroupBox.InputBindings>
+                        <KeyBinding Key="D" Modifiers="Ctrl" Command="self:App.ToggleDoPatternCmd"
+                                    CommandTarget="{Binding ElementName=GrpDo}" />
+                    </GroupBox.InputBindings>
+                    <GroupBox.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <ToggleButton BorderThickness="0"
+                                          Name="ToggleDoVisibility"
+                                          MinWidth="0"
+                                          MinHeight="0"
+                                          IsChecked="{Binding Path=IsDoPatternVisible, Mode=TwoWay}"
+                                          Style="{StaticResource SimpleExpanderDownHeaderStyle}"
+                                          Focusable="False"
+                                          HorizontalAlignment="Stretch"
+                                          ToolTip="Show/hide the list of do statements. Press Ctrl+D" />
+                            <Button MouseDoubleClick="GrpDoPatterns_MouseDoubleClick"
+                                    Name="BtnGrpDo"
+                                    HorizontalAlignment="Left"
+                                    Style="{StaticResource PatternGrpButtonStyle}"
+                                    ToolTip="All the things that need to be done when one of these questions gets activated. (DoubleClick to select all)">
+                                <TextBlock Style="{StaticResource PatternEditorGrpBoxTextBlockStyle}"
+                                           Text="Do" />
+                            </Button>
+                        </StackPanel>
+                    </GroupBox.Header>
+                    <Grid
+                        Visibility="{Binding Path=IsDoPatternVisible, Converter={StaticResource BoolToVisConv}, Mode=OneWay}"
+                        Margin="8,0,0,0">
+                        <ContentPresenter Content="{Binding Path=Do}"
+                                          ContentTemplate="{StaticResource DoPatternTemplate}" />
+                    </Grid>
+                </GroupBox>
+                <ItemsControl ItemsSource="{Binding Path=Outputs}"
+                              ItemTemplate="{StaticResource PatternQuestionOutputTemplate}"
+                              IsTabStop="False" />
+                <ctrls:PatternTextBox Style="{StaticResource NewItemInputTextBox}"
+                                      Tag="FocusNewOut"
+                                      cf:FocusManager.IsFocused="{Binding Path=FocusNewOut, Mode=OneWay}"
+                                      GotFocus="TxtNewItem_GotFocus"
+                                      TextChanged="TxtSubOutput_TextChanged">
+                    <ctrls:PatternTextBox.CommandBindings>
+                        <CommandBinding Command="Paste" CanExecute="NewSubPaste_CanExecute"
+                                        Executed="NewCondOutputPaste_Executed" />
+                    </ctrls:PatternTextBox.CommandBindings>
+                </ctrls:PatternTextBox>
+
+            </StackPanel>
+        </GroupBox>
+        <DataTemplate.Triggers>
+            <Trigger SourceName="GrpConditional" Property="IsMouseOver" Value="True">
+                <Setter TargetName="ToggleHasDo" Property="Visibility" Value="Visible" />
+                <Setter TargetName="BtnAddQuestion" Property="Visibility" Value="Visible" />
+                <Setter TargetName="BtnRemoveQuestion" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger SourceName="GrpConditional" Property="IsKeyboardFocusWithin" Value="True">
+                <Setter TargetName="ToggleHasDo" Property="Visibility" Value="Visible" />
+                <Setter TargetName="BtnAddQuestion" Property="Visibility" Value="Visible" />
+                <Setter TargetName="BtnRemoveQuestion" Property="Visibility" Value="Visible" />
+            </Trigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <!--repeat.-->
+    <DataTemplate x:Key="RepeatsPatternTemplate">
+        <GroupBox Style="{StaticResource PatternEditorGroupBoxStyle}"
+                  Name="GrpConditional">
+            <GroupBox.CommandBindings>
+                <CommandBinding Command="self:App.ToggleDoPatternCmd" Executed="HasDoPatterns_Executed" />
+            </GroupBox.CommandBindings>
+            <GroupBox.InputBindings>
+                <KeyBinding Key="D" Modifiers="Ctrl" Command="self:App.ToggleDoPatternCmd" />
+            </GroupBox.InputBindings>
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <ToggleButton BorderThickness="0"
+                                  Name="ToggleHasDo"
+                                  MinWidth="0"
+                                  MinHeight="0"
+                                  Visibility="Hidden"
+                                  Foreground="Blue"
+                                  IsChecked="{Binding Path=HasDoPatterns, Mode=TwoWay}"
+                                  Style="{StaticResource SimpleExpanderDownHeaderStyle}"
+                                  HorizontalAlignment="Stretch"
+                                  ToolTip="Add/Remove the 'do' section (Press Ctrl+D)" />
+
+                    <Button MouseDoubleClick="GrpOutputs_MouseDoubleClick"
+                            Name="BtnGrpOutput"
+                            Style="{StaticResource PatternGrpButtonStyle}"
+                            ToolTip="All the statements that can be used when the condition is met. (DoubleClick to select all, Ctrl+Enter to add a new record)">
+                        <Button.CommandBindings>
+                            <CommandBinding Command="self:App.InsertItemAfterCmd" Executed="AddOutput_Executed" />
+                        </Button.CommandBindings>
+                        <Button.InputBindings>
+                            <KeyBinding Key="Enter" Modifiers="Ctrl" Command="self:App.InsertItemAfterCmd"
+                                        CommandTarget="{Binding ElementName=BtnGrpOutput}" />
+                        </Button.InputBindings>
+                        <TextBlock Style="{StaticResource PatternEditorGrpBoxTextBlockStyle}"
+                                   Text="Output" />
+                    </Button>
+                    <TextBlock Margin="8,0,0,0"
+                               FontWeight="Normal">
+                        When:
+                    </TextBlock>
+                    <ContentPresenter Content="{Binding Path=Condition}"
+                                      ContentTemplate="{StaticResource ConditionPatternTemplate}"
+                                      HorizontalAlignment="Stretch" />
+                    <Button Click="BtnAddRepeatBlock_Click"
+                            Margin="4,0,0,0"
+                            Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                            ToolTip="Add a new repeat section at this location.">
+                        <Image Source="\Images\Edit\Add_Enabled.png" />
+                    </Button>
+                    <Button Click="BtnRemoveConditional_Click"
+                            Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                            ToolTip="Remove this repeat section.">
+                        <Image Source="\Images\Edit\DeleteSmall_Enabled.png" />
+                    </Button>
+                </StackPanel>
+            </GroupBox.Header>
+            <StackPanel Margin="8,0,0,0">
+                <GroupBox Style="{StaticResource PatternEditorGroupBoxStyle}"
+                          Visibility="{Binding Path=HasDo, Mode=OneWay,Converter={StaticResource BoolToVisConv}}"
+                          Margin="16,0,0,0"
+                          Name="GrpDo">
+                    <GroupBox.CommandBindings>
+                        <CommandBinding Command="self:App.ToggleDoPatternCmd"
+                                        Executed="DoPatternsToggleCollaps_Executed" />
+                    </GroupBox.CommandBindings>
+                    <GroupBox.InputBindings>
+                        <KeyBinding Key="D" Modifiers="Ctrl" Command="self:App.ToggleDoPatternCmd"
+                                    CommandTarget="{Binding ElementName=GrpDo}" />
+                    </GroupBox.InputBindings>
+                    <GroupBox.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <ToggleButton BorderThickness="0"
+                                          Name="ToggleDoVisibility"
+                                          MinWidth="0"
+                                          MinHeight="0"
+                                          IsChecked="{Binding Path=IsDoPatternVisible, Mode=TwoWay}"
+                                          Style="{StaticResource SimpleExpanderDownHeaderStyle}"
+                                          Focusable="False"
+                                          HorizontalAlignment="Stretch"
+                                          ToolTip="Show/hide the list of do statements. Press Ctrl+D" />
+                            <Button MouseDoubleClick="GrpDoPatterns_MouseDoubleClick"
+                                    Name="BtnGrpDo"
+                                    HorizontalAlignment="Left"
+                                    Style="{StaticResource PatternGrpButtonStyle}"
+                                    ToolTip="All the things that need to be done when one of these questions gets activated. (DoubleClick to select all)">
+                                <TextBlock Style="{StaticResource PatternEditorGrpBoxTextBlockStyle}"
+                                           Text="Do" />
+                            </Button>
+                        </StackPanel>
+                    </GroupBox.Header>
+                    <Grid
+                        Visibility="{Binding Path=IsDoPatternVisible, Converter={StaticResource BoolToVisConv}, Mode=OneWay}"
+                        Margin="8,0,0,0">
+                        <ContentPresenter Content="{Binding Path=Do}"
+                                          ContentTemplate="{StaticResource DoPatternTemplate}" />
+                    </Grid>
+                </GroupBox>
+
+                <ItemsControl ItemsSource="{Binding Path=Outputs}"
+                              ItemTemplate="{StaticResource PatternSimpleOutputTemplate}"
+                              IsTabStop="False" />
+                <ctrls:PatternTextBox Style="{StaticResource NewItemInputTextBox}"
+                                      Margin="12,0,0,0"
+                                      Tag="FocusNewOut"
+                                      cf:FocusManager.IsFocused="{Binding Path=FocusNewOut, Mode=OneWay}"
+                                      GotFocus="TxtNewItem_GotFocus"
+                                      TextChanged="TxtSubOutput_TextChanged">
+                    <ctrls:PatternTextBox.CommandBindings>
+                        <CommandBinding Command="Paste" CanExecute="NewSubPaste_CanExecute"
+                                        Executed="NewCondOutputPaste_Executed" />
+                    </ctrls:PatternTextBox.CommandBindings>
+                </ctrls:PatternTextBox>
+
+            </StackPanel>
+
+
+        </GroupBox>
+        <DataTemplate.Triggers>
+            <Trigger SourceName="GrpConditional" Property="IsMouseOver" Value="True">
+                <Setter TargetName="ToggleHasDo" Property="Visibility" Value="Visible" />
+            </Trigger>
+
+            <Trigger SourceName="GrpConditional" Property="IsKeyboardFocusWithin" Value="True">
+                <Setter TargetName="ToggleHasDo" Property="Visibility" Value="Visible" />
+            </Trigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <!--topic details-->
+    <ControlTemplate x:Key="TopicDetailsTemplate">
+        <GroupBox Style="{StaticResource InputsGroupBoxStyle}">
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <Button MouseDoubleClick="GrpTopicFilters_MouseDoubleClick"
+                            Name="BtnGrpTopicFilter"
+                            Style="{StaticResource PatternGrpButtonStyle}"
+                            ToolTip="Topic filter patterns are matched against the content of #user.topic. Rules that are defined in topics who have a filter that matches '#user.topic' have precedence over others. (DoubleClick to select all, Ctrl+Enter to add a new record)">
+                        <Button.CommandBindings>
+                            <CommandBinding Command="self:App.InsertItemAfterCmd" Executed="AddTopicFilter_Executed" />
+                        </Button.CommandBindings>
+                        <Button.InputBindings>
+                            <KeyBinding Key="Enter" Modifiers="Ctrl" Command="self:App.InsertItemAfterCmd"
+                                        CommandTarget="{Binding ElementName=BtnGrpTopicFilter}" />
+                        </Button.InputBindings>
+                        <TextBlock Style="{StaticResource RuleNameTextBlockStyle}">Filters</TextBlock>
+                    </Button>
+
+                    <!--<ToggleButton BorderThickness="0"
+                                   Name="ToggleShowTopicFilters"
+                                   MinWidth="0"
+                                   MinHeight="0"
+                                   Foreground="Blue"
+                                   IsChecked="{Binding Path=IsTopicsFiltersExpanded, Mode=TwoWay}"
+                                   Style="{StaticResource SimpleExpanderDownHeaderStyle}"
+                                   Focusable="False"
+                                   HorizontalAlignment="Stretch"
+                                   ToolTip="Add/Remove the 'evaluate' section (Press Ctrl+D)"/>-->
+                </StackPanel>
+            </GroupBox.Header>
+            <StackPanel>
+                <ItemsControl ItemsSource="{Binding Path=TopicFilters}"
+                              ItemTemplate="{StaticResource TopicFilterTemplate}"
+                              IsTabStop="False" />
+                <ctrls:PatternTextBox Style="{StaticResource NoBindTextPatternInputTextBox}"
+                                      cf:FocusManager.IsFocused="{Binding Path=FocusNewTopicFilter, Mode=OneWay}"
+                                      GotFocus="TxtNewItem_GotFocus"
+                                      TextChanged="TxtNewTopicFilter_TextChanged">
+                    <ctrls:PatternTextBox.CommandBindings>
+                        <CommandBinding Command="Paste" CanExecute="NewInputPaste_CanExecute"
+                                        Executed="NewTopicFilterPaste_Executed" />
+                    </ctrls:PatternTextBox.CommandBindings>
+                </ctrls:PatternTextBox>
+            </StackPanel>
+        </GroupBox>
+    </ControlTemplate>
+
+
+    <!--Template used to declare new data values.-->
+    <ControlTemplate x:Key="NewDataPatternEditorTemplate">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="{Binding Path=AddValSplitPos, Mode=TwoWay}" />
+                <ColumnDefinition Width="6" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Grid.Row="0"
+                      Grid.Column="0"
+                      ToolTip="Type here to start a new rule with an input pattern."
+                      Style="{StaticResource NewDataGroupBoxStyle}">
+                <GroupBox.Header>
+                    <TextBlock Style="{StaticResource PatternEditorGrpBoxTextBlockStyle}"
+                               Text="input" />
+                </GroupBox.Header>
+                <ctrls:PatternTextBox Style="{StaticResource NoBindTextPatternInputTextBox}"
+                                      Tag="FocusNewIn"
+                                      cf:FocusManager.IsFocused="{Binding Path=FocusNewIn, Mode=OneWay}"
+                                      GotFocus="TxtNewItem_GotFocus"
+                                      TextChanged="TxtPattern_TextChanged">
+                    <ctrls:PatternTextBox.CommandBindings>
+                        <CommandBinding Command="Paste" CanExecute="NewInputPaste_CanExecute"
+                                        Executed="NewInputPaste_Executed" />
+                    </ctrls:PatternTextBox.CommandBindings>
+                </ctrls:PatternTextBox>
+            </GroupBox>
+
+            <GridSplitter Grid.Row="0"
+                          Grid.Column="1"
+                          Style="{StaticResource PatternEditorVerSplitter}" />
+
+            <GroupBox Grid.Row="0"
+                      Grid.Column="2"
+                      Style="{StaticResource NewDataGroupBoxStyle}"
+                      ToolTip="Type here to start a new rule with an output pattern.">
+                <GroupBox.Header>
+                    <TextBlock Style="{StaticResource PatternEditorGrpBoxTextBlockStyle}"
+                               Text="output" />
+                </GroupBox.Header>
+                <ctrls:PatternTextBox Style="{StaticResource NoBindTextPatternInputTextBox}"
+                                      Tag="FocusNewOut"
+                                      cf:FocusManager.IsFocused="{Binding Path=FocusNewOut, Mode=OneWay}"
+                                      GotFocus="TxtNewItem_GotFocus"
+                                      TextChanged="TxtOutput_TextChanged">
+                    <ctrls:PatternTextBox.CommandBindings>
+                        <CommandBinding Command="Paste" CanExecute="NewInputPaste_CanExecute"
+                                        Executed="NewOutputPaste_Executed" />
+                    </ctrls:PatternTextBox.CommandBindings>
+                </ctrls:PatternTextBox>
+            </GroupBox>
+        </Grid>
+    </ControlTemplate>
+
+    <!--A controlTemplate for controls that represent a placeholder for an 'add' new invalid-response pattern
+   This allows access to the backing resourcedictionary object.
+   Note: only works if you put the list which newly created items need to be added, is assigned as the datacontext.
+   -->
+    <ControlTemplate x:Key="TextPatternNewFallBackTemplate">
+        <ctrls:PatternTextBox Style="{StaticResource NoBindTextPatternInputTextBox}"
+                              cf:FocusManager.IsFocused="{Binding Path=Owner.FocusNewFallback, Mode=OneWay}"
+                              GotFocus="TxtNewItem_GotFocus"
+                              TextChanged="TxtNewFallback_TextChanged">
+            <ctrls:PatternTextBox.CommandBindings>
+                <CommandBinding Command="Paste" CanExecute="NewInputPaste_CanExecute"
+                                Executed="NewFallbackPaste_Executed" />
+            </ctrls:PatternTextBox.CommandBindings>
+        </ctrls:PatternTextBox>
+    </ControlTemplate>
+
+    <!--A controlTemplate for controls that represent a placeholder for an 'add' new opeinging statments 
+   This allows access to the backing resourcedictionary object.
+   Note: only works if you put the list which newly created items need to be added, is assigned as the datacontext.
+   -->
+    <ControlTemplate x:Key="TextPatternNewStartTemplate">
+        <ctrls:PatternTextBox Style="{StaticResource NoBindTextPatternInputTextBox}"
+                              cf:FocusManager.IsFocused="{Binding Path=Owner.FocusNewStart, Mode=OneWay}"
+                              GotFocus="TxtNewItem_GotFocus"
+                              TextChanged="TxtNewFallback_TextChanged">
+            <ctrls:PatternTextBox.CommandBindings>
+                <CommandBinding Command="Paste" CanExecute="NewInputPaste_CanExecute" Executed="NewStartPaste_Executed" />
+            </ctrls:PatternTextBox.CommandBindings>
+        </ctrls:PatternTextBox>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="TextPatternNewContextTemplate">
+        <ctrls:PatternTextBox Style="{StaticResource NoBindTextPatternInputTextBox}"
+                              cf:FocusManager.IsFocused="{Binding Path=Owner.FocusNewContext, Mode=OneWay}"
+                              GotFocus="TxtNewItem_GotFocus"
+                              TextChanged="TxtNewFallback_TextChanged">
+            <ctrls:PatternTextBox.CommandBindings>
+                <CommandBinding Command="Paste" CanExecute="NewInputPaste_CanExecute"
+                                Executed="NewContextPaste_Executed" />
+            </ctrls:PatternTextBox.CommandBindings>
+        </ctrls:PatternTextBox>
+    </ControlTemplate>
+
+    <!--A controlTemplate for controls that represent a placeholder for an 'add' new do pattern
+   This allows access to the backing resourcedictionary object.
+   Note: only works if you put the list which newly created items need to be added, is assigned as the datacontext.
+   -->
+    <ControlTemplate x:Key="NewPatternEditorQuestionTemplate">
+        <GroupBox ToolTip="Type here to start a conditional question."
+                  Style="{StaticResource PatternEditorGroupBoxStyle}">
+            <GroupBox.Header>
+                <DockPanel LastChildFill="True">
+                    <TextBlock Style="{StaticResource PatternEditorGrpBoxTextBlockStyle}">
+                        Ask when:
+                    </TextBlock>
+                    <ctrls:PatternTextBox Style="{StaticResource NewItemInputTextBox}"
+                                          Tag="FocusNewCondOfQuestion"
+                                          cf:FocusManager.IsFocused="{Binding Path=FocusNewCondOfQuestion, Mode=OneWay}"
+                                          GotFocus="TxtNewItem_GotFocus"
+                                          TextChanged="TxtCondOfQuestion_TextChanged">
+                        <ctrls:PatternTextBox.CommandBindings>
+                            <CommandBinding Command="Paste" CanExecute="NewInputPaste_CanExecute"
+                                            Executed="NewQuestionCondPaste_Executed" />
+                        </ctrls:PatternTextBox.CommandBindings>
+                    </ctrls:PatternTextBox>
+                </DockPanel>
+            </GroupBox.Header>
+            <ctrls:PatternTextBox Style="{StaticResource NewItemInputTextBox}"
+                                  Tag="FocusNewQuestion"
+                                  cf:FocusManager.IsFocused="{Binding Path=FocusNewQuestion, Mode=OneWay}"
+                                  GotFocus="TxtNewItem_GotFocus"
+                                  TextChanged="TxtQuestion_TextChanged">
+                <ctrls:PatternTextBox.CommandBindings>
+                    <CommandBinding Command="Paste" CanExecute="NewInputPaste_CanExecute"
+                                    Executed="NewQuestionPaste_Executed" />
+                </ctrls:PatternTextBox.CommandBindings>
+            </ctrls:PatternTextBox>
+        </GroupBox>
+    </ControlTemplate>
+
+    <!--A controlTemplate for controls that represent a placeholder for an 'add' new do pattern
+   This allows access to the backing resourcedictionary object.
+   Note: only works if you put the list which newly created items need to be added, is assigned as the datacontext.
+   -->
+    <ControlTemplate x:Key="TextPatternNewRepeatTemplate">
+        <GroupBox ToolTip="Type here to start a reply for repeating input."
+                  Style="{StaticResource PatternEditorGroupBoxStyle}">
+            <GroupBox.Header>
+                <DockPanel LastChildFill="True">
+                    <TextBlock Style="{StaticResource PatternEditorGrpBoxTextBlockStyle}">output when:</TextBlock>
+                    <ctrls:PatternTextBox Style="{StaticResource NoBindTextPatternInputTextBox}"
+                                          Tag="FocusNewCondOfRepeat"
+                                          cf:FocusManager.IsFocused="{Binding Path=Owner.FocusNewCondOfRepeat, Mode=OneWay}"
+                                          GotFocus="TxtNewItem_GotFocus"
+                                          TextChanged="TxtCondOfRepeat_TextChanged">
+                        <ctrls:PatternTextBox.CommandBindings>
+                            <CommandBinding Command="Paste" CanExecute="NewInputPaste_CanExecute"
+                                            Executed="NewQuestionCondPaste_Executed" />
+                        </ctrls:PatternTextBox.CommandBindings>
+                    </ctrls:PatternTextBox>
+                </DockPanel>
+            </GroupBox.Header>
+            <ctrls:PatternTextBox Style="{StaticResource NoBindTextPatternInputTextBox}"
+                                  Tag="FocusNewRepeat"
+                                  cf:FocusManager.IsFocused="{Binding Path=Owner.FocusNewRepeat, Mode=OneWay}"
+                                  GotFocus="TxtNewItem_GotFocus"
+                                  TextChanged="TxtRepeat_TextChanged">
+                <ctrls:PatternTextBox.CommandBindings>
+                    <CommandBinding Command="Paste" CanExecute="NewInputPaste_CanExecute"
+                                    Executed="NewRepeatPaste_Executed" />
+                </ctrls:PatternTextBox.CommandBindings>
+            </ctrls:PatternTextBox>
+        </GroupBox>
+    </ControlTemplate>
+
+
+    <self:PatternsItemsSourceConverter x:Key="PatternsSourceConv"
+                                       NewRuleTemplate="{StaticResource NewDataPatternEditorTemplate}"
+                                       RuleTemplate="{StaticResource PatternRuleTemplate}"
+                                       TopicDetailsTemplate="{StaticResource TopicDetailsTemplate}"
+                                       NewQuestionTemplate="{StaticResource NewPatternEditorQuestionTemplate}" />
+
+    <self:PatternEditorTemplateSelector x:Key="PatternsTemplateSel"
+                                        RuleTemplate="{StaticResource PatternRuleTemplate}"
+                                        QuestionTemplate="{StaticResource ConditionalQuestionsTemplate}" />
+
+
+</ResourceDictionary>

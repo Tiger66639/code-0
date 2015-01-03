@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>Question</Name>
+  <Rules>
+    <Rule>
+      <Name>new rule 1</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>hello</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>do you like Thee?</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Rule>
+  </Rules>
+</Topic>

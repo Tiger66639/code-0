@@ -1,0 +1,10 @@
+//everything related to conversation logs.
+class ConversationLog
+{
+   //the cluster that contains all the conversationg logs for this bot.
+   cluster conversationloghistory : 346 {}
+   
+   // Used as the meaning for a  cluster that is used to store a conversation between the network and the other end of a textsin.
+   Neuron conversationlog {}
+   
+}

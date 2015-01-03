@@ -1,0 +1,83 @@
+﻿<self:CtrlEditorItem x:Class="JaStDev.HAB.Designer.CtrlGlobal"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+                     xmlns:hab="clr-namespace:JaStDev.HAB;assembly=JaStDev.HabCore"
+                     xmlns:dd="clr-namespace:DnD"
+                     Background="Transparent"
+                     Focusable="True">
+    <Grid Background="Transparent"
+          Height="24">
+        <Path Data="{Binding Source={StaticResource ImgGlobalPath}}"
+              Visibility="{Binding Path=IsMultiUsed, Converter={StaticResource BoolToVisConv}}"
+              Stretch="Fill"
+              Stroke="Black"
+              StrokeThickness="1"
+              Fill="{StaticResource ImgGlobalBrush}">
+            <Path.RenderTransform>
+                <TranslateTransform X="4" Y="-4" />
+            </Path.RenderTransform>
+        </Path>
+        <Path Data="{Binding Source={StaticResource ImgGlobalPath}}"
+              Stretch="Fill"
+              Stroke="Black"
+              StrokeThickness="1"
+              Fill="{StaticResource ImgGlobalBrush}" />
+        <!--<Image Source="{StaticResource ImgVariable}"
+                Style="{StaticResource CodeItemBackgroundImageStyle}"/>-->
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="2,0,2,0">
+            <TextBlock Text="{Binding Path=NeuronInfo.DisplayTitle}"
+                       VerticalAlignment="Center" />
+            <Expander Style="{StaticResource ExpandToRightStyle}"
+                      ExpandDirection="Right">
+                <StackPanel Orientation="Horizontal">
+                    <Grid Style="{StaticResource CodeItemDropTargetGrid}"
+                          Tag="{Binding ElementName=CpValue}"
+                          dd:DragDropManager.DropTarget="{StaticResource ResultCodeItemDropAdvisor}"
+                          dd:DragDropManager.DragSource="{StaticResource CodeItemDragAdvisor}">
+                        <Border Style="{StaticResource CodeItemDropTargetBorder}"
+                                Visibility="{Binding Path=NotHasValue, Converter={StaticResource BoolToVisConv}, Mode=OneWay}">
+                            <TextBlock Style="{StaticResource CodeItemDropTargetText}"
+                                       ToolTip="The default value, when the global is used for the first time without being initialized.  This can be an expression.">
+                                <Italic>Value</Italic>
+                            </TextBlock>
+                        </Border>
+                        <ContentPresenter Content="{Binding Path=Value, Mode=TwoWay}"
+                                          x:Name="CpValue" />
+                    </Grid>
+                    <Grid>
+
+                        <!--visualizer of split reaction-->
+                        <Grid Style="{StaticResource CodeItemDropTargetGrid}"
+                              Margin="0,0,20,0"
+                              Tag="{Binding ElementName=SplitReactionPart}"
+                              dd:DragDropManager.DropTarget="{StaticResource ResultCodeItemDropAdvisor}"
+                              dd:DragDropManager.DragSource="{StaticResource CodeItemDragAdvisor}">
+                            <Border Style="{StaticResource CodeItemDropTargetBorder}"
+                                    Visibility="{Binding Path=NotHasSplitReaction, Converter={StaticResource BoolToVisConv}, Mode=OneWay}">
+                                <TextBlock Style="{StaticResource CodeItemDropTargetText}"
+                                           ToolTip="How should the global be handled during a split(can be an expression).">
+                                    <Italic>Split reaction</Italic>
+                                </TextBlock>
+                            </Border>
+                            <ContentPresenter Content="{Binding Path=SplitReaction, Mode=TwoWay}"
+                                              x:Name="SplitReactionPart" />
+                        </Grid>
+                        <!--Possible default values.-->
+                        <ComboBox Style="{StaticResource CodeItemFixedItemsSelectorStyle}"
+                                  DisplayMemberPath="Info.DisplayTitle"
+                                  HorizontalAlignment="Right"
+                                  SelectionChanged="SplitReaction_SelectionChanged">
+                            <self:NeuronInfo ID="{x:Static hab:PredefinedNeurons.Duplicate}" />
+                            <self:NeuronInfo ID="{x:Static hab:PredefinedNeurons.Copy}" />
+                            <self:NeuronInfo ID="{x:Static hab:PredefinedNeurons.Empty}" />
+                        </ComboBox>
+                    </Grid>
+                </StackPanel>
+            </Expander>
+        </StackPanel>
+    </Grid>
+</self:CtrlEditorItem>

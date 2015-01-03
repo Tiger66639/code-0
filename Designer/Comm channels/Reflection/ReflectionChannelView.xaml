@@ -1,0 +1,131 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.ReflectionChannelView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+             xmlns:cf="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+             xmlns:dd="clr-namespace:DnD"
+             cf:Help.Topic="reflectionchannel.html">
+    <UserControl.CommandBindings>
+        <CommandBinding Command="Delete" CanExecute="Delete_CanExecute" Executed="Delete_Executed" />
+        <CommandBinding Command="self:App.ExportLibRefToClipboardCmd" CanExecute="Export_CanExecute"
+                        Executed="Export_Executed" />
+    </UserControl.CommandBindings>
+    <UserControl.InputBindings>
+        <KeyBinding Key="Del" Command="Delete" />
+    </UserControl.InputBindings>
+    <UserControl.Resources>
+        <self:FunctionDataDragAdvisor x:Key="FunctionDataDragSource" />
+
+        <ContextMenu x:Key="MenuMethodItem">
+            <MenuItem Header="Export to clipboard"
+                      Command="self:App.ExportLibRefToClipboardCmd"
+                      ToolTip="Export the function definition to the clipboard so it can be included in nnl code as an attribute."
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}" />
+        </ContextMenu>
+
+        <DataTemplate DataType="{x:Type self:FunctionData}">
+            <StackPanel Orientation="Horizontal"
+                        Background="Transparent">
+                <CheckBox IsChecked="{Binding Path=IsLoaded}"
+                          ToolTip="When checked, the function call is mapped to a neuron."
+                          VerticalAlignment="Center" />
+                <TextBlock Text="{Binding Path=Name}"
+                           ToolTip="{Binding Path=Description}"
+                           Background="Transparent"
+                           Focusable="True"
+                           dd:DragDropManager.DragSource="{StaticResource FunctionDataDragSource}"
+                           VerticalAlignment="Center"
+                           Margin="4,0,0,0" />
+                <TextBlock Margin="1,0,4,0"
+                           Visibility="{Binding Path=IsLoaded, Converter={StaticResource BoolToVisConv}}"
+                           VerticalAlignment="Center">
+                    :
+                </TextBlock>
+                <TextBox MinWidth="60"
+                         Foreground="DarkBlue"
+                         Visibility="{Binding Path=IsLoaded, Converter={StaticResource BoolToVisConv}}"
+                         BorderThickness="0"
+                         VerticalAlignment="Center">
+                    <TextBox.Text>
+                        <Binding Path="MappedName" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <ExceptionValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+            </StackPanel>
+
+        </DataTemplate>
+
+        <HierarchicalDataTemplate DataType="{x:Type self:ReflectionData}"
+                                  ItemsSource="{Binding Path=Children}">
+            <StackPanel Orientation="Horizontal">
+                <CheckBox IsChecked="{Binding Path=IsLoaded}"
+                          ToolTip="When checked, all the child functions will be mapped to a neuron." />
+                <TextBlock Text="{Binding Path=Name}"
+                           Margin="4,0,0,0" />
+            </StackPanel>
+        </HierarchicalDataTemplate>
+
+        <Style x:Key="AssemblyDataTreeItemStyle" TargetType="{x:Type TreeViewItem}">
+            <Setter Property="IsExpanded" Value="{Binding Path=IsExpanded, Mode=TwoWay}" />
+            <Setter Property="IsSelected" Value="{Binding Path=IsSelected}" />
+            <Setter Property="ContextMenu" Value="{StaticResource MenuMethodItem}" />
+        </Style>
+
+    </UserControl.Resources>
+    <DockPanel>
+        <Expander Style="{StaticResource SimpleExpandDownStyle}"
+                  Focusable="False"
+                  DockPanel.Dock="Top"
+                  IsExpanded="{Binding Source={x:Static self:Properties.Settings.Default}, Path=ToolbarExpandedReflectionChannel, Mode=TwoWay}">
+            <ToolBar FocusManager.IsFocusScope="False">
+                <Button ToolTip="Load assembly from cache"
+                        x:Name="BtnLoadCach"
+                        Click="BtnLoadCach_Click"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    <Image Source="/Images/folder_cache.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Button ToolTip="Load assembly from file"
+                        x:Name="BtnLoadFile"
+                        Click="BtnLoadFile_Click"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    <Image Source="/Images/Open_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Separator
+                    Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}" />
+                <ToggleButton ToolTip="Load/unload the IL instructions for .net."
+                              x:Name="BtnToggleOpcodes"
+                              Checked="BtnToggleOpcodes_Checked"
+                              Unchecked="BtnToggleOpcodes_Unchecked"
+                              Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}"
+                              Style="{StaticResource TlbToggleButtonsStyle}">
+                    <Image Source="/Images/Commchannel/dotnet.jpg"
+                           Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+            </ToolBar>
+        </Expander>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" Name="ColSplitter" />
+                <ColumnDefinition Name="ColOpCodes" />
+            </Grid.ColumnDefinitions>
+            <TreeView ItemsSource="{Binding Path=Assemblies}"
+                      Name="TrvAssemblies"
+                      ItemContainerStyle="{StaticResource AssemblyDataTreeItemStyle}"
+                      VirtualizingStackPanel.IsVirtualizing="true"
+                      VirtualizingStackPanel.VirtualizationMode="Recycling" />
+            <GridSplitter Grid.Column="1"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Stretch"
+                          ShowsPreview="True"
+                          Width="6" />
+            <ListBox ItemsSource="{Binding Path=OpCodes}"
+                     Grid.Column="2" />
+        </Grid>
+    </DockPanel>
+</UserControl>

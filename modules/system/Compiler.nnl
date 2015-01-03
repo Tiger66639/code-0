@@ -1,0 +1,20 @@
+class System
+{
+   //provides acces to the nnl parser and compiler
+   class Compiler
+   {
+      [external 
+         <LibRef>
+           <AssemblyName>NNLParsers.DLL</AssemblyName>
+           <TypeName>JaStDev.HAB.Parsers.NNLModuleCompiler</TypeName>
+           <MethodName>ParseExpression</MethodName>
+           <MappedName>Comp_ParseExpression</MappedName>
+           <ParameterTypes>
+             <string>System.String</string>
+             <string>System.String</string>
+           </ParameterTypes>
+         </LibRef>
+      ]                 //Link to external function that was imported with an OS channel and has the name Comp_ParseExpression.
+      ParseExpression(string toParse): var;
+   }
+}

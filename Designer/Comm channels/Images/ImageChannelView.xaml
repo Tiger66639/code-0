@@ -1,0 +1,372 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.ImageChannelView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+             xmlns:jc="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+             xmlns:Ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls"
+             jc:Help.Topic="imagechannel.html"
+             x:Name="this">
+    <DockPanel>
+        <Expander Style="{StaticResource SimpleExpandDownStyle}"
+                  IsExpanded="{Binding Source={x:Static self:Properties.Settings.Default}, Path=ToolbarExpandedImageChannelView, Mode=TwoWay}"
+                  Focusable="False"
+                  DockPanel.Dock="Top">
+            <ToolBarTray>
+                <Ctrls:ResManToolBar CommandTarget="{Binding ElementName=ImageResMan}" />
+
+                <ToolBar>
+                    <Button Click="BtnSend_Click"
+                            Style="{StaticResource TlbButtonsStyle}"
+                            ToolTip="Send the input text to the sensory interface.">
+                        <Image Source="/Images/Commchannel/send.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </Button>
+                    <Separator />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="12" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.5*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBox x:Name="TxtWidth"
+                                 Grid.Column="0"
+                                 Grid.Row="0"
+                                 Grid.RowSpan="2"
+                                 TextAlignment="Right"
+                                 MinWidth="30"
+                                 Text="{Binding Path=Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}"
+                                 Binding.SourceUpdated="TxtWidth_TargetUpdated"
+                                 Binding.TargetUpdated="TxtWidth_TargetUpdated"
+                                 ToolTip="Specifies the nr of columns there are in the raster of neurons that is sent to the sin."
+                                 Style="{StaticResource {x:Static ToolBar.TextBoxStyleKey}}" />
+                        <RepeatButton
+                            Grid.Column="1"
+                            Grid.Row="0"
+                            Style="{StaticResource ToolbarRepeatButtonStyle}"
+                            Click="RepeatNrWidthUp_Click">
+                            5
+                        </RepeatButton>
+                        <RepeatButton
+                            Grid.Column="1"
+                            Grid.Row="1"
+                            VerticalAlignment="Bottom"
+                            Style="{StaticResource ToolbarRepeatButtonStyle}"
+                            Click="RepeatNrWidthDown_Click">
+                            6
+                        </RepeatButton>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="12" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.5*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBox x:Name="TxtHeight"
+                                 Grid.Column="0"
+                                 Grid.Row="0"
+                                 Grid.RowSpan="2"
+                                 TextAlignment="Right"
+                                 MinWidth="30"
+                                 Text="{Binding Path=Height, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}"
+                                 Binding.SourceUpdated="TxtHeight_TargetUpdated"
+                                 Binding.TargetUpdated="TxtHeight_TargetUpdated"
+                                 ToolTip="Specifies the nr of rows there are in the raster of neurons that is sent to the sin."
+                                 Style="{StaticResource {x:Static ToolBar.TextBoxStyleKey}}" />
+                        <RepeatButton
+                            Grid.Column="1"
+                            Grid.Row="0"
+                            Style="{StaticResource ToolbarRepeatButtonStyle}"
+                            Click="RepeatNrHeightUp_Click">
+                            5
+                        </RepeatButton>
+                        <RepeatButton
+                            Grid.Column="1"
+                            Grid.Row="1"
+                            VerticalAlignment="Bottom"
+                            Style="{StaticResource ToolbarRepeatButtonStyle}"
+                            Click="RepeatNrHeightDown_Click">
+                            6
+                        </RepeatButton>
+                    </Grid>
+                </ToolBar>
+
+                <ToolBar>
+                    <ComboBox ItemsSource="{StaticResource ImageChannelEditingModes}"
+                              SelectedItem="{Binding ElementName=InkInput, Path=EditingMode, Mode=TwoWay}" />
+                    <Separator />
+                    <ComboBox SelectedItem="{Binding Source={StaticResource ImageChannelDrawingAttribs}, Path=Color}"
+                              ItemTemplate="{StaticResource ColorTemplate}"
+                              ItemsSource="{Binding Source={x:Static self:App.Current}, Path=ColorList}"
+                              MinWidth="20">
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel MaxWidth="160" />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                    </ComboBox>
+                    <ToggleButton x:Name="TglTransparancy"
+                                  IsChecked="{Binding ElementName=InkInput, Path=IsPressuredTransparency}"
+                                  ToolTip="When checked, strokes are drawn with a transpancy relative to the pressure.">
+                        <Image Source="/Images/Commchannel/Transparancy.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </ToggleButton>
+                    <ToggleButton
+                        IsChecked="{Binding Source={StaticResource ImageChannelDrawingAttribs}, Path=IgnorePressure, Converter={StaticResource BoolInv}}"
+                        ToolTip="Use pressure sensitive pen">
+                        <Image Source="/Images/tablet.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </ToggleButton>
+                    <ToggleButton x:Name="TglFit"
+                                  IsChecked="{Binding Source={StaticResource ImageChannelDrawingAttribs}, Path=FitToCurve}"
+                                  ToolTip="When checked, Bezier smoothing is used to render the lines">
+                        <Image
+                            Source="{Binding ElementName=TglFit, Path=IsChecked, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Commchannel/AntiAliasing.png, Mode=OneWay}"
+                            Style="{StaticResource TlbImageStyle}" />
+                    </ToggleButton>
+                    <ToggleButton
+                        IsChecked="{Binding Source={StaticResource ImageChannelDrawingAttribs}, Path=IsHighlighter}"
+                        ToolTip="When checked, newly drawn lines appear to highlight the image below, so the original is not overwritten.">
+                        <Image Source="/Images/Commchannel/Highlight_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </ToggleButton>
+                    <Separator />
+
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="12" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.5*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBox x:Name="TxtTipWidth"
+                                 Grid.Column="0"
+                                 Grid.Row="0"
+                                 Grid.RowSpan="2"
+                                 TextAlignment="Right"
+                                 MinWidth="30"
+                                 Text="{Binding Source={StaticResource ImageChannelDrawingAttribs}, Path=Width, StringFormat=F1}"
+                                 ToolTip="The width of the pen tip."
+                                 Style="{StaticResource {x:Static ToolBar.TextBoxStyleKey}}" />
+                        <RepeatButton
+                            Grid.Column="1"
+                            Grid.Row="0"
+                            Style="{StaticResource ToolbarRepeatButtonStyle}"
+                            Click="RepeatPenWidthUp_Click">
+                            5
+                        </RepeatButton>
+                        <RepeatButton
+                            Grid.Column="1"
+                            Grid.Row="1"
+                            VerticalAlignment="Bottom"
+                            Style="{StaticResource ToolbarRepeatButtonStyle}"
+                            Click="RepeatPenWidthDown_Click">
+                            6
+                        </RepeatButton>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="12" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.5*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBox x:Name="TxtTipHeight"
+                                 Grid.Column="0"
+                                 Grid.Row="0"
+                                 Grid.RowSpan="2"
+                                 TextAlignment="Right"
+                                 MinWidth="30"
+                                 Text="{Binding Source={StaticResource ImageChannelDrawingAttribs}, Path=Height, StringFormat=F1}"
+                                 ToolTip="The height of the pen tip."
+                                 Style="{StaticResource {x:Static ToolBar.TextBoxStyleKey}}" />
+                        <RepeatButton
+                            Grid.Column="1"
+                            Grid.Row="0"
+                            Style="{StaticResource ToolbarRepeatButtonStyle}"
+                            Click="RepeatPenHeightUp_Click">
+                            5
+                        </RepeatButton>
+                        <RepeatButton
+                            Grid.Column="1"
+                            Grid.Row="1"
+                            VerticalAlignment="Bottom"
+                            Style="{StaticResource ToolbarRepeatButtonStyle}"
+                            Click="RepeatPenHeightDown_Click">
+                            6
+                        </RepeatButton>
+                    </Grid>
+
+                    <ComboBox SelectedValuePath="Tag"
+                              SelectedValue="{Binding Source={StaticResource ImageChannelDrawingAttribs}, Path=StylusTip}"
+                              ToolTip="Select the shape of the stylus tip.">
+                        <ComboBoxItem Tag="{x:Static StylusTip.Rectangle}">
+                            <Rectangle Width="16"
+                                       Height="14"
+                                       Stroke="Black"
+                                       StrokeThickness="1" />
+                        </ComboBoxItem>
+                        <ComboBoxItem Tag="{x:Static StylusTip.Ellipse}">
+                            <Ellipse Width="16"
+                                     Height="14"
+                                     Stroke="Black"
+                                     StrokeThickness="1" />
+                        </ComboBoxItem>
+                    </ComboBox>
+                </ToolBar>
+            </ToolBarTray>
+        </Expander>
+
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.25*" />
+                <ColumnDefinition Width="6" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <self:CtrlResourceManager ResourceType="{x:Type self:ImageReference}"
+                                      DialogFilter="Image files (*.bmp;*.gif;*.png;*.tiff;*.jpg)|*.bmp;*.gif;*.png;*.tiff;*.jpg"
+                                      Items="{Binding Path=Resources}"
+                                      x:Name="ImageResMan" />
+
+            <GridSplitter Grid.Row="0"
+                          Grid.Column="1"
+                          Width="6"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Stretch" />
+
+            <Grid Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Border BorderThickness="1"
+                        Background="White"
+                        BorderBrush="DarkGray">
+                    <Image Stretch="None"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Source="{Binding Path=Image}" />
+                </Border>
+
+                <GridSplitter Grid.Row="0"
+                              Grid.Column="1"
+                              Width="6"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Stretch" />
+
+                <Border BorderThickness="1"
+                        BorderBrush="DarkGray"
+                        Background="White"
+                        Grid.Column="2">
+                    <Image Stretch="None"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Source="{Binding Path=Output}" />
+                </Border>
+
+                <GridSplitter Grid.Row="1"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="3"
+                              Height="6"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Center" />
+
+                <TabControl x:Name="TabInput"
+                            Grid.ColumnSpan="3"
+                            Grid.Row="2"
+                            SelectedIndex="{Binding Path=SelectedInputView, Mode=OneWay}"
+                            SelectionChanged="TabInput_SelectionChanged">
+                    <TabItem Header="Grid"
+                             x:Name="TabItemGrid">
+                        <Grid>
+                            <Grid x:Name="GrdPixels"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center">
+                                <Grid.RenderTransform>
+                                    <ScaleTransform x:Name="GridScaler"
+                                                    ScaleX="{Binding ElementName=SldZoomGrid, Path=Value}"
+                                                    ScaleY="{Binding ElementName=SldZoomGrid, Path=Value}" />
+                                </Grid.RenderTransform>
+                            </Grid>
+                            <TextBlock Foreground="Red"
+                                       FontSize="14"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Visibility="Collapsed"
+                                       x:Name="TxtGridError">
+                                The size of the input image is to large for the Grid editor!
+                            </TextBlock>
+                            <Slider x:Name="SldZoomGrid"
+                                    Orientation="Horizontal"
+                                    Value="1"
+                                    Minimum="0.03"
+                                    Maximum="3"
+                                    SmallChange="0.05"
+                                    LargeChange="0.1"
+                                    Width="90"
+                                    HorizontalAlignment="Right"
+                                    Margin="8"
+                                    VerticalAlignment="Top" />
+                        </Grid>
+
+
+                    </TabItem>
+                    <TabItem Header="Stylus">
+                        <Grid>
+                            <Border BorderBrush="DarkGray"
+                                    BorderThickness="1"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                                <jc:TransparentInkCanvas x:Name="InkInput"
+                                                         IsPressuredTransparency="True"
+                                                         Height="{Binding Path=Height}"
+                                                         Width="{Binding Path=Width}"
+                                                         DefaultDrawingAttributes="{StaticResource ImageChannelDrawingAttribs}">
+                                    <jc:TransparentInkCanvas.LayoutTransform>
+                                        <ScaleTransform x:Name="StylusScaler"
+                                                        ScaleX="{Binding ElementName=SldZoomStylus, Path=Value}"
+                                                        ScaleY="{Binding ElementName=SldZoomStylus, Path=Value}" />
+                                    </jc:TransparentInkCanvas.LayoutTransform>
+                                </jc:TransparentInkCanvas>
+                            </Border>
+                            <Slider x:Name="SldZoomStylus"
+                                    Orientation="Horizontal"
+                                    Value="1"
+                                    Minimum="0.03"
+                                    Maximum="3"
+                                    SmallChange="0.05"
+                                    LargeChange="0.1"
+                                    Width="90"
+                                    HorizontalAlignment="Right"
+                                    Margin="8"
+                                    VerticalAlignment="Top" />
+
+                        </Grid>
+
+                    </TabItem>
+                </TabControl>
+
+            </Grid>
+        </Grid>
+
+    </DockPanel>
+</UserControl>

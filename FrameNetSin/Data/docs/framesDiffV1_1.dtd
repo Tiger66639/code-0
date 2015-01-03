@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This is the DTD for the framesDiff.xml file, which contains the difference between
+two frames.xml files.  It is primarilly used to document the data changes
+bewteen two data releases.  Its format can be summarized as:
+
+<framesDiff>
+  <frame>*
+    <definition>
+    <fe>*
+	  <semType>
+      <definition>
+    <lexunit>*
+      <definition>
+      <annotated>
+      <total>
+      <oldannotated>
+      <oldtotal>
+      
+
+-->
+<!ELEMENT framesDiff (frame*)>
+
+<!ELEMENT frame (definition*, olddefinition*, fe*, lexunit*, semType*)>
+
+<!ATTLIST frame 
+          ID       CDATA         #REQUIRED
+          name      CDATA        #REQUIRED
+          oldname     CDATA      #IMPLIED
+          changeType CDATA       #REQUIRED
+          cDate     CDATA        #IMPLIED> 
+
+<!ELEMENT definition (#PCDATA)>
+
+<!ELEMENT olddefinition (#PCDATA)>
+
+<!ELEMENT fe (definition*, olddefinition*, semType*)>
+
+<!ATTLIST fe
+          ID       CDATA         #REQUIRED
+          name      CDATA         #REQUIRED
+          oldname     CDATA      #IMPLIED
+          changeType CDATA       #REQUIRED
+          abbrev       CDATA    #IMPLIED
+          oldabbrev       CDATA    #IMPLIED
+          coreType     CDATA    #IMPLIED
+          oldcoreType     CDATA    #IMPLIED
+          cDate     CDATA         #IMPLIED
+          fgColor      CDATA    #IMPLIED
+          oldfgColor      CDATA    #IMPLIED
+          bgColor      CDATA    #IMPLIED
+          oldbgColor      CDATA    #IMPLIED>
+
+<!ELEMENT semType EMPTY>
+<!ATTLIST semType
+			ID NMTOKEN #REQUIRED
+			name CDATA #IMPLIED
+			oldname CDATA #IMPLIED
+			changeType CDATA #REQUIRED>
+
+<!ELEMENT lexunit (definition*, olddefinition*, annotated*, total*, oldannotated*, oldtotal*, semType*)>
+
+<!ATTLIST lexunit
+         ID       CDATA         #REQUIRED
+         name      CDATA         #REQUIRED
+         changeType CDATA       #REQUIRED
+	     oldname     CDATA      #IMPLIED
+		 status		CDATA		#IMPLIED
+		 oldstatus	CDATA		#IMPLIED
+         cDate     CDATA         #IMPLIED
+         pos          CDATA    #IMPLIED
+         oldpos        CDATA    #IMPLIED>
+
+<!ELEMENT annotated (#PCDATA)>
+
+<!ELEMENT oldannotated (#PCDATA)>
+
+<!ELEMENT total (#PCDATA)>
+<!ELEMENT oldtotal (#PCDATA)>
+
+

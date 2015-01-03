@@ -1,0 +1,187 @@
+﻿<Window x:Class="JaStDev.HAB.Designer.Dialogs.DlgFindText"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Find text"
+        Width="350"
+        SizeToContent="Height"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="ToolWindow"
+        FocusManager.FocusedElement="{Binding ElementName=TxtToSearch}"
+        Closed="Window_Closed">
+    <Window.Background>
+        <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}" />
+    </Window.Background>
+    <Window.CommandBindings>
+        <CommandBinding Command="Close" Executed="Close_Executed" />
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Key="Escape" Command="Close" />
+    </Window.InputBindings>
+    <DockPanel>
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    DockPanel.Dock="Bottom"
+                    Margin="4,0,4,4">
+            <Button Margin="4"
+                    Width="80"
+                    Click="FindNext_Click"
+                    ToolTip="Search for and select the next value.">
+                Find _Next
+            </Button>
+            <Button Margin="4"
+                    Width="80"
+                    IsDefault="True"
+                    Click="FindAll_Click"
+                    Name="BtnFindAll"
+                    Visibility="{Binding ElementName=RadFind, Path=IsChecked, Converter={StaticResource BoolToVisConv}}"
+                    ToolTip="Search for all the results and display in an overview window.">
+                Find _All
+            </Button>
+            <Button Margin="4"
+                    Width="80"
+                    Click="Replace_Click"
+                    Visibility="{Binding ElementName=RadReplace, Path=IsChecked, Converter={StaticResource BoolToVisConv}}"
+                    ToolTip="Replace the current selection.">
+                _Replace
+            </Button>
+            <Button Margin="4"
+                    Width="80"
+                    IsDefault="True"
+                    Click="ReplaceAll_Click"
+                    Name="BtnReplaceAll"
+                    Visibility="{Binding ElementName=RadReplace, Path=IsChecked, Converter={StaticResource BoolToVisConv}}"
+                    ToolTip="Search for all the results and replace them with the specified text.">
+                Replace _All
+            </Button>
+        </StackPanel>
+        <Border DockPanel.Dock="Top"
+                Background="#FF8A95A2"
+                BorderBrush="DarkGray"
+                BorderThickness="0,0,0,1">
+            <StackPanel Orientation="Horizontal">
+                <RadioButton Name="RadFind"
+                             Margin="4,2,0,2"
+                             IsChecked="True"
+                             Width="80"
+                             Style="{StaticResource {x:Static ToolBar.RadioButtonStyleKey}}">
+                    Find
+                </RadioButton>
+                <RadioButton Name="RadReplace"
+                             Width="80"
+                             Margin="0,2,2,2"
+                             Style="{StaticResource {x:Static ToolBar.RadioButtonStyleKey}}">
+                    Replace
+                </RadioButton>
+            </StackPanel>
+        </Border>
+        <StackPanel Margin="4,0,4,0">
+            <TextBlock Margin="4,4,4,2">Find what:</TextBlock>
+            <TextBox Margin="4,2,4,4"
+                     Name="TxtToSearch"
+                     Text="{Binding Path=TextToSearch, UpdateSourceTrigger=PropertyChanged}"
+                     ToolTip="The value to search for." />
+            <TextBlock Margin="4,0,4,2"
+                       Visibility="{Binding ElementName=RadReplace, Path=IsChecked, Converter={StaticResource BoolToVisConv}}">
+                Replace with:
+            </TextBlock>
+            <TextBox Margin="4,2,4,4"
+                     Name="TxtToReplace"
+                     Text="{Binding Path=ReplaceText, UpdateSourceTrigger=PropertyChanged}"
+                     Visibility="{Binding ElementName=RadReplace, Path=IsChecked, Converter={StaticResource BoolToVisConv}}"
+                     ToolTip="The value that should replace the search text." />
+            <Separator />
+            <DockPanel LastChildFill="False">
+                <CheckBox Margin="4"
+                          IsChecked="{Binding Path=MatchCase}"
+                          ToolTip="When checked, the case of the results needs to match the case of the search term, otherwise it doesn't matter."
+                          DockPanel.Dock="Left">
+                    Match case
+                </CheckBox>
+                <CheckBox Margin="4"
+                          IsChecked="{Binding Path=AsRegEx}"
+                          ToolTip="When checked, the search-term is interpreted as a regular expression."
+                          DockPanel.Dock="Right">
+                    As regular expression
+                </CheckBox>
+            </DockPanel>
+            <Separator />
+            <TextBlock Margin="4,4,4,2">Look in:</TextBlock>
+            <ComboBox Margin="4,2,4,4"
+                      Name="CmbSelectScope"
+                      SelectedIndex="{Binding Path=SearchScope}"
+                      ToolTip="Specify the scope of the search: the currently selected editor, all open editors or the entire project.">
+                <ComboBoxItem>Current editor</ComboBoxItem>
+                <ComboBoxItem>All open editors</ComboBoxItem>
+                <ComboBoxItem>Entire project</ComboBoxItem>
+            </ComboBox>
+            <GroupBox Header="Include:"
+                      Margin="4,2,4,4">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <CheckBox IsChecked="{Binding Path=Includeinput}"
+                              ToolTip="When checked, the search will include all the 'input' statements. When not checked, they will be skipped.">
+                        input
+                    </CheckBox>
+                    <CheckBox IsChecked="{Binding Path=IncludeOutput}"
+                              HorizontalAlignment="Left"
+                              Grid.Column="1"
+                              ToolTip="When checked, the search will include all the 'output' statements. When not checked, they will be skipped.">
+                        output
+                    </CheckBox>
+                    <CheckBox Grid.Column="2"
+                              HorizontalAlignment="Right"
+                              IsChecked="{Binding Path=IncludeNoReply}"
+                              ToolTip="When checked, the search will include all the 'When not replied' statements. When not checked, they will be skipped.">
+                        When not replied
+                    </CheckBox>
+
+
+                    <CheckBox IsChecked="{Binding Path=IncludeCondition}"
+                              Grid.Row="1"
+                              ToolTip="When checked, the search will include all the 'when' patterns. When not checked, they will be skipped.">
+                        When
+                    </CheckBox>
+                    <CheckBox IsChecked="{Binding Path=IncludeDo}"
+                              HorizontalAlignment="Left"
+                              Grid.Column="1"
+                              Grid.Row="1"
+                              ToolTip="When checked, the search will include all the 'do' statements. When not checked, they will be skipped.">
+                        Do
+                    </CheckBox>
+                    <CheckBox Grid.Column="2"
+                              Grid.Row="1"
+                              HorizontalAlignment="Left"
+                              IsChecked="{Binding Path=IncludeQuestions}"
+                              ToolTip="When checked, the search will include all the questions tab (conditions and outputs are controlled seperatly). When not checked, the tab will be skipped.">
+                        Questions
+                    </CheckBox>
+
+                    <CheckBox IsChecked="{Binding Path=IncludeTopicFilters}"
+                              Grid.Row="2"
+                              ToolTip="When checked, the search will include all the topic filter patterns. When not checked, they will be skipped.">
+                        Filters
+                    </CheckBox>
+                    <CheckBox IsChecked="{Binding Path=IncludeResponseFor}"
+                              HorizontalAlignment="Left"
+                              Grid.Column="1"
+                              Grid.Row="2"
+                              ToolTip="When checked, the search will include all the 'Response-for' statements. When not checked, they will be skipped.">
+                        Response-For
+                    </CheckBox>
+
+                </Grid>
+            </GroupBox>
+            <Separator />
+        </StackPanel>
+    </DockPanel>
+</Window>

@@ -1,0 +1,72 @@
+﻿<Window x:Class="JaStDev.HAB.Designer.Dialogs.DlgAssignImportance"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:cf="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+        Title="Assign importance"
+        Width="386"
+        x:Name="TheWindow"
+        ShowInTaskbar="False"
+        WindowState="Normal"
+        WindowStyle="ToolWindow"
+        WindowStartupLocation="CenterOwner"
+        Topmost="True"
+        SizeToContent="Height">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+
+        <TextBlock Text="Importance: "
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left" />
+        <TextBox Text="{Binding ElementName=TheWindow, Path=Answer}"
+                 x:Name="TxtValue"
+                 cf:FocusManager.IsFocused="True"
+                 Grid.Row="0"
+                 Grid.Column="1"
+                 Margin="8" />
+
+        <CheckBox Grid.Row="1"
+                  Grid.Column="1"
+                  Margin="8,0,8,0"
+                  IsChecked="True"
+                  x:Name="ChkPosGrp"
+                  ToolTip="An importance level is best assigned to pos groups. Only objects that are used directly in a flow definition can make use of the assigned importance level.">
+            Assign to Pos group
+        </CheckBox>
+
+        <StackPanel Grid.Row="2"
+                    Grid.ColumnSpan="2">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <Button IsDefault="True"
+                        MinWidth="80"
+                        Margin="8,8,0,8"
+                        Click="OnClickOk">
+                    Ok
+                    <Button.ToolTip>
+                        Apply the changes and close the window.
+                    </Button.ToolTip>
+                </Button>
+                <Button IsCancel="True"
+                        MinWidth="80"
+                        Margin="8">
+                    Cancel
+                    <Button.ToolTip>
+                        Undo the changes and close the window.
+                    </Button.ToolTip>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+
+    </Grid>
+</Window>

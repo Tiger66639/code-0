@@ -1,0 +1,77 @@
+//provides a way (primarily for android devices) to load asset data into the network. Note: this was before the queries were introduced
+class LoadAssetData
+{
+   using common;
+   
+   var inportto(copy);  // this global is used by the wordnet sin (through SynsetId) to store the asset in which to import the data supplied to the current procesor.
+
+   //Used as the meaning for a link from a parsed thes path to a value to indicate that it should be loaded into an asset (the previously used one, from the same processor if posible) and also make certain that the thesaurus relationship exists.
+   neuron loadassetitem : 390
+   {
+      exec()
+      {
+         var thespathresult = Thes.GetThesPathResult(Statics.CurrentFrom);   //solves a thesaurus path and returns all the possible values at the end of the path. This is used to get all the valid values for a thesaurus path, so we can check if any of the values is in the input.    Input: next= a cluster who's children define a path in the thesaurus. The first item can be one of the  pos neurons. should have at least 1 textneuron as child.    Output:    ThesPathResult=all the textneurons that are at the end of the thes-path.    Note: if the thesaurus path didn't lead anywhere (for instance, no valid pos), no values are returned.        
+         if (Count(thespathresult) == 0)
+         {
+            Error("Invalid thesaurus path found as attrib value while loading asset items");
+            ExitSolve();
+         }
+         var iAssetItem, iValueItem;
+         var iAttrib = thespathresult;
+         if (Search.IsThesRelated(Statics.CurrentTo, thespathresult, Thes.IsA) != true)
+         {
+            var todo = New(neuron);
+            AddLink(todo, thespathresult, Statics.LeftPart);
+            var iRightPart = MakeCluster(Statics.List, Statics.CurrentTo);
+            AddLink(todo, iRightPart, Statics.RightPart);
+            AddLink(todo, Statics.AssignAdd, Statics.Operator);
+            Thes.DoThesaurusOperation(todo);
+            iValueItem = GetLastCluster(Statics.CurrentTo, Statics.Object);   //we get the  last cluster, which is the newly created object (done by do thesaurus  operation).    
+            Freeze(todo, iRightPart);
+         }
+         else
+         {
+            var next = new(neuronCluster);
+            AddChild(next, Statics.CurrentTo);
+            iValueItem = Thes.GetThesPathResult(next);
+            iAssetItem = GetChildrenFiltered(inportto, ref(filtervar), ref((((GetFirstOut(filtervar, Statics.Attribute) == iAttrib) || ContainsChildren(iAttrib, GetFirstOut(filtervar, Statics.Attribute))) || ContainsChildren(GetFirstOut(filtervar, Statics.Attribute), iAttrib))));
+         }
+         if (Count(iAssetItem) > 0)
+            SetFirstOut(iAssetItem, iValueItem, Statics.Value);
+         else
+         {
+            iAssetItem = New(neuron);
+            AddLink(iAssetItem, iAttrib, Statics.Attribute);
+            AddLink(iAssetItem, iValueItem, Statics.Value);
+            AddChild(inportto, iAssetItem);
+         }
+         Delete(Statics.CurrentFrom);
+      }
+   }
+   /*
+     Used as the meaning for a link from an object to an IntNeuron in order to indicate the info was loaded from WordNet + it identifies from where exactly it was loaded.
+    */
+   neuron synsetid : 136
+   {
+      exec()
+      {
+         var iAssetItem = GetFirstIn(Statics.CurrentTo, Statics.Value);
+         if (Count(iAssetItem) > 0)
+         {
+            inportto = GetFirstCluster(iAssetItem, Assets.Asset);
+            Delete(Statics.CurrentFrom);
+         }
+         else
+         {
+            inportto = Statics.CurrentFrom;
+            SetClusterMeaning(inportto, Assets.Asset);
+            iAssetItem = New(neuron);
+            AddLink(iAssetItem, "id", Statics.Attribute);
+            AddLink(iAssetItem, Statics.CurrentTo, Statics.Value);
+            AddChild(inportto, iAssetItem);
+            AddChild(Assets.Asset, inportto);   //so we know about the new root asset.    
+            RemoveLink(Statics.CurrentFrom, Statics.CurrentTo, Statics.CurrentMeaning);
+         }
+      }
+   }
+}

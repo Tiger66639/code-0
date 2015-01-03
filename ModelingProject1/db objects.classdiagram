@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="cd1c0858-0843-40b7-a1c4-0ac9a2baaa64" name="UMLClassDiagram1" linkedPackageId="ade17e2a-2e9a-4153-9ef5-ce86c4e33418" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <ownedCommentsInternal>
+    <comment Id="84981f3a-5601-4d31-9061-2c88cb327784">
+      <elementDefinition Id="7341245f-3f40-4f55-af89-14fecb4283ea" />
+      <body>...</body>
+    </comment>
+    <comment Id="e337b5f5-353c-4dad-a666-5ed8b4b95dfe">
+      <elementDefinition Id="e4d5ee56-3102-42ea-9995-99f55392894e" />
+      <body>...</body>
+    </comment>
+    <comment Id="b13126d6-7ed3-4480-9852-915b88273339">
+      <elementDefinition Id="f38d49c1-8e43-4e97-9183-df157d6ab6fa" />
+      <body>...</body>
+    </comment>
+  </ownedCommentsInternal>
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="441ecb24-e6aa-4d0f-9e9e-d31b46aa25db" name="Neuron" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="9315890e-1bf0-49fe-851e-ce4776cabc00" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="70ba3512-8d77-4022-b537-a8c624487927" name="NeuronCluster" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="03d46ac4-2948-4e8c-b4a6-20b6cb81fe09" />
+        <generalsInternal>
+          <generalization Id="c2daffd9-4acd-43a9-9177-9dd7088f87b3" isSubstitutable="false">
+            <classMoniker Id="441ecb24-e6aa-4d0f-9e9e-d31b46aa25db" LastKnownName="Neuron" />
+            <elementDefinition Id="869ac4f5-deeb-498c-b488-e7ac007b0bc3" />
+          </generalization>
+        </generalsInternal>
+        <targetEnds>
+          <association Id="0c977ec4-5e35-4b5b-ac7c-09d175d496e7" isDerived="false" sourceEndRoleName="Parents" targetEndRoleName="Children" isLeaf="false" isAbstract="false">
+            <classMoniker Id="441ecb24-e6aa-4d0f-9e9e-d31b46aa25db" LastKnownName="Neuron" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="46065c46-f551-499b-ac1e-0619e9e6b537" name="Parents" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString Id="a2bd44cf-3cf0-45f3-b7a3-baf94fd37987" name="Lower" value="*">
+                      <elementDefinition Id="818fe4ea-c37d-43f5-8d95-8a806409398e" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="a24f5d6f-e59c-452a-88a2-5b6fcc85ca7d" name="Upper" value="*">
+                      <elementDefinition Id="aa207400-7f3f-4e56-8164-b818b9b60248" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="25729e95-7921-4e5c-885a-167f3a613c60" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="bef626bf-0e46-4429-8fa6-2cf29439e72a" name="Children" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <lowerValueInternal>
+                    <literalString Id="63bc2fc6-e7e4-4a74-9687-2a9232595318" name="Lower" value="*">
+                      <elementDefinition Id="46db1a62-e653-4f7b-8b5d-d1eb971845e8" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="bd5db47f-9305-4c9f-ac53-9dc600eac608" name="Upper" value="*">
+                      <elementDefinition Id="2980e7c3-627d-4de3-b5f1-cc1e4ec8680e" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="cc4ccb44-909f-407b-9d93-bfcc89b0b463" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="78cc1c42-fc2e-4c6c-84c6-286b3c195bf3" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="e6044ac3-38be-48fc-a916-a8ff5f9db786" name="Expression" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="6454714a-fda4-4dfb-b74f-e7d1f2395df0" />
+        <generalsInternal>
+          <generalization Id="9d3a7df3-9beb-42a0-830b-32858fa9652b" isSubstitutable="false">
+            <classMoniker Id="441ecb24-e6aa-4d0f-9e9e-d31b46aa25db" LastKnownName="Neuron" />
+            <elementDefinition Id="1b529499-469a-4954-a8c3-a2390f96a6db" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="bb372592-da65-4c90-b524-622cacad3270" name="Instruction" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="0a9f8aa3-bfab-4932-a182-a1dd4ba19096" />
+        <generalsInternal>
+          <generalization Id="3d2ed70f-e815-4c97-b6d5-7ae839559bd4" isSubstitutable="false">
+            <classMoniker Id="441ecb24-e6aa-4d0f-9e9e-d31b46aa25db" LastKnownName="Neuron" />
+            <elementDefinition Id="52fd20b1-f9df-4139-b4b7-b2a3859bba2f" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="a689e504-69f0-4268-b00b-2d0771e74385" name="ValueNeuron" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="11fb8724-21bf-4b04-953d-6a4edafccd52" />
+        <generalsInternal>
+          <generalization Id="fe29ad48-9305-4c9a-8535-48e8ba144625" isSubstitutable="false">
+            <classMoniker Id="441ecb24-e6aa-4d0f-9e9e-d31b46aa25db" LastKnownName="Neuron" />
+            <elementDefinition Id="9d5a4d9f-1945-4146-a569-b6225c5147bf" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="cee6a39d-50f8-453a-b3a3-ae5a193e088d" name="TextNeuron" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="5e5e83e3-30e0-4c3f-9ed1-9ba46d0d4726" />
+        <generalsInternal>
+          <generalization Id="1b925c0c-f091-4712-ac5c-f33ec53816f6" isSubstitutable="false">
+            <classMoniker Id="a689e504-69f0-4268-b00b-2d0771e74385" LastKnownName="ValueNeuron" />
+            <elementDefinition Id="7f1022cf-28b1-4f0a-8d2b-0e3a1ecb2427" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="b9fb9bec-274f-4c0e-afa5-2caf0542146a" name="IntNeuron" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="04805c73-b0f7-417a-8263-066cebf7f4f0" />
+        <generalsInternal>
+          <generalization Id="657f6f1e-eb2c-4003-9e0c-7585fa2fd0db" isSubstitutable="false">
+            <classMoniker Id="a689e504-69f0-4268-b00b-2d0771e74385" LastKnownName="ValueNeuron" />
+            <elementDefinition Id="a2cadc88-7f1d-41c2-9644-23da09b5c506" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="8614ed5b-07dc-4566-be95-21703dab6a3b" name="DoubleNeuron" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="899b0d72-2b4e-48c5-ae9d-4bf6499d4c18" />
+        <generalsInternal>
+          <generalization Id="6d266115-88bf-4d51-aab4-5c6cfb0ac52f" isSubstitutable="false">
+            <classMoniker Id="a689e504-69f0-4268-b00b-2d0771e74385" LastKnownName="ValueNeuron" />
+            <elementDefinition Id="e76790f9-99a7-48d5-81bc-b03daa6b1b8c" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="e6639f5e-b6f6-4333-9a3a-a8b5ecd9ed7a" name="Sin" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="18e9c85c-8bbb-4d48-80ea-3bfd2bd2fb58" />
+        <generalsInternal>
+          <generalization Id="dac6ae77-ed66-4a7c-96d9-cd788ec99c0e" isSubstitutable="false">
+            <classMoniker Id="cee6a39d-50f8-453a-b3a3-ae5a193e088d" LastKnownName="TextNeuron" />
+            <elementDefinition Id="d5f7d45a-e42e-4094-b712-67d4969c63d2" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="5b2fb397-b26d-4c0f-8565-ea4d983d0e9e" name="Variable" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="2134ac36-7fe4-4ff7-8c4a-ebbe9d123825" />
+        <generalsInternal>
+          <generalization Id="0b2bdc8d-f986-4cdb-b9bd-4aa5d688de80" isSubstitutable="false">
+            <classMoniker Id="e6044ac3-38be-48fc-a916-a8ff5f9db786" LastKnownName="Expression" />
+            <elementDefinition Id="951c383d-3b2a-4aa5-85d8-cacac63d4462" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="6f084d28-b1cc-41e9-862c-7d475abd4fff" name="Conditional" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="02f13562-2016-4dca-92e0-5378a04c3721" />
+        <generalsInternal>
+          <generalization Id="c06b23e1-45ff-4169-81ac-4e2f208d76ad" isSubstitutable="false">
+            <classMoniker Id="e6044ac3-38be-48fc-a916-a8ff5f9db786" LastKnownName="Expression" />
+            <elementDefinition Id="1374a1bf-fc18-4fba-b8c3-d0c19326d3de" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="68c031a8-3c86-48cb-848b-96d176d610b2" name="Statement" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="161c3c09-7d2b-4afb-97b8-eb6734057ba1" />
+        <generalsInternal>
+          <generalization Id="ef519c95-6123-4e10-a8bd-7090e740e075" isSubstitutable="false">
+            <classMoniker Id="e6044ac3-38be-48fc-a916-a8ff5f9db786" LastKnownName="Expression" />
+            <elementDefinition Id="1e693cc4-0d1d-4da8-b808-853f1237aba6" />
+          </generalization>
+        </generalsInternal>
+        <targetEnds>
+          <association Id="35b917cd-41d1-4744-a8d4-994bb5f80b7b" isDerived="false" sourceEndRoleName="Calls" targetEndRoleName="" isLeaf="false" isAbstract="false">
+            <classMoniker Id="bb372592-da65-4c90-b524-622cacad3270" LastKnownName="Instruction" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="fd6c6eef-41f8-4758-9c8c-b4a69c23cf08" name="Calls" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString Id="19fc7153-a1d3-47d7-a9c4-53969b468085" name="Lower" value="*">
+                      <elementDefinition Id="70e994ff-0b90-44ee-8744-803faa57d64e" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="4c267f19-031f-4f4f-becd-2f860215a063" name="Upper" value="*">
+                      <elementDefinition Id="ad97319c-1075-43ad-9eb2-a2c10587dc03" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="3dbf80ba-785c-4a6f-bb2b-7319a7c7d6a9" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="71e14a9c-d826-45de-83f9-8ee3f84a6967" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <lowerValueInternal>
+                    <literalString Id="fe6b64aa-d508-4772-8602-0518a8e2a938" name="Lower" value="1">
+                      <elementDefinition Id="c2e2179d-02ac-4797-a503-2cb07e734080" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="322dc051-1663-446a-9318-d08b093aeb77" name="Upper" value="1">
+                      <elementDefinition Id="482fa294-071a-421f-8c59-dc6261a238ce" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="f6664440-72c6-48c1-9338-cb03b5004a71" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="66284493-9b3f-407f-a355-06519ea137e4" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+  </packagedElements>
+  <package Id="ade17e2a-2e9a-4153-9ef5-ce86c4e33418" name="ModelingProject1">
+    <elementDefinition Id="32ddaec2-430b-44fe-8236-946e727f27b1" />
+    <profileInstances>
+      <packageHasProfileInstances Id="553a6def-8703-49e8-8860-9fbde5c90c43">
+        <profileInstance Id="d8f28b62-3d22-4348-ac28-7b22e70a9fc3" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="27ebe544-aa94-4f84-9ca3-ac645a4fe101">
+        <profileInstance Id="06450b55-7317-4c54-b819-6a3e3023a8be" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
+  </package>
+</logicalClassDesignerModel>

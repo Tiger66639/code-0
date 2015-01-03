@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE VNCLASS SYSTEM "vn_class-3.dtd">
+<VNCLASS ID="subjugate-42.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vn_schema-3.xsd">
+    <MEMBERS>
+        <MEMBER name="suppress" wn=""/>
+        <MEMBER name="stamp_down" wn=""/>
+        <MEMBER name="subdue" wn=""/>
+        <MEMBER name="conquer" wn=""/>
+        <MEMBER name="curb" wn=""/>
+        <MEMBER name="crush" wn=""/>
+        <MEMBER name="stifle" wn=""/>
+        <MEMBER name="dampen" wn=""/>
+        <MEMBER name="suffocate" wn=""/>
+        <MEMBER name="choke" wn=""/>
+        <MEMBER name="hush" wn=""/>
+        <MEMBER name="silence" wn=""/>
+        <MEMBER name="still" wn=""/>
+        <MEMBER name="shut_up" wn=""/>
+        <MEMBER name="hush_up" wn=""/>
+        <MEMBER name="lull" wn=""/>
+        <MEMBER name="calm_down" wn=""/>
+        <MEMBER name="gag" wn=""/>
+        <MEMBER name="muzzle" wn=""/>
+        <MEMBER name="squelch" wn=""/>
+        <MEMBER name="quell" wn=""/>
+        <MEMBER name="quench" wn=""/>
+        <MEMBER name="smother" wn=""/>
+        <MEMBER name="muffle" wn=""/>
+        <MEMBER name="repress" wn=""/>
+        <MEMBER name="quash" wn=""/>
+        <MEMBER name="keep_down" wn=""/>
+        <MEMBER name="subjugate" wn=""/>
+        <MEMBER name="reduce" wn=""/>
+        <MEMBER name="strangle" wn=""/>
+        <MEMBER name="kill" wn=""/>
+    </MEMBERS>
+    <THEMROLES>
+        <THEMROLE type="Agent">
+            <SELRESTRS logic="or">
+                <SELRESTR Value="+" type="animate"/>
+                <SELRESTR Value="+" type="organization"/>
+            </SELRESTRS>
+        </THEMROLE>
+        <THEMROLE type="Patient">
+            <SELRESTRS logic="or">
+                <SELRESTR Value="+" type="animate"/>
+                <SELRESTR Value="+" type="organization"/>
+            </SELRESTRS>
+        </THEMROLE>
+        <THEMROLE type="Instrument">
+            <SELRESTRS/>
+        </THEMROLE>
+    </THEMROLES>
+    <FRAMES>
+        <FRAME>
+            <DESCRIPTION descriptionNumber="0.2" primary="NP V NP" secondary="NP" xtag="0.2"/>
+            <EXAMPLES>
+                <EXAMPLE>Winnie the Pooh subjugated the unfortunate Pixies.</EXAMPLE>
+            </EXAMPLES>
+            <SYNTAX>
+                <NP value="Agent">
+                    <SYNRESTRS/>
+                </NP>
+                <VERB/>
+                <NP value="Patient">
+                    <SYNRESTRS/>
+                </NP>
+            </SYNTAX>
+            <SEMANTICS>
+                <PRED value="cause">
+                    <ARGS>
+                        <ARG type="ThemRole" value="Agent"/>
+                        <ARG type="Event" value="E"/>
+                    </ARGS>
+                </PRED>
+                <PRED value="subjugated">
+                    <ARGS>
+                        <ARG type="Event" value="during(E)"/>
+                        <ARG type="ThemRole" value="Patient"/>
+                    </ARGS>
+                </PRED>
+            </SEMANTICS>
+        </FRAME>
+        <FRAME>
+            <DESCRIPTION descriptionNumber="8.1" primary="NP V NP PP.instrument" secondary="NP-PPwith-PP" xtag="0.2"/>
+            <EXAMPLES>
+                <EXAMPLE>Russia subjugated Mongolia with overwhelming force.</EXAMPLE>
+            </EXAMPLES>
+            <SYNTAX>
+                <NP value="Agent">
+                    <SYNRESTRS/>
+                </NP>
+                <VERB/>
+                <NP value="Patient">
+                    <SYNRESTRS/>
+                </NP>
+		<PREP value="with">
+		    <SELRESTRS/>
+		</PREP>
+                <NP value="Instrument">
+                    <SYNRESTRS/>
+                </NP>
+            </SYNTAX>
+            <SEMANTICS>
+                <PRED value="cause">
+                    <ARGS>
+                        <ARG type="ThemRole" value="Agent"/>
+                        <ARG type="Event" value="E"/>
+                    </ARGS>
+                </PRED>
+                <PRED value="subjugated">
+                    <ARGS>
+                        <ARG type="Event" value="during(E)"/>
+                        <ARG type="ThemRole" value="Patient"/>
+                    </ARGS>
+                </PRED>
+                <PRED value="use">
+                    <ARGS>
+                        <ARG type="Event" value="during(E)"/>
+                        <ARG type="ThemRole" value="Agent"/>
+                        <ARG type="ThemRole" value="Instrument"/>
+                    </ARGS>
+                </PRED>
+            </SEMANTICS>
+        </FRAME>
+    </FRAMES>
+    <SUBCLASSES/>
+</VNCLASS>
+
+
+

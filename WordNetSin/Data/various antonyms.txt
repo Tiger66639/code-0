@@ -1,0 +1,506 @@
+A
+alive - dead
+all - nothing
+awake - asleep
+
+B
+bad - good
+before - after
+begin - end
+best - worst
+big - little
+big - small
+black - white
+boy - girl
+
+C
+cold - hot
+come - go
+create - destroy
+
+D
+dark - light
+day - night
+dead - alive
+
+E
+east - west
+easy - hard
+empty - full
+
+F
+false - true
+fast - slow
+fat - thin
+find - lose
+first - last
+float - sink
+full - empty
+	
+
+G
+give - take
+good - bad
+good - evil
+
+H
+happy - sad
+hard - easy
+hard - soft
+heaven - hell
+heavy - light
+here - there
+high - low
+horizontal - vertical
+hot - cold
+
+I
+in - out
+inside - outside
+
+L
+large - small
+laugh - cry
+left - right
+light - dark
+light - heavy
+long - short
+loose - tight
+lose - find
+loud - quiet
+love - hate
+	
+
+M
+more - less
+
+N
+narrow - wide
+near - far
+neat - messy
+new - old
+north - south
+
+O
+old - young
+open - closed
+open - shut
+over - under
+
+P
+pretty - ugly
+push - pull
+
+Q
+question - answer
+quiet - loud
+
+R
+real - fake
+rich - poor
+right - left
+right - wrong
+right-side-up - upside-down
+	
+
+S
+shallow - deep
+sink - float
+slow - fast
+soft - hard
+start - finish
+sweet - sour
+
+T
+tall - short
+tight - loose
+tough - easy
+true - false
+
+U
+up - down
+upside-down - right-side-up
+upstairs - downstairs
+
+V
+visible - invisible
+
+W
+war - peace
+wet - dry
+white - black
+win - lose
+
+Y
+young - old
+
+Z
+zip - unzip
+
+
+after/before
+answer/question
+any/none
+arrive/depart
+behind/ahead
+black/white
+brave/cowardly
+bright/dull
+cold/hot
+cool/warm
+crazy/sane
+curly/straight
+dark/light
+day/night
+dim/bright
+dumb/smart
+easy/hard
+every/none
+everything/nothing
+fact/fiction
+famous/unknown
+fast/slow
+fat/thin
+good/bad
+girl/boy
+grim/happy
+happy/sad
+hairy/bald
+hard/easy
+heavy/light
+here/there
+his/hers
+hot/cold
+hope/despair
+huge/small
+interesting/dull
+kids/adults
+kind/mean
+length/width
+lend/take
+less/more
+level/uneven
+live/die
+live/dead
+long/short
+lost/found
+man/woman
+many/few
+men/women
+near/far
+neat/messy
+never/always
+nice/mean
+odd/even
+old/new
+old/young
+open/close
+open/shut
+ornate/simple
+part/whole
+past/present
+perfect/flawed
+pretty/ugly
+prince/princess
+pre/post
+push/pull
+quiet/noisy
+quick/slow
+ran/walked
+remember/forget
+rise/fall
+rise/set
+run/walk
+sat/stood
+save/spend
+silly/serious
+sit/stand
+straight/wavy
+strong/weak
+sunny/cloudy
+tall/short
+tame/wild
+theirs/yours
+true/false
+under/over
+useless/useful
+was/is
+water/ice
+wonder/know
+yes/no
+yep/nope
+
+
+absence 	presence
+accept 	refuse
+accurate 	inaccurate
+advantage 	disadvantage
+alive 	dead
+always 	never
+ancient 	modern
+answer 	question, query
+approval 	disapproval
+approached 	receded, departed
+abundant 	scarce
+admit 	deny
+advance 	retreat, retire
+artificial 	natural
+arrival 	departure
+ascend 	descend
+attack 	defense
+attractive 	repulsive
+attention 	inattention
+asleep 	awake
+ally 	enemy
+agree 	disagree
+bad 	good
+backward 	forward, onward
+bend 	straighten
+beautiful 	ugly
+beginning 	ending
+below 	above
+bent 	straight
+big 	small, little
+blunt 	sharp
+better 	worse
+best 	worst
+blame 	praise
+bless 	curse
+bitter 	sweet
+borrow 	lend
+bravery 	cowardice
+build 	destroy, demolish
+bold 	timid, meek
+bright 	dull
+broad 	narrow
+clear 	vague, cloudy
+careful 	rush, careless
+calm 	troubled
+capable 	incapable
+captivity 	freedom, liberty
+cellar 	attic
+cheap 	dear, expensive
+close 	distant
+clever 	stupid
+cold 	hot
+combine 	separate
+clockwise 	anti-clockwise
+correct 	incorrect
+conceal 	reveal
+come 	go
+common 	rare
+comfort 	discomfort
+courage 	cowardice
+cruel 	kind
+courteous 	discourteous, rude
+cunning 	simple
+dainty 	clumsy
+danger 	safety
+dark 	light
+deep 	shallow
+decrease 	increase
+definite 	indefinite
+demand 	supply
+despair 	hope
+disappear 	appear
+disease 	health
+discourage 	encourage
+dismal 	cheerful
+doctor 	patient
+dry 	wet
+dull 	clear, bright
+dusk 	dawn
+early 	late
+easy 	difficult
+ebb 	flow
+East 	West
+economise 	waste
+encourage 	discourage
+entrance 	exit
+employer 	employee
+empty 	full
+excited 	calm
+end 	beginning
+expand 	contract
+expensive 	inexpensive, cheap
+export 	import
+exterior 	interior
+external 	internal
+fail 	succeed
+false 	true
+feeble 	sturdy, strong, powerful
+foolish 	wise
+fast 	slow
+few 	many
+famous 	unknown
+forelegs 	hind legs
+fat 	thin
+find 	lose
+first 	last
+freedom 	captivity
+fold 	unfold
+frequent 	seldom
+forget 	remember
+found 	lost
+fresh 	stale
+friend 	enemy
+fortunate 	unfortunate
+frank 	secretive
+full 	empty
+generous 	mean
+gentle 	rough
+gather 	distribute
+glad 	sorry
+gloomy 	cheerful
+giant 	dwarf, pygmy
+granted 	refused
+great 	minute, small, little
+guardian 	ward
+guest 	host
+guilty 	innocent
+happy 	sad, miserable
+hard 	soft
+harmful 	harmless
+hasten 	dawdle
+hate 	love
+healthy 	unhealthy, ill, diseased
+here 	there
+heavy 	light
+height 	depth
+hero 	coward
+hill 	valley
+horizontal 	vertical
+hinder 	aid, help
+honest 	dishonest
+humble 	proud
+hunger 	thirst
+imitation 	genuine
+immense 	tiny, minute
+imprison 	free
+include 	exclude
+increase 	decrease
+inhabited 	uninhabited
+inferior 	superior
+inside 	outside
+intelligent 	unintelligent, stupid
+inhale 	exhale
+interior 	exterior, outside
+interesting 	uninteresting, dull
+internal 	external
+intentional 	accidental
+join 	separate
+junior 	senior
+justice 	injustice
+king 	subject
+knowledge 	ignorance
+laugh 	cry
+lawful 	unlawful
+lazy 	industrious, energetic
+land 	sea
+landlord 	tenant
+large 	little, small
+last 	first
+lawyer 	client
+lecturer 	student
+lender 	borrower
+lengthen 	shorten
+left 	right
+less 	more
+light 	dark, heavy
+like 	dislike, unlike
+likely 	unlikely
+leader 	follower
+little 	large, much, big
+lofty 	lowly
+long 	short
+loud 	soft
+loss 	find, win
+low 	high
+loyal 	disloyal
+mad 	sane
+magnetize 	demagnetize
+master 	servant
+mature 	immature
+maximum 	minimum
+me 	you
+merry 	mirthless, sad
+minority 	majority
+miser 	spendthrift
+misunderstand 	understand
+narrow 	wide
+near 	far, distant
+neat 	untidy
+new 	old
+night 	day
+noisy 	quiet
+North 	South
+obedient 	disobedient
+odd 	even
+offer 	refuse
+open 	shut
+optimist 	pessimist
+out 	in
+parent 	child
+past 	present
+patient 	impatient
+peace 	war
+permanent 	temporary
+please 	displease
+plentiful 	scarce
+poetry 	prose
+possible 	impossible
+poverty 	wealth
+powerful 	feeble, weak
+polite 	impolite, rude
+private 	public
+prudent 	imprudent
+pretty 	unsightly, ugly
+pure 	impure
+qualified 	unqualified
+rapid 	slow
+regularly 	irregularly
+rich 	poor
+right 	wrong, left
+rigid 	pliable, soft
+rough 	smooth
+satisfactory 	unsatisfactory
+security 	insecurity
+scatter 	collect
+serious 	trivial
+second-hand 	new
+sense 	nonsense
+shopkeeper 	customer
+singular 	plural
+simple 	complicated
+slim 	thick, stout
+solid 	liquid
+sober 	drunk
+speaker 	listener
+sour 	sweet
+sorrow 	joy
+sow 	reap
+stand 	lie
+straight 	crooked
+strong 	weak
+success 	failure
+sunny 	cloudy
+take 	give
+tall 	short
+tame 	wild
+teacher 	pupil
+thick 	thin
+tight 	slack, loose
+top 	bottom
+transparent 	opaque
+truth 	untruth, lie
+up 	down
+vacant 	occupied
+valuable 	valueless
+victory 	defeat
+virtue 	vice
+visible 	invisible
+voluntary 	compulsory
+vowel 	consonant
+wax 	wane
+wisdom 	folly
+within 	without

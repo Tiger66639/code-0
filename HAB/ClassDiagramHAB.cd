@@ -1,0 +1,1111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="Ook een 'CompleteSequence' instructie maken.  Gebruikt principe van babbage's difference engine.&#xD;&#xA;zie: http://en.wikipedia.org/wiki/Difference_engine voor algoritme">
+    <Position X="23.223" Y="15.07" Height="1.24" Width="3.085" />
+  </Comment>
+  <Comment CommentText="Why is the number 3 so important.  CompleteSequence uses 3 everywhere: needs 3 values to compute, using 3 steps.&#xD;&#xA;The brain also uses 3 steps to translate data,...">
+    <Position X="4.674" Y="16.752" Height="1.301" Width="2.862" />
+  </Comment>
+  <Class Name="JaStDev.HAB.Brain" Collapsed="true">
+    <Position X="8.5" Y="13" Width="1.5" />
+    <AssociationLine Name="Storage" Type="JaStDev.HAB.ILongtermMem">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.11" Y="0.112" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>QgJBoIQIAAsjECEQDQOIVAAKAUXEIACiIAAEhQFMCiA=</HashCode>
+      <FileName>Brain\Brain.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Current" />
+      <Property Name="Storage" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="JaStDev.HAB.Neuron" Collapsed="true">
+    <Position X="15.25" Y="11.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="Rules" Type="JaStDev.HAB.Expression" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="15.25" Y="11.469" />
+        <Point X="12.438" Y="11.469" />
+        <Point X="12.438" Y="10.941" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.158" Y="0.288" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Actions" Type="JaStDev.HAB.Expression" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="15.25" Y="11.328" />
+        <Point X="13.25" Y="11.328" />
+        <Point X="13.25" Y="10.941" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.836" Y="0.192" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>EkBqIgOEICKggEAOIEAsCCACESJIIEBAQAMAgERCIRA=</HashCode>
+      <FileName>Brain\Neuron.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Rules" />
+      <Property Name="Actions" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="JaStDev.HAB.Link" Collapsed="true">
+    <Position X="15.75" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ggACABgBBAAAAAAAEACQAABCABBKIAAAAAACgEGAAgA=</HashCode>
+      <FileName>Brain\Link.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="JaStDev.HAB.Expression" Collapsed="true">
+    <Position X="12" Y="10.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Neuron" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="15.312" Y="11.25" />
+        <Point X="15.312" Y="10.625" />
+        <Point X="13.5" Y="10.625" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\Expression.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.Processor" Collapsed="true">
+    <Position X="16.25" Y="9.5" Width="1.5" />
+    <AssociationLine Name="Stack" Type="JaStDev.HAB.Neuron" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="17" Y="10.062" />
+        <Point X="17" Y="10.437" />
+        <Point X="16.583" Y="10.437" Type="JumpStart" />
+        <Point X="16.417" Y="10.437" Type="JumpEnd" />
+        <Point X="16.188" Y="10.437" />
+        <Point X="16.188" Y="11.25" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-0.382" Y="0.704" Height="0.182" Width="0.847" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>BAAASEABCIAHONATRwQAACVogEqoiAAAYFBEAAIArNA=</HashCode>
+      <FileName>Processor\Processor.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="NeuronToSolve" />
+      <Property Name="SplitData" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Stack" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="JaStDev.HAB.Sin" Collapsed="true">
+    <Position X="10.25" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAIAAAAAAAQIAAAAAAACAAIAAA=</HashCode>
+      <FileName>Sins\Sin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.TextSin" Collapsed="true">
+    <Position X="9.25" Y="18" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAABAAAAAEIQAgAIEAQAgAAQAAAAAgAAEARoAAA=</HashCode>
+      <FileName>Sins\TextSin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.TextNeuron" Collapsed="true">
+    <Position X="10.25" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAEAAAAAAEAAAAACACAAAAAAAAAAAAiABAIAA=</HashCode>
+      <FileName>Brain\TextNeuron.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.Instruction" Collapsed="true">
+    <Position X="18.5" Y="12.5" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Neuron" FixedFromPoint="true">
+      <Path>
+        <Point X="16.75" Y="11.5" />
+        <Point X="17.125" Y="11.5" />
+        <Point X="17.125" Y="12.846" />
+        <Point X="18.5" Y="12.846" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQEAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Instruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.KnoledgeNeuron" Collapsed="true">
+    <Position X="18.5" Y="11.5" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Neuron" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="16.75" Y="11.5" />
+        <Point X="17.125" Y="11.5" />
+        <Point X="17.125" Y="11.812" />
+        <Point X="18.5" Y="11.812" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Brain\KnoledgeNeuron.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.PushInstruction" Collapsed="true">
+    <Position X="21.25" Y="15.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Instruction" FixedFromPoint="true">
+      <Path>
+        <Point X="20" Y="12.875" />
+        <Point X="20.375" Y="12.875" />
+        <Point X="20.375" Y="15.596" />
+        <Point X="21.25" Y="15.596" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Processor\Stack\PushInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.PopInstruction" Collapsed="true">
+    <Position X="21.25" Y="16.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Instruction" FixedFromPoint="true">
+      <Path>
+        <Point X="20" Y="12.875" />
+        <Point X="20.375" Y="12.875" />
+        <Point X="20.375" Y="16.596" />
+        <Point X="21.25" Y="16.596" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Processor\Stack\PopInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.NeuronCluster" Collapsed="true">
+    <Position X="18.5" Y="10.5" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Neuron" FixedFromPoint="true">
+      <Path>
+        <Point X="16.75" Y="11.531" />
+        <Point X="17.125" Y="11.531" />
+        <Point X="17.125" Y="10.846" />
+        <Point X="18.5" Y="10.846" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAgEBCAAAAAAAAAEACACAAAAQAAAAABAgABAIgA=</HashCode>
+      <FileName>Brain\NeuronCluster.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.LongtermMem" Collapsed="true">
+    <Position X="7" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAABAAAAAEAAAEAAAAAQAAhAAAAIEA=</HashCode>
+      <FileName>Storage\LongtermMem.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="JaStDev.HAB.DoubleNeuron" Collapsed="true">
+    <Position X="12.25" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAIAAEAAAAACACAAAAAAAAAAAggABAIAA=</HashCode>
+      <FileName>Brain\DoubleNeuron.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.ResultExpression" Collapsed="true">
+    <Position X="9" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\ResultExpression.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.SearchExpression" Collapsed="true">
+    <Position X="9" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAACAAAAAACAAAEAAAAQAAEAAAEAAAAA=</HashCode>
+      <FileName>Expressions\SearchExpression.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.ConditionalExpression" Collapsed="true">
+    <Position X="15.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAACAAAAEAAAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\ConditionalExpression.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.ConditionalStatement" Collapsed="true">
+    <Position X="11.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>YAAAAAAAAABMAAQUABAAACAAAABAAAQAAACAAAAAAAA=</HashCode>
+      <FileName>Expressions\ConditionalStatement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.Statement" Collapsed="true">
+    <Position X="13.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAQEAAAAACAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\Statement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.BoolExpression" Collapsed="true">
+    <Position X="8" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAIAAAAAQGAAAAAiAAACAAAAAAAEABAAAAIAA=</HashCode>
+      <FileName>Expressions\BoolExpression.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.InsertLinkInstruction" Collapsed="true">
+    <Position X="21.25" Y="17.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Instruction" FixedFromPoint="true">
+      <Path>
+        <Point X="20" Y="12.875" />
+        <Point X="20.375" Y="12.875" />
+        <Point X="20.375" Y="17.596" />
+        <Point X="21.25" Y="17.596" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAEAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Insert\InsertLinkInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.Variable" Collapsed="true">
+    <Position X="13" Y="4.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.SimpleResultExpression" FixedFromPoint="true">
+      <Path>
+        <Point X="10.75" Y="5.75" />
+        <Point X="10.75" Y="5.316" />
+        <Point X="13.75" Y="5.316" />
+        <Point X="13.75" Y="4.941" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAIAAAAAAEAAAAACAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Expressions\Variable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.ResultStatement" Collapsed="true">
+    <Position X="7.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIIAAAAAAEAAAAACAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\ResultStatement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.ResultInstruction" Collapsed="true">
+    <Position X="21.25" Y="23" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Instruction" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="20" Y="12.875" />
+        <Point X="20.375" Y="12.875" />
+        <Point X="20.375" Y="23.312" />
+        <Point X="21.25" Y="23.312" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\ResultInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.CompleteSequence" Collapsed="true">
+    <Position X="27.75" Y="17.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.MultiResultInstruction" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="26.25" Y="17.5" />
+        <Point X="26.625" Y="17.5" />
+        <Point X="26.625" Y="17.688" />
+        <Point X="27.75" Y="17.688" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAQAAACAAAAAAAAAIAAAAAAIAAAA=</HashCode>
+      <FileName>Instructions\CompleteSequence.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.IndexOfChildInstruction" Collapsed="true">
+    <Position X="27.75" Y="20.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.SingleResultInstruction" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="26" Y="22.062" />
+        <Point X="26.375" Y="22.062" />
+        <Point X="26.375" Y="20.625" />
+        <Point X="27.75" Y="20.625" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\IndexOf\IndexOfChildInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.CountInstruction" Collapsed="true">
+    <Position X="27.75" Y="21.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.SingleResultInstruction" FixedFromPoint="true">
+      <Path>
+        <Point X="26" Y="22.125" />
+        <Point X="26.375" Y="22.125" />
+        <Point X="26.375" Y="21.596" />
+        <Point X="27.75" Y="21.596" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\CountInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.IntNeuron" Collapsed="true">
+    <Position X="14.25" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAIAAEAAAAACACAAAAAAAAAAAggABAIAA=</HashCode>
+      <FileName>Brain\IntNeuron.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.AddInfoInstruction" Collapsed="true">
+    <Position X="21.25" Y="5.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Instruction" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="20" Y="12.875" />
+        <Point X="20.375" Y="12.875" />
+        <Point X="20.375" Y="5.625" />
+        <Point X="21.25" Y="5.625" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Add\AddInfoInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.NewInstruction" Collapsed="true">
+    <Position X="27.75" Y="22.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.SingleResultInstruction" FixedFromPoint="true">
+      <Path>
+        <Point X="26" Y="22.188" />
+        <Point X="26.292" Y="22.188" Type="JumpStart" />
+        <Point X="26.458" Y="22.188" Type="JumpEnd" />
+        <Point X="26.625" Y="22.188" />
+        <Point X="26.625" Y="22.596" />
+        <Point X="27.75" Y="22.596" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Neurons\NewInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.RemoveChildInstruction" Collapsed="true">
+    <Position X="21.25" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Remove\RemoveChildInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.MakeClusterInstruction" Collapsed="true">
+    <Position X="27.75" Y="19.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.SingleResultInstruction" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="26" Y="22.062" />
+        <Point X="26.375" Y="22.062" />
+        <Point X="26.375" Y="19.688" />
+        <Point X="27.75" Y="19.688" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Neurons\MakeClusterInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.PeekInstruction" Collapsed="true">
+    <Position X="27.75" Y="23.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.SingleResultInstruction" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="26" Y="22.125" />
+        <Point X="26.375" Y="22.125" />
+        <Point X="26.375" Y="23.5" />
+        <Point X="27.75" Y="23.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Processor\Stack\PeekInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.OutputInstruction" Collapsed="true">
+    <Position X="21.25" Y="14.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Instruction" FixedFromPoint="true">
+      <Path>
+        <Point X="20" Y="12.875" />
+        <Point X="20.375" Y="12.875" />
+        <Point X="20.375" Y="14.596" />
+        <Point X="21.25" Y="14.596" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Processor\OutputInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.MoveInstruction" Collapsed="true">
+    <Position X="23.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Move-Copy\MoveChildrenInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.DuplicateInstruction" Collapsed="true">
+    <Position X="27.75" Y="24.5" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.SingleResultInstruction" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="26" Y="22.062" />
+        <Point X="26.375" Y="22.062" />
+        <Point X="26.375" Y="24.75" />
+        <Point X="27.75" Y="24.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Neurons\DuplicateInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.DeleteInstruction" Collapsed="true">
+    <Position X="21.25" Y="13.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Instruction" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="20" Y="12.875" />
+        <Point X="20.375" Y="12.875" />
+        <Point X="20.375" Y="13.5" />
+        <Point X="21.25" Y="13.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Neurons\DeleteInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.Assignment" Collapsed="true">
+    <Position X="7" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQEAAAAACAAACAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>Expressions\Assignment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.SingleResultInstruction" Collapsed="true">
+    <Position X="24.5" Y="21.75" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.ResultInstruction" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="22.75" Y="23.5" />
+        <Point X="23.125" Y="23.5" />
+        <Point X="23.125" Y="22.125" />
+        <Point X="24.5" Y="22.125" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AABAAAAAIAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\SingleResultInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.MultiResultInstruction" Collapsed="true">
+    <Position X="24.75" Y="17.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.ResultInstruction" FixedFromPoint="true">
+      <Path>
+        <Point X="22.75" Y="23.25" />
+        <Point X="23.125" Y="23.25" />
+        <Point X="23.125" Y="17.596" />
+        <Point X="24.75" Y="17.596" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\MultiResultInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.AddChildInstruction" Collapsed="true">
+    <Position X="21.25" Y="6.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Instruction" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="20" Y="12.875" />
+        <Point X="20.375" Y="12.875" />
+        <Point X="20.375" Y="6.562" />
+        <Point X="21.25" Y="6.562" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Add\AddChildInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.AddLinkInstruction" Collapsed="true">
+    <Position X="21.25" Y="4.5" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Instruction" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="20" Y="12.875" />
+        <Point X="20.375" Y="12.875" />
+        <Point X="20.375" Y="5.062" />
+        <Point X="21.25" Y="5.062" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Add\AddLinkInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.ChangeLinkFrom" Collapsed="true">
+    <Position X="21.25" Y="18.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Instruction" FixedFromPoint="true">
+      <Path>
+        <Point X="20" Y="12.875" />
+        <Point X="20.375" Y="12.875" />
+        <Point X="20.375" Y="18.596" />
+        <Point X="21.25" Y="18.596" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Change\ChangeLinkFrom.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.IndexOfInfoInstruction" Collapsed="true">
+    <Position X="27.75" Y="18.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.SingleResultInstruction" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="26" Y="22.062" />
+        <Point X="26.375" Y="22.062" />
+        <Point X="26.375" Y="18.625" />
+        <Point X="27.75" Y="18.625" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AEBAAAAAAAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\IndexOf\IndexOfInfoInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.IndexOfLinkInstruction" Collapsed="true">
+    <Position X="27.75" Y="25.5" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.SingleResultInstruction" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="26" Y="22.125" />
+        <Point X="26.375" Y="22.125" />
+        <Point X="26.375" Y="25.812" />
+        <Point X="27.75" Y="25.812" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAgAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\IndexOf\IndexOfLinkInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.InsertChildInstruction" Collapsed="true">
+    <Position X="21.25" Y="20" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Instruction" FixedFromPoint="true">
+      <Path>
+        <Point X="20" Y="12.875" />
+        <Point X="20.375" Y="12.875" />
+        <Point X="20.375" Y="20.346" />
+        <Point X="21.25" Y="20.346" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAgAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Insert\InsertChildInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.InsertInfoInstruction" Collapsed="true">
+    <Position X="21.25" Y="21" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Instruction" FixedFromPoint="true">
+      <Path>
+        <Point X="20" Y="12.875" />
+        <Point X="20.375" Y="12.875" />
+        <Point X="20.375" Y="21.346" />
+        <Point X="21.25" Y="21.346" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAEAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Insert\InsertInfoInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.MoveInfoInstruction" Collapsed="true">
+    <Position X="23.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Move-Copy\MoveInfoInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.CopyInfoInstruction" Collapsed="true">
+    <Position X="21.25" Y="8.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Instruction" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="20" Y="12.812" />
+        <Point X="20.375" Y="12.812" />
+        <Point X="20.375" Y="8.625" />
+        <Point X="21.25" Y="8.625" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAACQAAAAAACAAAAAAAAAIAAgAAAAAAAA=</HashCode>
+      <FileName>Instructions\Move-Copy\CopyInfoInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.RemoveInfoInstruction" Collapsed="true">
+    <Position X="21.25" Y="19.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Instruction" FixedFromPoint="true">
+      <Path>
+        <Point X="20" Y="12.875" />
+        <Point X="20.375" Y="12.875" />
+        <Point X="20.375" Y="19.596" />
+        <Point X="21.25" Y="19.596" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Remove\RemoveInfoInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.CopyChildrenInstruction" Collapsed="true">
+    <Position X="21.25" Y="7.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Instruction" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="20" Y="12.812" />
+        <Point X="20.375" Y="12.812" />
+        <Point X="20.375" Y="7.562" />
+        <Point X="21.25" Y="7.562" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQQAAAAACAAAAAAAAAIAAgAAAAAAAA=</HashCode>
+      <FileName>Instructions\Move-Copy\CopyChildrenInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.ChangeLinkMeaning" Collapsed="true">
+    <Position X="21.25" Y="10.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Instruction" FixedFromPoint="true">
+      <Path>
+        <Point X="20" Y="12.812" />
+        <Point X="20.375" Y="12.812" />
+        <Point X="20.375" Y="10.596" />
+        <Point X="21.25" Y="10.596" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Change\ChangeLinkMeaning.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.ChangeLinkTo" Collapsed="true">
+    <Position X="21.25" Y="11.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Instruction" FixedFromPoint="true">
+      <Path>
+        <Point X="20" Y="12.812" />
+        <Point X="20.375" Y="12.812" />
+        <Point X="20.375" Y="11.596" />
+        <Point X="21.25" Y="11.596" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Change\ChangeLinkTo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.RemoveLinkInstruction" Collapsed="true">
+    <Position X="21.25" Y="9.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Instruction" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="20" Y="12.812" />
+        <Point X="20.375" Y="12.812" />
+        <Point X="20.375" Y="9.562" />
+        <Point X="21.25" Y="9.562" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Remove\RemoveLinkInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.CurrentFrom" Collapsed="true">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\CurrentFrom.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.CurrentTo" Collapsed="true">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\CurrentTo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.CurrentMeaning" Collapsed="true">
+    <Position X="13.25" Y="0.5" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.SystemVariable" FixedToPoint="true">
+      <Path>
+        <Point X="12.25" Y="2.5" />
+        <Point X="12.25" Y="1.566" />
+        <Point X="14" Y="1.566" />
+        <Point X="14" Y="1.191" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\CurrentMeaning.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.CurrentInfo" Collapsed="true">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\CurrentInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.SystemVariable" Collapsed="true">
+    <Position X="11.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\SystemVariable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.ValueNeuron" Collapsed="true">
+    <Position X="12.25" Y="13.5" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Neuron" FixedFromPoint="true">
+      <Path>
+        <Point X="15.25" Y="11.688" />
+        <Point X="14.875" Y="11.688" />
+        <Point X="14.875" Y="13.846" />
+        <Point X="13.75" Y="13.846" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Brain\ValueNeuron.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.ExpressionsBlock" Collapsed="true">
+    <Position X="15.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAQEAAAAACAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\ExpressionsBlock.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.TimerNeuron" Collapsed="true">
+    <Position X="11.25" Y="18" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAEIAIAAACAAAAAgAAAABAgABIIAA=</HashCode>
+      <FileName>Brain\TimerNeuron.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.CurrentSin" Collapsed="true">
+    <Position X="15.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\CurrentSin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.SuspendInstruction" Collapsed="true">
+    <Position X="21.25" Y="24" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Instruction" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="20" Y="12.875" />
+        <Point X="20.375" Y="12.875" />
+        <Point X="20.375" Y="24.312" />
+        <Point X="21.25" Y="24.312" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAgAAAAAAIAAAAAAgAAAA=</HashCode>
+      <FileName>Instructions\Processor\SuspendInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.AwakeInstruction" Collapsed="true">
+    <Position X="21.25" Y="25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Instruction" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="20" Y="12.875" />
+        <Point X="20.375" Y="12.875" />
+        <Point X="20.375" Y="25.375" />
+        <Point X="21.25" Y="25.375" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Processor\AwakeInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.WarningInstruction" Collapsed="true">
+    <Position X="21.25" Y="26" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Instruction" FixedToPoint="true">
+      <Path>
+        <Point X="19.25" Y="13.191" />
+        <Point X="19.25" Y="26.375" />
+        <Point X="21.25" Y="26.375" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Errors-warnings\WarningInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.ErrorInstruction" Collapsed="true">
+    <Position X="21.25" Y="27" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Instruction" FixedToPoint="true">
+      <Path>
+        <Point X="19.25" Y="13.191" />
+        <Point X="19.25" Y="27.312" />
+        <Point X="21.25" Y="27.312" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Errors-warnings\ErrorInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.ExecuteInstruction" Collapsed="true">
+    <Position X="27.75" Y="16.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.MultiResultInstruction" FixedFromPoint="true">
+      <Path>
+        <Point X="26.25" Y="17.5" />
+        <Point X="26.625" Y="17.5" />
+        <Point X="26.625" Y="16.596" />
+        <Point X="27.75" Y="16.596" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Processor\ExecuteInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.GetChildrenInstruction" Collapsed="true">
+    <Position X="27.75" Y="15.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.MultiResultInstruction" FixedFromPoint="true">
+      <Path>
+        <Point X="26.25" Y="17.5" />
+        <Point X="26.625" Y="17.5" />
+        <Point X="26.625" Y="15.596" />
+        <Point X="27.75" Y="15.596" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Get\GetChildrenInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.TypeOfInstruction" Collapsed="true">
+    <Position X="27.75" Y="13.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.MultiResultInstruction" FixedFromPoint="true">
+      <Path>
+        <Point X="26.25" Y="17.5" />
+        <Point X="26.625" Y="17.5" />
+        <Point X="26.625" Y="13.596" />
+        <Point X="27.75" Y="13.596" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Neurons\TypeOfInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.GetFirstClusterInstruction" Collapsed="true">
+    <Position X="27.75" Y="26.5" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.SingleResultInstruction" FixedFromPoint="true">
+      <Path>
+        <Point X="26" Y="22.125" />
+        <Point X="26.375" Y="22.125" />
+        <Point X="26.375" Y="26.846" />
+        <Point X="27.75" Y="26.846" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Get\GetFirstClusterInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.GetClustersInstruction" Collapsed="true">
+    <Position X="27.75" Y="14.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.MultiResultInstruction" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="26.25" Y="17.5" />
+        <Point X="26.625" Y="17.5" />
+        <Point X="26.625" Y="14.5" />
+        <Point X="27.75" Y="14.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Get\GetClustersInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.GetChildrenOfTypeInstruction" Collapsed="true">
+    <Position X="27.75" Y="12.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.MultiResultInstruction" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="26.25" Y="17.5" />
+        <Point X="26.625" Y="17.5" />
+        <Point X="26.625" Y="12.562" />
+        <Point X="27.75" Y="12.562" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Get\GetChildrenOfTypeInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.GetFirstOutInstruction" Collapsed="true">
+    <Position X="27.75" Y="27.5" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.SingleResultInstruction" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="26" Y="22.125" />
+        <Point X="26.375" Y="22.125" />
+        <Point X="26.375" Y="27.75" />
+        <Point X="27.75" Y="27.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Get\GetFirstOutInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.SetFirstOutInstruction" Collapsed="true">
+    <Position X="21.25" Y="28" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.Instruction" FixedToPoint="true">
+      <Path>
+        <Point X="19.25" Y="13.191" />
+        <Point X="19.25" Y="28.375" />
+        <Point X="21.25" Y="28.375" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Set\SetFirstOutInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.SplitInstruction" Collapsed="true">
+    <Position X="21.25" Y="29" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Processor\Split\SplitInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.ByRefExpression" Collapsed="true">
+    <Position X="11" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAEAAAAACAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\ByRefExpression.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.SimpleResultExpression" Collapsed="true">
+    <Position X="10" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\SimpleResultExpression.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.InterleafInstruction" Collapsed="true">
+    <Position X="27.75" Y="11.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.MultiResultInstruction" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="26.25" Y="17.5" />
+        <Point X="26.625" Y="17.5" />
+        <Point X="26.625" Y="11.625" />
+        <Point X="27.75" Y="11.625" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Set Operations\InterleafInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.UnionInstruction" Collapsed="true">
+    <Position X="27.75" Y="10.25" Width="1.5" />
+    <InheritanceLine Type="JaStDev.HAB.MultiResultInstruction" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="26.25" Y="17.5" />
+        <Point X="26.625" Y="17.5" />
+        <Point X="26.625" Y="10.688" />
+        <Point X="27.75" Y="10.688" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Set Operations\UnionInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.HeadData" Collapsed="true">
+    <Position X="18.25" Y="8.25" Width="1.5" />
+    <AssociationLine Name="Requestor" Type="JaStDev.HAB.SplitData" FixedToPoint="true">
+      <Path>
+        <Point X="18.938" Y="8.25" />
+        <Point X="18.938" Y="7.062" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAiAAAAAAAAAAAAAAIAAAAAAAAQAAQAA=</HashCode>
+      <FileName>Processor\HeadData.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Callback" />
+      <Property Name="ResultList" />
+      <Property Name="Requestor" />
+      <Property Name="Previous" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="SubProcessors" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="JaStDev.HAB.SplitData" Collapsed="true">
+    <Position X="18.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAEABA=</HashCode>
+      <FileName>Processor\SplitData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.DecreaseWeightInstruction" Collapsed="true">
+    <Position X="21.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Processor\Weight\DecreaseWeightInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.GetMaxWeightInstruction" Collapsed="true">
+    <Position X="27.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Processor\Weight\GetMaxWeightInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.GetWeightInstruction" Collapsed="true">
+    <Position X="27.75" Y="28.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Processor\Weight\GetWeightInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.IncreaseWeightInstruction" Collapsed="true">
+    <Position X="21.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Processor\Weight\IncreaseWeightInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.Global" Collapsed="true">
+    <Position X="14" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAIAAAAAAAACAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\Global.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="System.UInt64" Collapsed="true">
+    <Position X="8.75" Y="10" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Struct>
+  <Interface Name="JaStDev.HAB.ILongtermMem" Collapsed="true">
+    <Position X="8.5" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAABAAAAAEAAAEAAAAAAAAhAAAAIEA=</HashCode>
+      <FileName>Storage\ILongtermMem.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

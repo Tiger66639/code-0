@@ -1,0 +1,364 @@
+<?xml version="1.0"?>
+<ArrayOfReflectionSinEntryPoint xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ReflectionSinEntryPoint>
+    <MethodName>CloseProcess</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>CmdShell.CmdShell</TypeName>
+    <ID>9627</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>StartProcess</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>CmdShell.CmdShell</TypeName>
+    <ID>9633</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>OpenDocument</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>CmdShell.CmdShell</TypeName>
+    <ID>9629</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>Decrypt</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.File</TypeName>
+    <ID>9634</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>Delete</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.File</TypeName>
+    <ID>5911</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>Copy</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.File</TypeName>
+    <ID>5912</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>Encrypt</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.File</TypeName>
+    <ID>5913</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>Exists</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.File</TypeName>
+    <ID>5916</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetCreationTime</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.File</TypeName>
+    <ID>5915</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetLastAccessTime</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.File</TypeName>
+    <ID>5914</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetLastWriteTime</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.File</TypeName>
+    <ID>5917</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>ReadAllText</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.File</TypeName>
+    <ID>1784</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>WriteAllText</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.File</TypeName>
+    <ID>1789</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>ReadAllLines</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.File</TypeName>
+    <ID>1788</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>AppendAllText</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.File</TypeName>
+    <ID>9315</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>Move</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.File</TypeName>
+    <ID>9317</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>ChangeExtension</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.Path</TypeName>
+    <ID>9319</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetDirectoryName</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.Path</TypeName>
+    <ID>9320</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetInvalidPathChars</MethodName>
+    <ParameterTypes />
+    <TypeName>System.IO.Path</TypeName>
+    <ID>9321</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetInvalidFileNameChars</MethodName>
+    <ParameterTypes />
+    <TypeName>System.IO.Path</TypeName>
+    <ID>9326</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetExtension</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.Path</TypeName>
+    <ID>9327</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetFullPath</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.Path</TypeName>
+    <ID>9335</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetFileName</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.Path</TypeName>
+    <ID>9339</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetFileNameWithoutExtension</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.Path</TypeName>
+    <ID>9338</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetPathRoot</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.Path</TypeName>
+    <ID>9334</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetTempPath</MethodName>
+    <ParameterTypes />
+    <TypeName>System.IO.Path</TypeName>
+    <ID>9337</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetRandomFileName</MethodName>
+    <ParameterTypes />
+    <TypeName>System.IO.Path</TypeName>
+    <ID>9336</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetTempFileName</MethodName>
+    <ParameterTypes />
+    <TypeName>System.IO.Path</TypeName>
+    <ID>9322</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>HasExtension</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.Path</TypeName>
+    <ID>9333</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>IsPathRooted</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.Path</TypeName>
+    <ID>9332</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>Combine</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.Path</TypeName>
+    <ID>9328</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>Combine</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.Path</TypeName>
+    <ID>9331</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>Combine</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.Path</TypeName>
+    <ID>9330</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>Exists</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.Directory</TypeName>
+    <ID>9329</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetCreationTime</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.Directory</TypeName>
+    <ID>9316</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetFiles</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.Directory</TypeName>
+    <ID>9318</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetFiles</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.Directory</TypeName>
+    <ID>7585</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetDirectories</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.Directory</TypeName>
+    <ID>7588</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetDirectories</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.Directory</TypeName>
+    <ID>7587</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetLogicalDrives</MethodName>
+    <ParameterTypes />
+    <TypeName>System.IO.Directory</TypeName>
+    <ID>1790</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetDirectoryRoot</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.Directory</TypeName>
+    <ID>7576</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetCurrentDirectory</MethodName>
+    <ParameterTypes />
+    <TypeName>System.IO.Directory</TypeName>
+    <ID>1622</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>SetCurrentDirectory</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.Directory</TypeName>
+    <ID>1623</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>Move</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.Directory</TypeName>
+    <ID>9632</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>Delete</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>System.IO.Directory</TypeName>
+    <ID>9636</ID>
+  </ReflectionSinEntryPoint>
+</ArrayOfReflectionSinEntryPoint>

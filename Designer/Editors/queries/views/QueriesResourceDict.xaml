@@ -1,0 +1,60 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+                    xmlns:q="clr-namespace:JaStDev.HAB.Queries;assembly=QuerySupport"
+                    xmlns:Ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls"
+                    xmlns:cq="clr-namespace:JaStDev.HAB.Queries;assembly=CustomConduitSupport"><!--xmlns:Ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls"-->
+
+
+    <!--default template for explorer type's extra filtering info.-->
+    <DataTemplate DataType="{x:Type q:ExplorerPipe}">
+        <Grid Width="150">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0"
+                       HorizontalAlignment="Right"
+                       Margin="8,0,4,0"
+                       VerticalAlignment="Center">
+                From:
+            </TextBlock>
+            <TextBox Grid.Column="1"
+                     VerticalAlignment="Stretch"
+                     Grid.Row="0"
+                     Text="{Binding Path=LowerRange, UpdateSourceTrigger=PropertyChanged}"
+                     Margin="0,4,8,0"
+                     ToolTip="Specify the id of the first item to process." />
+
+            <TextBlock Grid.Row="1"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       Margin="8,0,4,0">
+                To:
+            </TextBlock>
+            <TextBox Grid.Column="1"
+                     VerticalAlignment="Stretch"
+                     Grid.Row="1"
+                     Margin="0,4,8,8"
+                     Text="{Binding Path=UpperRange, UpdateSourceTrigger=PropertyChanged}"
+                     ToolTip="Specify the id of the last item to process." />
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type self:CustomConduitSelector}">
+        <Ctrls:CtrlCustomConduitSelector DataContext="{Binding }"
+                                         Margin="8" />
+    </DataTemplate>
+
+    <Style x:Key="QueryHeaderBorderStyle" TargetType="{x:Type Border}">
+        <Setter Property="BorderThickness" Value="0,0,1,0" />
+        <Setter Property="BorderBrush" Value="{StaticResource GridViewColumnHeaderBackground}" />
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+
+</ResourceDictionary>

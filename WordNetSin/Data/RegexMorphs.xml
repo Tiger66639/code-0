@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfRegexDef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <RegexDef>
+    <RegEx>^(?'result'[\w]+)(?'after1'ing)$</RegEx>
+    <ID>247</ID>
+    <POS>v</POS>
+  </RegexDef>
+  <RegexDef>
+    <RegEx>^(?'result'[\w]+)(?'after1's)$</RegEx>
+    <ID>247</ID>
+    <POS>v</POS>
+  </RegexDef>
+  <RegexDef>
+    <RegEx>^(?'result'\[\w]+)(?'after1'ed)$</RegEx>
+    <ID>247</ID>
+    <POS>v</POS>
+  </RegexDef>
+  <RegexDef>
+    <RegEx>^(?'result'\[\w]+)(?'after1's)$</RegEx>
+    <ID>247</ID>
+    <POS>n</POS>
+  </RegexDef>
+</ArrayOfRegexDef>

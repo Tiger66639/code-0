@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>Simple Unknown</Name>
+  <Rules>
+    <Rule>
+      <Name>art unknown</Name>
+      <Patterns>
+        <Pattern><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph><Run FontFamily="Segoe UI" FontSize="12" xml:lang="nl-be" xml:space="preserve">Note: we set the weight of the var close to that of a thesaurus. This is because an article has a lower weight then nouns, and 'a' will also be seen as a noun in the 'subject' and 'object'. If we wouldn't do this,  the wrong pattern would be triggered.</Run></Paragraph></FlowDocument><Expression>^art:art $v</Expression></Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.unknown.inv = L($art $v);
+#bot.mem.unknown.val = $v;</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>possesiveadj unknown</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^subj:adj.possesive $v</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.unknown.inv = L($subj:InvertPerson $v);
+#bot.mem.unknown.val = $v;
+#bot.mem.unknown.Path = $subj:ResolvePerson;</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>unknown</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>$v</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.unknown.inv = $v;
+#bot.mem.unknown.val = $v;</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>possesiveadj Filter unknown</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^subj:adj.possesive ^subjFilter:adj $v</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.unknown.inv = L($subj:InvertPerson $subjFilter $v);
+#bot.mem.unknown.val = $v;
+#bot.mem.unknown.Filter = $subjFilter;
+#bot.mem.unknown.Path = $subj:ResolvePerson;
+</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>the unknown of matter</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^a:art $v of ( ~(simple subject).(possesiveAdj matter) | ~(simple subject).(single adj or noun) | ~(simple subject).(art noun) )</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.unknown.inv = L($a $v of #bot.mem.who.inv);
+#bot.mem.unknown.val = $v;</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>the cond of unknown</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^a:art ^p:noun of $v</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.attrib.val = $p;
+#bot.mem.unknown.inv = L($a $v of #bot.mem.who.inv);
+#bot.mem.unknown.val = $v;</Expression>
+      </ToCal>
+    </Rule>
+  </Rules>
+</Topic>

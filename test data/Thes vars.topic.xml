@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>Thes vars</Name>
+  <Rules>
+    <Rule>
+      <Name>new rule 1</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^var:noun</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>first is thes var: $var</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <DoPatterns />
+      <Evaluate />
+      <Calculate />
+    </Rule>
+    <Rule>
+      <Name>new rule 2</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^var:noun name</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>thes var with static: $var</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <DoPatterns />
+      <Evaluate />
+      <Calculate />
+    </Rule>
+    <Rule>
+      <Name>new rule 3</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>name ^var:noun</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>static with thes var: $var</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <DoPatterns />
+      <Evaluate />
+      <Calculate />
+    </Rule>
+    <Rule>
+      <Name>new rule 4</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>name ^var:noun name</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>thes in middle: $var</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <DoPatterns />
+      <Evaluate />
+      <Calculate />
+    </Rule>
+    <Rule>
+      <Name>new rule 5</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^var:noun $b</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>thes with var: $var and $b</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <DoPatterns />
+      <Evaluate />
+      <Calculate />
+    </Rule>
+    <Rule>
+      <Name>new rule 6</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>$b ^var:noun</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>var in front of thes var: $b and $var</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <DoPatterns />
+      <Evaluate />
+      <Calculate />
+    </Rule>
+  </Rules>
+  <Questions />
+</Topic>

@@ -1,0 +1,25 @@
+//test refference to case items
+Cluster main
+{
+   this()
+   {
+      if(a() == true && main == true)
+      {
+      }
+      //if((a() && b()) || (c() && d()) || ( e() && f() ) )
+     // {
+     // }
+     // if((a() || b()) && (c() || d()) && (e() || f()) )
+      //{
+      //}
+   }
+   
+   a(): bool{}
+   b(): bool{}
+   c(): bool{}
+   d(): bool{}
+   e(): bool{}
+   f(): bool{}
+}
+
+

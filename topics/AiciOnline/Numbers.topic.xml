@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>Numbers</Name>
+  <Rules>
+    <Rule>
+      <Name>Unary</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>~Number</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>\(~Numbers.Expression\) </Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals>
+        <Conditional>
+          <Condition>
+            <Expression>#bot.mem.number</Expression>
+          </Condition>
+          <Outputs />
+          <IsOutputSequenced />
+          <Do>
+            <Expression>#bot.mem.amount ;= #bot.mem.number;
+#bot.mem -= 'number';</Expression>
+          </Do>
+        </Conditional>
+      </Conditionals>
+      <Outputs />
+      <IsOutputSequenced />
+    </Rule>
+    <Rule>
+      <Name>MulNum</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^op:conj.Multiplication ~Numbers.Unary</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.amount ;= $op:GetInstruction;</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>Mul</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>~Numbers.Unary ~Numbers.MulNum {~Numbers.MulNum }</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.amount ;= #bot.mem.amount:SolveMultiplyStack;</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>AddNum</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^op:conj.addition ~Numbers.Mul</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.amount ;= $op:GetInstruction;</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>Expression</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>~Numbers.Mul ~Numbers.AddNum { ~Numbers.AddNum }</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.amount ;= #bot.mem.amount:SolveAddStack;</Expression>
+      </ToCal>
+    </Rule>
+  </Rules>
+</Topic>

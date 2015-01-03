@@ -1,0 +1,289 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.ChatBotChannelView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+             xmlns:jc="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+             xmlns:Ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls"
+             xmlns:cf="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+             jc:Help.Topic="imagechannel.html"
+             mc:Ignorable="d"
+             Background="White"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.CommandBindings>
+        <CommandBinding Command="Delete" CanExecute="Delete_CanExecute" />
+    </UserControl.CommandBindings>
+    <DockPanel>
+        <Expander Style="{StaticResource SimpleExpandDownStyle}"
+                  IsExpanded="{Binding Source={x:Static self:Properties.Settings.Default}, Path=ToolbarExpandedChatBotView, Mode=TwoWay}"
+                  Focusable="False"
+                  DockPanel.Dock="Top">
+            <ToolBar>
+                <ToggleButton IsChecked="{Binding Path=SpeechEngine.AudioOutOn}"
+                              x:Name="ToggleAudioOut"
+                              ToolTip="Turn audio output output on/off."
+                              Style="{StaticResource TlbToggleButtonsStyle}">
+                    <!--{Binding ElementName=ToggleAudioOut, Path=IsChecked, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Commchannel/Audio.png, Mode=OneWay}-->
+                    <Image Source="/Images/Commchannel/Audio_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+                <ToggleButton IsChecked="{Binding Path=SpeechEngine.AudioInOn}"
+                              x:Name="ToggleAudioIn"
+                              ToolTip="Turn audio input (microphone) on/off."
+                              Style="{StaticResource TlbToggleButtonsStyle}">
+                    <!--{Binding ElementName=ToggleAudioIn, Path=IsChecked, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Commchannel/mic.png, Mode=OneWay}-->
+                    <Image Source="/Images/Commchannel/mic_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+                <!--there are no alternates available for the moment, so hide the button, so it can't be used.-->
+                <!--Visibility="Collapsed"-->
+                <ToggleButton IsChecked="{Binding Path=ShowAdvancedInput}"
+                              x:Name="ToggleShowAdvanced"
+                              IsEnabled="{Binding Path=SpeechEngine.AudioInOn, Mode=OneWay}"
+                              ToolTip="Turn audio input (microphone) on/off."
+                              Style="{StaticResource TlbToggleButtonsStyle}">
+                    <!--{Binding ElementName=ToggleAudioIn, Path=IsChecked, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Commchannel/mic.png, Mode=OneWay}-->
+                    <Image
+                        Source="{Binding ElementName=ToggleShowAdvanced, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Commchannel/AdvancedInputView.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+                <!--Important: bind selectedItem before itemssource, this way, we don't get null when unloaded-->
+                <ComboBox ToolTip="Select the audio voice of the chatbot."
+                          DisplayMemberPath="DisplayName"
+                          SelectedItem="{Binding Path=SelectedVoice}"
+                          ItemsSource="{Binding Path=AvailableVoices, Mode=OneWay}"
+                          Focusable="False"
+                          IsEnabled="{Binding Path=IsNotSpeaking}"
+                          MinWidth="50" />
+
+                <Separator />
+                <Button ToolTip="Copy the conversation log to the clipboard"
+                        x:Name="BtnCopy"
+                        Click="BtnCopy_Click"
+                        Style="{StaticResource TlbNoFocusButtonsStyle}">
+                    <Image Source="/Images/Edit/Cut_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Button ToolTip="Save the conversation log to a text file."
+                        Click="SaveConv_Click"
+                        Style="{StaticResource TlbNoFocusButtonsStyle}">
+                    <Image Source="/Images/SaveAll_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Button Click="BtnClear_Click"
+                        Style="{StaticResource TlbNoFocusButtonsStyle}"
+                        ToolTip="Clear the conversation log.">
+                    <Image Source="/Images/Commchannel/clear.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Separator />
+                <ComboBox ItemsSource="{Binding Path=Characters}"
+                          DisplayMemberPath="Name"
+                          ToolTip="Select the character that is displayed."
+                          SelectedItem="{Binding Path=SelectedCharacter}"
+                          MinWidth="50"
+                          IsEnabled="{Binding Path=IsNotSpeaking}"
+                          Focusable="False" />
+                <Slider x:Name="SldZoomGrid"
+                        Focusable="False"
+                        Orientation="Horizontal"
+                        Minimum="0.03"
+                        Maximum="2"
+                        SmallChange="0.05"
+                        LargeChange="0.1"
+                        Width="90"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Value="{Binding Path=ZoomValue}"
+                        MouseDoubleClick="SldZoomGrid_MouseDoubleClick"
+                        ToolTip="Make the character bigger or smaller. Double-click to reset." />
+                <ToggleButton
+                    IsChecked="{Binding Path=ShowFloatingChar, Mode=TwoWay, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}"
+                    TargetUpdated="ToggleButton_TargetUpdated"
+                    SourceUpdated="ToggleButton_TargetUpdated"
+                    ToolTip="Show the character stand alone or inside the application."
+                    Style="{StaticResource TlbToggleButtonsStyle}">
+                    <Image Source="/Images/Commchannel/FloatingChar_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+                <!--<Button Click="Button_Click">test</Button>-->
+            </ToolBar>
+
+        </Expander>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition x:Name="ColHead" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="6" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <GridSplitter Grid.Row="0"
+                          Grid.Column="1"
+                          Grid.RowSpan="3"
+                          Width="6"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Stretch"
+                          x:Name="SplitVertical"
+                          Style="{StaticResource PatternEditorVerSplitter}" />
+
+            <GridSplitter Grid.Row="1"
+                          Grid.Column="0"
+                          Height="6"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Center"
+                          Style="{StaticResource PatternEditorHorSplitter}" />
+
+            <Ctrls:ChatBotDialogCtrl ItemsSource="{Binding Path=ConversationLog}"
+                                     VerticalScrollBarVisibility="Auto"
+                                     IsReadOnly="True"
+                                     BorderThickness="0" />
+
+            <DockPanel Grid.Row="2"
+                       Grid.Column="0">
+                <Button DockPanel.Dock="Right"
+                        Margin="8,0,0,0"
+                        ToolTip="Send the text to the chatbot."
+                        Click="BtnSend_Click"
+                        Height="40"
+                        Width="40"
+                        Focusable="False">
+                    <Image Source="/Images/Commchannel/send.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <TextBox Text="{Binding Path=InputText, UpdateSourceTrigger=PropertyChanged}"
+                         HorizontalScrollBarVisibility="Disabled"
+                         VerticalScrollBarVisibility="Auto"
+                         TextWrapping="Wrap"
+                         x:Name="TxtToSend"
+                         cf:FocusManager.IsFocused="True"
+                         PreviewKeyDown="TxtSend_PrvKeyDown"
+                         ToolTip="Type the text that you want to send to the chatbot here."
+                         BorderThickness="0"
+                         SpellCheck.IsEnabled="True" />
+            </DockPanel>
+
+            <ItemsControl Grid.Row="3"
+                          Grid.Column="0"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Center"
+                          Visibility="{Binding Path=ShowAdvancedInput, Converter={StaticResource BoolToVisConv}}"
+                          Background="White"
+                          ItemsSource="{Binding Path=RecordedWords}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <ComboBox ItemsSource="{Binding Path=Items}"
+                                  DisplayMemberPath="Text"
+                                  SelectedValue="{Binding Path=Text}"
+                                  SelectedValuePath="Text"
+                                  SelectionChanged="CmbAlternates_SelectionChanged" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <Grid x:Name="CharacterView"
+                  Grid.Column="2"
+                  Grid.RowSpan="5"
+                  ClipToBounds="True"
+                  SnapsToDevicePixels="True">
+                <Ctrls:ObservingCanvas ItemsSource="{Binding Path=SelectedCharacter.VisibleItems, Mode=OneWay}"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Height="{Binding Path=SelectedCharacter.Height}"
+                                       Width="{Binding Path=SelectedCharacter.Width}"
+                                       SnapsToDevicePixels="True"
+                                       UseLayoutRounding="True">
+                    <Ctrls:ObservingCanvas.LayoutTransform>
+                        <ScaleTransform x:Name="GridScaler"
+                                        ScaleX="{Binding Path=ZoomValue}"
+                                        ScaleY="{Binding Path=ZoomValue}" />
+                    </Ctrls:ObservingCanvas.LayoutTransform>
+                </Ctrls:ObservingCanvas>
+
+
+                <Expander ExpandDirection="Up"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Bottom"
+                          Margin="8,0,0,8"
+                          Style="{StaticResource NormalExpander}">
+                    <Border BorderThickness="1"
+                            BorderBrush="Black"
+                            CornerRadius="4"
+                            Background="#A5FFFFFF">
+                        <StackPanel Margin="4">
+                            <TextBlock>
+                                <Run>Author: </Run>
+                                <Run Text="{Binding Path=SelectedCharacter.Author}" />
+                            </TextBlock>
+
+                            <TextBlock PreviewMouseLeftButtonDown="Hyperlink_MouseLeftButtonDown">
+                                <Run>Website: </Run>
+                                <Hyperlink>
+                                    <Run Text="{Binding Path=SelectedCharacter.AuthorWebsite}" />
+                                </Hyperlink>
+                            </TextBlock>
+
+                            <TextBlock>
+                                <Run>Copyright: </Run>
+                                <Run Text="{Binding Path=SelectedCharacter.Copyright}" />
+                            </TextBlock>
+
+                            <TextBlock>
+                                <Run>Creation date: </Run>
+                                <Run Text="{Binding Path=SelectedCharacter.CreationDate}" />
+                            </TextBlock>
+
+                            <TextBlock>
+                                <Run>Last updated: </Run>
+                                <Run Text="{Binding Path=SelectedCharacter.LastUpdateDate}" />
+                            </TextBlock>
+
+                            <TextBlock>
+                                <Run>Rating: </Run>
+                                <Run Text="{Binding Path=SelectedCharacter.Rating}" />
+                            </TextBlock>
+
+                            <TextBlock>
+                                <Run>Sexual: </Run>
+                                <Run Text="{Binding Path=SelectedCharacter.Sexual}" />
+                            </TextBlock>
+
+                            <TextBlock>
+                                <Run>Violence: </Run>
+                                <Run Text="{Binding Path=SelectedCharacter.Violence}" />
+                            </TextBlock>
+
+                            <TextBlock>
+                                <Run>Other: </Run>
+                                <Run Text="{Binding Path=SelectedCharacter.Other}" />
+                            </TextBlock>
+
+                            <TextBlock>
+                                <Run>Description: </Run>
+                                <Run Text="{Binding Path=SelectedCharacter.Description}" />
+                            </TextBlock>
+
+                        </StackPanel>
+                    </Border>
+                </Expander>
+
+
+            </Grid>
+
+        </Grid>
+    </DockPanel>
+
+</UserControl>

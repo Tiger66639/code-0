@@ -1,0 +1,710 @@
+﻿<ResourceDictionary x:Class="JaStDev.HAB.Designer.CommonCodeItemsControls"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+                    xmlns:dd="clr-namespace:DnD"
+                    xmlns:cf="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+                    xmlns:hab="clr-namespace:JaStDev.HAB;assembly=JaStDev.HabCore"
+                    xmlns:Ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls"
+                    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
+
+
+    <Style x:Key="TlbCodeItemsImageStyle" TargetType="{x:Type Image}">
+        <Setter Property="Width" Value="16" />
+        <Setter Property="Height" Value="16" />
+    </Style>
+
+    <self:CodeListItemDragAdvisor x:Key="CodeListItemDragAdvisor" />
+    <self:CodeListItemDropAdvisor x:Key="CodeListItemDropAdvisor" />
+    <self:CodeListItemDropAdvisor x:Key="ResultCodeListItemDropAdvisor"
+                                  AllowedType="{x:Type self:CodeItemResult}" />
+
+    <self:CodeItemDragAdvisor x:Key="CodeItemDragAdvisor" />
+    <self:CodeItemDropAdvisor x:Key="CodeItemDropAdvisor" />
+    <self:CodeItemDropAdvisor x:Key="VarCodeItemDropAdvisor"
+                              AllowedType="{x:Type self:CodeItemVariable}" />
+    <!--This drop advisor excepts all items that have a result, so CodeItemResult descendents, or all neurons which are turned into static result
+   code items
+   This mode is required for CodeItems-->
+    <self:CodeItemDropAdvisor x:Key="ResultCodeItemDropAdvisor"
+                              AllowedType="{x:Type self:CodeItemResult}" />
+    <!--<self:CodeItemDropAdvisor x:Key="AssignableCodeItemDropAdvisor" 
+                             AllowedNeuronType="{x:Type hab:ValueNeuron}"
+                             AllowedType="{x:Type self:CodeItemVariable}"/>-->
+
+    <self:CodeListDropAdvisor x:Key="CodeListDropAdvisor" />
+
+    <self:CodeListDropAdvisor x:Key="ResultCodeListDropAdvisor"
+                              AllowedType="{x:Type self:CodeItemResult}" />
+
+    <self:CodeItemPanelDropAdvisor x:Key="CodeListPanelDropAdvisor" />
+
+    <cf:OrientationToBoolConverter x:Key="OrToBoolConv"
+                                   TrueValue="Vertical" />
+    <self:DivConverter x:Key="DivConv" />
+
+    <!--Default menu for all code items-->
+    <ContextMenu x:Key="DefaultCodeItemContextMenu">
+        <MenuItem Header="Is breakpoint" IsCheckable="True"
+                  IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.SelectedItem.IsBreakPoint}" />
+        <Separator />
+        <MenuItem Header="Inspect value"
+                  Command="self:App.InspectExpressionCmd"
+                  InputGestureText="F7"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.SelectedItem.Item}" />
+        <MenuItem Header="Browse neuron"
+                  Command="self:GlobalCommands.BrowseNeuronCmd"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                  ToolTip="Look at all the relationships of the neuron through a neuron debug view."
+                  InputGestureText="F8">
+            <MenuItem.Icon>
+                <Image Source="/Images/BrowseNeuron_Enabled.png"
+                       Style="{StaticResource TlbCodeItemsImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="Attach to processor"
+                  ToolTip="Attach the neuron to the currently selected processor so that any change in another processor is reported."
+                  Command="self:App.AttachToCurProcessorCmd"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.SelectedItem.Item}" />
+        <Separator />
+        <MenuItem Header="Order">
+            <MenuItem Header="Bring to top" Command="MoveToHome" />
+            <MenuItem Header="Move up" Command="MoveUp" />
+            <MenuItem Header="Move down" Command="MoveDown" />
+            <MenuItem Header="Send to bottom" Command="MoveToEnd" />
+        </MenuItem>
+        <MenuItem Header="Zoom"
+                  ItemsSource="{StaticResource CodeZoomMenuItems}" />
+        <Separator />
+        <MenuItem Command="Cut">
+            <MenuItem.Icon>
+                <Image Source="/Images/Edit/Cut_Enabled.png" Style="{StaticResource TlbCodeItemsImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Command="Copy">
+            <MenuItem.Icon>
+                <Image Source="/Images/Edit/Copy_Enabled.png" Style="{StaticResource TlbCodeItemsImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Command="Paste">
+            <MenuItem.Icon>
+                <Image Source="/Images/Edit/Paste_Enabled.png" Style="{StaticResource TlbCodeItemsImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <Separator />
+        <MenuItem Command="Delete"
+                  InputGestureText="Del" />
+        <MenuItem Header="Delete special"
+                  InputGestureText="Ctrl+Del"
+                  Command="self:App.DeleteSpecialCmd" />
+        <Separator />
+        <MenuItem Header="Rename"
+                  Command="self:App.RenameCmd"
+                  InputGestureText="F2" />
+        <MenuItem Header="Change to" ItemsSource="{StaticResource ChangeToMenuItems}" />
+        <MenuItem Header="Run" Command="Play" />
+        <MenuItem Header="Synchronize"
+                  InputGestureText="F4"
+                  ToolTip="Synchronize the currently selected item with the explorer."
+                  Command="self:App.SyncCmd">
+            <MenuItem.Icon>
+                <Image Source="/Images/Sync_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <Separator />
+        <MenuItem Header="View frames..." Command="self:GlobalCommands.ViewAttachedFramessCmd"
+                  ToolTip="Show the object-frames editor for the selected item."
+                  InputGestureText="Shift+F6"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.SelectedItem.Item}">
+            <MenuItem.Icon>
+                <Image Source="/Images/Frame/Object_Frames_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="View asset..." Command="self:GlobalCommands.ViewAttachedAssetsCmd"
+                  ToolTip="Show the asset editor for the selected item."
+                  InputGestureText="Shift+F5"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.SelectedItem.Item}">
+            <MenuItem.Icon>
+                <Image Source="/Images/Asset/objectAsset_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="View code..." Command="self:GlobalCommands.ViewCodeCmd"
+                  ToolTip="Open and show a code editor for the selected item."
+                  InputGestureText="Shift+F4"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.SelectedItem.Item}">
+            <MenuItem.Icon>
+                <Image Source="/Images/ViewCode_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+    </ContextMenu>
+    <!--Context menu for bool expression-->
+    <ContextMenu x:Key="BoolExpressionCodeItemContextMenu">
+        <MenuItem Header="Is breakpoint"
+                  IsCheckable="True"
+                  IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.IsBreakPoint}" />
+        <Separator />
+        <MenuItem Header="Inspect value"
+                  Command="self:App.InspectExpressionCmd"
+                  InputGestureText="F7"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.SelectedItem.Item}" />
+        <MenuItem Header="Browse neuron"
+                  Command="self:GlobalCommands.BrowseNeuronCmd"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                  ToolTip="Look at all the relationships of the neuron through a neuron debug view."
+                  InputGestureText="F8">
+            <MenuItem.Icon>
+                <Image Source="/Images/BrowseNeuron_Enabled.png"
+                       Style="{StaticResource TlbCodeItemsImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="Attach to processor"
+                  ToolTip="Attach the neuron to the currently selected processor so that any change in another processor is reported."
+                  Command="self:App.AttachToCurProcessorCmd"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.SelectedItem.Item}" />
+        <Separator />
+        <MenuItem Header="Show on 2 Rows"
+                  IsCheckable="True"
+                  IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Orientation, Converter={StaticResource OrToBoolConv}}" />
+        <MenuItem Header="Order">
+            <MenuItem Header="Bring to top" Command="MoveToHome" />
+            <MenuItem Header="Move up" Command="MoveUp" />
+            <MenuItem Header="Move down" Command="MoveDown" />
+            <MenuItem Header="Send to bottom" Command="MoveToEnd" />
+        </MenuItem>
+        <Separator />
+        <MenuItem Command="Cut">
+            <MenuItem.Icon>
+                <Image Source="/Images/Edit/Cut_Enabled.png" Style="{StaticResource TlbCodeItemsImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Command="Copy">
+            <MenuItem.Icon>
+                <Image Source="/Images/Edit/Copy_Enabled.png" Style="{StaticResource TlbCodeItemsImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Command="Paste">
+            <MenuItem.Icon>
+                <Image Source="/Images/Edit/Paste_Enabled.png" Style="{StaticResource TlbCodeItemsImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <Separator />
+        <MenuItem Command="Delete"
+                  InputGestureText="Del" />
+        <MenuItem Header="Delete special"
+                  InputGestureText="Ctrl+Del"
+                  Command="self:App.DeleteSpecialCmd" />
+        <Separator />
+        <MenuItem Header="Rename"
+                  Command="self:App.RenameCmd"
+                  InputGestureText="F2" />
+        <MenuItem Header="Change to" ItemsSource="{StaticResource ChangeToMenuItems}" />
+        <MenuItem Header="Run" Command="Play" />
+        <Separator />
+        <MenuItem Header="View frames..." Command="self:GlobalCommands.ViewAttachedFramessCmd"
+                  ToolTip="Show the object-frames editor for the selected item."
+                  InputGestureText="Shift+F6"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.SelectedItem.Item}">
+            <MenuItem.Icon>
+                <Image Source="/Images/Frame/Object_Frames_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="View asset..." Command="self:GlobalCommands.ViewAttachedAssetsCmd"
+                  ToolTip="Show the asset editor for the selected item."
+                  InputGestureText="Shift+F5"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.SelectedItem.Item}">
+            <MenuItem.Icon>
+                <Image Source="/Images/Asset/objectAsset_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="View code..." Command="self:GlobalCommands.ViewCodeCmd"
+                  ToolTip="Open and show a code editor for the selected item."
+                  InputGestureText="Shift+F4"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.SelectedItem.Item}">
+            <MenuItem.Icon>
+                <Image Source="/Images/ViewCode_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+    </ContextMenu>
+
+    <DataTemplate x:Key="CodePageTemplate">
+        <self:CtrlCodeEditorPage />
+    </DataTemplate>
+
+    <DataTemplate x:Key="HeaderCodePageTemplate">
+        <TextBlock Text="{Binding Path=Title}" />
+    </DataTemplate>
+
+    <!--Default style for all controls that display code items.-->
+    <Style TargetType="{x:Type self:CtrlEditorItem}"
+           x:Key="CodeEditorItemStyle">
+        <Setter Property="ContextMenu" Value="{StaticResource DefaultCodeItemContextMenu}" />
+        <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}" />
+        <Setter Property="Ctrls:CodePagePanel.IsSelected" Value="{Binding Path=IsSelected}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type self:CtrlEditorItem}">
+                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--Applied to all the containers (wrappers) used by the CodePagePanel. Provides drag/drop support + margin
+       to display the vertical line.-->
+    <Style x:Key="CPPContainerStyle" TargetType="{x:Type ContentControl}">
+        <Setter Property="Focusable" Value="false" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="dd:DragDropManager.DropTarget" Value="{StaticResource CodeListItemDropAdvisor}" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContentControl}">
+                    <Grid Margin="4,0,4,0"
+                          dd:DragDropManager.DragSource="{StaticResource CodeListItemDragAdvisor}"
+                          Background="Transparent"
+                          HorizontalAlignment="Center">
+                        <ContentPresenter Margin="0,8,0,0"
+                                          x:Name="TheContent"
+                                          Ctrls:CodePagePanel.IsNextStatement="{Binding Path=NeuronInfo.IsNextStatement}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--Default style for ListBoxItems that represent code items.-->
+    <Style x:Key="LockCodeListItemStyle" TargetType="{x:Type ContentControl}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="dd:DragDropManager.DropTarget" Value="{StaticResource ResultCodeListItemDropAdvisor}" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContentControl}">
+                    <Grid Margin="4,0,4,0"
+                          dd:DragDropManager.DragSource="{StaticResource CodeListItemDragAdvisor}"
+                          Background="Transparent"
+                          HorizontalAlignment="Center">
+                        <ContentPresenter x:Name="TheContent" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--Style used by CtrlStatement and CtrlResultStatement for the sub code items.-->
+    <Style x:Key="StatementPartItem" TargetType="{x:Type ContentControl}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="dd:DragDropManager.DropTarget" Value="{StaticResource ResultCodeListItemDropAdvisor}" />
+        <Setter Property="Margin" Value="2,0,2,0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContentControl}">
+                    <!--The border is to get the drag working.-->
+                    <Border Background="Transparent"
+                            dd:DragDropManager.DragSource="{StaticResource CodeListItemDragAdvisor}">
+                        <ContentPresenter x:Name="TheContent"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--Background image style-->
+    <Style x:Key="CodeItemBackgroundImageStyle" TargetType="{x:Type Image}">
+        <Setter Property="Stretch" Value="Fill" />
+    </Style>
+
+    <!--Default style applied to all the borders used to indicate drop targets.-->
+    <Style x:Key="CodeItemDropTargetBorder" TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Gray" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="Margin" Value="4" />
+        <Setter Property="Padding" Value="2" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="MinHeight" Value="20" />
+        <Setter Property="MinWidth" Value="24" />
+        <!--<Setter Property="Focusable" Value="false"/>-->
+    </Style>
+
+    <!--Default style applied to all the borders used to indicate drop targets.-->
+    <Style x:Key="CtrlDropTargetStyle" TargetType="{x:Type Border}" BasedOn="{StaticResource CodeItemDropTargetBorder}">
+        <Setter Property="TextBlock.Foreground" Value="Gray" />
+        <Setter Property="Background" Value="White" />
+        <Setter Property="Focusable" Value="True" />
+        <Style.Triggers>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="TextBlock.Foreground" Value="Red" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="CodeItemDropTargetLabel" TargetType="{x:Type Label}">
+        <!--<Setter Property="Focusable" Value="False"/>-->
+        <Setter Property="Foreground" Value="Gray" />
+        <Setter Property="Padding" Value="4,0,4,0" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="CodeItemDropTargetText" TargetType="{x:Type TextBlock}">
+        <Setter Property="IsHitTestVisible" Value="False" />
+        <!--<Setter Property="Focusable" Value="False"/>-->
+        <Setter Property="Padding" Value="4,0,4,0" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="CodeItemDropTargetGrid" TargetType="{x:Type Grid}">
+        <Setter Property="TextBlock.Foreground" Value="Gray" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Background" Value="Transparent" />
+        <EventSetter Event="MouseLeftButtonDown" Handler="CodeItemDropTargetGrid_MouseLeftButtonDown" />
+        <Style.Triggers>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="TextBlock.Foreground" Value="Red" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--Default style for comboboxes containing neurons (or possibly soemthing else) on code items.-->
+    <Style x:Key="CodeItemComboBox" TargetType="{x:Type ComboBox}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <DataTemplate x:Key="CodeItemNeuronItemTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Image Source="{Binding Converter={StaticResource NeuronToImgConv}}"
+                   Stretch="Fill"
+                   Height="16"
+                   Width="16" />
+            <TextBlock Text="{Binding Converter={StaticResource NeuronToInfoConv}}" />
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="NoImageCodeItemNeuronItemTemplate">
+        <TextBlock Text="{Binding Converter={StaticResource NeuronToInfoConv}}" />
+    </DataTemplate>
+
+    <Style x:Key="CodeItemSubList" TargetType="{x:Type Ctrls:ArgumentsItemsControl}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="Gray" />
+        <Setter Property="Margin" Value="4,0,0,0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Ctrls:ArgumentsItemsControl}">
+                    <StackPanel Orientation="Horizontal"
+                                SnapsToDevicePixels="true"
+                                Margin="{TemplateBinding Padding}">
+                        <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Border Style="{StaticResource CodeItemDropTargetBorder}">
+                            <TextBlock HorizontalAlignment="Center"
+                                       IsHitTestVisible="False"
+                                       Foreground="Gray">
+                                <Italic>children</Italic>
+                            </TextBlock>
+                        </Border>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--<Style x:Key="HorConditionalsSubList" TargetType="{x:Type Ctrls:ArgumentsItemsControl}" BasedOn="{StaticResource CodeItemSubList}">
+      <Setter Property="ItemsPanel">
+         <Setter.Value>
+            <ItemsPanelTemplate>
+               <StackPanel Orientation="Horizontal"/>
+            </ItemsPanelTemplate>
+         </Setter.Value>
+      </Setter>
+      <Setter Property="Template">
+         <Setter.Value>
+            <ControlTemplate TargetType="{x:Type Ctrls:ArgumentsItemsControl}">
+               <StackPanel Orientation="Horizontal"
+                           SnapsToDevicePixels="true"
+                           Margin="{TemplateBinding Padding}">
+                  <Border BorderBrush="Black"
+                          BorderThickness="0,1,0,1"
+                          x:Name="ListBorder">
+                     <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                  </Border>
+                  <Border Style="{StaticResource CodeItemDropTargetBorder}"
+                          x:Name="DropBorder"
+                          VerticalAlignment="Top">
+                     <TextBlock HorizontalAlignment="Center"
+                                IsHitTestVisible="False"
+                                Foreground="Gray"><Italic>Children</Italic></TextBlock>
+                  </Border>
+                  <StackPanel.RenderTransform>
+                     <TranslateTransform X="{Binding ElementName=DropBorder, Path=ActualWidth, Converter={StaticResource DivConv}}"/>
+                  </StackPanel.RenderTransform>
+               </StackPanel>
+               <ControlTemplate.Triggers>
+                  <DataTrigger Binding="{Binding Path=LoopLineVisibility}" Value="Visible">
+                     <Setter TargetName="ListBorder" Property="BorderThickness" Value="1"/>
+                  </DataTrigger>
+               </ControlTemplate.Triggers>
+            </ControlTemplate>
+         </Setter.Value>
+      </Setter>
+   </Style>-->
+
+    <Style x:Key="HorCodeItemSubList" TargetType="{x:Type Ctrls:ArgumentsItemsControl}"
+           BasedOn="{StaticResource CodeItemSubList}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Ctrls:ArgumentsItemsControl}">
+                    <StackPanel Orientation="Horizontal"
+                                SnapsToDevicePixels="true"
+                                Margin="{TemplateBinding Padding}">
+                        <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Border Style="{StaticResource CodeItemDropTargetBorder}"
+                                IsHitTestVisible="True">
+                            <TextBlock HorizontalAlignment="Center"
+                                       IsHitTestVisible="False"
+                                       Foreground="Gray">
+                                <Italic>Args</Italic>
+                            </TextBlock>
+                        </Border>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--<Style x:Key="VerCodeItemSubList" TargetType="{x:Type Ctrls:ArgumentsItemsControl}" BasedOn="{StaticResource CodeItemSubList}">
+      <Setter Property="Template">
+         <Setter.Value>
+            <ControlTemplate TargetType="{x:Type Ctrls:ArgumentsItemsControl}">
+               <StackPanel SnapsToDevicePixels="true"
+                           Margin="{TemplateBinding Padding}">
+                  <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                  <Border Style="{StaticResource CodeItemDropTargetBorder}"
+                          Background="White">
+                     <TextBlock HorizontalAlignment="Center"
+                                IsHitTestVisible="False"
+                                Foreground="Gray"><Italic>Children</Italic></TextBlock>
+                  </Border>
+               </StackPanel>
+            </ControlTemplate>
+         </Setter.Value>
+      </Setter>
+   </Style>-->
+
+    <Style x:Key="NeuronsToLockList" TargetType="{x:Type Ctrls:ArgumentsItemsControl}"
+           BasedOn="{StaticResource CodeItemSubList}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Ctrls:ArgumentsItemsControl}">
+                    <StackPanel SnapsToDevicePixels="true"
+                                Margin="{TemplateBinding Padding}">
+                        <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Border Style="{StaticResource CodeItemDropTargetBorder}"
+                                Background="White">
+                            <TextBlock HorizontalAlignment="Center"
+                                       IsHitTestVisible="False"
+                                       VerticalAlignment="Center"
+                                       Foreground="Gray">
+                                <Italic>Neurons</Italic>
+                            </TextBlock>
+                        </Border>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="LinksToLockList" TargetType="{x:Type Ctrls:ArgumentsItemsControl}"
+           BasedOn="{StaticResource CodeItemSubList}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Ctrls:ArgumentsItemsControl}">
+                    <StackPanel SnapsToDevicePixels="true"
+                                Margin="{TemplateBinding Padding}">
+                        <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Border Style="{StaticResource CodeItemDropTargetBorder}"
+                                Background="White">
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       IsHitTestVisible="False"
+                                       Foreground="Gray">
+                                <Italic>Links</Italic>
+                            </TextBlock>
+                        </Border>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style x:Key="CodeItemFixedItemsSelectorStyle" TargetType="{x:Type ComboBox}"
+           BasedOn="{StaticResource CodeItemComboBox}">
+        <Style.Resources>
+
+            <Geometry x:Key="DownArrowGeometry">M 0 0 L 3.5 4 L 7 0 Z</Geometry>
+
+            <Style x:Key="ComboBoxReadonlyToggleButton" TargetType="{x:Type ToggleButton}">
+                <Setter Property="OverridesDefaultStyle"
+                        Value="true" />
+                <Setter Property="IsTabStop"
+                        Value="false" />
+                <Setter Property="Focusable"
+                        Value="false" />
+                <Setter Property="ClickMode"
+                        Value="Press" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                            <theme:ButtonChrome Name="Chrome"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                RenderMouseOver="{TemplateBinding IsMouseOver}"
+                                                RenderPressed="{TemplateBinding IsPressed}"
+                                                SnapsToDevicePixels="true">
+                                <Grid Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"
+                                      HorizontalAlignment="Right">
+                                    <Path Name="Arrow"
+                                          Margin="3,1,0,0"
+                                          Fill="Black"
+                                          Data="{StaticResource DownArrowGeometry}"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                                </Grid>
+                            </theme:ButtonChrome>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsChecked"
+                                         Value="true">
+                                    <Setter TargetName="Chrome"
+                                            Property="RenderPressed"
+                                            Value="true" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled"
+                                         Value="false">
+                                    <Setter TargetName="Arrow"
+                                            Property="Fill"
+                                            Value="#AFAFAF" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+
+        </Style.Resources>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBox}">
+                    <Grid Name="MainGrid"
+                          SnapsToDevicePixels="true">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition
+                                MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"
+                                Width="0" />
+                        </Grid.ColumnDefinitions>
+                        <Popup Name="PART_Popup"
+                               AllowsTransparency="true"
+                               Grid.ColumnSpan="2"
+                               Placement="Right"
+                               Margin="1"
+                               IsOpen="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                               PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
+                            <theme:SystemDropShadowChrome Name="Shdw"
+                                                          Color="Transparent"
+                                                          MinWidth="{Binding ElementName=MainGrid,Path=ActualWidth}"
+                                                          MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                <Border x:Name="DropDownBorder"
+                                        BorderThickness="1"
+                                        BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"
+                                        Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
+                                    <ScrollViewer CanContentScroll="true">
+                                        <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained"
+                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                    </ScrollViewer>
+                                </Border>
+                            </theme:SystemDropShadowChrome>
+                        </Popup>
+                        <ToggleButton Grid.ColumnSpan="2"
+                                      Background="{TemplateBinding Background}"
+                                      BorderBrush="{TemplateBinding BorderBrush}"
+                                      Style="{StaticResource ComboBoxReadonlyToggleButton}"
+                                      IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger SourceName="PART_Popup" Property="Popup.HasDropShadow" Value="true">
+                            <Setter TargetName="Shdw" Property="Margin" Value="0,0,5,5" />
+                            <Setter TargetName="Shdw" Property="Color" Value="#71000000" />
+                        </Trigger>
+                        <Trigger Property="HasItems" Value="false">
+                            <Setter TargetName="DropDownBorder" Property="Height" Value="95" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                            <Setter Property="Background" Value="#FFF4F4F4" />
+                        </Trigger>
+                        <Trigger Property="IsGrouping" Value="true">
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--Toggle button for selecting a ByRef expression.-->
+    <Style x:Key="ByRefToggleButton" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Gray" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border Name="Chrome"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="1"
+                            CornerRadius="3"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            SnapsToDevicePixels="true">
+                        <ContentPresenter x:Name="PART_CONTENT" Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          RecognizesAccessKey="True"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="false">
+                            <Setter TargetName="PART_CONTENT" Property="Visibility" Value="Hidden" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="#ADADAD" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

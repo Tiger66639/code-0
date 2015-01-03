@@ -1,0 +1,238 @@
+class Topics
+{
+   using PathCommon;
+   using Common;
+   
+   
+   //topics (and rules) are bound to the '~' operator.
+   bind ~ BindTopic register
+   {
+      //sends the value back to the patternmatcher and returns the result of the patternmatch
+      //this is equivalent to AIML's srai element.
+      srai(var value): var
+      {
+         return PatternMatcher.Parse(value);
+      }
+      
+      //Tries to find a topic linked to the input value and returns this as result.
+      //Input can be a text form (textneuron, object, compound, Statics.PosGroup) or asset. When not asset and no direct link is found, the thesaurus is used to find a result. When multiple results are found this way, a random value is returned.
+      GetTopic(var value): var
+      {
+         return FindTopicInThes(value);
+      }
+      
+      //roots
+      {
+         //returns the topic with the specified name (if there is any).
+         get(var topicName): var
+         {
+            if(count(topicName) > 0)
+            {
+               var iRes = GetIncomming(topicName, Statics.NameOfMember);
+               if(count(iRes) > 0)
+                  return filter(ref(filtervar), ref(GetClusterMeaning(filterVar) == Statics.Topic), iRes);
+               else
+                  return GetFirstOut(topicName, Statics.Topic);                                                            //could also be attached to an object.
+            }
+            return;                                                                                                     //need to return an empty value.
+         }
+         
+         //all the functions that can come after a topic 'get'
+         :TopicFunctions
+         {
+            //renders the 'questions' section of the specified topic.
+            Render(var topic): var
+            {
+               return InternalRender(topic, true);
+            }
+            
+            //gets if we found a valid topic
+            Exists(var val): bool
+            {
+               return count(val) > 0;
+            }
+         }
+         
+         //everything that can come after a get.
+         .AfterTopic
+         {
+            //returns the rule with the specified name in the specified topic.
+            get(var topic, var ruleName): var
+            {
+               if(count(topic) > 0 && count(ruleName) > 0)
+                  return GetChildrenFiltered(topic, ref(filterVar), ref(GetFirstOut(filterVar, Statics.NameOfMember) == ruleName));
+               return;
+            }
+            
+            //all the functions that can come after a rule 'get'
+            :RuleFunctions
+            {
+               //renders the content of the specified rule
+               Render(var rule): var
+               {
+                  return InternalRender(rule, true);
+               }
+               
+               //gets if we found a valid rule
+               Exists(var val): bool
+               {
+                  return count(val) > 0;
+               }
+            }
+         }
+      }
+   }
+
+   
+   //renders the output of a rule.
+   cluster InternalRender
+   {
+      /*
+      Activates the 'Output' section of the input (which can be a topic or rule) and returns the result that was rendered. When the input was a topic, the 'questions' section will be activated, if it was a rule, the 'conditionals/output' section will be rendered.
+      You can optionally specify an argument, value 'true' or 'false' to indicate if the do-patterns also need to be executed or not.
+      Execution is done in another thread, to make certain that any var changes done by the rendering, don't affect any other parts.
+      */
+      this(var toRender, var execCode): var
+      { 
+         var iToFreeze = New(NeuronCluster);                                                //the function has 2 results: the output + itmes to freeze, which we need to capture as well.
+         var iRes = waitfor Render(toRender, execCode, OutputSin, PatternMatcher.SplitResults, iToFreeze);
+         Add(PatternMatcher.ItemsToFreeze, GetChildren(iToFreeze));                                      //don't forget the items that still need to be frozen.   
+         Delete(iToFreeze);
+         return iRes;
+      }
+      
+      //the entry point for the 'blockedSolve'
+      Render(var toRender, var execCode, var theOutput, var prevResults, var toFreeze): var
+      {
+         OutputSin = theOutput;
+         PatternMatcher.SplitResults = prevResults;
+         if(count(PatternMatcher.SplitResults) > 0)
+            LoadPatternResults();
+         switch (GetClusterMeaning(toRender))
+         {
+            case Statics.Topic:
+               InternalRenderTopic(toRender, execCode);
+            case Statics.Rule:
+            {
+               InternalRenderRule(toRender, execCode);
+               InternalRenderTopic(GetFirstCluster(toRender, Statics.Topic), execCode);
+            }
+         }
+         AddChild(toFreeze, PatternMatcher.ItemsToFreeze);
+         return PatternMatcher.RenderPatternItems.ContentToRender;
+      }
+      
+      InternalRenderRule(var rule, bool iPerformDoPatterns)
+      {
+         var iListToUse;
+         var iConditionals = GetFirstOut(rule, Statics.Condition);
+         if (Count(iConditionals) > 0)
+         {
+            iListToUse = PatternMatcher.ResolveConditionals(iConditionals);
+            if (Count(iListToUse) == 0)
+               iListToUse = GetFirstOut(rule, Statics.OutputPatterns);
+         }
+         else
+            iListToUse = GetFirstOut(rule, Statics.OutputPatterns);
+         if (Count(iListToUse) > 0)
+         {
+            if (iPerformDoPatterns != false)
+               PatternMatcher.ExecuteDoPatterns(GetFirstOut(iListToUse, Statics.DoPatterns)); 
+            RenderContent(iListToUse);
+         }
+      }
+      
+      InternalRenderTopic(var iTopic, bool iPerformDoPatterns)
+      {
+         var iListToUse;
+         var iConditionals = GetFirstOut(iTopic, Statics.Questions);
+         if (Count(iConditionals) > 0)
+            iListToUse = PatternMatcher.ResolveConditionals(iConditionals);
+         if (Count(iListToUse) > 0)
+         {
+            if (iPerformDoPatterns != false)
+               PatternMatcher.executedopatterns(GetFirstOut(iListToUse, Statics.DoPatterns)); 
+            RenderContent(iListToUse);
+         }
+      }
+   }
+   
+   
+   //Picks a randome item from list-to-use and renders the content.
+   RenderContent(var listToUse)
+   {
+      var iResultPattern = GetRandomChild(listtouse);
+      if (Count(iResultPattern) > 0)
+      {
+         PatternMatcher.RenderResultPattern(iResultPattern);
+         if (Count(GetFirstCluster(iResultPattern, Statics.ResponseForOutputs)) > 0)
+            AddLink(OutputSin, iResultPattern, PatternMatcher.Needsresponsefor);
+      }
+   }
+   
+   /*
+     Tries to find a topic linked to the input value and returns this as result.
+   Input can be a text form (textneuron, object, compound, Statics.PosGroup) or asset. When not asset and no direct link is found, the thesaurus is used to find a result. When multiple results are found this way, a random value is returned.
+    */
+   NeuronCluster FindTopicInThes(Statics.Code)
+   {
+      this(var callbackin): var
+      {
+         var found;
+         foreach (callbackin in callbackin)
+         {
+            found = GetOutgoing(callbackin, Statics.Topic);
+            if (Count(found) == 0)
+               found = waitfor InternalFindTopicInThes(callbackIn);
+         }
+         return found;
+      }
+      InternalFindTopicInThes(var callbackin): var
+      {
+         var iCurLocInThes = Convert.ToObject(callbackin);
+         if (Count(iCurLocInThes) == 0)
+               ExitSolve();
+            else
+               Split(GetTopicFinished, ref(iCurLocInThes), iCurLocInThes);                         //setup the callback
+         
+         var related = GetInFiltered(iCurLocInThes, ref(filtermeaning), ref(filterfrom), ref((GetChildren(Thes.AllConjugations) Contains filtermeaning)));
+         if(count(related) > 0)
+            Split(GetTopicFinished, ref(iCurLocInThes), iCurLocInThes, related);
+         var found = GetOutgoing(iCurLocInThes, Statics.Topic);
+         if (Count(found) > 0)
+         {
+            AddSplitResult(found);
+            ExitSolve();
+         }
+         else
+         {
+            var iFullPath;
+            var isacluster = GetClustersWithMeaning(iCurLocInThes, Thes.IsA);
+            while (Count(isacluster) > 0)
+            {
+               Split(GetTopicFinished, ref(isacluster), isacluster);
+               if (iFullPath !Contains isacluster)
+                  add(iFullPath, isacluster);
+               else
+                  ExitSolve();
+               iCurLocInThes = GetFirstIn(isacluster, Thes.IsA);
+               Split(GetTopicFinished, ref(iCurLocInThes), iCurLocInThes, GetFirstOut(iCurLocInThes, Thes.Noun));
+               found = GetOutgoing(iCurLocInThes, Statics.Topic);
+               if (Count(found) > 0)
+               {
+                  AddSplitResult(found);
+                  ExitSolve();
+               }
+               else
+                  isacluster = GetClustersWithMeaning(iCurLocInThes, Thes.IsA);
+            }
+         }
+      }
+      
+      GetTopicFinished(): var
+      {
+         return GetRandom(GetMaxWeight());
+      }
+   }
+   
+ }

@@ -1,0 +1,53 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Network\AiciServer.cs">
+    <Files>
+      <File FileName="Network\AiciServer.cs" Line="243" Column="65" />
+      <File FileName="Activities\AiciPreferencesActivity.cs" Line="199" Column="8" />
+      <File FileName="Activities\AiciActivity.cs" Line="608" Column="7" />
+      <File FileName="Activities\helpers\AssetInstaller.cs" Line="173" Column="11" />
+      <File FileName="Activities\helpers\ContactsLoader.cs" Line="78" Column="5" />
+      <File FileName="c:\Users\Esus\Documents\dev\VS\Projects\AI\Hosts\AiciAndroid\Activities\helpers\AiciPrefs.cs" Line="113" Column="10" />
+      <File FileName="Network\NetworkManager.cs" Line="71" Column="93" />
+      <File FileName="c:\Users\Esus\Documents\dev\VS\Projects\AI\HAB\Locks\WaitObject.cs" Line="15" Column="35" />
+      <File FileName="..\..\HAB\Sins\WordsDictionary.cs" Line="377" Column="1" />
+      <File FileName="CmdShell\CmdShell.cs" Line="18" Column="5" />
+      <File FileName="..\..\os.MonoDroid\Contacts.cs" Line="101" Column="34" />
+      <File FileName="..\..\os.MonoDroid\ContactsAndroid.cs" Line="242" Column="1" />
+      <File FileName="c:\Users\Esus\Documents\dev\VS\Projects\AI\Hosts\WordNetSin.MonoDroid\WordNetSin.cs" Line="77" Column="1" />
+      <File FileName="c:\Users\Esus\Documents\dev\VS\Projects\AI\os.MonoDroid\Communication.cs" Line="87" Column="8" />
+      <File FileName="Properties\AssemblyInfo.cs" Line="1" Column="1" />
+      <File FileName="Properties\AndroidManifest.xml" Line="11" Column="12" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="AiciAndroid" expanded="True">
+            <Node name="Activities" expanded="True" />
+            <Node name="Network" expanded="True">
+              <Node name="AiciServer.cs" selected="True" />
+            </Node>
+            <Node name="Properties" expanded="True" />
+            <Node name="Resources" expanded="True" />
+          </Node>
+          <Node name="WordNetSin.MonoDroid" expanded="True" />
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="C:\Users\Esus\Documents\dev\VS\Projects\AI\os.MonoDroid\ContactsAndroid.cs" line="210" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
+    <Watch file="..\..\HAB\Brain\Brain.cs" line="661" offsetX="585" offsetY="8177" expression="global::JaStDev.HAB.Neuron" liveUpdate="False" />
+  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
+  <MonoDevelop.Ide.ItemProperties.AiciAndroid AndroidDeviceId-Debug="S5660c4dffc40" MonoForAntroid.PreferredDevice="3.7in WVGA (Nexus One)" />
+</Properties>

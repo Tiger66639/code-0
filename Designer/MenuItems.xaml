@@ -1,0 +1,295 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:hab="clr-namespace:JaStDev.HAB;assembly=JaStDev.HabCore">
+
+    <BooleanToVisibilityConverter x:Key="BoolToVisConv" />
+    <!--Warning: this collection doesn't work in the NeuronExplorer. I needed to make a local copy of this collection to get
+       the CommandTarget working. This could also be the case for other users.   
+   -->
+    <CompositeCollection x:Key="ChangeToMenuItems">
+        <MenuItem Header="Neuron"
+                  Command="self:App.ChangeToCmd"
+                  CommandParameter="{x:Type hab:Neuron}"
+                  CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+        <MenuItem Header="Cluster"
+                  Command="self:App.ChangeToCmd"
+                  CommandParameter="{x:Type hab:NeuronCluster}"
+                  CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+        <MenuItem Header="Text neuron"
+                  Command="self:App.ChangeToCmd"
+                  CommandParameter="{x:Type hab:TextNeuron}"
+                  CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+        <MenuItem Header="Int neuron"
+                  Command="self:App.ChangeToCmd"
+                  CommandParameter="{x:Type hab:IntNeuron}"
+                  CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+        <MenuItem Header="Double neuron"
+                  Command="self:App.ChangeToCmd"
+                  CommandParameter="{x:Type hab:DoubleNeuron}"
+                  CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+        <Separator />
+        <MenuItem Header="Code block"
+                  Command="self:App.ChangeToCmd"
+                  CommandParameter="{x:Type hab:ExpressionsBlock}"
+                  CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+        <MenuItem Header="Lock"
+                  Command="self:App.ChangeToCmd"
+                  CommandParameter="{x:Type hab:LockExpression}"
+                  CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+        <MenuItem Header="Assignment"
+                  Command="self:App.ChangeToCmd"
+                  CommandParameter="{x:Type hab:Assignment}"
+                  CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+        <MenuItem Header="BoolExpression"
+                  Command="self:App.ChangeToCmd"
+                  CommandParameter="{x:Type hab:BoolExpression}"
+                  CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+
+        <MenuItem Header="Conditional statement"
+                  Command="self:App.ChangeToCmd"
+                  CommandParameter="{x:Type hab:ConditionalStatement}"
+                  CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+        <MenuItem Header="Conditional part"
+                  Command="self:App.ChangeToCmd"
+                  CommandParameter="{x:Type hab:ConditionalExpression}"
+                  CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+        <MenuItem Header="Result Statement"
+                  Command="self:App.ChangeToCmd"
+                  CommandParameter="{x:Type hab:ResultStatement}"
+                  CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+        <MenuItem Header="Statement"
+                  Command="self:App.ChangeToCmd"
+                  CommandParameter="{x:Type hab:Statement}"
+                  CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+        <MenuItem Header="Variable"
+                  Command="self:App.ChangeToCmd"
+                  CommandParameter="{x:Type hab:Variable}"
+                  CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+        <MenuItem Header="Global"
+                  Command="self:App.ChangeToCmd"
+                  CommandParameter="{x:Type hab:Global}"
+                  CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+    </CompositeCollection>
+
+    <!--contains the menu items to create a new object that is also registered as a specific part of speech form-->
+    <CompositeCollection x:Key="NewObjectPOSMenuItems">
+        <MenuItem Command="self:App.NewObjectCmd" Header="Adjective" CommandParameter="adj" />
+        <MenuItem Command="self:App.NewObjectCmd" Header="Adverb" CommandParameter="adverb" />
+        <MenuItem Command="self:App.NewObjectCmd" Header="Article" CommandParameter="art" />
+        <MenuItem Command="self:App.NewObjectCmd" Header="Complementizer" CommandParameter="Comp" />
+        <MenuItem Command="self:App.NewObjectCmd" Header="Conjunction" CommandParameter="conj" />
+        <MenuItem Command="self:App.NewObjectCmd" Header="Determiner" CommandParameter="Det" />
+        <MenuItem Command="self:App.NewObjectCmd" Header="Interjection" CommandParameter="interj" />
+        <MenuItem Command="self:App.NewObjectCmd" Header="Noun" CommandParameter="noun" />
+        <MenuItem Command="self:App.NewObjectCmd" Header="Preposition" CommandParameter="prep" />
+        <MenuItem Command="self:App.NewObjectCmd" Header="Pronoun" CommandParameter="pronoun" />
+        <MenuItem Command="self:App.NewObjectCmd" Header="Verb" CommandParameter="verb" />
+    </CompositeCollection>
+
+    <CompositeCollection x:Key="ZoomMenuItems">
+        <MenuItem Header="10%">
+            <MenuItem.Tag>
+                <sys:Double>10.0</sys:Double>
+            </MenuItem.Tag>
+        </MenuItem>
+        <MenuItem Header="20%">
+            <MenuItem.Tag>
+                <sys:Double>20.0</sys:Double>
+            </MenuItem.Tag>
+        </MenuItem>
+        <MenuItem Header="30%">
+            <MenuItem.Tag>
+                <sys:Double>30.0</sys:Double>
+            </MenuItem.Tag>
+        </MenuItem>
+        <MenuItem Header="40%">
+            <MenuItem.Tag>
+                <sys:Double>40.0</sys:Double>
+            </MenuItem.Tag>
+        </MenuItem>
+        <MenuItem Header="50%">
+            <MenuItem.Tag>
+                <sys:Double>50.0</sys:Double>
+            </MenuItem.Tag>
+        </MenuItem>
+        <MenuItem Header="60%">
+            <MenuItem.Tag>
+                <sys:Double>60.0</sys:Double>
+            </MenuItem.Tag>
+        </MenuItem>
+        <MenuItem Header="80%">
+            <MenuItem.Tag>
+                <sys:Double>80.0</sys:Double>
+            </MenuItem.Tag>
+        </MenuItem>
+        <MenuItem Header="100%">
+            <MenuItem.Tag>
+                <sys:Double>100.0</sys:Double>
+            </MenuItem.Tag>
+        </MenuItem>
+        <MenuItem Header="120%">
+            <MenuItem.Tag>
+                <sys:Double>120.0</sys:Double>
+            </MenuItem.Tag>
+        </MenuItem>
+        <MenuItem Header="140%">
+            <MenuItem.Tag>
+                <sys:Double>140.0</sys:Double>
+            </MenuItem.Tag>
+        </MenuItem>
+        <MenuItem Header="160%">
+            <MenuItem.Tag>
+                <sys:Double>160.0</sys:Double>
+            </MenuItem.Tag>
+        </MenuItem>
+        <MenuItem Header="180%">
+            <MenuItem.Tag>
+                <sys:Double>180.0</sys:Double>
+            </MenuItem.Tag>
+        </MenuItem>
+        <MenuItem Header="200%">
+            <MenuItem.Tag>
+                <sys:Double>200.0</sys:Double>
+            </MenuItem.Tag>
+        </MenuItem>
+        <MenuItem Header="250%">
+            <MenuItem.Tag>
+                <sys:Double>250.0</sys:Double>
+            </MenuItem.Tag>
+        </MenuItem>
+        <MenuItem Header="300%">
+            <MenuItem.Tag>
+                <sys:Double>300.0</sys:Double>
+            </MenuItem.Tag>
+        </MenuItem>
+    </CompositeCollection>
+
+    <CompositeCollection x:Key="CodeZoomMenuItems">
+        <MenuItem Header="10%"
+                  Command="NavigationCommands.Zoom"
+                  CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}">
+            <MenuItem.CommandParameter>
+                <sys:Double>10.0</sys:Double>
+            </MenuItem.CommandParameter>
+        </MenuItem>
+        <MenuItem Header="20%"
+                  Command="NavigationCommands.Zoom">
+            <MenuItem.CommandParameter>
+                <sys:Double>20.0</sys:Double>
+            </MenuItem.CommandParameter>
+        </MenuItem>
+        <MenuItem Header="30%"
+                  Command="NavigationCommands.Zoom">
+            <MenuItem.CommandParameter>
+                <sys:Double>30.0</sys:Double>
+            </MenuItem.CommandParameter>
+        </MenuItem>
+        <MenuItem Header="40%"
+                  Command="NavigationCommands.Zoom">
+            <MenuItem.CommandParameter>
+                <sys:Double>40.0</sys:Double>
+            </MenuItem.CommandParameter>
+        </MenuItem>
+        <MenuItem Header="50%"
+                  Command="NavigationCommands.Zoom">
+            <MenuItem.CommandParameter>
+                <sys:Double>50.0</sys:Double>
+            </MenuItem.CommandParameter>
+        </MenuItem>
+        <MenuItem Header="60%"
+                  Command="NavigationCommands.Zoom">
+            <MenuItem.CommandParameter>
+                <sys:Double>60.0</sys:Double>
+            </MenuItem.CommandParameter>
+        </MenuItem>
+        <MenuItem Header="70%"
+                  Command="NavigationCommands.Zoom">
+            <MenuItem.CommandParameter>
+                <sys:Double>70.0</sys:Double>
+            </MenuItem.CommandParameter>
+        </MenuItem>
+        <MenuItem Header="80%"
+                  Command="NavigationCommands.Zoom">
+            <MenuItem.CommandParameter>
+                <sys:Double>80.0</sys:Double>
+            </MenuItem.CommandParameter>
+        </MenuItem>
+        <MenuItem Header="90%"
+                  Command="NavigationCommands.Zoom">
+            <MenuItem.CommandParameter>
+                <sys:Double>90.0</sys:Double>
+            </MenuItem.CommandParameter>
+        </MenuItem>
+        <MenuItem Header="100%"
+                  Command="NavigationCommands.Zoom">
+            <MenuItem.CommandParameter>
+                <sys:Double>100.0</sys:Double>
+            </MenuItem.CommandParameter>
+        </MenuItem>
+        <MenuItem Header="110%"
+                  Command="NavigationCommands.Zoom">
+            <MenuItem.CommandParameter>
+                <sys:Double>110.0</sys:Double>
+            </MenuItem.CommandParameter>
+        </MenuItem>
+        <MenuItem Header="120%"
+                  Command="NavigationCommands.Zoom">
+            <MenuItem.CommandParameter>
+                <sys:Double>120.0</sys:Double>
+            </MenuItem.CommandParameter>
+        </MenuItem>
+        <MenuItem Header="130%"
+                  Command="NavigationCommands.Zoom">
+            <MenuItem.CommandParameter>
+                <sys:Double>130.0</sys:Double>
+            </MenuItem.CommandParameter>
+        </MenuItem>
+        <MenuItem Header="140%"
+                  Command="NavigationCommands.Zoom">
+            <MenuItem.CommandParameter>
+                <sys:Double>140.0</sys:Double>
+            </MenuItem.CommandParameter>
+        </MenuItem>
+        <MenuItem Header="150%"
+                  Command="NavigationCommands.Zoom">
+            <MenuItem.CommandParameter>
+                <sys:Double>150.0</sys:Double>
+            </MenuItem.CommandParameter>
+        </MenuItem>
+    </CompositeCollection>
+
+    <!--Data template used for overlay items in a menu-->
+    <DataTemplate x:Key="OverlayItemTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Rectangle Fill="{Binding Path=Overlay.Foreground}"
+                       Stroke="Black"
+                       StrokeThickness="1"
+                       Width="12"
+                       Height="8"
+                       VerticalAlignment="Center" />
+            <TextBlock Text="{Binding Path=Overlay.Text}"
+                       Margin="8,0,0,0"
+                       ToolTip="{Binding Path=Overlay.Tooltip}" />
+        </StackPanel>
+    </DataTemplate>
+
+    <!--The style that is applied toa ll the overlay menu items.-->
+    <Style x:Key="OverlayItemMenuItemStyle" TargetType="{x:Type MenuItem}">
+        <Setter Property="Command" Value="self:App.ShareLinkCmd" />
+        <Setter Property="CommandParameter" Value="{Binding}" />
+        <Setter Property="CommandTarget"
+                Value="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+    </Style>
+
+    <!--The data template for menu items that represents ovelayed items who's links can be shared.-->
+    <HierarchicalDataTemplate x:Key="ShareLinkMenuItemTemplate"
+                              ItemsSource="{Binding Path=Overlays}"
+                              ItemTemplate="{StaticResource OverlayItemTemplate}"
+                              ItemContainerStyle="{StaticResource OverlayItemMenuItemStyle}">
+        <!--We use a new contentpresenter, so we use the default template for the NeuronData type.-->
+        <ContentPresenter Content="{Binding}" />
+    </HierarchicalDataTemplate>
+
+</ResourceDictionary>

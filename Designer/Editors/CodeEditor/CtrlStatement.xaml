@@ -1,0 +1,52 @@
+﻿<self:CtrlEditorItem x:Class="JaStDev.HAB.Designer.CtrlStatement"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+                     xmlns:hab="clr-namespace:JaStDev.HAB;assembly=JaStDev.HabCore"
+                     xmlns:Ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls"
+                     xmlns:dd="clr-namespace:DnD"
+                     Background="Transparent"
+                     Focusable="True"
+                     x:Name="this">
+    <self:CtrlEditorItem.CommandBindings>
+        <CommandBinding Command="MoveUp" CanExecute="MoveUp_CanExecute" Executed="MoveUp_Executed" />
+        <CommandBinding Command="MoveDown" CanExecute="MoveDown_CanExecute" Executed="MoveDown_Executed" />
+        <CommandBinding Command="MoveToEnd" CanExecute="MoveDown_CanExecute" Executed="MoveToEnd_Executed" />
+        <CommandBinding Command="MoveToHome" CanExecute="MoveUp_CanExecute" Executed="MoveToHome_Executed" />
+    </self:CtrlEditorItem.CommandBindings>
+    <Grid>
+        <Path Data="{Binding Source={StaticResource ImgStatementPath}}"
+              Visibility="{Binding Path=IsMultiUsed, Converter={StaticResource BoolToVisConv}}"
+              Stretch="Fill"
+              Stroke="Black"
+              StrokeThickness="1"
+              Fill="{StaticResource ImgStatementBrush}">
+            <Path.RenderTransform>
+                <TranslateTransform X="4" Y="-4" />
+            </Path.RenderTransform>
+        </Path>
+        <Path Data="{Binding Source={StaticResource ImgStatementPath}}"
+              Stretch="Fill"
+              Stroke="Black"
+              StrokeThickness="1"
+              Fill="{StaticResource ImgStatementBrush}" />
+        <!--<Image Source="{StaticResource ImgStatement}"
+                Style="{StaticResource CodeItemBackgroundImageStyle}"/>-->
+        <StackPanel Margin="8,0,8,0"
+                    Orientation="Horizontal">
+            <!--Instruction-->
+            <ComboBox SelectedItem="{Binding Path=Instruction}"
+                      ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=Instructions, Mode=OneTime}"
+                      ItemTemplate="{StaticResource CodeItemNeuronItemTemplate}"
+                      Style="{StaticResource CodeItemComboBox}"
+                      VirtualizingStackPanel.IsVirtualizing="True"
+                      VirtualizingStackPanel.VirtualizationMode="Recycling" />
+            <Ctrls:ArgumentsItemsControl ItemsSource="{Binding Path=Arguments}"
+                                         ItemContainerStyle="{StaticResource StatementPartItem}"
+                                         Style="{StaticResource HorCodeItemSubList}"
+                                         dd:DragDropManager.DropTarget="{StaticResource CodeListDropAdvisor}" />
+        </StackPanel>
+        <ToggleButton Style="{StaticResource DebugToggleButton}"
+                      IsChecked="{Binding Path=IsBreakPoint}" />
+    </Grid>
+</self:CtrlEditorItem>

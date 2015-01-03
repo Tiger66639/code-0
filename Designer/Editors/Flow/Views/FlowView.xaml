@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.FlowView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:dd="clr-namespace:DnD"
+             xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+             xmlns:Ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:cf="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+             xmlns:kb="http://kent.boogaart/controls"
+             xmlns:prop="clr-namespace:JaStDev.HAB.Designer.Properties"
+             x:Name="self">
+    <UserControl.CommandBindings>
+        <CommandBinding Command="Cut" CanExecute="Cut_CanExecute" Executed="Cut_Executed" />
+        <CommandBinding Command="Copy" CanExecute="Copy_CanExecute" Executed="Copy_Executed" />
+        <CommandBinding Command="Paste" CanExecute="Paste_CanExecute" Executed="Paste_Executed" />
+
+        <CommandBinding Command="self:App.RenameCmd" CanExecute="Rename_CanExecute" Executed="Rename_Executed" />
+        <CommandBinding Command="Delete" CanExecute="Delete_CanExecute" Executed="Delete_Executed" />
+        <CommandBinding Command="self:App.DeleteSpecialCmd" CanExecute="DeleteSpecial_CanExecute"
+                        Executed="DeleteSpecial_Executed" />
+    </UserControl.CommandBindings>
+
+    <AdornerDecorator ClipToBounds="True">
+        <Grid Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
+            <Ctrls:FlowPanel HorizontalAlignment="Stretch"
+                             x:Name="LstItems"
+                             Focusable="True"
+                             VerticalAlignment="Stretch"
+                             Background="Transparent"
+                             ConditionalPartBackgroundStyle="{StaticResource FlowPanelCondPartBackgroundStyle}"
+                             ConditionalBackgroundStyle="{StaticResource FlowPanelCondBackgroundStyle}"
+                             ItemsSource="{Binding}"
+                             HorizontalOffset="{Binding Path=HorScrollPos, Mode=TwoWay}"
+                             ElementStyle="{StaticResource FlowPanelElementStyle}"
+                             VerticalOffset="{Binding Path=VerScrollPos, Mode=TwoWay}"
+                             dd:DragDropManager.DropTarget="{StaticResource FLowPanelDropAdvisor}"
+                             ContextMenuOpening="LstItems_ContextMenuOpening"
+                             ContextMenu="{StaticResource FlowListContextMenu}">
+                <Ctrls:FlowPanel.LayoutTransform>
+                    <ScaleTransform ScaleX="{Binding Path=Zoom}"
+                                    ScaleY="{Binding Path=Zoom}" />
+                </Ctrls:FlowPanel.LayoutTransform>
+                <Ctrls:FlowPanel.InputBindings>
+                    <KeyBinding Key="F2" Command="self:App.RenameCmd" />
+
+                    <KeyBinding Key="Oem4" Command="self:App.AddFlowOptionCmd" />
+                    <KeyBinding Key="Oem4" Command="self:App.AddFlowLoopCmd"
+                                Modifiers="Shift" />
+                    <KeyBinding Key="OemPeriod" Command="self:App.AddFlowStaticCmd" />
+                    <KeyBinding Key="O" Command="self:App.AddFlowNewObjectCmd" />
+                    <KeyBinding Key="OemPeriod"
+                                Modifiers="Control"
+                                Command="self:App.InsertFlowStaticCmd" />
+                    <KeyBinding Key="O"
+                                Modifiers="Control"
+                                Command="self:App.InsertFlowNewObjectCmd" />
+                    <KeyBinding Key="Oem4"
+                                Command="self:App.InsertFlowOptionCmd"
+                                Modifiers="Control" />
+                    <KeyBinding Key="Oem4"
+                                Command="self:App.InsertFlowLoopCmd"
+                                Modifiers="Shift+Control" />
+                    <KeyBinding Key="Oem6" Command="self:App.ChangeFlowLoopToOptionCmd" />
+                    <KeyBinding Key="Oem6" Command="self:App.ChangeFlowOptionToLoopCmd"
+                                Modifiers="Shift" />
+                    <KeyBinding Key="N" Command="self:App.AddFlowNewNeuronCmd" />
+                    <KeyBinding Key="N"
+                                Modifiers="Control"
+                                Command="self:App.InsertFlowNewNeuronCmd" />
+                    <KeyBinding Key="Oem5" Command="self:App.AddFlowCondPartCmd"
+                                Modifiers="Shift" />
+                    <KeyBinding Key="Oem5" Command="self:App.InsertFlowCondPartCmd"
+                                Modifiers="Shift+Control" />
+                    <KeyBinding Key="R" Command="self:App.ToggleFlowLoopSelectionRequirementCmd" />
+                    <KeyBinding Command="self:App.AddFlowCmd" Key="F" />
+                </Ctrls:FlowPanel.InputBindings>
+            </Ctrls:FlowPanel>
+            <Popup x:Name="PopupSelectItem"
+                   AllowsTransparency="true"
+                   IsOpen="{Binding ElementName=self, Path=PopupIsOpen, Mode=TwoWay}"
+                   StaysOpen="False"
+                   Placement="RelativePoint"
+                   PlacementTarget="{Binding ElementName=LstItems}"
+                   PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}"
+                   Opened="PopupSelectItem_Opened"
+                   Closed="PopupSelectItem_Closed">
+                <kb:Resizer
+                    Height="{Binding Source={x:Static prop:Settings.Default}, Path=NDBBrowserHeight, Mode=TwoWay}"
+                    Width="{Binding Source={x:Static prop:Settings.Default}, Path=NDBBrowserWidth, Mode=TwoWay}">
+                    <Ctrls:NeuronDataBrowser x:Name="LstDictItems"
+                                             SelectionChanged="LstDictItems_SelectionChanged"
+                                             SelectionCanceled="LstDictItems_SelectionCanceled" />
+                </kb:Resizer>
+            </Popup>
+        </Grid>
+    </AdornerDecorator>
+</UserControl>

@@ -1,0 +1,156 @@
+﻿<UserControl x:Class="AiciWeb.MainPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="400"
+             Unloaded="UserControl_Unloaded">
+
+    <UserControl.Resources>
+        <!--data template used for dialog items.-->
+        <DataTemplate x:Key="DialogItem">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Margin="4,0,4,0"
+                          Foreground="{Binding Path=Color}">
+                    <TextBlock.Text>
+                        <Binding Path="Originator">
+                            <Binding.StringFormat>{0}:</Binding.StringFormat>
+                        </Binding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock Text="{Binding Path=Text}"
+                       Grid.Column="1"
+                       x:Name="TxtText"
+                       Foreground="{Binding Path=Color}"/>
+            </StackPanel>
+        </DataTemplate>
+
+    </UserControl.Resources>
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="0.4*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0"
+                    Grid.ColumnSpan="2"
+                    Margin="8">
+            <Grid.RowDefinitions>
+                <RowDefinition  MaxHeight="0.3" Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+
+
+
+            <RichTextBox 
+                     Margin="0,0,0,8"
+                     IsReadOnly="True">
+                <Paragraph>
+                    <Bold>For the CBC testers:</Bold>
+                </Paragraph>
+                <Paragraph>
+                    <Run>You might find the downloadable version of Aici more useful. This provides:</Run>
+                </Paragraph>
+                <Paragraph>
+                    <Run>- An easy way to copy the conversation to the clipboard using a context menu item.</Run>
+                </Paragraph>
+                <Paragraph>
+                    <Run>- A better status overview, which can be helpful to see if Aici is still thinking, or there was simply no result.</Run>
+                </Paragraph>
+                <Paragraph>
+                    <Run>
+                        You can get the download version from:   
+                    </Run>
+                    <Hyperlink NavigateUri="http://janbogaerts.name/index.php/downloads/"
+                           TargetName="_blank"> _My downloads page</Hyperlink>
+                </Paragraph>
+            </RichTextBox>
+
+
+
+
+
+            <ListBox  x:Name="LstDialogs"
+                      Grid.Row="1"
+                     ItemTemplate="{StaticResource DialogItem}"/>
+        </Grid>
+        <TextBox Grid.Row="1"
+                 Margin="8,0,8,8"
+                 x:Name="TxtInput"
+                 IsEnabled="False"
+                 KeyDown="TxtInput_KeyDown"/>
+        <Button Grid.Row="1"
+                Grid.Column="1"
+                x:Name="BtnSend"
+                Margin="0,0,8,8"
+                IsEnabled="False"
+              Click="BtnSend_Click">
+            Send
+        </Button>
+        <TextBlock Grid.Row="2"
+                   
+                   Margin="8,0,8,8"
+                   TextWrapping="Wrap"
+                   Grid.ColumnSpan="3">Disclaimer: all conversations are logged for future analysis in order to improve the system.</TextBlock>
+        
+        <RichTextBox Grid.Column="2"
+                     Margin="0,8,8,8"
+                     IsReadOnly="True">
+            <Paragraph>
+                <Bold>Some pointers for getting started:</Bold>
+            </Paragraph>
+            <Paragraph>
+                <Run>- Use short sentences.</Run>
+            </Paragraph>
+            <Paragraph>
+                <Run>- Only send a single statement at a time. The basis to handle multiple statements is present, but not yet tested.</Run>
+            </Paragraph>
+            <Paragraph>
+                <Run>- where and why questions are not yet implement. What, who and how (x) should be working.</Run>
+            </Paragraph>
+            <Paragraph>
+                <Run>- Aici doesn't have enough definitions yet to automatically learn new sentence structures.</Run>
+            </Paragraph>
+            <Paragraph>
+                <Run>- Have a bit of patience. Aici is running on a shared server and uses lots of resources.</Run>
+            </Paragraph>
+            <Paragraph ></Paragraph>
+            
+            <Paragraph >
+                <Bold>Some examples:</Bold>
+            </Paragraph>
+            <Paragraph>
+                <Run>- I am Jan.</Run>
+            </Paragraph>
+            <Paragraph>
+                <Run>- Jan am I.</Run>
+            </Paragraph>
+            <Paragraph>
+                <Run>- What is my name?</Run>
+            </Paragraph>
+            <Paragraph>
+                <Run>- I have a hand.</Run>
+            </Paragraph>
+            <Paragraph>
+                <Run>- Do i have a hand?</Run>
+            </Paragraph>
+            <Paragraph>
+                <Run>- How many hands do I have?</Run>
+            </Paragraph>
+            <Paragraph>
+                <Run>
+                    More inspiration for conversations can be found at:  
+                </Run>
+                <Hyperlink NavigateUri="http://janbogaerts.name/index.php/category/conversations/"
+                           TargetName="_blank">www.janbogaerts.name/index.php/category/conversations/</Hyperlink>
+            </Paragraph>
+        </RichTextBox>
+    </Grid>
+</UserControl>

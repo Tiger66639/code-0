@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CBDGlobals>
+  <ArrayOfExportableReflectionSinEntryPoint xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+  <DoOnStartup />
+  <OpeningStatements />
+  <Fallbacks />
+  <Context />
+  <DoAfterStatement />
+  <Repetitions />
+  <ModuleProperties>
+    <UseOutputVar />
+    <AutoResolveSyns />
+    <UseSTTWeight />
+    <SingleTopPatternResult />
+    <UseSTTWeight>True</UseSTTWeight>
+    <SingleTopPatternResult>True</SingleTopPatternResult>
+    <UseOutputVar />
+    <AutoResolveSyns />
+    <ErrorOnDuplicates />
+    <ToSkip>
+      <text>\s</text>
+      <text>\r</text>
+      <text>\n</text>
+      <text>\t</text>
+      <static>356</static>
+      <static>357</static>
+      <static>468</static>
+    </ToSkip>
+    <SentenceSigns>
+      <text>.</text>
+      <text>!</text>
+      <text>?</text>
+    </SentenceSigns>
+  </ModuleProperties>
+</CBDGlobals>

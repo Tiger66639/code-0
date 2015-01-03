@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.CtrlResourceManager"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+             x:Name="this">
+    <UserControl.CommandBindings>
+        <CommandBinding Command="self:App.AddResourceCmd" Executed="AddResource_Executed" />
+        <CommandBinding Command="Delete" CanExecute="Delete_CanExecute" Executed="Delete_Executed" />
+        <CommandBinding Command="self:App.SendResourceCmd" CanExecute="Delete_CanExecute"
+                        Executed="SendResource_Executed" />
+        <CommandBinding Command="self:App.SendAllResourcesCmd" CanExecute="Delete_CanExecute"
+                        Executed="SendAllResources_Executed" />
+
+
+    </UserControl.CommandBindings>
+    <ListBox MinHeight="20"
+             ItemsSource="{Binding ElementName=this, Path=Items}"
+             x:Name="LstItems"
+             SelectionChanged="LstItems_SelectionChanged" />
+</UserControl>

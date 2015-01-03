@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AD384360-99B6-4AFA-8BE6-9D497D62FD01}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>os.MonoDroid</RootNamespace>
+    <AssemblyName>os.MonoDroid</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;ANDROID</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidLinkMode>None</AndroidLinkMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;ANDROID</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidLinkMode>SdkOnly</AndroidLinkMode>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="LogService.MonoDroid">
+      <HintPath>..\..\Components\Log\LogService.MonoDroid\bin\Release\LogService.MonoDroid.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Android" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BatteryReceiver.cs" />
+    <Compile Include="Calendar.cs" />
+    <Compile Include="CalendarAndroid.cs" />
+    <Compile Include="CalendarItem.cs" />
+    <Compile Include="Communication.cs" />
+    <Compile Include="CommunicationAndroid.cs" />
+    <Compile Include="Contacts.cs" />
+    <Compile Include="ContactsAndroid.cs" />
+    <Compile Include="EndCallListener.cs" />
+    <Compile Include="IAndroidService.cs" />
+    <Compile Include="IIntentResultService.cs" />
+    <Compile Include="PhoneManagementAndroid.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PhoneManagement.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HAB.MonoDroid\HAB.MonoDroid.csproj">
+      <Project>{AC38E9EF-4230-400F-BC67-724EDBB37C82}</Project>
+      <Name>HAB.MonoDroid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hosts\DataCore\DataCore.csproj">
+      <Project>{40F38367-E571-495E-AC94-0793B3477AF3}</Project>
+      <Name>DataCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hosts\WordNetSin.MonoDroid\WordNetSin.MonoDroid.csproj">
+      <Project>{CE91F431-152D-4391-B64C-D4205264FFDB}</Project>
+      <Name>WordNetSin.MonoDroid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lobes\SensoryInterfaces.MonoDroid\SensoryInterfaces.MonoDroid.csproj">
+      <Project>{1B2D3E17-970C-422B-B1F6-900E7B67446E}</Project>
+      <Name>SensoryInterfaces.MonoDroid</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

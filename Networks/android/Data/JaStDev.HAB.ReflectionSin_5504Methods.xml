@@ -1,0 +1,247 @@
+<?xml version="1.0"?>
+<ArrayOfReflectionSinEntryPoint xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ReflectionSinEntryPoint>
+    <MethodName>GetContactInfo</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>os.MonoDroid.AiciContacts</TypeName>
+    <ID>9627</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetContactId</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>os.MonoDroid.AiciContacts</TypeName>
+    <ID>9633</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetContactPhoneNr</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>os.MonoDroid.AiciContacts</TypeName>
+    <ID>9629</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>HasPhoneNr</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>os.MonoDroid.AiciContacts</TypeName>
+    <ID>9634</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetContactEmail</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>os.MonoDroid.AiciContacts</TypeName>
+    <ID>5911</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>AddEvent</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>os.MonoDroid.Calendar</TypeName>
+    <ID>5912</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>SetEventTitle</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>os.MonoDroid.Calendar</TypeName>
+    <ID>5913</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>SetEventStartDate</MethodName>
+    <ParameterTypes>
+      <string>System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>os.MonoDroid.Calendar</TypeName>
+    <ID>5916</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>SetEventEndDate</MethodName>
+    <ParameterTypes>
+      <string>System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>os.MonoDroid.Calendar</TypeName>
+    <ID>5915</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>SetEventDescription</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>os.MonoDroid.Calendar</TypeName>
+    <ID>5914</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>SetEventLocation</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>os.MonoDroid.Calendar</TypeName>
+    <ID>5917</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>SetPhoneToSilent</MethodName>
+    <ParameterTypes />
+    <TypeName>os.MonoDroid.PhoneManagement</TypeName>
+    <ID>1784</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>SetPhoneToVibrate</MethodName>
+    <ParameterTypes />
+    <TypeName>os.MonoDroid.PhoneManagement</TypeName>
+    <ID>1789</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>SetPhoneToNormal</MethodName>
+    <ParameterTypes />
+    <TypeName>os.MonoDroid.PhoneManagement</TypeName>
+    <ID>1788</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>SendSMS</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>os.MonoDroid.Communication</TypeName>
+    <ID>9315</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>SendEmail</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>os.MonoDroid.Communication</TypeName>
+    <ID>9317</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>MakePhoneCall</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>os.MonoDroid.Communication</TypeName>
+    <ID>9319</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>SendTweet</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>os.MonoDroid.Communication</TypeName>
+    <ID>9320</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>SendEmail</MethodName>
+    <ParameterTypes>
+      <string>System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>os.MonoDroid.Communication</TypeName>
+    <ID>9321</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>OpenScraper</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>CmdShell.Scraping</TypeName>
+    <ID>9326</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>ScrapeText</MethodName>
+    <ParameterTypes>
+      <string>System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>CmdShell.Scraping</TypeName>
+    <ID>9327</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>CloseScraper</MethodName>
+    <ParameterTypes>
+      <string>System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>CmdShell.Scraping</TypeName>
+    <ID>9335</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetBatteryLevel</MethodName>
+    <ParameterTypes />
+    <TypeName>os.MonoDroid.PhoneManagement</TypeName>
+    <ID>9339</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetBatteryTemp</MethodName>
+    <ParameterTypes />
+    <TypeName>os.MonoDroid.PhoneManagement</TypeName>
+    <ID>9338</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>GetBatteryVoltage</MethodName>
+    <ParameterTypes />
+    <TypeName>os.MonoDroid.PhoneManagement</TypeName>
+    <ID>9334</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>OpenDocument</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>CmdShell.CmdShell</TypeName>
+    <ID>9337</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>StartProcess</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>CmdShell.CmdShell</TypeName>
+    <ID>9336</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>SelectImage</MethodName>
+    <ParameterTypes />
+    <TypeName>os.MonoDroid.PhoneManagement</TypeName>
+    <ID>9322</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>StartEmail</MethodName>
+    <ParameterTypes />
+    <TypeName>os.MonoDroid.Communication</TypeName>
+    <ID>9333</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>StartGmail</MethodName>
+    <ParameterTypes />
+    <TypeName>os.MonoDroid.Communication</TypeName>
+    <ID>9332</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>ShowHelp</MethodName>
+    <ParameterTypes />
+    <TypeName>os.MonoDroid.PhoneManagement</TypeName>
+    <ID>9328</ID>
+  </ReflectionSinEntryPoint>
+</ArrayOfReflectionSinEntryPoint>

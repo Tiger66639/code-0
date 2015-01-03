@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Module>
+<Name>Learn1</Name>
+<MajorVer>0</MajorVer>
+<MinorVer>1</MinorVer>
+
+<File>StaticRefs.nnl</File>
+<File>PatternMatchRefs.nnl</File>
+
+<File>core.nnl</File>
+</Module>

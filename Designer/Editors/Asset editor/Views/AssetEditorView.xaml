@@ -1,0 +1,372 @@
+﻿<self:CtrlEditorBase x:Class="JaStDev.HAB.Designer.AssetEditorView"
+                     xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:Ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls"
+                     xmlns:cf="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+                     xmlns:dd="clr-namespace:DnD"
+                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                     cf:Help.Topic="asseteditors.html"
+                     Background="Transparent"
+                     Focusable="True"
+                     IsHitTestVisible="True"
+                     SizeChanged="CtrlEditorBase_SizeChanged"
+                     DataContextChanged="CtrlEditorBase_DataContextChanged">
+    <self:CtrlEditorBase.CommandBindings>
+        <CommandBinding Command="self:App.AddAssetRecordCmd" CanExecute="AddAssetRecord_CanExecute"
+                        Executed="AddAssetRecord_Executed" />
+        <CommandBinding Command="self:App.AddAssetSubRecordCmd" CanExecute="AddAssetSubRecord_CanExecute"
+                        Executed="AddAssetSubRecord_Executed" />
+        <CommandBinding Command="self:App.CreateOrClusterCmd" CanExecute="AddAssetRecord_CanExecute"
+                        Executed="CreateOrCluster_Executed" />
+        <CommandBinding Command="self:App.CreateAndClusterCmd" CanExecute="AddAssetRecord_CanExecute"
+                        Executed="CreateAndCluster_Executed" />
+        <CommandBinding Command="self:App.CreateSubAssetCmd" CanExecute="CreateSubAsset_CanExecute"
+                        Executed="CreateSubAsset_Executed" />
+        <CommandBinding Command="self:App.ChangeToAssetItemListCmd" CanExecute="ChangeToAssetItemList_CanExecute"
+                        Executed="ChangeToAssetItemList_Executed" />
+        <CommandBinding Command="self:App.ChangeToAssetItemValueCmd" CanExecute="ChangeToAssetItemValue_CanExecute"
+                        Executed="ChangeToAssetItemValue_Executed" />
+    </self:CtrlEditorBase.CommandBindings>
+    <self:CtrlEditorBase.InputBindings>
+        <KeyBinding Command="self:App.AddAssetRecordCmd" Modifiers="Shift+Control" Key="R" />
+        <KeyBinding Command="self:App.AddAssetSubRecordCmd" Modifiers="Shift+Control" Key="c" />
+        <KeyBinding Command="self:App.CreateSubAssetCmd" Modifiers="Shift+Control" Key="A" />
+        <KeyBinding Command="self:App.ChangeToAssetItemListCmd" Modifiers="Shift+Control" Key="L" />
+        <KeyBinding Command="self:App.ChangeToAssetItemValueCmd" Modifiers="Shift+Control" Key="V" />
+        <!--<KeyBinding Command="self:App.CreateOrClusterCmd" Modifiers="Shift+Control" Key="OemPipe"/>
+      <KeyBinding Command="self:App.CreateAndClusterCmd" Modifiers="Shift+Control" Key="Oem2"/>-->
+    </self:CtrlEditorBase.InputBindings>
+    <DockPanel>
+        <Expander Style="{StaticResource SimpleExpandDownStyle}"
+                  Focusable="False"
+                  IsExpanded="{Binding Source={x:Static self:Properties.Settings.Default}, Path=ToolbarExpandedAssetEditor, Mode=TwoWay}"
+                  DockPanel.Dock="Top">
+            <!--
+         FocusManager.IsFocusScope="False"
+         This toolbar needs to remain a focus scope, otherwise, we can't use the toolbar to add nested filters.
+         -->
+            <ToolBar>
+                <Button ToolTip="Add a new record (Shft+Ctrl+R)"
+                        x:Name="BtnAddRecord"
+                        Command="self:App.AddAssetRecordCmd"
+                        CommandTarget="{Binding ElementName=AssetsPanel}"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    <Image
+                        Source="{Binding ElementName=BtnAddRecord, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Asset/NewAssetRecord.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Button ToolTip="Add a new sub record (Shft+Ctrl+c)"
+                        x:Name="BtnAddRecordWithSub"
+                        Command="self:App.AddAssetSubRecordCmd"
+                        CommandTarget="{Binding ElementName=AssetsPanel}"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    <Image
+                        Source="{Binding ElementName=BtnAddRecordWithSub, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Asset/NewAssetRecordWS.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+
+                <!--<Button ToolTip="Add a new 'or' record (Shft+Ctrl+&#124;)"
+                    x:Name="BtnCreateOr"
+                    Command="self:App.CreateOrClusterCmd"
+                    Style="{StaticResource TlbButtonsStyle}">
+               &#124;&#124;
+            </Button>
+            <Button ToolTip="Add a new 'and' record (Shft+Ctrl+&amp;)"
+                    x:Name="BtnCreateAnd"
+                    Command="self:App.CreateAndClusterCmd"
+                    Style="{StaticResource TlbButtonsStyle}">
+               &amp;&amp;
+            </Button>-->
+                <Separator />
+                <Button ToolTip="Change the selected record to a value.(Shft+Ctrl+v)"
+                        x:Name="BtnChangeToValue"
+                        Command="self:App.ChangeToAssetItemValueCmd"
+                        Style="{StaticResource TlbButtonsStyle}"
+                        CommandTarget="{Binding ElementName=AssetsPanel}">
+                    <Image
+                        Source="{Binding ElementName=BtnChangeToValue, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Asset/AssetItemValue.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Button ToolTip="Change the selected record to a list.(Shft+Ctrl+L)"
+                        x:Name="BtnChangeToList"
+                        Command="self:App.ChangeToAssetItemListCmd"
+                        CommandTarget="{Binding ElementName=AssetsPanel}"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    <Image
+                        Source="{Binding ElementName=BtnChangeToList, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Asset/AssetItemList.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Button ToolTip="Change the selected record to a sub asset.(Shft+Ctrl+A)"
+                        x:Name="BtnChangeToAsset"
+                        Command="self:App.CreateSubAssetCmd"
+                        CommandTarget="{Binding ElementName=AssetsPanel}"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    <Image
+                        Source="{Binding ElementName=BtnChangeToAsset, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Asset/AddSubAsset.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Separator />
+                <Button x:Name="BtnDelete"
+                        ToolTip="Delete the selected record"
+                        Style="{StaticResource TlbButtonsStyle}"
+                        Command="Delete"
+                        CommandTarget="{Binding ElementName=AssetsPanel}">
+                    <Image
+                        Source="{Binding ElementName=BtnDelete, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Delete.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Separator />
+                <ToggleButton IsChecked="{Binding Path=IsIconVisible}"
+                              x:Name="BtnIconVisibility"
+                              ToolTip="Show/hide the icons in front of the values">
+                    <Image Source="/Images/Flow/ShowOverlays.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+            </ToolBar>
+        </Expander>
+        <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <ScrollBar Grid.Column="1"
+                       Grid.Row="0"
+                       Grid.RowSpan="2"
+                       x:Name="ScrollVer"
+                       Value="{Binding Path=VerScrollPos, Mode=TwoWay}"
+                       Minimum="0"
+                       ViewportSize="{Binding ElementName=AssetsPanel, Path=VerViewportSize}"
+                       SmallChange="1"
+                       LargeChange="{Binding ElementName=AssetsPanel, Path=VerLargeChange}"
+                       Maximum="{Binding ElementName=AssetsPanel, Path=VerticalMax, Mode=OneWay}"
+                       Orientation="Vertical"
+                       VerticalAlignment="Stretch"
+                       Visibility="{Binding ElementName=AssetsPanel, Path=VerBarVisibility}" />
+
+            <ItemsControl HorizontalAlignment="Stretch"
+                          ItemsSource="{Binding Path=Columns, Mode=OneWay}"
+                          Name="LstHeader"
+                          Margin="{Binding ElementName=AssetsPanel, Path=LevelDepth, Converter={StaticResource LMarginConv}}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                        <!--<StackPanel Orientation="Horizontal"/>-->
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="Control.Width" Value="{Binding Path=Width}" />
+                        <Setter Property="Grid.Column" Value="{Binding Path=Index, Mode=OneWay}" />
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource AssetHeaderBorderStyle}"
+                                dd:DragDropManager.DragSource="{StaticResource AssetColDragAdvisor}"
+                                dd:DragDropManager.DropTarget="{StaticResource AssetColDropAdvisor}">
+                            <Grid>
+                                <TextBlock Style="{StaticResource AssetHeaderTextStyle}"
+                                           Text="{Binding Path=Name}" />
+                                <Thumb Style="{StaticResource AssetHeaderColThumbStyle}"
+                                       DragDelta="ThumbCol_DragDelta" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <AdornerDecorator ClipToBounds="True"
+                              Grid.Row="1">
+                <Ctrls:AssetPanel HorizontalAlignment="Stretch"
+                                  VerticalAlignment="Stretch"
+                                  Background="White"
+                                  FallbackValue="Loading..."
+                                  ItemsSource="{Binding }"
+                                  ItemContainerStyle="{StaticResource TrvPanelItemAssetItemStyle}"
+                                  ContextMenu="{StaticResource AssetsContextMenu}"
+                                  x:Name="AssetsPanel"
+                                  ClipToBounds="True"
+                                  VerticalOffset="{Binding Path=VerScrollPos, Mode=TwoWay}"
+                                  Ctrls:TiltWheelProvider.TiltWheel="AssetsPanel_TiltWheel"
+                                  Focusable="True"
+                                  MouseDown="AssetPanel_MouseDown">
+                    <!--<Ctrls:AssetPanel.ItemTemplateSelector>
+                  <self:AssetTemplateSelector>
+                     <self:AssetTemplateSelector.NormalTemplate>
+
+                        <DataTemplate>
+                           <Border Background="Transparent"
+                             BorderThickness="0,0,0,1"
+                             BorderBrush="LightGray"
+                             
+                             >
+                              <Grid>
+                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition x:Name="PART_COL1" Width="Auto"/>
+                                    <ColumnDefinition x:Name="PART_COL2" Width="Auto"/>
+                                    <ColumnDefinition x:Name="PART_COL3" Width="Auto" />
+                                    <ColumnDefinition x:Name="PART_COL4" Width="Auto"/>
+                                    <ColumnDefinition x:Name="PART_COL5" Width="Auto"/>
+                                    <ColumnDefinition x:Name="PART_COL6" Width="Auto"/>
+                                    <ColumnDefinition x:Name="PART_COL7" Width="Auto"/>
+                                    <ColumnDefinition x:Name="PART_COL8" Width="Auto"/>
+                                    <ColumnDefinition x:Name="PART_COL9" Width="Auto"/>
+                                    <ColumnDefinition x:Name="PART_COL10" Width="*"/>
+                                 </Grid.ColumnDefinitions>
+
+                                 
+                                 <Border Grid.Column="0" 
+                                         BorderThickness="0,0,1,0"
+                                         BorderBrush="Gray"
+                                         IsKeyboardFocusWithinChanged="Border_IsKeyboardFocusWithinChanged">
+                                    <Border.Width>
+                                       <MultiBinding Converter="{StaticResource AssetColWidthConverter}">
+                                          <Binding Path="Root.Columns[0].Width"/>
+                                          <Binding RelativeSource="{RelativeSource AncestorType={x:Type Ctrls:TreeViewPanelItem}}" Path="Level" Mode="OneTime"/>
+                                          <Binding ElementName="AssetsPanel"  Path="LevelDepth" Mode="OneTime"/>
+                                       </MultiBinding>
+                                    </Border.Width>
+                                    <Ctrls:NeuronDataEditor SelectedNeuron="{Binding Path=Attribute, Mode=TwoWay}"
+                                                            ShowDropDownOnMouseOver="true"
+                                                            Popup="{StaticResource NeuronBrowserPopup}"
+                                                            VerticalAlignment="Top"
+                                                            IconVisibility="{Binding Path=Owner.Root.IconVisibility}"
+                                                            dd:DragDropManager.DropTarget="{StaticResource NDEditorDropAdvisor}"/>
+                                    
+                                    <Border.Tag>
+                                       <sys:Int32>-1</sys:Int32>
+                                    </Border.Tag>
+                                 </Border>
+
+                                 <Border Grid.Column="{Binding Path=Data[0].Column.Index, Mode=OneWay}" 
+                                         Width="{Binding Path=Data[0].Column.Width, Mode=OneWay}"
+                                         IsKeyboardFocusWithinChanged="Border_IsKeyboardFocusWithinChanged">
+                                    <Border.Tag>
+                                       <sys:Int32>0</sys:Int32>
+                                    </Border.Tag>
+                                    <ContentPresenter Content="{Binding Path=Data[0]}"
+                                                      ContentTemplate="{StaticResource AssetItemValueDataTemplate}"/>
+                                 </Border>
+                                 <Border Grid.Column="{Binding Path=Data[1].Column.Index, Mode=OneWay}" 
+                                         Width="{Binding Path=Data[1].Column.Width, Mode=OneWay}"
+                                         IsKeyboardFocusWithinChanged="Border_IsKeyboardFocusWithinChanged">
+                                    <Border.Tag>
+                                       <sys:Int32>1</sys:Int32>
+                                    </Border.Tag>
+                                    <ContentPresenter Content="{Binding Path=Data[1]}"
+                                                      ContentTemplate="{StaticResource AssetItemValueDataTemplate}"/>
+                                 </Border>
+
+                                 <Border Grid.Column="{Binding Path=Data[2].Column.Index, Mode=OneWay}" 
+                                         Width="{Binding Path=Data[2].Column.Width, Mode=OneWay}"
+                                         IsKeyboardFocusWithinChanged="Border_IsKeyboardFocusWithinChanged">
+                                    <Border.Tag>
+                                       <sys:Int32>2</sys:Int32>
+                                    </Border.Tag>
+                                    <ContentPresenter Content="{Binding Path=Data[2]}"
+                                                      ContentTemplate="{StaticResource AssetItemValueDataTemplate}"/>
+                                 </Border>
+                                 
+                                 <Border Grid.Column="{Binding Path=Data[3].Column.Index, Mode=OneWay}" 
+                                         Width="{Binding Path=Data[3].Column.Width, Mode=OneWay}"
+                                         IsKeyboardFocusWithinChanged="Border_IsKeyboardFocusWithinChanged">
+                                    <Border.Tag>
+                                       <sys:Int32>3</sys:Int32>
+                                    </Border.Tag>
+                                    <ContentPresenter Content="{Binding Path=Data[3]}"
+                                                      ContentTemplate="{StaticResource AssetItemValueDataTemplate}"/>
+                                 </Border>
+                                 <Border Grid.Column="{Binding Path=Data[4].Column.Index, Mode=OneWay}" 
+                                         Width="{Binding Path=Data[4].Column.Width, Mode=OneWay}"
+                                         IsKeyboardFocusWithinChanged="Border_IsKeyboardFocusWithinChanged">
+                                    <Border.Tag>
+                                       <sys:Int32>4</sys:Int32>
+                                    </Border.Tag>
+                                    <ContentPresenter Content="{Binding Path=Data[4]}"
+                                                   ContentTemplate="{StaticResource AssetItemValueDataTemplate}"/>
+                                 </Border>
+                                 <Border Grid.Column="{Binding Path=Data[5].Column.Index, Mode=OneWay}" 
+                                         Width="{Binding Path=Data[5].Column.Width, Mode=OneWay}"
+                                         IsKeyboardFocusWithinChanged="Border_IsKeyboardFocusWithinChanged">
+                                    <Border.Tag>
+                                       <sys:Int32>5</sys:Int32>
+                                    </Border.Tag>
+                                 <ContentPresenter Content="{Binding Path=Data[5]}"
+                                                   ContentTemplate="{StaticResource AssetItemValueDataTemplate}"/>
+                                 </Border>
+                                 <Border Grid.Column="{Binding Path=Data[6].Column.Index, Mode=OneWay}" 
+                                         Width="{Binding Path=Data[6].Column.Width, Mode=OneWay}"
+                                         IsKeyboardFocusWithinChanged="Border_IsKeyboardFocusWithinChanged">
+                                    <Border.Tag>
+                                       <sys:Int32>6</sys:Int32>
+                                    </Border.Tag>
+                                 <ContentPresenter Content="{Binding Path=Data[6]}"
+                                                   ContentTemplate="{StaticResource AssetItemValueDataTemplate}"/>
+                                 </Border>
+                                 <Border Grid.Column="{Binding Path=Data[7].Column.Index, Mode=OneWay}" 
+                                         Width="{Binding Path=Data[7].Column.Width, Mode=OneWay}"
+                                         IsKeyboardFocusWithinChanged="Border_IsKeyboardFocusWithinChanged">
+                                    <Border.Tag>
+                                       <sys:Int32>7</sys:Int32>
+                                    </Border.Tag>
+                                    <ContentPresenter Content="{Binding Path=Data[7]}"
+                                                      ContentTemplate="{StaticResource AssetItemValueDataTemplate}"/>
+                                 </Border>
+
+                 
+                                 <Border Grid.Column="{Binding Path=Data[8].Column.Index, Mode=OneWay}" 
+                                         Width="{Binding Path=Data[8].Column.Width, Mode=OneWay}"
+                                         IsKeyboardFocusWithinChanged="Border_IsKeyboardFocusWithinChanged">
+                                    <Border.Tag>
+                                       <sys:Int32>-1</sys:Int32>
+                                    </Border.Tag>
+
+                                    <Ctrls:NeuronDataEditor SelectedNeuron="{Binding Path=Data[8].Value, Mode=TwoWay}"
+                                                            KeyboardNavigation.TabIndex="{Binding Path=Data[8].Column.Index, Mode=OneWay}"
+                                                            ShowDropDownOnMouseOver="true"
+                                                            Popup="{StaticResource NeuronBrowserPopup}"
+                                                            VerticalAlignment="Top"
+                                                            IconVisibility="{Binding Path=Owner.Root.IconVisibility}"
+                                                            dd:DragDropManager.DropTarget="{StaticResource NDEditorDropAdvisor}"/>
+                                 </Border>
+                              </Grid>
+                           </Border>
+                        </DataTemplate>
+
+                     </self:AssetTemplateSelector.NormalTemplate>
+                     
+                     <self:AssetTemplateSelector.GroupTemplate>
+                        <DataTemplate>
+                           <Ctrls:DropDownNSSelector SelectedNeuron="{Binding Path=GroupMode, Mode=TwoWay}"
+                                                        dd:DragDropManager.DropTarget="{StaticResource DDNeuronSelectorDropAdvisor}"
+                                                        Margin="0,0,4,0"/>
+                        </DataTemplate>
+                     </self:AssetTemplateSelector.GroupTemplate>
+                        
+                     
+                  </self:AssetTemplateSelector>
+                  
+               </Ctrls:AssetPanel.ItemTemplateSelector>-->
+                </Ctrls:AssetPanel>
+            </AdornerDecorator>
+        </Grid>
+    </DockPanel>
+</self:CtrlEditorBase>

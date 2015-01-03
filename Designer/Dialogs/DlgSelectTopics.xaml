@@ -1,0 +1,65 @@
+﻿<Window x:Class="JaStDev.HAB.Designer.Dialogs.DlgSelectTopics"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+        Title="Select Topics"
+        x:Name="this"
+        WindowStyle="SingleBorderWindow"
+        Topmost="True"
+        WindowStartupLocation="CenterOwner"
+        SizeToContent="WidthAndHeight"
+        MinHeight="200"
+        ShowInTaskbar="False">
+    <Window.Resources>
+
+        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Margin" Value="0,8,8,8" />
+            <Setter Property="MinWidth" Value="80" />
+        </Style>
+
+        <DataTemplate DataType="{x:Type self:TextPatternEditor}">
+            <CheckBox Checked="TreeView_Selected"
+                      Unchecked="TreeView_Unselected"
+                      Content="{Binding Path=Name}" />
+        </DataTemplate>
+
+        <HierarchicalDataTemplate DataType="{x:Type self:BrowsableTopicsEnumerator}"
+                                  ItemsSource="{Binding}">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="/Images/ClosedFolder.png"
+                       Margin="0,0,8,0"
+                       VerticalAlignment="Center" />
+                <TextBlock Text="{Binding Path=Owner.Owner.Name}"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+        </HierarchicalDataTemplate>
+    </Window.Resources>
+    <DockPanel>
+        <TextBlock DockPanel.Dock="Top"
+                   TextWrapping="Wrap"
+                   Margin="8,8,8,0">
+            Select the topics that will translate the document(s):
+        </TextBlock>
+        <StackPanel DockPanel.Dock="Bottom">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Margin="8,0,0,0">
+                <Button IsDefault="True"
+                        Click="OnClickOk">
+                    Ok
+                    <Button.ToolTip>
+                        Select all the items and return.
+                    </Button.ToolTip>
+                </Button>
+                <Button IsCancel="True">
+                    Cancel
+                    <Button.ToolTip>
+                        Cancel the selection and close the window.
+                    </Button.ToolTip>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+        <TreeView Margin="8,8,8,0"
+                  ItemsSource="{Binding ElementName=this, Path=Items}" />
+    </DockPanel>
+</Window>

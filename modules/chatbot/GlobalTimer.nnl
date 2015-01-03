@@ -1,0 +1,55 @@
+class GlobalTimer
+{  
+   using Common;
+   
+   //starts the timer so that at the end of the 
+   Start(var topic)
+   {
+      if(count(topic) == 1)
+      {
+         StopTimer(InternalTimer);
+         SetFirstOut(InternalTimer, topic, 'topic');                //store the topic that needs to be called.
+         SetFirstOut(InternalTimer, common.OutputSin, 'output');                //also need to know where to render too.
+         StartTimer(InternalTimer);
+      }
+      else
+         error("Illegal nr of topics, the timer can only start with 1 topic at a time.");
+   }
+   
+   //stops the current global timer and makes certain that there is no more topic attached.
+   Stop()
+   {
+      StopTimer(InternalTimer);
+      RemoveLinksOut(InternalTimer, 'topic');
+      RemoveLinksOut(InternalTimer, 'output');
+   }
+   
+   //gets the topic that will be used by the timer on the next tick to do something
+   GetTopic(): var
+   {
+      return GetFirstOut(InternalTimer, 'topic');
+   }
+
+   
+   TimerSin InternalTimer
+   {
+      //called when the timer elapses (has to be neuron 49 that defines the link to a code cluster, otherwise the engine wont find the callback)
+      //the topic will also be removed after the timer has passed and the timer will be stopped.
+      OnTick()
+      {
+         var iTopic = GetFirstOut(InternalTimer, 'topic');
+         var iRenderTo = GetFirstOut(InternalTimer, 'output');
+         Stop();                                                     //do after getting the topic cause this removes the topic.
+         if(count(iTopic) > 0)
+         {
+            PatternMatcher.splitresults = MakeCluster(iTopic);          //we need to have a splitResults cluster cause that's where the renderer gets a ref to the pattern, for which we use the topic, cause there currently is no pattern.
+            var iOutput = Topics.InternalRender(iTopic, true);
+            lock(PatternMatcher.RenderLock)                                                        //this is used to make certain that only 1 block can render at a time, so that all the text of a single process is never interrupted (there are potentially multiple calls to Output, which can't be interrupted).
+               Output(iRenderTo, Statics.BeginTextblock, iOutput, Statics.EndTextblock);
+            OutputSin = iRenderTo;                                                              //so that the next timer tick also potentially has the correct sin.
+            PatternMatcher.CallDoAfterStatement();                                                 //also has to be done after an OnIdle render.   
+            Delete(GetChildren(PatternMatcher.splitresults), PatternMatcher.splitresults);             //the results cluster is no longer needed. also all of it's children are also no longer needed.
+         }
+      }
+   }
+}

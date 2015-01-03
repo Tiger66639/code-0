@@ -1,0 +1,53 @@
+//Attention: this code expects an OS channel with id 1248.
+class System
+{
+   using common;
+   
+   //for calling .net functions. Expects an OS channel at id 1248. Adjust the code if needed.
+   ReflectionSin OS_out: 1248 { }
+   
+   //contains a possible error, caused by trying to call a .net function through the reflection sin, which raised an exception.
+   Variable LastError;
+
+   //sends the function-neuron and arguments to the OS-reflection sin.
+   [CallOS]
+   ExpressionsBlock CallOsFunction
+   {
+      //the first argument should be the function to call, the next arguments should be the 
+      //arguments that need to be passed on to the os-function.
+      statements(var function): var
+      {
+         var tosend = New(neuron);
+         var iArgs = New(neuroncluster);
+         var oscallresult, operandresult;
+         
+         while(ParamStackCount() > 0)
+         {
+            PopValue(operandresult);
+            if (Count(operandresult) > 1)
+            {
+               operandresult = MakeCluster(Statics.argument, operandresult);
+               AddChild(iArgs, operandresult);
+               Freeze(operandresult);
+            }
+            else
+               AddChild(iArgs, operandresult);
+         }
+         AddLink(tosend, function, Statics.reflectionsincall);
+         AddLink(tosend, iArgs, Statics.arguments);
+         Output(OS_out, tosend);
+         LastError = GetFirstOut(tosend, Statics.reflectionsinexception);
+         if (Count(LastError) > 0)
+            Error(LastError);
+         oscallresult = GetFirstOut(tosend, Statics.Value);
+         if (TypeOf(oscallresult) == neuroncluster)
+         {
+            var temp = GetChildren(oscallresult);
+            Delete(oscallresult);
+            oscallresult = temp;
+         }
+         Freeze(tosend, iArgs, oscallresult);
+         return oscallresult;
+      }
+   }
+}

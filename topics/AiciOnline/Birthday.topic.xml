@@ -1,0 +1,438 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>Birthday</Name>
+  <Rules>
+    <Rule>
+      <Name>WhenBirthday</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>(when | what) is ^subj:adj.possesive birthday</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>^subj:adj.possesive birthday is (when | what)</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals>
+        <Conditional>
+          <Condition>
+            <Expression>count($result) == 0</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>I don't know when #bot.mem.who.inv brithday is.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+      </Conditionals>
+      <Outputs>
+        <Output>
+          <Expression>#bot.mem.who.inv brithday is on $result\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.who.inv = L($subj:InvertPerson);
+$result = #($subj:ResolvePerson).birthday;
+int iMonth = $result:month;
+$result = L(^noun.month[@iMonth - 1], $result:day $result:year);</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>WhenSubjectBorn</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>When ^v:verb.be ~subject born</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>~subject ^v:verb.be born when</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals>
+        <Conditional>
+          <Condition>
+            <Expression>count($result) == 0</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>I don't know when #bot.mem.who.inv brithday is.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+      </Conditionals>
+      <Outputs>
+        <Output>
+          <Expression>#bot.mem.who.inv brithday is on $result\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>$result = #bot.mem.who.val.birthday;
+int iMonth = $result:month;
+$result = L(^noun.month[@iMonth - 1], $result:day $result:year);</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>SubjectBeBornOn</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>~Subject ^v:verb.be [also] born on ~DateTime</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>on ~DateTime [,] ~subject ^v:verb.be born</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>Ok, #bot.mem.Who.Inv $v:conjugateverb(#bot.mem.who.val) born on #bot.mem.DateTime.Inv\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.Who.val.birthday = #bot.mem.DateTime.Val;</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>WhoElseInyearAsPron</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>who [else] ^v:verb.be [also] born (in|on) the same year as ^s:pronoun.object</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>who [else] ^v:verb.be [also] born (in|on) the same year as ^s:pronoun.subject ^vv:verb.be</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals>
+        <Conditional>
+          <Condition>
+            <Expression>count($people) == 0 &amp;&amp; count($UnknownPeople) == 0</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>No one, I'm afraid.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+        <Conditional>
+          <Condition>
+            <Expression>count($people) &gt; 0 &amp;&amp; count($UnknownPeople) == 0 </Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>That would be $people\.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+        <Conditional>
+          <Condition>
+            <Expression>count($people) == 0 &amp;&amp; count($UnknownPeople) &gt; 0 </Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>I know about others that are born in the same year as #bot.mem.Who.Inv, but I don't now the name of $UnknownPeople \. </Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+      </Conditionals>
+      <Outputs>
+        <Output>
+          <Expression>That would be $people, also $UnknownPeople, but I can't find a name.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>var iPerson = $s:ResolvePerson;
+#bot.mem.Who.val = iPerson;
+#bot.mem.Who.Inv = $s:InvertPerson;
+var iAllOfYear = GetClustersWithMeaning( #(@iPerson).birthday:year, ref(Time));  //get all dates for the specified year
+var iPeople = Chatbot.Search.GetAssetsFromValue(iAllOfYear,  'birthday');  //get all assets that link to those dates
+iPeople = Complement(iPeople, #user); //remove the current user.
+var iRes, iUnknownRes;
+foreach(iPerson in iPeople)
+{
+   if(iPerson == #bot)
+      add(iRes, 'me');
+   else
+   {
+      var iName = #(@iPerson).name;
+      if(count(iName) &gt; 0)
+         Add(iRes, iName);
+      else
+         Add(iUnknownRes, iPerson);
+   }
+}
+var iComma = ', ';
+var iAtEnd = ' and ';
+if(count(iRes) &gt; 0)
+   $people = Interleaf(ref(ires), ref(iComma), ref(iAtEnd));
+if(count(iUnknownRes) &gt; 0)
+   $UnknownPeople = Interleaf(ref(iUnknownRes), ref(iComma), ref(iAtEnd));</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>WhoElseInMonthAsPron</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>who [else] is [also] born (in|on) the same month as ^s:pronoun.object</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals>
+        <Conditional>
+          <Condition>
+            <Expression>count($people) == 0 &amp;&amp; count($UnknownPeople) == 0</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>No one, I'm afraid.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+        <Conditional>
+          <Condition>
+            <Expression>count($people) &gt; 0 &amp;&amp; count($UnknownPeople) == 0 </Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>That would be $people\.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+        <Conditional>
+          <Condition>
+            <Expression>count($people) == 0 &amp;&amp; count($UnknownPeople) &gt; 0 </Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>I know about others that are born in the same year as #bot.mem.Who.Inv, but I don't now the name of $UnknownPeople \. </Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+      </Conditionals>
+      <Outputs>
+        <Output>
+          <Expression>That would be $people, also $UnknownPeople, but I can't find a name.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>var iPerson = $s:ResolvePerson;
+#bot.mem.Who.val = iPerson;
+#bot.mem.Who.Inv = $s:InvertPerson;
+var iAllOfYear = GetClustersWithMeaning( #(@iPerson).birthday:month, ref(Time));  //get all dates for the specified year
+var iPeople = Chatbot.Search.GetAssetsFromValue(iAllOfYear,  'birthday');  //get all assets that link to those dates
+iPeople = Complement(iPeople, #user); //remove the current user.
+var iRes, iUnknownRes;
+foreach(iPerson in iPeople)
+{
+   if(iPerson == #bot)
+      add(iRes, 'me');
+   else
+   {
+      var iName = #(@iPerson).name;
+      if(count(iName) &gt; 0)
+         Add(iRes, iName);
+      else
+         Add(iUnknownRes, iPerson);
+   }
+}
+var iComma = ', ';
+var iAtEnd = ' and ';
+if(count(iRes) &gt; 0)
+   $people = Interleaf(ref(ires), ref(iComma), ref(iAtEnd));
+if(count(iUnknownRes) &gt; 0)
+   $UnknownPeople = Interleaf(ref(iUnknownRes), ref(iComma), ref(iAtEnd));</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>WhoElseInDayAsPron</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>who else is born (in|on) the same day as ^s:pronoun.object</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals>
+        <Conditional>
+          <Condition>
+            <Expression>count($people) == 0 &amp;&amp; count($UnknownPeople) == 0</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>No one, I'm afraid.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+        <Conditional>
+          <Condition>
+            <Expression>count($people) &gt; 0 &amp;&amp; count($UnknownPeople) == 0 </Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>That would be $people\.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+        <Conditional>
+          <Condition>
+            <Expression>count($people) == 0 &amp;&amp; count($UnknownPeople) &gt; 0 </Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>I know about others that are born in the same year as #bot.mem.Who.Inv, but I don't now the name of $UnknownPeople \. </Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+      </Conditionals>
+      <Outputs>
+        <Output>
+          <Expression>That would be $people, also $UnknownPeople, but I can't find a name.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>var iPerson = $s:ResolvePerson;
+#bot.mem.Who.val = iPerson;
+#bot.mem.Who.Inv = $s:InvertPerson;
+var iAllOfYear = GetClustersWithMeaning( #(@iPerson).birthday:day, ref(Time));  //get all dates for the specified year
+var iPeople = Chatbot.Search.GetAssetsFromValue(iAllOfYear,  'birthday');  //get all assets that link to those dates
+iPeople = Complement(iPeople, #user); //remove the current user.
+var iRes, iUnknownRes;
+foreach(iPerson in iPeople)
+{
+   if(iPerson == #bot)
+      add(iRes, 'me');
+   else
+   {
+      var iName = #(@iPerson).name;
+      if(count(iName) &gt; 0)
+         Add(iRes, iName);
+      else
+         Add(iUnknownRes, iPerson);
+   }
+}
+var iComma = ', ';
+var iAtEnd = ' and ';
+if(count(iRes) &gt; 0)
+   $people = Interleaf(ref(ires), ref(iComma), ref(iAtEnd));
+if(count(iUnknownRes) &gt; 0)
+   $UnknownPeople = Interleaf(ref(iUnknownRes), ref(iComma), ref(iAtEnd));</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>UnknownBeBornOn</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>~(Simple Unknown).Unknown ^v:Verb.Be born on ~DateTime</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>~(Simple Unknown).Unknown 's birthday ^v:Verb.Be [on] ~DateTime</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>I don't know any #bot.mem.unknown.inv\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Rule>
+    <Rule>
+      <Name>PossesiveBirthdayOn</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^subj:adj.possesive birthday ^v:verb.be [on] ~DateTime</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>~DateTime ^v:verb.be ^subj:adj.possesive birthday</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>Ok, #bot.mem.Who.Inv birthday $v:conjugateverb(#bot.mem.who.val) on #bot.Mem.DateTime.Inv\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>var iPerson = $subj:ResolvePerson;
+#bot.mem.Who.val = iPerson;
+#bot.mem.Who.Inv = $subj:InvertPerson;
+#(@iPerson).birthday = #bot.mem.DateTime.Val;</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>PossesiveBirthday=</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^subj:adj.possesive birthday = ~DateTime</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>Ok, #bot.mem.Who.Inv birthday $v:conjugateverb(#bot.mem.who.val) on #bot.Mem.DateTime.Inv\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>var iPerson = $subj:ResolvePerson;
+#bot.mem.Who.val = iPerson;
+#bot.mem.Who.Inv = $subj:InvertPerson;
+#(@iPerson).birthday = #bot.mem.DateTime.Val;
+$v = ^verb.be;</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>SubjectBeBornInYear</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>~Subject ^v:verb.be [also] born in [the year]s ^year:int</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>Ok, #bot.mem.Who.Inv $v:conjugateverb(#bot.mem.who.val) born in #bot.mem.DateTime.Inv\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>var iYear = IToDT($year);
+#bot.mem.DateTime.Val = iYear;
+#bot.mem.DateTime.Inv = $year;
+#bot.mem.Who.val.birthday = iYear;</Expression>
+      </ToCal>
+    </Rule>
+  </Rules>
+</Topic>

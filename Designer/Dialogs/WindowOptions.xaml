@@ -1,0 +1,398 @@
+﻿<Window x:Class="JaStDev.HAB.Designer.WindowOptions"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:HAB="clr-namespace:JaStDev.HAB;assembly=JaStDev.HabCore"
+        xmlns:prop="clr-namespace:JaStDev.HAB.Designer.Properties"
+        xmlns:cf="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+        xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+        xmlns:speech="clr-namespace:JaStDev.HAB.CharacterEngine;assembly=CharacterEngine"
+        Title="Options"
+        WindowStyle="SingleBorderWindow"
+        WindowStartupLocation="CenterOwner"
+        Topmost="True"
+        ShowInTaskbar="False"
+        Height="340"
+        Width="757"
+        Closing="Window_Closing"
+        cf:Help.Topic="Options.html">
+    <Window.Background>
+        <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}" />
+    </Window.Background>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="DialogSettings.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Bottom">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <Button IsDefault="True"
+                        Click="OnClickOk">
+                    Ok
+                    <Button.ToolTip>
+                        Apply the changes and close the window.
+                    </Button.ToolTip>
+                </Button>
+                <Button IsCancel="True">
+                    Cancel
+                    <Button.ToolTip>
+                        Undo the changes and close the window.
+                    </Button.ToolTip>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+        <TabControl TabStripPlacement="Left"
+                    SelectedIndex="0">
+            <TabItem Header="General"
+                     ToolTip="Edit the general settings of the application">
+
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                              VerticalScrollBarVisibility="Auto">
+                    <Grid Margin="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition MinWidth="10"
+                                              Width="Auto" />
+                            <ColumnDefinition Width="*"
+                                              MinWidth="10" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="32" />
+                            <RowDefinition Height="32" />
+                            <RowDefinition Name="Row1" Height="32" />
+                            <RowDefinition Name="Row2" Height="32" />
+                            <RowDefinition Height="32" />
+                            <RowDefinition Height="12" />
+                            <RowDefinition Height="32" />
+                            <RowDefinition Height="32" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0" Grid.Row="0">Default project template:</TextBlock>
+                        <TextBlock Grid.Column="0" Grid.Row="1">Sandbox path:</TextBlock>
+                        <TextBlock Grid.Column="0" Grid.Row="2"
+                                   Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                            FrameNet path:
+                        </TextBlock>
+                        <TextBlock Grid.Column="0" Grid.Row="3"
+                                   Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                            VerbNet path:
+                        </TextBlock>
+                        <TextBlock Grid.Column="0" Grid.Row="4">Characters path:</TextBlock>
+                        <TextBlock Grid.Column="0" Grid.Row="6">Auto save:</TextBlock>
+
+
+                        <TextBox Grid.Column="1"
+                                 Grid.Row="0"
+                                 Name="TxtTemplateFile">
+                            <TextBox.ToolTip>
+                                Defines the project path used as a template to create new projects.
+                            </TextBox.ToolTip>
+                            <TextBox.Tag>
+                                Please select the project path used as a template to create new projects.
+                            </TextBox.Tag>
+                        </TextBox>
+                        <Button Grid.Column="2"
+                                Grid.Row="0"
+                                Click="OnClickMoreFile"
+                                Tag="{Binding ElementName=TxtTemplateFile}"
+                                Style="{StaticResource MoreButton}">
+                            ...
+                            <Button.ToolTip>
+                                Use the 'Open File dialog' to select the template file.
+                            </Button.ToolTip>
+                        </Button>
+
+
+                        <TextBox Grid.Column="1"
+                                 Grid.Row="1"
+                                 Name="TxtSandboxPath">
+                            <!--Text="{Binding Source={x:Static HAB:Brain.Current}, Path=Storage.NeuronsPath, UpdateSourceTrigger=Explicit}"-->
+                            <TextBox.ToolTip>
+                                Specifies the directory to use for starting the project in a sandbox.
+                            </TextBox.ToolTip>
+                            <TextBox.Tag>
+                                Please select the directory used for starting the project in a sandbox.
+                            </TextBox.Tag>
+                        </TextBox>
+                        <Button Grid.Column="2"
+                                Grid.Row="1"
+                                Click="OnClickMore"
+                                Style="{StaticResource MoreButton}"
+                                Tag="{Binding ElementName=TxtSandboxPath}">
+                            ...
+                            <Button.ToolTip>
+                                Open a folder browser dialog box.
+                            </Button.ToolTip>
+                        </Button>
+
+
+                        <TextBox Grid.Column="1"
+                                 Grid.Row="2"
+                                 Name="TxtFrameNetPath"
+                                 Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                            <TextBox.ToolTip>
+                                The path of the framenet database.
+                            </TextBox.ToolTip>
+                            <TextBox.Tag>
+                                Please select the location of the FrameNet database.
+                            </TextBox.Tag>
+                        </TextBox>
+                        <Button Grid.Column="2"
+                                Grid.Row="2"
+                                Click="OnClickMore"
+                                Style="{StaticResource MoreButton}"
+                                Tag="{Binding ElementName=TxtFrameNetPath}"
+                                Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                            ...
+                            <Button.ToolTip>
+                                Select the path where the xml files for framenet are stored.
+                            </Button.ToolTip>
+                        </Button>
+
+                        <TextBox Grid.Column="1"
+                                 Grid.Row="3"
+                                 Name="TxtVerbNetPath"
+                                 Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                            <TextBox.ToolTip>
+                                Specifies the location of the VerbNet database.
+                            </TextBox.ToolTip>
+                        </TextBox>
+                        <Button Grid.Column="2"
+                                Grid.Row="3"
+                                Click="OnClickMore"
+                                Style="{StaticResource MoreButton}"
+                                Tag="{Binding ElementName=TxtVerbNetPath}"
+                                Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                            ...
+                            <Button.ToolTip>
+                                Select the path where the xml files for VerbNet are stored.
+                            </Button.ToolTip>
+                        </Button>
+
+
+                        <TextBox Grid.Column="1"
+                                 Grid.Row="4"
+                                 Name="TxtCharactersPath">
+                            <TextBox.ToolTip>
+                                Specifies the location of the characters.
+                            </TextBox.ToolTip>
+                            <TextBox.Tag>
+                                Please select the path where the characters are stored.
+                            </TextBox.Tag>
+                        </TextBox>
+                        <Button Grid.Column="2"
+                                Grid.Row="4"
+                                Click="OnClickMore"
+                                Tag="{Binding ElementName=TxtCharactersPath}"
+                                Style="{StaticResource MoreButton}">
+                            ...
+                            <Button.ToolTip>
+                                Please select the path where the characters are stored.
+                            </Button.ToolTip>
+                        </Button>
+
+
+                        <CheckBox Grid.Column="1"
+                                  Grid.Row="6"
+                                  Name="CheckAutoSave">
+                            <CheckBox.ToolTip>
+                                Should the data be automatically saved or not.
+                            </CheckBox.ToolTip>
+                            <StackPanel Orientation="Horizontal"
+                                        IsEnabled="{Binding ElementName=CheckAutoSave, Path=IsChecked}">
+                                <TextBlock>every: </TextBlock>
+                                <TextBox x:Name="TxtAutoSaveInterval"
+                                         MinWidth="40" />
+                                <TextBlock>minutes.</TextBlock>
+                            </StackPanel>
+                        </CheckBox>
+
+                        <CheckBox Grid.Column="1"
+                                  Grid.Row="7"
+                                  Name="CheckTriggerEvents">
+                            <CheckBox.ToolTip>
+                                If checked, the network events will be triggered in design mode. If not checked, they will only be triggered when in viewer or sandbox mode.
+                            </CheckBox.ToolTip>
+                            Trigger events in design mode.
+                        </CheckBox>
+
+
+                    </Grid>
+                </ScrollViewer>
+
+
+            </TabItem>
+            <TabItem Header="Editing"
+                     ToolTip="Settings related to edting data.">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                              VerticalScrollBarVisibility="Auto">
+                    <Grid Margin="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition MinWidth="10"
+                                              Width="Auto" />
+                            <ColumnDefinition Width="*"
+                                              MinWidth="10" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="32" />
+                            <RowDefinition Height="32" />
+                            <RowDefinition Height="32" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Column="0" Grid.Row="0">Maximum undo size:</TextBlock>
+                        <TextBox Grid.Column="1"
+                                 Grid.Row="0"
+                                 Name="TxtTNrOfUndo">
+                            <TextBox.ToolTip>
+                                Determines how many undo steps can be performed.
+                            </TextBox.ToolTip>
+                        </TextBox>
+
+                        <CheckBox Grid.Row="1"
+                                  Grid.Column="1"
+                                  Name="CheckEditingSpellcheck">
+                            <CheckBox.ToolTip>
+                                When checked, the editor boxes will display a red line underneath misspelled words.
+                            </CheckBox.ToolTip>
+                            Use spell checking
+                        </CheckBox>
+
+                        <TextBlock Grid.Column="0" Grid.Row="2">Editor font:</TextBlock>
+                        <ComboBox Name="CmbEditorsFont"
+                                  Grid.Row="2"
+                                  Grid.Column="1"
+                                  VirtualizingStackPanel.IsVirtualizing="True"
+                                  VirtualizingStackPanel.VirtualizationMode="Recycling"
+                                  ItemsSource="{Binding ElementName=This, Path=AvailableFonts, IsAsync=True}"
+                                  ToolTip="Select the font used in the pattern editors." />
+
+                        <GroupBox Header="Example"
+                                  Grid.Row="3"
+                                  Grid.Column="1">
+                            <TextBlock Margin="8"
+                                       HorizontalAlignment="Left"
+                                       Foreground="Black"
+                                       FontFamily="{Binding ElementName=CmbEditorsFont, Path=SelectedItem, Mode=OneWay}">
+                                a [sample] (pattern|example) {to look at}
+                            </TextBlock>
+                        </GroupBox>
+
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Speech"
+                     ToolTip="Settings related to speech production and recording.">
+                <!--ItemsSourrce of datagrid gets set in code-->
+                <Grid Margin="4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Margin="0,0,4,0">Speech engine:</TextBlock>
+                    <ComboBox Name="CmbEngineType"
+                              Grid.Column="1">
+                        <ComboBoxItem ToolTip="The default, unmanaged engine.">Unmanaged SAPI engine</ComboBoxItem>
+                        <ComboBoxItem ToolTip="The managed engine.">Managed SAPI engine</ComboBoxItem>
+                        <ComboBoxItem ToolTip="The internal engine, based on Espeak.">Synthesizer engine</ComboBoxItem>
+                    </ComboBox>
+                    <DataGrid Margin="0,4,0,0"
+                              Grid.Row="1"
+                              Grid.ColumnSpan="2"
+                              Name="GrdVoices"
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              CanUserSortColumns="False"
+                              AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Display Name" Binding="{Binding DisplayName}" />
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True" />
+                            <DataGridCheckBoxColumn Header="Enabled" Binding="{Binding IsEnabled}" />
+                            <DataGridCheckBoxColumn Header="Use SSML" Binding="{Binding SSMLEnabled}" />
+                            <DataGridComboBoxColumn Header="Prefered character"
+                                                    SelectedItemBinding="{Binding PreferedCharacter}"
+                                                    ItemsSource="{Binding Source={x:Static self:ChatBotChannel.Characters}}" />
+                            <DataGridComboBoxColumn Header="format" SelectedItemBinding="{Binding SendFormatString}"
+                                                    ItemsSource="{Binding Source={x:Static speech:Voice.AvailableFormatStrings}}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Tuning"
+                     ToolTip="Manage properties that effect the performance of the network.">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                              VerticalScrollBarVisibility="Auto">
+                    <Grid Margin="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition MinWidth="10"
+                                              Width="Auto" />
+                            <ColumnDefinition Width="*"
+                                              MinWidth="10" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="32" />
+                            <RowDefinition Height="32" />
+                            <RowDefinition Height="32" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0" Grid.Row="0">Initial stack size:</TextBlock>
+                        <TextBlock Grid.Column="0" Grid.Row="1">Max nr of processor threads:</TextBlock>
+                        <TextBlock Grid.Column="0" Grid.Row="2">Min nr of supported blocked processors:</TextBlock>
+
+
+                        <TextBox Grid.Column="1"
+                                 Grid.Row="0"
+                                 Name="TxtStackSize">
+                            <TextBox.ToolTip>
+                                Specifies the initial size of the stack used by brain processors.
+                            </TextBox.ToolTip>
+                        </TextBox>
+
+                        <TextBox Grid.Column="1"
+                                 Grid.Row="1"
+                                 Name="TxtMaxConcurrentProcessors">
+                            <TextBox.ToolTip>
+                                This values determins how many processors can be running at the same time.  This influences responsiveness of the
+                                designer during full load (the higher this number, the more resources are used).
+                            </TextBox.ToolTip>
+                        </TextBox>
+                        <TextBox Grid.Column="1"
+                                 Grid.Row="2"
+                                 Name="TxtMinBlockedProcessors">
+                            <TextBox.ToolTip>
+                                This values determins how many threads are reserved for processors that are waiting for other processors to finish.
+                                For best performance, take the 'MaxConcurrentProcessors' * 3. The bigger this number, the more resources are used.
+                            </TextBox.ToolTip>
+                        </TextBox>
+
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+            <!--<TabItem Header="Comm channels"
+                  ToolTip="Manage the available communication channels.">
+
+            <Grid>
+               <Grid.ColumnDefinitions>
+                  <ColumnDefinition/>
+                  <ColumnDefinition Width="Auto"/>
+               </Grid.ColumnDefinitions>
+               <ListView/>
+               <StackPanel Grid.Column="1">
+                  <Button Margin="4">Add</Button>
+                  <Button Margin="4">Move up</Button>
+                  <Button Margin="4">Move down</Button>
+               </StackPanel>
+            </Grid>
+            
+         </TabItem>-->
+
+
+        </TabControl>
+    </DockPanel>
+</Window>

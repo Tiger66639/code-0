@@ -1,0 +1,13 @@
+﻿@model Aici.Models.ChatInteraction
+
+@foreach (var i in Model.Conversation)
+{
+   if (i.Source == Aici.Network.TextChannel.BOT)
+   {
+      <p style="color: #008000">@i.Text</p>
+   }
+   else
+   {
+      <p style="color: #0000FF">@i.Text</p>
+   }
+}

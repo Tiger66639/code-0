@@ -1,0 +1,88 @@
+﻿<Window x:Class="JaStDev.HAB.Designer.DlgOnlineSync"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Synchronize"
+        Height="400"
+        ShowInTaskbar="False"
+        WindowState="Normal"
+        WindowStyle="ToolWindow"
+        WindowStartupLocation="CenterOwner"
+        SizeToContent="Height">
+    <Window.Background>
+        <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}" />
+    </Window.Background>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Bottom">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <Button IsDefault="True"
+                        MinWidth="80"
+                        Click="Ok_Click">
+                    Start
+                    <Button.ToolTip>
+                        Begins the synchronization process.
+                    </Button.ToolTip>
+                </Button>
+                <Button IsCancel="True"
+                        MinWidth="80"
+                        Margin="8,0,0,0">
+                    Cancel
+                    <Button.ToolTip>
+                        Cancel synchronization.
+                    </Button.ToolTip>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Column="1">Download</TextBlock>
+            <TextBlock Grid.Column="2">Upload</TextBlock>
+
+            <TextBlock Grid.Row="1">Topics</TextBlock>
+            <CheckBox Grid.Row="1"
+                      Grid.Column="1"
+                      IsEnabled="False"
+                      HorizontalAlignment="Center" />
+            <CheckBox Grid.Row="1"
+                      Grid.Column="2"
+                      IsChecked="{Binding Path=UploadTopics}"
+                      HorizontalAlignment="Center" />
+
+            <TextBlock Grid.Row="2">Thesaurus</TextBlock>
+            <CheckBox Grid.Row="2"
+                      Grid.Column="1"
+                      IsChecked="{Binding Path=DownloadThes}"
+                      HorizontalAlignment="Center" />
+            <CheckBox Grid.Row="2"
+                      IsChecked="{Binding Path=UploadThes}"
+                      Grid.Column="2"
+                      HorizontalAlignment="Center" />
+            <TextBlock Grid.Row="3">Assets</TextBlock>
+            <CheckBox Grid.Row="3"
+                      Grid.Column="1"
+                      IsChecked="{Binding Path=DownloadAssets}"
+                      HorizontalAlignment="Center" />
+            <CheckBox Grid.Row="3"
+                      Grid.Column="2"
+                      IsChecked="{Binding Path=UploadAssets}"
+                      HorizontalAlignment="Center" />
+            <TextBlock Grid.Row="4">chat logs</TextBlock>
+            <CheckBox Grid.Row="4"
+                      Grid.Column="1"
+                      IsChecked="{Binding Path=DownloadLogs}"
+                      HorizontalAlignment="Center" />
+        </Grid>
+    </DockPanel>
+</Window>

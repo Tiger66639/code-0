@@ -1,0 +1,14 @@
+//references to the patternmatching algorithm (temporarely).
+ 
+var OutputSin: 1237;
+
+neuron CurrentConversation: 1246{}
+ 
+var Exec: 1632;
+
+var call_Result: 1897;
+
+var CallbackIn: 4431;
+var CallbackOut: 4432;
+
+Cluster AutoLearned: 1287 {}

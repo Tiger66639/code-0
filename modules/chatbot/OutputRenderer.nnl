@@ -1,0 +1,48 @@
+
+class Output
+{
+    /*
+    Activates a series of functions to modify the asset defined in CallbackIn.
+    Then looks up a pattern, based on how the value for 'CallbackIn' maps to that pattern. CallbackIn should be an asset, the attribute of all the children, makes up the pattern name.
+    Finally, activates the 'Output' section of the pattern that was found (which can be a topic or rule) and returns the result that was rendered. When the input was a topic, the 'questions' section will be activated, if it was a rule, the 'conditionals/output' section will be rendered.
+   You can optionally specify an argument, value 'true' or 'false' to indicate if the do-patterns also need to be executed or not.
+   Execution is done in another thread, to make certain that any var changes done by the rendering, don't affect any other parts.
+    */
+   Cluster CreateOutput
+   {
+      this()
+      {
+         var iFound = ^Bot.TextRenderers.*;                                                  //get all the callbacks that need to be called before getting a pattern to render.   
+         foreach(iFound in iFound)
+         {
+            PushValue(^(@iFound).Args);                                                           //need to manually add the function arguments for the callback.
+            PushValue(callbackIn);
+            call(^(iFound).Callback);                                                        //a renderer is an asset with children: Callback (value = the cluster to call), and 'Args' (possible extra values for the callback, that were supplied by the user). The callback usually modifies the cluster found in CallbackIn, so pass that also along.   
+         }
+         var iPath;
+         foreach(var iChild in CallbackIn)                                                   //get all the attribute values so we can build the name of the pattern to activate.
+            Add(ref(iPath), GetFirstOut(iChild, Statics.Attribute));
+         iPath = GetCommonParentWithMeaning(Statics.CompoundWord, iPath);                    //get the compound from all the pattern names, this links to the pattern.
+         if(count(iPath) > 0)
+         {
+            var iPattern = GetFirstIn(iPath, Statics.NameOfMember);
+            if(Count(iPattern) > 0)
+            {
+               var exec = New(neuroncluster);
+               var callresult = New(neuroncluster);
+               if (Count(callbackargs) > 0)
+                  AddChild(exec, callbackargs);
+               AddLink(exec, callresult, Render);
+               AddInfo(exec, callresult, Render, OutputSin, PatternMatcher.SplitResults, iPattern);
+               BlockedSolve(exec);
+               callbackout = Union(callbackout, GetChildren(callresult));
+               Add(ref(PatternMatcher.ItemsToFreeze), GetChildren(exec));
+               Delete(exec, callresult);
+               return;                                                                             //it worked, lets get out of here so that there is no error rendered.
+            }
+         }
+         Error("Can't map the path '" iPath "' to a pattern");
+      }
+   }
+
+}

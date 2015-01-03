@@ -1,0 +1,140 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:self="clr-namespace:JaStDev.HAB.Designer">
+
+    <ContextMenu x:Key="DefaultDebugContextMenu">
+        <MenuItem Header="Is breakpoint" IsCheckable="True"
+                  IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.IsBreakPoint}" />
+        <Separator />
+        <MenuItem Header="Inspect value"
+                  Command="self:App.InspectExpressionCmd"
+                  InputGestureText="F7"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}" />
+        <MenuItem Header="Open in editor" Command="self:App.OpenDebuggerInEditorCmd"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}" />
+        <MenuItem Header="Sync with explorer" Command="self:App.SyncCmd"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+            <MenuItem.Icon>
+                <Image Source="/Images/Sync_Enabled.png"
+                       Style="{StaticResource TlbImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+
+        <Separator />
+        <MenuItem Header="View frames..." Command="self:GlobalCommands.ViewAttachedFramessCmd"
+                  ToolTip="Show the object-frames editor for the selected item."
+                  InputGestureText="Shift+F6"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+            <MenuItem.Icon>
+                <Image Source="/Images/Frame/Object_Frames_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="View asset..." Command="self:GlobalCommands.ViewAttachedAssetsCmd"
+                  ToolTip="Show the asset editor for the selected item."
+                  InputGestureText="Shift+F5"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+            <MenuItem.Icon>
+                <Image Source="/Images/Asset/objectAsset_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="View code..." Command="self:GlobalCommands.ViewCodeCmd"
+                  ToolTip="Open and show a code editor for the selected item."
+                  InputGestureText="Shift+F4"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+            <MenuItem.Icon>
+                <Image Source="/Images/ViewCode_Enabled.png"
+                       Style="{StaticResource TlbImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+    </ContextMenu>
+
+    <Style TargetType="{x:Type self:CtrlEditorItem}"
+           x:Key="DebugEditorItemStyle">
+        <Setter Property="ContextMenu" Value="{StaticResource DefaultDebugContextMenu}" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type self:CtrlEditorItem}">
+                    <Grid>
+                        <Border Background="Transparent">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                        <Rectangle
+                            StrokeThickness="1"
+                            Stroke="Blue"
+                            StrokeDashArray="1 2"
+                            SnapsToDevicePixels="true"
+                            Visibility="Collapsed"
+                            x:Name="selector" />
+
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="selector" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <DataTemplate DataType="{x:Type self:CodeItemByRef}">
+        <self:CtrlDebugByRef IsSelected="{Binding Path=IsSelected}"
+                             Style="{StaticResource DebugEditorItemStyle}" />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type self:CodeItemStatement}">
+        <self:CtrlDebugResultStatement IsSelected="{Binding Path=IsSelected}"
+                                       Style="{StaticResource DebugEditorItemStyle}" />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type self:CodeItemResultStatement}">
+        <self:CtrlDebugResultStatement IsSelected="{Binding Path=IsSelected}"
+                                       Style="{StaticResource DebugEditorItemStyle}" />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type self:CodeItemBoolExpression}">
+        <self:CtrlDebugBoolExpression IsSelected="{Binding Path=IsSelected}"
+                                      Style="{StaticResource DebugEditorItemStyle}" />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type self:CodeItemConditionalExpression}">
+        <self:CtrlDebugBoolExpression DataContext="{Binding Path=Condition}"
+                                      IsSelected="{Binding Path=IsSelected}"
+                                      Style="{StaticResource DebugEditorItemStyle}" />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type self:CodeItemCodeBlock}">
+        <self:CtrlDebugStatic IsSelected="{Binding Path=IsSelected}"
+                              Style="{StaticResource DebugEditorItemStyle}" />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type self:CodeItemConditionalStatement}">
+        <self:CtrlDebugConditionalStatement IsSelected="{Binding Path=IsSelected}"
+                                            Style="{StaticResource DebugEditorItemStyle}" />
+    </DataTemplate>
+
+
+    <DataTemplate DataType="{x:Type self:CodeItemStatic}">
+        <self:CtrlDebugStatic IsSelected="{Binding Path=IsSelected}"
+                              Style="{StaticResource DebugEditorItemStyle}" />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type self:CodeItemVariable}">
+        <self:CtrlDebugVariable IsSelected="{Binding Path=IsSelected}"
+                                Style="{StaticResource DebugEditorItemStyle}" />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type self:CodeItemGlobal}">
+        <self:CtrlDebugVariable IsSelected="{Binding Path=IsSelected}"
+                                Style="{StaticResource DebugEditorItemStyle}" />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type self:CodeItemAssignment}">
+        <self:CtrlDebugAssignment IsSelected="{Binding Path=IsSelected}"
+                                  Style="{StaticResource DebugEditorItemStyle}" />
+    </DataTemplate>
+</ResourceDictionary>

@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AiciWeb.Web.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="MaxConcurrentProcessors" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">25</Value>
+    </Setting>
+    <Setting Name="InitProcessorStackSize" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="DBLocation" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\HostingSpaces\bragisof\bragisoft.com\data\AiciClient\Data</Value>
+    </Setting>
+    <Setting Name="LogFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\HostingSpaces\bragisof\bragisoft.com\data\AiciClient\Logs\general.log</Value>
+    </Setting>
+    <Setting Name="ConversationsLogLoc" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\HostingSpaces\bragisof\bragisoft.com\data\AiciClient\Logs</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

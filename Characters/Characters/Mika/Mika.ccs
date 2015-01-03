@@ -1,0 +1,921 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Character xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <CharacterInfo>
+    <Name>Mika</Name>
+    <Author>Ady Di Pierro</Author>
+    <Copyright>Copyright 2011 Ady Di Pierro</Copyright>
+    <License />
+    <AuthorWebsite>http://www.laticisimagery.com.au/</AuthorWebsite>
+    <CreationDate>2011-08-07T14:43:26.602+02:00</CreationDate>
+    <LastUpdateDate>2011-08-07T14:43:26.602+02:00</LastUpdateDate>
+    <Rating>
+      <Rating>Unknown</Rating>
+      <Sexual>false</Sexual>
+      <Violence>false</Violence>
+      <Other>false</Other>
+      <Description />
+    </Rating>
+    <OnlineOptions>
+      <OnlineCharacterBaseUrl />
+      <PreferredWidth>150</PreferredWidth>
+      <PreferredHeight>150</PreferredHeight>
+    </OnlineOptions>
+  </CharacterInfo>
+  <Background>
+	<ImageResource>images\Kima00.png</ImageResource>
+	<ImageResource>images\KimaEars.png</ImageResource>
+  </Background>
+  <Animations>
+    <Animation>
+      <AnimationFrames>
+	  <AnimationFrame>
+          <Duration>25</Duration>
+          <ImageResource>images\Expressions\Kima Sad (01).png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>25</Duration>
+          <ImageResource>images\Expressions\Kima Sad (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>25</Duration>
+          <ImageResource>images\Expressions\Kima Sad (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>80</Duration>
+          <ImageResource>images\Expressions\Kima Sad (04).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>25</Duration>
+          <ImageResource>images\Expressions\Kima Sad (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>25</Duration>
+          <ImageResource>images\Expressions\Kima Sad (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>25</Duration>
+          <ImageResource>images\Expressions\Kima Sad (01).png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+      </AnimationFrames>
+      <EnableFrameSpeaking>false</EnableFrameSpeaking>
+      <HoldLastFrameForSpeak>false</HoldLastFrameForSpeak>
+      <FirstFrameUnderlay>false</FirstFrameUnderlay>
+      <Name>sad1</Name>
+    </Animation>
+  <Animation>
+      <AnimationFrames>
+	  <AnimationFrame>
+          <Duration>25</Duration>
+          <ImageResource>images\Expressions\Kima Smile (01).png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>25</Duration>
+          <ImageResource>images\Expressions\Kima Smile (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>25</Duration>
+          <ImageResource>images\Expressions\Kima Smile (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>105</Duration>
+          <ImageResource>images\Expressions\Kima Smile (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>25</Duration>
+          <ImageResource>images\Expressions\Kima Smile (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>25</Duration>
+          <ImageResource>images\Expressions\Kima Smile (01).png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+      </AnimationFrames>
+      <EnableFrameSpeaking>false</EnableFrameSpeaking>
+      <HoldLastFrameForSpeak>false</HoldLastFrameForSpeak>
+      <FirstFrameUnderlay>false</FirstFrameUnderlay>
+      <Name>smile1</Name>
+    </Animation>
+  <Animation>
+      <AnimationFrames>
+	  <AnimationFrame>
+          <Duration>25</Duration>
+          <ImageResource>images\Expressions\Kima What (01).png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>25</Duration>
+          <ImageResource>images\Expressions\Kima What (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>25</Duration>
+          <ImageResource>images\Expressions\Kima What (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>80</Duration>
+          <ImageResource>images\Expressions\Kima What (04).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>25</Duration>
+          <ImageResource>images\Expressions\Kima What (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>25</Duration>
+          <ImageResource>images\Expressions\Kima What (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>25</Duration>
+          <ImageResource>images\Expressions\Kima What (01).png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+      </AnimationFrames>
+      <EnableFrameSpeaking>false</EnableFrameSpeaking>
+      <HoldLastFrameForSpeak>false</HoldLastFrameForSpeak>
+      <FirstFrameUnderlay>false</FirstFrameUnderlay>
+      <Name>what1</Name>
+    </Animation>
+	
+	
+	<Animation>
+      <AnimationFrames>
+	  <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\Expressions\Kima Quirk (01).png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\Expressions\Kima Quirk (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\Expressions\Kima Quirk (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>95</Duration>
+          <ImageResource>images\Expressions\Kima Quirk (04).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\Expressions\Kima Quirk (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\Expressions\Kima Quirk (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\Expressions\Kima Quirk (01).png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+      </AnimationFrames>
+      <EnableFrameSpeaking>false</EnableFrameSpeaking>
+      <HoldLastFrameForSpeak>false</HoldLastFrameForSpeak>
+      <FirstFrameUnderlay>false</FirstFrameUnderlay>
+      <Name>quirk1</Name>
+    </Animation>
+	
+	
+  <Animation>
+      <AnimationFrames>
+	  <AnimationFrame>
+          <Duration>25</Duration>
+          <ImageResource>images\Expressions\Kima Happy (01).png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>25</Duration>
+          <ImageResource>images\Expressions\Kima Happy (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>25</Duration>
+          <ImageResource>images\Expressions\Kima Happy (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>80</Duration>
+          <ImageResource>images\Expressions\Kima Happy (04).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>25</Duration>
+          <ImageResource>images\Expressions\Kima Happy (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>25</Duration>
+          <ImageResource>images\Expressions\Kima Happy (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>25</Duration>
+          <ImageResource>images\Expressions\Kima Happy (01).png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+      </AnimationFrames>
+      <EnableFrameSpeaking>false</EnableFrameSpeaking>
+      <HoldLastFrameForSpeak>false</HoldLastFrameForSpeak>
+      <FirstFrameUnderlay>false</FirstFrameUnderlay>
+      <Name>happy1</Name>
+    </Animation>
+  
+	<Animation>
+      <AnimationFrames>
+	  <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyeClose L (01).png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyeClose L (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyeClose L (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyeClose L (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyeClose L (01).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+      </AnimationFrames>
+      <EnableFrameSpeaking>true</EnableFrameSpeaking>
+      <HoldLastFrameForSpeak>false</HoldLastFrameForSpeak>
+      <FirstFrameUnderlay>false</FirstFrameUnderlay>
+      <Name>lwink1</Name>
+    </Animation>
+	
+	<Animation>
+      <AnimationFrames>
+	  <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyeClose R (01).png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyeClose R (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyeClose R (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyeClose R (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyeClose R (01).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+      </AnimationFrames>
+      <EnableFrameSpeaking>true</EnableFrameSpeaking>
+      <HoldLastFrameForSpeak>false</HoldLastFrameForSpeak>
+      <FirstFrameUnderlay>false</FirstFrameUnderlay>
+      <Name>rwink1</Name>
+    </Animation>
+	
+	<Animation>
+      <AnimationFrames>
+	  <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima Eyes Down (01).png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima Eyes Down (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>50</Duration>
+          <ImageResource>images\eyes\Kima Eyes Down (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima Eyes Down (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima Eyes Down (01).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+      </AnimationFrames>
+      <EnableFrameSpeaking>true</EnableFrameSpeaking>
+      <HoldLastFrameForSpeak>false</HoldLastFrameForSpeak>
+      <FirstFrameUnderlay>false</FirstFrameUnderlay>
+      <Name>eyes down1</Name>
+    </Animation>
+	
+	<Animation>
+      <AnimationFrames>
+	  <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima Eyes Left (01).png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima Eyes Left (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima Eyes Left (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>50</Duration>
+          <ImageResource>images\eyes\Kima Eyes Left (04).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima Eyes Left (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima Eyes Left (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima Eyes Left (01).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+      </AnimationFrames>
+      <EnableFrameSpeaking>true</EnableFrameSpeaking>
+      <HoldLastFrameForSpeak>false</HoldLastFrameForSpeak>
+      <FirstFrameUnderlay>false</FirstFrameUnderlay>
+      <Name>eyes left1</Name>
+    </Animation>
+	
+	<Animation>
+      <AnimationFrames>
+	  <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima Eyes Right (01).png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima Eyes Right (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>50</Duration>
+          <ImageResource>images\eyes\Kima Eyes Right (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima Eyes Right (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima Eyes Right (01).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+      </AnimationFrames>
+      <EnableFrameSpeaking>true</EnableFrameSpeaking>
+      <HoldLastFrameForSpeak>false</HoldLastFrameForSpeak>
+      <FirstFrameUnderlay>false</FirstFrameUnderlay>
+      <Name>eyes right1</Name>
+    </Animation>
+	
+	
+	<Animation>
+      <AnimationFrames>
+	  <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima Eyes Up (01).png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima Eyes Up (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>50</Duration>
+          <ImageResource>images\eyes\Kima Eyes Up (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima Eyes Up (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima Eyes Up (01).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+      </AnimationFrames>
+      <EnableFrameSpeaking>true</EnableFrameSpeaking>
+      <HoldLastFrameForSpeak>false</HoldLastFrameForSpeak>
+      <FirstFrameUnderlay>false</FirstFrameUnderlay>
+      <Name>eyes up1</Name>
+    </Animation>
+	
+	
+	<Animation>
+      <AnimationFrames>
+	  <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyesSquint (01).png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyesSquint (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyesSquint (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>50</Duration>
+          <ImageResource>images\eyes\Kima EyesSquint (04).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyesSquint (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyesSquint (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyesSquint (01).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+      </AnimationFrames>
+      <EnableFrameSpeaking>true</EnableFrameSpeaking>
+      <HoldLastFrameForSpeak>false</HoldLastFrameForSpeak>
+      <FirstFrameUnderlay>false</FirstFrameUnderlay>
+      <Name>eyes squint</Name>
+    </Animation>
+	
+	<Animation>
+      <AnimationFrames>
+	  <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyesWiden (01).png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyesWiden (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyesWiden (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>40</Duration>
+          <ImageResource>images\eyes\Kima EyesWiden (04).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyesWiden (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyesWiden (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyesWiden (01).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+      </AnimationFrames>
+      <EnableFrameSpeaking>true</EnableFrameSpeaking>
+      <HoldLastFrameForSpeak>false</HoldLastFrameForSpeak>
+      <FirstFrameUnderlay>false</FirstFrameUnderlay>
+      <Name>eyes widen1</Name>
+    </Animation>
+	
+	<Animation>
+      <AnimationFrames>
+	  <AnimationFrame>
+          <Duration>5</Duration>
+          <ImageResource>images\other\Kima Ears (01).png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>5</Duration>
+          <ImageResource>images\other\Kima Ears (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>5</Duration>
+          <ImageResource>images\other\Kima Ears (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>5</Duration>
+          <ImageResource>images\other\Kima Ears (04).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>5</Duration>
+          <ImageResource>images\other\Kima Ears (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>5</Duration>
+          <ImageResource>images\other\Kima Ears (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>5</Duration>
+          <ImageResource>images\other\Kima Ears (01).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>5</Duration>
+          <ImageResource>images\other\Kima Ears (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>5</Duration>
+          <ImageResource>images\other\Kima Ears (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>5</Duration>
+          <ImageResource>images\other\Kima Ears (04).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>5</Duration>
+          <ImageResource>images\other\Kima Ears (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>5</Duration>
+          <ImageResource>images\other\Kima Ears (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>5</Duration>
+          <ImageResource>images\other\Kima Ears (01).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>5</Duration>
+          <ImageResource>images\other\Kima Ears (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>5</Duration>
+          <ImageResource>images\other\Kima Ears (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>5</Duration>
+          <ImageResource>images\other\Kima Ears (04).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>5</Duration>
+          <ImageResource>images\other\Kima Ears (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>5</Duration>
+          <ImageResource>images\other\Kima Ears (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>5</Duration>
+          <ImageResource>images\other\Kima Ears (01).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+      </AnimationFrames>
+      <EnableFrameSpeaking>true</EnableFrameSpeaking>
+      <HoldLastFrameForSpeak>false</HoldLastFrameForSpeak>
+      <FirstFrameUnderlay>false</FirstFrameUnderlay>
+	  <BackgroundSuppress>KimaEars.png</BackgroundSuppress>
+      <Name>earsmove1</Name>
+    </Animation>
+	
+	<Animation>
+      <AnimationFrames>
+	  <AnimationFrame>
+          <Duration>5</Duration>
+          <ImageResource>images\other\Kima EyeBrows (01).png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>5</Duration>
+          <ImageResource>images\other\Kima EyeBrows (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>5</Duration>
+          <ImageResource>images\other\Kima EyeBrows (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>40</Duration>
+          <ImageResource>images\other\Kima EyeBrows (04).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>5</Duration>
+          <ImageResource>images\other\Kima EyeBrows (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>5</Duration>
+          <ImageResource>images\other\Kima EyeBrows (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>5</Duration>
+          <ImageResource>images\other\Kima EyeBrows (01).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+      </AnimationFrames>
+      <EnableFrameSpeaking>true</EnableFrameSpeaking>
+      <HoldLastFrameForSpeak>false</HoldLastFrameForSpeak>
+      <FirstFrameUnderlay>false</FirstFrameUnderlay>
+      <Name>eyebrows1</Name>
+    </Animation>
+	
+	
+  </Animations>
+  <VisemeGroups>
+    <VisemeGroup>
+      <Name>Default</Name>
+	  <ZIndex>1</ZIndex>
+      <VisemeImages>
+        <VisemeImage>
+          <VisemeIndex>0</VisemeIndex>
+          <ImageResource>images\Kima00.png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>1</VisemeIndex>
+          <ImageResource>images\Visemes\Kima03 EH.png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>2</VisemeIndex>
+          <ImageResource>images\Visemes\Kima04 AA.png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>3</VisemeIndex>
+          <ImageResource>images\Visemes\Kima04 AA.png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>4</VisemeIndex>
+          <ImageResource>images\Visemes\Kima03 EH.png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>5</VisemeIndex>
+          <ImageResource>images\Visemes\Kima07 ER.png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>6</VisemeIndex>
+          <ImageResource>images\Visemes\Kima01 IY.png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>7</VisemeIndex>
+          <ImageResource>images\Visemes\Kima15 W.png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>8</VisemeIndex>
+          <ImageResource>images\Visemes\Kima05 OW.png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>9</VisemeIndex>
+          <ImageResource>images\Visemes\Kima04 AA.png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>10</VisemeIndex>
+          <ImageResource>images\Visemes\Kima05 OW.png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>11</VisemeIndex>
+          <ImageResource>images\Visemes\Kima04 AA.png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>12</VisemeIndex>
+          <ImageResource>images\Visemes\Kima14 L.png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>13</VisemeIndex>
+          <ImageResource>images\Visemes\Kima07 ER.png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>14</VisemeIndex>
+          <ImageResource>images\Visemes\Kima14 L.png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>15</VisemeIndex>
+          <ImageResource>images\Visemes\Kima08 S.png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>16</VisemeIndex>
+          <ImageResource>images\Visemes\Kima09 SH.png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>17</VisemeIndex>
+          <ImageResource>images\Visemes\Kima11 TH.png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>18</VisemeIndex>
+          <ImageResource>images\Visemes\Kima10 F.png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>19</VisemeIndex>
+          <ImageResource>images\Visemes\Kima13 T.png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>20</VisemeIndex>
+          <ImageResource>images\Visemes\Kima16 K.png</ImageResource>
+        </VisemeImage>
+        <VisemeImage>
+          <VisemeIndex>21</VisemeIndex>
+          <ImageResource>images\Visemes\Kima12 M.png</ImageResource>
+        </VisemeImage>
+      </VisemeImages>
+    </VisemeGroup>
+  </VisemeGroups>
+  <IdleLevels>
+    <IdleLevel>
+      <MinStartDelay>5</MinStartDelay>
+      <MaxStartDelay>15</MaxStartDelay>
+      <MinDuration>5</MinDuration>
+      <MaxDuration>15</MaxDuration>
+      <MinInterval>2</MinInterval>
+      <MaxInterval>8</MaxInterval>
+      <AnimationNames>
+	    <AnimationName>earsmove1</AnimationName>
+		<AnimationName>eyes squint</AnimationName>
+		<AnimationName>happy1</AnimationName>
+		<AnimationName>earsmove1</AnimationName>
+      </AnimationNames>
+    </IdleLevel>
+  </IdleLevels>
+  <BackgroundAnimations>
+	<Animation>
+      <AnimationFrames>
+	  <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\other\Kima Nose Flare (01).png</ImageResource>
+          <VisemeGroupName/>
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\other\Kima Nose Flare (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\other\Kima Nose Flare (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\other\Kima Nose Flare (04).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\other\Kima Nose Flare (05).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>12</Duration>
+          <ImageResource>images\other\Kima Nose Flare (04).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>12</Duration>
+          <ImageResource>images\other\Kima Nose Flare (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>12</Duration>
+          <ImageResource>images\other\Kima Nose Flare (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>12</Duration>
+          <ImageResource>images\other\Kima Nose Flare (01).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+      </AnimationFrames>
+      <Name>nosebreath</Name>
+	  <LoopStyle>VarTimer</LoopStyle>
+	  <MinStartDelay>1</MinStartDelay>
+      <MaxStartDelay>3</MaxStartDelay>
+	  <ZIndex>2</ZIndex>
+    </Animation>	
+	<Animation>
+      <AnimationFrames>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyesClose (01).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>8</Duration>
+          <ImageResource>images\eyes\Kima EyesClose (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>5</Duration>
+          <ImageResource>images\eyes\Kima EyesClose (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+		<AnimationFrame>
+          <Duration>8</Duration>
+          <ImageResource>images\eyes\Kima EyesClose (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyesClose (01).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>100</Duration>
+          <ImageResource />
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyesClose (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyesClose (03).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+        <AnimationFrame>
+          <Duration>10</Duration>
+          <ImageResource>images\eyes\Kima EyesClose (02).png</ImageResource>
+          <VisemeGroupName />
+        </AnimationFrame>
+      </AnimationFrames>
+      <Name>blink1</Name>
+	  <LoopStyle>VarTimer</LoopStyle>
+	  <MinStartDelay>4</MinStartDelay>
+      <MaxStartDelay>12</MaxStartDelay>
+	  <ZIndex>2</ZIndex>
+    </Animation>
+  </BackgroundAnimations>
+</Character>

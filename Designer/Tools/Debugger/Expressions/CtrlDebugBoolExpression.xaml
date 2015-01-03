@@ -1,0 +1,19 @@
+﻿<self:CtrlEditorItem x:Class="JaStDev.HAB.Designer.CtrlDebugBoolExpression"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:self="clr-namespace:JaStDev.HAB.Designer">
+    <StackPanel Orientation="Horizontal">
+        <ContentPresenter Content="{Binding Path=LeftPart}" />
+        <ContentPresenter Content="{Binding Path=Operator}"
+                          Margin="4,0,4,0" />
+        <ContentPresenter Content="{Binding Path=RightPart}" />
+        <StackPanel Orientation="Horizontal"
+                    Background="Transparent"
+                    ToolTip="List to search"
+                    Visibility="{Binding Path=ListToSearchVisibility}">
+            <TextBlock>(</TextBlock>
+            <ContentPresenter Content="{Binding Path=ListToSearch}" />
+            <TextBlock>)</TextBlock>
+        </StackPanel>
+    </StackPanel>
+</self:CtrlEditorItem>

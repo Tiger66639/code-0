@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<NineRays.ILOMD.Options.Project>
+  <Excludes>
+    <NineRays.ILOMD.Options.Member>
+      <Name>
+      </Name>
+      <AssemblyName>
+      </AssemblyName>
+      <MemberInfoType>Custom</MemberInfoType>
+    </NineRays.ILOMD.Options.Member>
+  </Excludes>
+  <AssemblyList>
+    <NineRays.ILOMD.Options.AssemblyFileName>
+      <ObfuscationOptions>
+        <NineRays.ILOMD.Options.Options>
+          <AntiILDASM>True</AntiILDASM>
+          <SoftwareWatermark>The beginning is upon us.</SoftwareWatermark>
+          <Naming>NonDisplayable</Naming>
+        </NineRays.ILOMD.Options.Options>
+      </ObfuscationOptions>
+      <Name>..\HAB\bin\Release\JaStDev.HabCore.dll</Name>
+    </NineRays.ILOMD.Options.AssemblyFileName>
+  </AssemblyList>
+  <StrongNameKeyFile>
+  </StrongNameKeyFile>
+  <LayoutInfo>&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;Layout&gt;
+  &lt;Window Guid="0ed60d0b-4f98-4c6d-a6f8-aaaf4890266e" FloatingSize="550, 400" FloatingLocation="-1, -1" Docked="1" PopupSize="0" DockedSize="200" LastFixedDockLocation="Center" LastFixedLayoutGuid="c992722e-b209-4284-9c3f-719dcce76492" LastLayoutGuid="c992722e-b209-4284-9c3f-719dcce76492" /&gt;
+  &lt;Window Guid="1ab51f96-7428-4b68-9f25-0af0d8415f26" FloatingSize="250, 400" FloatingLocation="-1, -1" Docked="1" PopupSize="0" DockedSize="360" LastFixedDockLocation="Left" LastFixedLayoutGuid="306fbe28-980c-454a-ba2f-aefeec068244" LastLayoutGuid="306fbe28-980c-454a-ba2f-aefeec068244" /&gt;
+  &lt;Window Guid="16bbe2d2-5504-4cd4-82f2-6737d26493b8" FloatingSize="250, 400" FloatingLocation="-1, -1" Docked="1" PopupSize="0" DockedSize="360" LastFixedDockLocation="Left" LastFixedLayoutGuid="306fbe28-980c-454a-ba2f-aefeec068244" LastLayoutGuid="306fbe28-980c-454a-ba2f-aefeec068244" /&gt;
+  &lt;Window Guid="d011ae1a-b131-40cb-8ce1-4454c2694fcd" FloatingSize="250, 400" FloatingLocation="-1, -1" Docked="1" PopupSize="0" DockedSize="360" LastFixedDockLocation="Left" LastFixedLayoutGuid="306fbe28-980c-454a-ba2f-aefeec068244" LastLayoutGuid="306fbe28-980c-454a-ba2f-aefeec068244" /&gt;
+  &lt;Container Dock="3" ContentSize="360"&gt;
+    &lt;SplitLayoutSystem WorkingSize="360, 498" SplitMode="0"&gt;
+      &lt;ControlLayoutSystem WorkingSize="360, 498" Guid="306fbe28-980c-454a-ba2f-aefeec068244" Collapsed="0" SelectedControl="d011ae1a-b131-40cb-8ce1-4454c2694fcd"&gt;
+        &lt;Controls&gt;
+          &lt;Control Guid="1ab51f96-7428-4b68-9f25-0af0d8415f26" /&gt;
+          &lt;Control Guid="d011ae1a-b131-40cb-8ce1-4454c2694fcd" /&gt;
+          &lt;Control Guid="16bbe2d2-5504-4cd4-82f2-6737d26493b8" /&gt;
+        &lt;/Controls&gt;
+      &lt;/ControlLayoutSystem&gt;
+    &lt;/SplitLayoutSystem&gt;
+  &lt;/Container&gt;
+&lt;/Layout&gt;</LayoutInfo>
+</NineRays.ILOMD.Options.Project>

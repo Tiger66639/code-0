@@ -1,0 +1,12 @@
+<NotepadPlus>
+    <Session activeView="0">
+        <mainView activeIndex="4">
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="304" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Users\Esus\Documents\dev\VS\Projects\AI\modules\learn1\Learn1.nnm" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1644" startPos="0" endPos="0" selMode="0" lang="nnl" encoding="-1" filename="C:\Users\Esus\Documents\dev\VS\Projects\AI\modules\learn1\learn.nnl" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="744" startPos="0" endPos="0" selMode="0" lang="nnl" encoding="-1" filename="C:\Users\Esus\Documents\dev\VS\Projects\AI\modules\learn1\Core.nnl" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="331" startPos="0" endPos="0" selMode="0" lang="nnl" encoding="-1" filename="C:\Users\Esus\Documents\dev\VS\Projects\AI\modules\learn1\StaticRefs.nnl" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="422" startPos="0" endPos="0" selMode="0" lang="nnl" encoding="-1" filename="C:\Users\Esus\Documents\dev\VS\Projects\AI\modules\learn1\PatternMatchRefs.nnl" />
+        </mainView>
+        <subView activeIndex="0" />
+    </Session>
+</NotepadPlus>

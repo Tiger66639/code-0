@@ -1,0 +1,402 @@
+class ML
+{
+   using common;
+   
+   
+   //Used to identify a cluster as a random forest.
+   Neuron RandomForestRoot;
+   //continuous values (like age, weight,...) need to be divided into a group of 'bigger', 'smaller' and equal. 
+   //The 'Cutoff' neuron is used to indicate that a variable is continuous + which value to use for clasifying as bigger or smaller.
+   Neuron Cutoff;
+   
+
+   //provides autolearning through a group of auto-generated decision trees.
+   //training and testing can be done in through streaming (so line per line) by calling:
+   //RandomForest.Train(data, result);
+   //When training is done, the trees need to be completed (all variables need to be calculated, which can take some time), to do this, call:
+   //RandomFoest.Train.Close(); 
+   //once the forest is build, you can store a reference to it through the 'Root' variable
+   //to test data with the forest, first make certain that the root is loaded again, then call test:
+   //RandomForest.Root = xxx;
+   //var result = RandomForest.Test(data);
+   class RandomForest
+   {
+      //the entry point of the forest. Use this to save a new or reload a previously created forest for testing.
+      var Root;
+   
+      //adds a data record and uses it to build the trees and leafs in the forest.
+      cluster Train
+      {
+         //the nr of trees that should be generated, default is 10.
+         int NrTrees = 10;
+         
+         //the nr of threads used during the training process.
+         int TrainingThreads = 2;
+         
+         //the nr of data points that should be used to build a tree. This is a percentage, default .66. meaning that 66% of the variables will be used to build a tree.
+         double NrOfVariablesPerTree = 0.66;
+         
+         //determins how many trees will receive a single data row (set of variables) for training. Data rows that have not been used to build a tree, can be used for testing it.
+         double DataUsage = 0.66;
+         
+         //when true, variables can be re-used to build the tree (so the same variable can be used multiplt times in the same tree). When false, each variable can only be used 1 time in the decision tree.
+         bool ReuseVariables = false;
+         
+         //place all the indexes of the variables that contain continuous intege or double values. This allows the forest to treat them correctly.
+         int[] ContinuousValues;
+         
+         //determins how much a data row can potentially be exagerated. That is, this value determins how many times the same variable sequence can
+         //occur, aka, how many trees can have the same set and order of variables. If there are 2 identical trees, the same result will be stored in
+         //2 trees, so when testing, the same result will be returned 2 times, giving it an extra weight.
+         //A default value of 1 means that each row has to be trained by a unique set of variable sequences. Don't define a value less than 1.
+         int MaxDataExaggeration = 1;
+      
+         //data = the data values which will become the decisition points in the tree. Missing values should be replaced by the 'Empty' neuron. For a single forrest, all calls to 'train', should contain the same amount of data points.
+         //result = how the data should be interpreted, it's result. Should always be 1 value. a boolean
+         //note: during training, every data point is recorded in a cluster: MakeCluster(result, data)
+         this(var data, bool result)
+         {
+            if(count(Root) == 0)
+               BuildRoot(data);
+            var iTrees(shared) = GetTrees();                                          //we do this is in the calling thread cause otherwise we don't have all the global variables anymore (or we have to pass them along the thread boundery)         
+            waitfor InternalTrain(Root, data, result, iTrees);                                 //move to another processor, so we can savely do splits without harming the calling function.
+         }
+         
+         //does the actual training. See this for more info.
+         internalTrain(var theRoot, var data(shared), bool result(shared), var trees(shared))
+         {
+            Root = theRoot;                                                               //called async, so 'Root' is empty, needs to be filled with the value fo the caller.   
+            var icurPos = GetFirstOut(Root, 'forest');                                        //we put all the trees in a subrecord, easier for testing later on (can always use 'GetAllOutgoing' instead of having to filter on the variables for the root
+            if(count(iCurPos) == 0)
+            {
+               iCurPos = new(neuron);
+               AddLink(Root, icurPos, 'forest');
+            }
+            if(count(trees) > TrainingThreads)
+               SplitFixed(EmptyCallBack, TrainingThreads, ref(trees), trees);
+            else
+               Split(EmptyCallBack, ref(trees), trees);                                         //there are more threads allowed then trees to train, so each tree gets it's own thread.
+            foreach(var iTree in trees)
+               AddTrainData(iCurPos, data, result, iTree);
+         }
+         
+         //terminates the training process by pre'calculating all the percentages at the end leafs, so they don't need to be recalculated each time.
+         Close()
+         {
+            WaitFor InternalClose(Root);
+            AddLink(Root, true, 'IsClosed');                                                 //so the tester knows wether the tree is closed.      
+         }
+         
+         //not Thread save version of InternalClose. 
+         //terminates the training process by pre'calculating all the percentages at the end leafs, so they don't need to be recalculated each time.
+         InternalClose(var theRoot(shared))
+         {
+            Root = theRoot;
+            var iTree, i;
+            var iStarts = GetAllOutgoing(GetFirstOut(Root, 'forest'));
+            double iDouble, iTotal;
+            double[] iValues;
+            
+            while(count(iStarts) > 0)
+            {
+               Split(EmptyCallBack, ref(iTree), iStarts);
+               
+               iValues = GetAllOutgoing(iTree);
+               iTotal = Addition(iValues);
+               
+               foreach(iDouble in iValues)                                 
+                  iDouble = iDouble / iTotal;                                             //assign the average
+               Split(EmptyCallBack, ref(i), iValues);
+               iStarts = GetAllOutGoing(i);
+               if(LinkOutCount(iStarts[0]) == 0)
+               { 
+                  iValues = iStarts;
+                  iTotal = Addition(iValues);
+               
+                  foreach(iDouble in iValues)                                 
+                     iDouble = iDouble / iTotal;                                             //assign the average
+                  break();                                                                   //we have found the end, so exit the loop.
+               }
+            }
+         }
+         
+         
+         //gets automatically called when the root object needs to be created. This is a cluster that contains an intneuron for each variable that is used as a start point.
+         //builds a cluster for each tree. each cluster gets a serires of ints, which represent the indexes of the variables to use. The sequence of the indexes determins
+         //the sequene of the variables for the tree.
+         BuildRoot(var data)
+         {
+            int iDataCount = count(data);
+            int iCurPos, iMaxNrTrees;
+            var iTrees, iTree, iAllVars, iSelectedVars, iFound;
+            int iNrVarsToSelect;
+            if(typeof(NrOfVariablesPerTree) == DoubleNeuron)
+               iNrVarsToSelect = DToI(NrOfVariablesPerTree * iDataCount);
+            else if(typeof(NrOfVariablesPerTree) == IntNeuron)
+               iNrVarsToSelect = NrOfVariablesPerTree * iDataCount;
+            else
+            {
+               error("Invalid nr of variables per tree specified: double or int expected");
+               exitSolve();
+            }
+            
+            Sort(ContinuousValues);
+            int iCurContValue;                                                   //for walking through the list of continous values, so we can set things up correctly.
+            while(iCurPos < iDataCount)
+            {
+               var iNew = new(IntNeuron, iCurPos);
+               Add(iAllVars, iNew);                                              //create a new intNeuron for each datapoint and store it in a list. This will be used to randomly select items from.
+               if(count(ContinuousValues) > iCurContValue && ContinuousValues[iCurContValue] == iCurPos) //check if the column is labeled as a continuous value. If this is the case, the data points need to be converted to 'bigger', 'smaller' or equal, for which we need a cutoff value.
+                  AddLink(iNew, data[iCurPos], Cutoff);                          //this means that at least 1 record will be 'equal to'.   
+               iCurPos++;
+            }
+            if(iNrVarsToSelect < iDataCount)
+               iMaxNrTrees = Multiply(GetRange(1, iNrVarsToSelect, iAllVars), iCurPos);  
+            else
+               iMaxNrTrees = Multiply(GetRange(1, iNrVarsToSelect - 1, iAllVars), iCurPos);  
+            if(iMaxNrTrees < NrTrees)
+            {
+               NrTrees = iMaxNrTrees;
+               Warning("To many trees in the forest, can only generate ", NrTrees, " trees.");
+            }
+            Root = MakeCluster(RandomForestRoot);                                            //create the root, so we can already link to it.
+            int i = 0;
+            while(i < NrTrees)                                                      //build each tree.
+            {
+               Clear(ref(iSelectedVars));                                              //make certain we don't use the previous result.
+               int u = 0;
+               while(u < iNrVarsToSelect)                                //make the list of variables to select
+               {
+                  iFound = GetRandom(iAllVars);                                        //get a random point
+                  if(ReuseVariables == true || iSelectedVars !contains iFound)            //add it if we are allowed to reuse variable points or it hasn't been used yet.
+                  {
+                     Add(iSelectedVars, iFound);
+                     u++;
+                  }
+               }
+               iTree = TryCollectTree(iSelectedVars);
+               if(count(iTree) > 0)                                                 //if we were able to create the tree, store it and continue.
+               {
+                  Add(iTrees, iTree);
+                  i++;
+               }
+            }
+            AddChild(Root, iTrees);                                                            //stores the trees in the root.
+            iAllVars = MakeCluster('indexes' , iAllVars);                                                  //we also store a list of all the variables, so we can quickly get the objects when closing the training data.
+            AddLink(iAllVars, root, 'indexes');                                                 //and hook up the list of variables to the tree, so it can easily be found again.
+         }
+         
+         //checks if the variable sequence used by a tree, is unique (not yet used by another tree). If so, the items are clustered and returned
+         //this is done by building a tree structure starting from the root.
+         TryCollectTree(var items): var
+         {
+            var iFound, iCurPos;
+            iCurPos = GetFirstOut(Root, 'Trees');
+            if(count(iCurPos) == 0)
+            {
+               iCurPos = new(neuron);
+               addlink(Root, iCurPos, 'Trees');
+            }
+            foreach(var i in items)
+            {
+               iFound = GetFirstOut(iCurPos, i);
+               if(count(iFound) == 0)
+               {
+                  iFound = new(neuron);
+                  AddLink(iCurPos, iFound, i);
+               }
+               iCurPos = iFound;
+            }
+            if(ContainsLinksOut(iCurPos, 'Tree') == false || count(GetOutgoing(iCurPos, 'Tree')) < MaxDataExaggeration)
+            {
+               var iTree = MakeCluster(DTreeRoot, items);
+               AddLink(iCurPos, iTree, 'Tree');
+               return iTree;
+            }
+            return;                                                                          //it already existed, so return nothing.
+         }
+         
+      
+         //adds the data to the tree. Don't call this directly, instead, use 'Train(x,y);'
+         AddTrainData(var curPos, var data, bool result, var iTree)
+         {
+            double iFound;                                                             //will initially store the nr of rows that resulted in the same leaf. Will later be converted into a weighted average compared to the total nr of items.
+            var iVarPoint, iFrom, imeaning;
+            
+            foreach(int i in GetChildren(iTree))
+            {
+               lock(i)                                                                 //we lock the index of the var we want to process to make certain that no 2 threads try to process the same input variable at the same time. This is maximume concurrency security
+               {
+                  iVarPoint = GetFirstOut(curPos, i);
+                  if(count(iVarPoint) == 0)
+                  {
+                     iVarPoint = new(neuron);
+                     AddLink(curPos, ivarPoint, i);
+                  }
+                  var iVal = GetDataPoint(data, i, iVarPoint);
+                  //note: empty values are currently treated as regular values, the content of the empties, will later on be divided amongst the remainder.
+                  if(IntNeuron, DoubleNeuron contains typeof(iVal))                             //ints and doubles don't automatically map to the same neurons, text does. Take this into account.
+                     iFound = GetOutFiltered(iVarPoint, ref(iMeaning), ref(iFrom), ref(iMeaning == iVal));
+                  else
+                     iFound = GetFirstOut(ivarPoint, iVal);                                    //could be that the path already existed.   
+                  if(count(iFound) == 0)                                                  //but if it doesn't, create it now.
+                  {
+                     iFound = new(doubleNeuron);
+                     AddLink(ivarPoint, iFound, iVal);
+                  }
+                  iFound++;                                                               //increase the weight of the path: we just passed here.
+               }
+               curPos = iFound;
+            }
+            iFound = GetFirstOut(curPos, result);                                        //get the nr of times we found the result at this path.
+            if(count(iFound) == 0)                                                      //if this is the first time that this result is found for the specified combination of variables, create a new double to keep track of the count.
+            {
+               iFound = new(doubleNeuron);
+               AddLink(curPos, iFound, result);
+            }
+            iFound++;                                                               //increase the weight of the result: we just found it.
+         }
+         
+         
+         //Retrieves a nr of trees from the root that will be trained by a single row of values.
+         //this is based on the value of DataUsage.
+         //
+         //remarks: To make certain that every tree gets used the same nr of times, we store the list of
+         //trees that were not yet picked the preious time. When picking ,we also make certain that no tree is used 2 times
+         //for the same data-row.
+         GetTrees():var
+         {
+            if(DataUsage == 1)
+               return GetChildren(Root);
+            else
+            {
+               var iRes, iNew, iPickFrom;
+               var iPickFromCl = GetFirstOut(Root, 'NotYetUsed');
+               if(count(iPickFromCl) > 0)
+                  iPickFrom = GetChildren(iPickFromCl);
+               else
+               {
+                  iPickFromCl = new(NeuronCluster);
+                  Addlink(root, iPickFromCl, 'NotYetUsed');
+               }
+               while(DataUsage * ChildCount(Root) > count(iRes))                          //put 'DataUsage' first, this forces the interpreter to work with doubles intead of ints. This is because 'DataUsage is a double
+               {
+                  if(count(iPickFrom) == 0)
+                     iPickFrom = GetChildren(Root);
+                  iNew = GetRandom(iPickFrom);
+                  if(iRes !contains iNew)
+                  {
+                     Remove(iPickFrom, iNew);
+                     Add(iRes, iNew);
+                  }
+               }
+               ClearChildren(iPickFromCl);                                             //previous list of not yet used can be removed.
+               if(count(iPickFrom) > 0)                                                //the trees that were not yet picked, add them to the list, so they can be picked first, next time.
+                  AddChild(iPickFromCl, iPickFrom);
+               return iRes;
+            }
+         }
+         
+      }
+      
+      //uses a previously built forest to determin the result of a data set.
+      cluster Test
+      {
+         //data: the variables to use for  determining the result.
+         //returns wether the forest regards the data set as true or false, depending on how it was trained.
+         this(var data):bool
+         {
+            waitFor TestData(data, root);
+         }
+         
+         //performs the actual test. don't call this directly, but use 'Test(x); instead. This function allows us
+         //to perform the calculations in parallel for the trees.
+         TestData(var data(shared), var theRoot(shared))
+         {
+            var iCurPos, iVarPoint, iFound, iValue, iIndex, iRes, iMeaning, iFrom;
+            split(TestDone, ref(iCurPos), GetFirstOut(theRoot, 'forest'));                                 //make certain that the callback function is set up correctly (in case there is only 1 level)
+            while(count(iCurPos) > 0 && count(iRes) == 0)
+            {
+               split(TestDone, ref(iVarPoint), GetAllOutgoing(iCurPos));
+               iIndex = GetlinkMeaning(iCurPos, iVarPoint);
+               iValue = GetDataPoint(data, iIndex, iVarPoint);
+               if(iValue != Statics.Empty)
+               {
+                  if(intNeuron, DoubleNeuron contains typeof(iValue))
+                     iCurPos = GetOutFiltered(iVarPoint, ref(iMeaning), ref(iFrom), ref(iValue == iMeaning || imeaning == Statics.Empty));                               //always have to include any possible empty values.
+                  else
+                     iCurPos = GetOutgoing(iVarPoint, iValue, Statics.Empty);                               //always have to include any possible empty values.
+                  if(count(iCurPos) > 1)
+                     split(TestDone, ref(iCurPos), iCurPos);                                             //with the 'emtpy' value, we could have had multiple values.
+                  else if(count(iCurPos) == 0)
+                  {  
+                     AddSplitResult(0.0);
+                     ExitSolve();                                                                     //something is wrong in the tree, it is broken: there is no endpoint.
+                  }
+               }
+               else
+                  split(TestDone, ref(iCurPos),GetAllOutgoing(iVarPoint));                               //if the value is empty, try out all paths.
+               if(ContainsLinksOut(iCurPos, True, false) == true)
+                  iRes = GetWeightOf(iCurPos, true, theRoot);
+            }
+            if(count(iRes) > 0)
+               AddSplitResult(iRes);
+         }
+         
+         
+         //gets the weighted average of the specified value. If the forest is closed, this is simply the value
+         //that was found, but if it isn't, we still need to calculate the avereage.
+         GetWeightOf(var pos, bool value, var rootval): var
+         {
+            double iRes = GetFirstOut(pos, true);                                                                  //this exits the loop, we found the result.
+            if(Count(iRes) == 0)                                                                               //if there is no value, it's 0.
+               return 0.0;
+            else if(ContainsLinksOut(rootVal, 'IsClosed') == false)
+            {
+               var iAll = Addition(GetAllOutgoing(pos));
+               iRes = iRes / iAll;
+            }
+            return iRes;
+         }
+         
+         //The callback that will mix the result of all the trees together.
+         TestDone():bool
+         {
+            return avg(GetSplitResults()) > 0.5;
+         }
+      }
+   
+      
+      //returns the datapoint at the specified index. If the variable at the specified index position is continuous, the value will be converted into equal, bigger or smaller.
+      //var:
+      //data: the list of variables
+      //index = the index of the variable to 
+      //startPos = the neuron that defines the cutoff value for continuous variables.
+      cluster GetDataPoint
+      {
+         this(var data, int index, var startPos): var
+         {
+            var iCutoff = GetFirstOut(index, Cutoff);
+            if(count(iCutOff) == 0)
+               return data[index];
+            else
+            {
+               var iVal = data[index];
+               iCutOff = GetFirstIn(startPos, CutOff);                  //get the tree-local cutoff value (this is to create some randomness in the cutoff value: for each tree, we take a different cutoff, if possible.
+               if(count(iCutOff) == 0)
+               {
+                  iCutOff = iVal;
+                  AddLink(iVal, startPos, CutOff);                      //store the cutoff pos. We use an incomming link to make certain that there is no mixup with the tree data.
+                  return Statics.Equal;
+               }
+               if(iVal > iCutoff)
+                  return Statics.Bigger;
+               else if(iVal < iCutoff)
+                  return Statics.Smaller;
+               else
+                  return Statics.Equal;
+            }
+         }
+      }
+   }
+}

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This is the DTD for luXXXDiff.xml files which contains information about how a
+lexical unit XXX's annotation has changed since the previous release.  Its format
+is summarized as follows:
+	
+<luDiff>
+  <lexunit-annotation>
+	<subcorpus>*
+	  <annotationSet>*
+	     <layers>*
+	       <layer>*
+	     <layer>*
+	       <labels>*
+	         <label>*
+	       <label>*
+	     <sentence>*
+	
+Note that the structure of the file depends on the type of changes which occured.  E.g.
+If a new element was created it's (new) children will be included also.  If an element
+was changed (e.g. an attribute), then only the change is specified.
+-->	
+<!ELEMENT luDiff (lexunit-annotation)>
+
+<!ELEMENT lexunit-annotation (subcorpus*)>
+<!ATTLIST lexunit-annotation
+	ID NMTOKEN #REQUIRED
+	changeType CDATA #REQUIRED
+	name CDATA #IMPLIED
+	oldname CDATA #IMPLIED
+>
+
+<!ELEMENT subcorpus (annotationSet*)>
+<!ATTLIST subcorpus
+	changeType CDATA #REQUIRED
+	name CDATA #REQUIRED
+	>
+
+<!ELEMENT annotationSet (layers*,layer*,sentence*)>
+<!ATTLIST annotationSet
+	ID NMTOKEN #REQUIRED
+	changeType CDATA #IMPLIED
+	status CDATA #IMPLIED
+>
+
+<!ELEMENT layers (layer*)>
+<!ELEMENT layer (labels*,label*)>
+<!ATTLIST layer
+	ID NMTOKEN #REQUIRED
+	changeType CDATA #IMPLIED
+	name CDATA #REQUIRED
+	rank NMTOKEN #IMPLIED
+>
+
+<!ELEMENT sentence (text)>
+<!ATTLIST sentence
+			ID NMTOKEN #REQUIRED
+			aPos CDATA #IMPLIED>
+<!ELEMENT text (#PCDATA)>
+
+
+<!ELEMENT labels (label*)>
+<!ELEMENT label EMPTY>
+<!ATTLIST label
+	ID NMTOKEN #REQUIRED
+	changeType CDATA #IMPLIED
+	end NMTOKEN #IMPLIED
+	name CDATA #REQUIRED
+	oldend NMTOKEN #IMPLIED
+	oldname NMTOKEN #IMPLIED
+	start NMTOKEN #IMPLIED
+	itype NMTOKEN #IMPLIED
+>
+

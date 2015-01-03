@@ -1,0 +1,328 @@
+//stuff common to variable/asset and thesaurus paths.
+class PathCommon
+{
+   using common;
+   
+   Variable callbackout {}    //used as output var for all code clusters taht are used as callbacks for thes/asset/var paths. example: complete, superlative  
+   Variable callbackin {}     //used as input var for all code clusters taht are used as callbacks for thes/asset/var paths. example: complete, superlative
+   Variable callbackargs {}   //used to pass along any extra arguments.
+   
+   //converts the cluster found in 'CallbackArgs' into a list of items, as defined by it's children, which can be static neurons or variables.
+   ExpressionsBlock BuildCallbackArgs
+   {
+      statements()
+      {
+         var iBuildRes;
+         foreach (callbackargs in callbackargs)
+         {
+            foreach (callbackargs in GetChildren(callbackargs))
+               add(ref(iBuildRes), SolveSubPath(callBackArgs));
+         }
+         callbackargs = iBuildRes;
+      }
+   }
+   
+   //checks if the input is another path and tries to solve it. The result is returned.
+   Cluster SolveSubPath
+   {
+      this(var toSolve): var
+      {
+         switch (GetClusterMeaning(toSolve))
+         {
+            case Statics.ParsedThesVariable: return Thes.GetThesPathResult(toSolve);
+            case Statics.ParsedVariable: return Variables.GetVarResult(toSolve);
+            case Statics.ParsedAssetVariable: return Assets.GetassetPathResult(toSolve);
+            default: return toSolve;
+         }
+      }
+   }
+   
+   ResolveOperands(var values)
+   {
+      var iStoreIn;
+      foreach (var iOperand in values)
+      {
+         iStoreIn = GetClusterMeaning(iOperand);
+         Execute(ref(iStoreIn)) = CalculateOperand(iOperand); 
+      }
+   }
+   
+   /*
+     Calculates the result of an operand (a cluster that declares the content of a variable used in a bool).
+   Input: 
+   toCal=a cluster that contains textneurons/compound words , variable references or functions. 
+   Pattern=the input pattern that got activated. This is required to find the pattern-var results.
+
+   Output: Operand result = 1 or more textneurons/ compound words.
+    */
+   ExpressionsBlock CalculateOperand
+   {
+      statements(var toCal): var
+      {
+         var iRes, iNextToSkip;      //this var stores a neuron that possible has to be skipped if it is the Main.Next item, all other items should be displayed as normal. this is used to skip spaces for instance, in case a variable wasn't found.
+         foreach (var iOperandItem in GetChildren(toCal))
+         {
+            if (TypeOf(iOperandItem) == neuroncluster)
+            {
+               switch (GetClusterMeaning(iOperandItem))
+               {
+                  case Statics.Code:
+                  {
+                     Call(iOperandItem);
+                     var assetpathresult = Statics.ReturnValue;
+                     if (Count(assetpathresult) > 0)
+                        Add(ref(iRes), assetpathresult);
+                     else
+                        iNextToSkip = ' ';
+                  }
+                  default:
+                  {
+                     if (iNextToSkip != iOperandItem)
+                        Add(ref(iRes), iOperandItem);
+                     Clear(ref(iNextToSkip));
+                  }
+               }
+            }
+            else if(iOperandItem == PatternMatcher.TheOutput)
+               Add(ref(iRes), PatternMatcher.RenderPatternItems.ContentToRender);
+            else
+            {
+               if (iNextToSkip != iOperandItem)
+                  Add(ref(iRes), iOperandItem);
+               Clear(ref(iNextToSkip));
+            }
+         }
+         return iRes;
+      }
+   }
+   
+   /*
+     Cleans out a logical group (&& or ||), object, compound or asset when there are no more links or parents. 
+   Input: Clean = possibly 1 or more clusters with meaning &&, ||, object, asset or compound. It will delete the cluster + all children which are no longer reffed, recusrively.
+   thingsToDo: Performs all the 'do' statements in seuence, but from another processor, so that the 'do statements' are performed out of sync of the output rendering. This allows us to put the do-patterns to sleep until some data has been found.
+    */
+   CleanValue(var toClean)
+   {
+      var iNextToClean, iAssetItemToClean, iChildrenToClean, iValueToClean;
+      while (Count(toClean) > 0)
+      {
+         foreach (iValueToClean in toClean)
+         {
+            if (HasReferences(iValueToClean) == false)
+            {
+               if (GetClusterMeaning(iValueToClean) == Assets.Asset)
+               {
+                  iChildrenToClean = GetChildren(iValueToClean);
+                  Delete(iValueToClean);
+                  foreach (iAssetItemToClean in iChildrenToClean)
+                  {
+                     if (ClusterCount(iAssetItemToClean) == 0)
+                     {
+                        Add(iNextToClean, GetAllOutgoing(iAssetItemToClean));
+                        Delete(iAssetItemToClean);
+                     }
+                  }
+               }
+               else if(Statics.AndAnd, Statics.OrOr, Statics.CompoundWord, Statics.Object, Statics.Argument, statics.List Contains GetClusterMeaning(iValueToClean))
+               {
+                  Add(iNextToClean, GetChildren(iValueToClean));
+                  Delete(iValueToClean);
+               }
+            }
+            else
+               Add(iNextToClean, iValueToClean);
+         }
+         if (toClean == iNextToClean)
+            Break();
+         else
+         {
+            toClean = Distinct(iNextToClean);
+            Clear(ref(iNextToClean));
+         }
+      }
+   }
+   
+   //loads the values in SplitResult into variables.
+   ExpressionsBlock LoadPatternResults
+   {
+      statements()
+      {
+         var iVarCollector;
+         pattern = GetClusterMeaning(PatternMatcher.splitresults);
+         foreach (PatternMatcher.Main.CurCollector in GetChildren(PatternMatcher.splitresults))
+         {
+            iVarCollector = GetClusterMeaning(PatternMatcher.Main.CurCollector);
+            Execute(ref(iVarCollector)) = Union(Execute(iVarCollector), PatternMatcher.Main.CurCollector);
+         }
+      }
+   }
+   
+   //performs the actual complete function.
+   Neuron DoComplete
+   {
+      exec()
+      {
+         splitresult = Statics.CurrentTo;
+         Delete(Statics.CurrentFrom);
+         if (Union(IntNeuron, DoubleNeuron) Contains TypeOf(GetFirst(Statics.CurrentInfo)))
+            AddChild(splitresult, CompleteSequence(Statics.CurrentInfo, 1));
+         else
+         {
+            Split(completefinished, ref(splitresult), splitresult);
+            var iToComplete, iObjects, iLoopVar;
+            foreach (iLoopVar in Statics.CurrentInfo)
+            {
+               if ((TypeOf(iLoopVar) == textneuron) || (GetClusterMeaning(iLoopVar) == Statics.CompoundWord))
+               {
+                  iObjects = GetClustersWithMeaning(iLoopVar, Statics.Object);
+                  if (Count(iObjects) > 0)
+                  {
+                     Split(completefinished, ref(iObjects), iObjects);
+                     add(ref(iToComplete), iObjects);
+                  }
+               }
+               else
+                  add(ref(iToComplete), iLoopVar);
+            }
+            var iCommonParents = GetCommonParentsWithMeaning(Thes.IsA, iToComplete);
+            if (Count(iCommonParents) > 0)
+            {
+               Split(completefinished, ref(iCommonParents), iCommonParents);
+               var iIndexToComplete;
+               foreach (iLoopVar in iToComplete)
+                  add(ref(iIndexToComplete), IndexOfChild(iCommonParents, iLoopVar));
+               var iCompleteRes = CompleteSequence(iIndexToComplete, 1);
+               if ((iCompleteRes >= 0) && (iCompleteRes < ChildCount(iCommonParents)))
+                  AddSplitResult(GetChildAt(iCommonParents, iCompleteRes));
+               else
+               {
+                  var iPossibleChildren = GetChildren(iCommonParents);
+                  iPossibleChildren = Complement(ref(iPossibleChildren), ref(iToComplete));
+                  if (Count(iPossibleChildren) > 0)
+                     AddSplitResult(GetRandom(iPossibleChildren));
+               }
+            }
+         }
+      }
+      
+      completefinished()
+      {
+         AddChild(splitresult, GetSplitResults());
+      }
+   }   
+      
+   /*
+     Gets the immediate thesaurus parent from the input value. If no arguments are defined, the 'isa' relationship is presumed.
+    */ 
+   Cluster GetThesParent
+   {
+      var fRelationship;
+      
+      //always sets fRelationship back to 'isa'
+      this(var input): var
+      {
+         fRelationship = Thes.isa;
+         return GetValue(input);
+      }
+      
+      //gets the immediate parent using the specified relationship.
+      ForMeaning(var input, var meaning): var
+      {
+         fRelationship = meaning;
+         return GetValue(input);
+      }
+      
+      GetValue(var input): var
+      {
+         if (GetClusterMeaning(input) == Statics.posgroup)
+         {
+            var found = GetFirst(GetChildrenFiltered(input, ref(filtervar), ref(((GetClusterMeaning(filtervar) == Statics.object) && (GetChildrenOfType(filtervar, IntNeuron) > 0)))));
+            if (Count(found) == 0)
+            {
+               found = GetFirst(GetChildrenFiltered(input, ref(filtervar), ref(ContainsLinksIn(filtervar, Thes.plural))));
+               if (Count(found) > 0)
+               {
+                  input = GetFirstIn(found, Thes.plural);
+                  input = GetClustersWithMeaning(input, Statics.object);
+               }
+               else
+                  input = found;
+            }
+            else
+               input = found;
+         }
+         else if(GetClusterMeaning(input) != Statics.object)
+            input = GetClustersWithMeaning(input, Statics.object);
+         var iRes;
+         if (Count(input) > 0)
+         {
+            foreach (var loopvar in GetClustersWithMeaning(input, fRelationship))
+               Add(iRes, GetFirstIn(loopvar, fRelationship));
+         }
+         return iRes;
+      }
+   }
+
+   /*
+     Returns true if the input (which should be a cluster in some form) contains any of the specified arguments as child. The arguments can be objects or text, automatic conversion is done.
+    */
+   CalculateContainsChild(var list, var child): bool
+   {
+      foreach (child in child)
+      {
+         if (ContainsChildren(list, child))
+            return true;
+         else
+         {
+            switch (GetClusterMeaning(child))
+            {
+               case Statics.Object:
+               {
+                  var found = GetChildrenFiltered(child, ref(filtervar), ref(((TypeOf(filtervar) == textneuron) || (GetClusterMeaning(filtervar) == Statics.compoundword))));
+                  foreach (found in found)
+                     if (ContainsChildren(list, found))
+                        return true;
+                  found = GetClustersWithMeaning(child, Statics.PosGroup);
+                  foreach (found in found)
+                     if (ContainsChildren(list, found))
+                        return true;
+               }
+               case Statics.PosGroup:
+               {
+                  var found = GetChildrenFiltered(child, ref(filtervar), ref(((TypeOf(filtervar) == textneuron) || (Union(Statics.compoundword, Statics.Object) Contains GetClusterMeaning(filtervar)))));
+                  foreach (found in found)
+                     if (ContainsChildren(list, found))
+                        return true;
+               }
+               default:
+               {
+                  var found = Union(GetClustersWithMeaning(child, Statics.PosGroup), GetClustersWithMeaning(child, Statics.Object));
+                  foreach (found in found)
+                     if (ContainsChildren(list, found))
+                      return true;
+               }
+            }
+         }
+      }
+      return false;
+   }
+   
+   //compares the content of 2 path values and returns true if they are equal otherwise false.
+   //2 path values are equal when they are the same neurons, or one is a cluster (object/posgroup) that has the otherone as child.
+   ComparePathValues(var left, var right): bool
+   {
+      if(left == right)
+         return true;
+      else if(Statics.Object, Statics.PosGroup contains GetClusterMeaning(left) )   //if left is an object or posgroup only. Could also be a compound, but a compound == textneuron, can't check it's children cause all of it's children make up the text.
+      {
+         if(ContainsChildren(left, right) == true)
+            return true;
+         else if(GetClusterMeaning(right) == Statics.PosGroup)                     //if left was an object right can still be a posgroup
+            return ContainsChildren(right, left);
+      }
+      else if (Statics.Object, Statics.PosGroup contains GetClusterMeaning(right) )
+         return ContainsChildren(right, left);
+      return false;
+   }
+   
+}

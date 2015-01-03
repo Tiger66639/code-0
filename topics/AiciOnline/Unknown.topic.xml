@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>Unknown</Name>
+  <Rules>
+    <Rule>
+      <Name>new rule 1</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>~(Simple Unknown)</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+    </Rule>
+  </Rules>
+</Topic>

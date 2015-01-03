@@ -1,0 +1,207 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.TextChannelView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             x:Name="Ctrl"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:jc="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+             xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
+             xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+             xmlns:hab="clr-namespace:JaStDev.HAB;assembly=JaStDev.HabCore"
+             jc:Help.Topic="textchannel.html"
+             DataContextChanged="Ctrl_DataContextChanged">
+    <UserControl.Resources>
+
+        <LinearGradientBrush x:Key="TextBoxBorder"
+                             StartPoint="0,0"
+                             EndPoint="0,20"
+                             MappingMode="Absolute">
+            <LinearGradientBrush.GradientStops>
+                <GradientStop Color="#ABADB3"
+                              Offset="0.05" />
+                <GradientStop Color="#E2E3EA"
+                              Offset="0.07" />
+                <GradientStop Color="#E3E9EF"
+                              Offset="1" />
+            </LinearGradientBrush.GradientStops>
+        </LinearGradientBrush>
+
+        <!--data template used for dialog items.-->
+        <DataTemplate x:Key="DialogItem">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition SharedSizeGroup="RightPart" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Path=Originator, StringFormat={}{0:c}:}"
+                           Margin="4,0,4,0"
+                           x:Name="TxtOriginator"
+                           Foreground="{Binding Source={x:Static self:Properties.Settings.Default}, Path=DialogTextInColor}" />
+                <TextBlock Text="{Binding Path=Text}"
+                           Grid.Column="1"
+                           x:Name="TxtText"
+                           Foreground="{Binding Source={x:Static self:Properties.Settings.Default}, Path=DialogTextInColor}" />
+            </Grid>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding Path=Originator}" Value="PC">
+                    <Setter TargetName="TxtOriginator" Property="Foreground"
+                            Value="{Binding Source={x:Static self:Properties.Settings.Default}, Path=DialogTextOutColor}" />
+                    <Setter TargetName="TxtText" Property="Foreground"
+                            Value="{Binding Source={x:Static self:Properties.Settings.Default}, Path=DialogTextOutColor}" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+
+        <!--Data template used for debug listboxes.-->
+        <DataTemplate x:Key="DebugData">
+            <ItemsControl ItemsSource="{Binding Path=DebugData}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </DataTemplate>
+
+        <Style x:Key="SelectionBoundListBoxItem" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}" />
+        </Style>
+
+        <ContextMenu x:Key="DialogContextMenu">
+            <MenuItem Header="Save conversation" Click="SaveConv_Click" />
+        </ContextMenu>
+
+    </UserControl.Resources>
+    <DockPanel>
+        <Expander Style="{StaticResource SimpleExpandDownStyle}"
+                  IsExpanded="{Binding Source={x:Static self:Properties.Settings.Default}, Path=ToolbarExpandedTextChannelView, Mode=TwoWay}"
+                  Focusable="False"
+                  DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Click="BtnSend_Click"
+                        Style="{StaticResource TlbButtonsStyle}"
+                        ToolTip="Send the input text to the sensory interface.">
+                    <Image Source="/Images/Commchannel/send.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <ComboBox SelectedValuePath="Tag"
+                          SelectedValue="{Binding Path=ProcessMode}"
+                          ToolTip="Select the way input is send to the sensory interface">
+                    <ComboBoxItem Tag="{x:Static hab:TextSinProcessMode.DictionaryWords}">Use words</ComboBoxItem>
+                    <ComboBoxItem Tag="{x:Static hab:TextSinProcessMode.ClusterWords}">Use clusters</ComboBoxItem>
+                    <ComboBoxItem Tag="{x:Static hab:TextSinProcessMode.LetterStream}">Use letters</ComboBoxItem>
+                    <ComboBoxItem Tag="{x:Null}">Use default</ComboBoxItem>
+                </ComboBox>
+                <Separator />
+                <Button ToolTip="Copy the conversation log to the clipboard"
+                        x:Name="BtnCopy"
+                        Click="BtnCopy_Click"
+                        Style="{StaticResource TlbNoFocusButtonsStyle}">
+                    <Image Source="/Images/Edit/Cut_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Button ToolTip="Save the conversation log to a text file."
+                        Click="SaveConv_Click"
+                        Style="{StaticResource TlbNoFocusButtonsStyle}">
+                    <Image Source="/Images/SaveAll_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Button Click="BtnClear_Click"
+                        Style="{StaticResource TlbNoFocusButtonsStyle}"
+                        ToolTip="Clear the conversation log.">
+                    <Image Source="/Images/Commchannel/clear.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Separator />
+                <ToggleButton IsChecked="{Binding Path=AudioOn}"
+                              x:Name="ToggleAudio"
+                              ToolTip="Turn audio output on/off.">
+                    <Image
+                        Source="{Binding ElementName=ToggleAudio, Path=IsChecked, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Commchannel/Audio.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+            </ToolBar>
+        </Expander>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <ListBox Grid.Row="0"
+                     Grid.Column="0"
+                     ItemsSource="{Binding Path=InputData}"
+                     x:Name="LstInput"
+                     VirtualizingStackPanel.IsVirtualizing="True"
+                     ItemTemplate="{StaticResource DebugData}"
+                     ItemContainerStyle="{StaticResource SelectionBoundListBoxItem}"
+                     MinWidth="4"
+                     ToolTip="Displays the input data how it was sent as neurons." />
+            <!--Visibility="{Binding Path=ViewIn, Converter={StaticResource BoolToVisConv}}"-->
+
+            <GridSplitter Grid.Row="0"
+                          Grid.Column="1"
+                          Width="6"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Stretch" />
+
+
+            <ListBox Grid.Row="0"
+                     Grid.Column="2"
+                     ItemsSource="{Binding Path=OutputData}"
+                     VirtualizingStackPanel.IsVirtualizing="True"
+                     x:Name="LstOutput"
+                     ItemTemplate="{StaticResource DebugData}"
+                     ItemContainerStyle="{StaticResource SelectionBoundListBoxItem}"
+                     ScrollViewer.CanContentScroll="False"
+                     MinWidth="4"
+                     ToolTip="Displays the output data how it was received as neurons." />
+            <!--Visibility="{Binding Path=ViewOut, Converter={StaticResource BoolToVisConv}}"-->
+
+            <GridSplitter Grid.Row="1"
+                          Grid.Column="0"
+                          Grid.ColumnSpan="3"
+                          Height="6"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Center" />
+
+            <ListBox Grid.IsSharedSizeScope="True"
+                     Grid.Row="2"
+                     Grid.Column="0"
+                     Grid.ColumnSpan="3"
+                     x:Name="LstDialog"
+                     ContextMenu="{StaticResource DialogContextMenu}"
+                     ItemsSource="{Binding Path=DialogData}"
+                     ItemTemplate="{StaticResource DialogItem}"
+                     ItemContainerStyle="{StaticResource SelectionBoundListBoxItem}"
+                     ToolTip="Displays both input and output statements as text." />
+
+            <GridSplitter Grid.Row="3"
+                          Grid.Column="0"
+                          Grid.ColumnSpan="3"
+                          Height="6"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Center" />
+
+            <DockPanel x:Name="DockChatInput"
+                       MinHeight="4"
+                       Grid.Row="4"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="3">
+                <TextBox x:Name="TxtToSend"
+                         Text="{Binding Path=InputText, UpdateSourceTrigger=PropertyChanged}"
+                         BorderBrush="{Binding ElementName=LstDialog, Path=BorderBrush}"
+                         PreviewKeyDown="TxtSend_PrvKeyDown"
+                         ToolTip="Type the text that you want to send to the sensory interface here." />
+            </DockPanel>
+
+        </Grid>
+    </DockPanel>
+
+</UserControl>

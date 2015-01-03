@@ -1,0 +1,955 @@
+==All irregular verbs==
+
+''This table includes selected archaic forms (marked *).''
+
+''Verbs marked † have an irregular present tense (see [[#Present tense irregular verbs]])
+{| class="wikitable sortable"
+! Verb forms !! Verb class and notes
+|-
+|''[[wiktionary:awake|awake]] – awoke – awoken''
+| [[Germanic strong verb#Class 6|Strong, class 6]]
+|-
+|''[[wiktionary:be|be]] [[List of English irregular verbs#Present tense irregular verbs|†]] was<!-- OK here: don't correct it--> – been''
+|[[Suppletive]]. See: [[Indo-European copula]].
+|-
+|''[[wiktionary:bear|bear]] – bore – born/borne''
+:''[[wiktionary:forbear|forbear]] – forbore – forborne''
+:''[[wiktionary:misbear|*misbear]] – misbore – misborne''
+:''[[wiktionary:overbear|overbear]] – overbore – overborne''
+:''[[wiktionary:underbear|underbear]] – underbore – underborne''
+| [[Germanic strong verb#Class 4|Strong, class 4]]
+|-
+|''[[wiktionary:beat|beat]] – beat – beaten/beat''
+:''[[wiktionary:browbeat|browbeat]] – browbeat – browbeaten''
+| [[Germanic strong verb#Class 7|Strong, class 7]]
+|-
+|''[[wiktionary:become|become]] – became – become''
+:''[[wiktionary:misbecome|misbecome]] – misbecame – misbecome''
+| [[Germanic strong verb#Class 4|Strong, class 4]]
+|-
+|''[[wiktionary:beget|beget]] – begot/*begat – begotten/begot''
+:''[[wiktionary:misbeget|misbeget]] – misbegot – misbegotten/misbegot''
+| [[Germanic strong verb#Class 5|Strong, class 5]]
+|-
+|''[[wiktionary:begin|begin]] – began – begun''
+| [[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|''[[wiktionary:bend|bend]] – bent/bended – bent/bended''
+:''[[wiktionary:overbend|overbend]] – overbent – overbent''
+:''[[wiktionary:unbend|unbend]] – unbent – unbent''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:beseech|beseech]] – beseeched/besought – beseeched/besought'' 
+| [[Germanic weak verb|Weak]] with [[Germanic umlaut#In Germanic verbs|Rückumlaut]] and [[Germanic spirant law]]
+|-
+|''[[wiktionary:bet|bet]] – bet/betted – bet/betted''
+:''[[wiktionary:underbet|underbet]] – underbet – underbet''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:bid|bid]] (in playing cards, auctions, etc.) – bid – bid''
+:''[[wiktionary:outbid|outbid]] – outbid – outbid''
+:''[[wiktionary:overbid|overbid]] – overbid – overbid''
+:''[[wiktionary:rebid|rebid]] – rebid – rebid''
+:''[[wiktionary:underbid|underbid]] – underbid – underbid''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:bid|bid]] (meaning to request or say) – bade/bid/bidded – bidden/bid/bidded ''
+| [[Germanic strong verb#Class 5|Strong, class 5]]
+|-
+|''[[wiktionary:bide|bide]] – bided/bode – bided/bidden''
+:''[[wiktionary:abide|abide]] – abided/*abode – abided/*abidden''
+| [[Germanic strong verb#Class 1|Strong, class 1]]
+|-
+|''[[wiktionary:bind|bind]] – bound – bound''
+:''[[wiktionary:unbind|unbind]] – unbound – unbound''
+:''[[wiktionary:underbind|underbind]] – underbound – underbound''
+| [[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|''[[wiktionary:bite|bite]] – bit – bitten''
+|[[Germanic strong verb#Class 1|Strong, class 1]]
+|-
+|''[[wiktionary:bleed|bleed]] – bled – bled''
+| [[Germanic weak verb|Weak]] with vowel reduction and assimilation of dentals
+|-
+|''[[wiktionary:bless|bless]] – blessed/blest – blessed/blest''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:blow|blow]] – blew – blown''
+:''[[wiktionary:overblow|overblow]] – overblew – overblown''
+| [[Germanic strong verb#Class 7|Strong, class 7]]
+|-
+|''[[wiktionary:break|break]] – broke – broken''
+:''[[wiktionary:outbreak|outbreak]] – outbroke – outbroken''
+:''[[wiktionary:rebreak|rebreak]] – rebroke – rebroken''
+| [[Germanic strong verb#Class 4|Strong, class 4]]
+|-
+|''[[wiktionary:breed|breed]] – bred – bred''
+:''[[wiktionary:inbreed|inbreed]] – inbred – inbred''
+:''[[wiktionary:interbreed|interbreed]] – interbred – interbred''
+:''[[wiktionary:overbreed|overbreed]] – overbred – overbred''
+| [[Germanic weak verb|Weak]] with vowel reduction and assimilation of dentals
+|-
+|''[[wiktionary:bring|bring]] – brought – brought''
+| [[Germanic weak verb|Weak]] with [[Germanic umlaut#In Germanic verbs|Rückumlaut]] and [[Germanic spirant law]]
+|-
+|''[[wiktionary:build|build]] – built – built''
+:''[[wiktionary:overbuild|overbuild]] – overbuilt – overbuilt''
+:''[[wiktionary:rebuild|rebuild]] – rebuilt – rebuilt''
+:''[[wiktionary:underbuild|underbuild]] – underbuilt – underbuilt''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:burn|burn]] – burned/burnt – burnt/burned''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:burst|burst]] – burst/bursted – burst/bursted/busted''
+| [[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|''[[wiktionary:buy|buy]] – bought – bought/*boughten''
+:''[[wiktionary:overbuy|overbuy]] – overbought – overbought''
+:''[[wiktionary:underbuy|underbuy]] – underbought – underbought''
+| [[Germanic weak verb|Weak]] with [[Germanic umlaut#In Germanic verbs|Rückumlaut]] and [[Germanic spirant law]]
+|-
+|''[[wiktionary:can|can (auxiliary verb only)]] – could – (none)''
+| [[Preterite-present verb|Preterite-present]], [[defective verb|defective]]
+|-
+|''[[wiktionary:cast|cast]] – cast – cast''
+:''[[wiktionary:broadcast|broadcast]] – broadcast – broadcast''
+:''[[wiktionary:downcast|downcast]] – downcast – downcast''
+:''[[wiktionary:forecast|forecast]] – forecast – forecast''
+:''[[wiktionary:miscast|miscast]] – miscast – miscast''
+:''[[wiktionary:overcast|overcast]] – overcast – overcast''
+:''[[wiktionary:podcast|podcast]] – podcast – podcast''
+:''[[wiktionary:precast|precast]] – precast – precast''
+:''[[wiktionary:recast|recast]] – recast – recast''
+:''[[wiktionary:simulcast|simulcast]] – simulcast – simulcast''
+:''[[wiktionary:telecast|telecast]] – telecast – telecast''
+:''[[wiktionary:typecast|typecast]] – typecast – typecast''
+:''[[wiktionary:undercast|undercast]] – undercast – undercast''
+:''[[wiktionary:upcast|upcast]] – upcast – upcast''
+:''[[wiktionary:webcast|webcast]] – webcast – webcast''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:catch|catch]] – caught – caught''
+| [[Germanic weak verb|Weak]] – a French loanword conjugated perhaps by analogy with teach-taught
+|-
+|''[[wiktionary:choose|choose]] – chose – chosen''
+:''[[wiktionary:mischoose|mischoose]] – mischose – mischosen''
+| [[Germanic strong verb#Class 2|Strong, class 2]]
+|-
+|''[[wiktionary:cleave|cleave]] (split apart) – clove – cloven/cleft''
+| [[Germanic strong verb#Class 2|Strong, class 2]]
+|-
+|*''[[wiktionary:cleave|cleave]] (cling to) – cleft/cleaved – cleft/cleaved''
+| [[Germanic weak verb|Weak]] with vowel reduction 
+|-
+|*''[[wiktionary:clepe|clepe]] – cleped/clept – cleped/clept''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:cling|cling]] – clung – clung''
+| [[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|''[[wiktionary:clothe|clothe]] – clothed/clad – clothed/clad''
+:''[[wikt:overclothe|overclothe]] – overclothed/overclad – overclothed/overclad''
+:''[[wikt:unclothe|unclothe]] – unclothed/unclad – unclothed/unclad''
+:''[[wikt:underclothe|underclothe]] – underclothed/underclad – underclothed/underclad''
+| [[Germanic weak verb|Weak]] with vowel reduction and assimilation of dentals
+|-
+|''[[wiktionary:come|come]] – came – come''
+:''[[wiktionary:misbecome|misbecome]] – misbecame – misbecome''
+:''[[wiktionary:overcome|overcome]] – overcame – overcome''
+| [[Germanic strong verb#Class 4|Strong, class 4]]
+|-
+|''[[wiktionary:cost|cost]] (the intransitive sense) – cost – cost''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:creep|creep]] – crept – crept''
+| [[Germanic strong verb#Class 2|Strong, class 2]]
+|-
+|''[[wiktionary:crow|crow]] – crowed/crew – crowed''
+|-
+|''[[wiktionary:cut#English|cut]] – cut – cut''
+:''[[wiktionary:clearcut|clearcut]] – clearcut – clearcut''
+:''[[wiktionary:crosscut|crosscut]] – crosscut – crosscut''
+:''[[wiktionary:intercut|intercut]] – intercut – intercut''
+:''[[wiktionary:recut|recut]] – recut – recut''
+:''[[wiktionary:undercut|undercut]] – undercut – undercut''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:deal#English|deal]] – dealt – dealt''
+:''[[wiktionary:misdeal|misdeal]] – misdealt – misdealt''
+:''[[wiktionary:redeal|redeal]] – redealt – redealt''
+| [[Germanic weak verb|Weak]] with vowel reduction and assimilation of dentals
+|-
+|''[[wiktionary:dig#English|dig]] – dug – dug''
+:''[[wiktionary:underdig|underdig]] – underdug – underdug''
+| &nbsp;
+|-
+|''[[wiktionary:dive#English|dive]] – dived/dove – dived''
+| [[Germanic weak verb|Weak]] with a naturally developing strong past tense
+|-
+|''[[wiktionary:do#English|do]] [[List of English irregular verbs#Present tense irregular verbs|†]] – did – done''
+:''[[wiktionary:fordo|*fordo]] – fordid – fordone''
+:''[[wiktionary:misdo|misdo]] – misdid – misdone''
+:''[[wiktionary:outdo|outdo]] – outdid – outdone''
+:''[[wiktionary:overdo|overdo]] – overdid – overdone''
+:''[[wiktionary:redo|redo]]  redid – redone''
+:''[[wiktionary:undo|undo]] – undid – undone''
+:''[[wiktionary:underdo|underdo]] – underdid – underdone''
+| [[Reduplication]] with past participle springing from OE "gedon"
+|-
+|''[[wiktionary:drag|drag]] – drug/dragged – drug/dragged''
+| [[Germanic strong verb#Class 6|Strong, class 6]]
+|-
+|''[[wiktionary:draw|draw]] – drew – drawn''
+:''[[wiktionary:outdraw|outdraw]] – outdrew – outdrawn''
+:''[[wiktionary:overdraw|overdraw]] – overdrew – overdrawn''
+:''[[wiktionary:redraw|redraw]] – redrew – redrawn''
+:''[[wiktionary:underdraw|underdraw]] – underdrew – underdrawn''
+:''[[wiktionary:withdraw|withdraw]] – withdrew – withdrawn''
+| [[Germanic strong verb#Class 6|Strong, class 6]]
+|-
+|''[[wiktionary:dream|dream]] – dreamed/dreamt – dreamed/dreamt''
+| [[Germanic weak verb|Weak]] with vowel reduction and assimilation of dentals
+|-
+|''[[wiktionary:dress|dress]] dressed/*drest  dressed/*drest''
+:''[[wiktionary:overdress|overdress]] overdressed  overdressed''
+:''[[wiktionary:underdress|underdress]] underdressed  underdressed''
+:''[[wiktionary:undress|undress]] undressed  undressed''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:drink|drink]] – drank – drunk/drank''
+:''[[wiktionary:outdrink|outdrink]] – outdrank – outdrunk''
+:''[[wiktionary:overdrink|overdrink]] – overdrank – overdrunk''
+| [[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|''[[wiktionary:drive|drive]] – drove – driven''
+:''[[wiktionary:overdrive|overdrive]] – overdrove – overdriven''
+:''[[wiktionary:test-drive|test-drive]] – test-drove – test-driven''
+| [[Germanic strong verb#Class 1|Strong, class 1]]
+|-
+|''[[wiktionary:dwell|dwell]] – dwelt/dwelled – dwelt/dwelled''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:eat#English|eat]] – ate – eaten''
+:''[[wiktionary:overeat|overeat]] – overate – overeaten''
+:''[[wiktionary:undereat|undereat]] – underate – undereaten''
+| [[Germanic strong verb#Class 5|Strong, class 5]]
+|-
+|''[[wiktionary:fall#English|fall]] – fell – fallen''
+:''[[wiktionary:befall|befall]] – befell – befallen''
+:''[[wiktionary:misbefall|*misbefall]] – misbefell – misbefallen''
+:''[[wiktionary:misfall|*misfall]] – misfell – misfallen''
+| [[Germanic strong verb#Class 7|Strong, class 7]]
+|-
+|''[[wiktionary:feed|feed]] – fed – fed''
+:''[[wiktionary:breastfeed|breastfeed]] – breastfed – breastfed''
+:''[[wiktionary:force-feed|force-feed]] – force-fed – force-fed''
+:''[[wiktionary:hand-feed|hand-feed]] – hand-fed – hand-fed''
+:''[[wiktionary:misfeed|misfeed]] – misfed – misfed''
+:''[[wiktionary:overfeed|overfeed]] – overfed – overfed''
+:''[[wiktionary:self-feed|self-feed]] – self-fed – self-fed''
+:''[[wiktionary:spoonfeed|spoonfeed]] – spoonfed – spoonfed''
+:''[[wiktionary:underfeed|underfeed]] – underfed – underfed''
+| [[Germanic weak verb|Weak]] with vowel reduction and assimilation of dentals
+|-
+|''[[wiktionary:feel|feel]] – felt – felt''
+| [[Germanic weak verb|Weak]] with vowel reduction and assimilation of dentals
+|-
+|''[[wiktionary:fight|fight]] – fought – fought''
+| [[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|''[[wiktionary:find#English|find]] – found – found''
+:''[[wiktionary:refind|refind]] – refound – refound''
+| [[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|''[[wiktionary:fit#English|fit]] - fit/fitted - fit/fitted''
+:''[[wiktionary:misfit|misfit]] - misfit/misfitted - misfit/misfitted''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:flee|flee]] – fled – fled''
+| [[Germanic strong verb#Class 2|Strong, class 2]]  
+|-
+|''[[wiktionary:fling|fling]] – flung – flung''
+| [[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|''[[wiktionary:fly#English|fly]] - flew - flown''
+:''[[wiktionary:outfly|outfly]] - outflew - outflown''
+:''[[wiktionary:overfly|overfly]] - overflew - overflown''
+:''[[wiktionary:test-fly|test-fly]] - test-flew - test-flown''
+| [[Germanic strong verb#Class 2|Strong, class 2]]
+|-
+|''[[wiktionary:forbid|forbid]] - forbade/forbid - forbidden''
+| [[Germanic strong verb#Class 5|Strong, class 5]]
+|-
+|''[[wiktionary:forget|forget]] - forgot - forgotten''
+| [[Germanic strong verb#Class 5|Strong, class 5]]
+|-
+|''*[[wiktionary:forlese|forlese]] - forlore - forlorn
+| &nbsp;
+|-
+|''[[wiktionary:forsake|forsake]] - forsook - forsaken''
+| [[Germanic strong verb#Class 6|Strong, class 6]]
+|-
+|''[[wiktionary:freeze|freeze]] - froze - frozen''
+:''[[wiktionary:refreeze|refreeze]] - refroze - refrozen''
+:''[[wiktionary:unfreeze|unfreeze]] - unfroze - unfrozen''
+| [[Germanic strong verb#Class 2|Strong, class 2]]
+|-
+|''[[wiktionary:get|get]] – got – gotten/got''
+:''[[wiktionary:misget|misget]] – misgot – misgotten''
+:''[[wiktionary:overget|*overget]] – overgot – overgotten''
+:''[[wiktionary:underget|*underget]] – undergot – undergotten''
+| [[Germanic strong verb#Class 5|Strong, class 5]]
+|-
+|''[[wiktionary:gild|gild]] - gilded/gilt - gilded/gilt''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|*''[[wiktionary:gird|gird]] - girt/girded - girt/girded''
+:''[[wiktionary:undergird|undergird]] - undergirt/undergirded - undergirt/undergirded''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:give|give]] - gave - given''
+:''[[wiktionary:forgive|forgive]] - forgave - forgiven''
+:''[[wiktionary:misgive|misgive]] - misgave - misgiven''
+| [[Germanic strong verb#Class 5|Strong, class 5]]
+|-
+|''[[wiktionary:go#English|go]] - went - gone''
+:''[[wiktionary:bego|bego]] - bewent - begone''
+:''[[wiktionary:forego|forego]] - forewent - foregone''
+:''[[wiktionary:forgo|forgo]] - forwent - forgone''
+:''[[wiktionary:undergo|undergo]] - underwent - undergone''
+:''[[wiktionary:withgo|*withgo]] - withwent - withgone''
+| [[Suppletive]]. See: [[go (verb)]].
+|-
+|*''[[wiktionary:grave|grave]] - grove/graved - graven/graved''
+| [[Germanic strong verb#Class 6|Strong, class 6]]
+|-
+|''[[wiktionary:grind|grind]] - ground/grinded - ground''
+| [[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|''[[wiktionary:grow#English|grow]] - grew - grown''
+:''[[wiktionary:outgrow|outgrow]] outgrew outgrown''
+:''[[wiktionary:overgrow|overgrow]] overgrew overgrown''
+:''[[wiktionary:regrow|regrow]] regrew regrown''
+:''[[wiktionary:undergrow|undergrow]] undergrew undergrown''
+:''[[wiktionary:upgrow|upgrow]] upgrew upgrown''
+| [[Germanic strong verb#Class 7|Strong, class 7]]
+|-
+|''[[wiktionary:hang|hang]] - hung/hanged - hung/hanged''
+:''[[wiktionary:overhang|overhang]] - overhung - overhung''
+:''[[wiktionary:underhang|underhang]] - underhung - underhung''
+:''[[wiktionary:uphang|uphang]] - uphung - uphung''
+| [[Germanic strong verb#Class 7|Strong, class 7]] weak past tense and present influenced by OE causative "hangian"
+|-
+|''[[wiktionary:have#English|have]] [[List of English irregular verbs#Present tense irregular verbs|†]] - had - had ''
+| [[Germanic weak verb|Weak]] pret. and past participle spring from O.E. haefd
+|-
+|''[[wiktionary:hear#English|hear]] - heard - heard''
+:''[[wiktionary:mishear|mishear]] misheard misheard''
+:''[[wiktionary:overhear|overhear]] overheard overheard''
+:''[[wiktionary:unhear|unhear]] unheard unheard''
+| [[Germanic weak verb|Weak]] with vowel reduction and assimilation of dentals
+|-
+|''[[wiktionary:heave|heave]] – heaved/hove – heaved/hove/hoven''
+:''[[wiktionary:upheave|upheave]] – upheaved/uphove – upheaved/uphove/uphoven''
+|-
+|''[[wiktionary:hew#English|hew]] - hew/hewed - hewn/hewed''
+:''[[wiktionary:underhew|*underhew]] - underhewed - underhewn/underhewed''
+| [[Germanic strong verb#Class 7|Strong, class 7]]
+|-
+|''[[wiktionary:hide#English|hide]] - hid - hidden''
+| [[Germanic weak verb|Weak]] vowel reduction and assimilation of dentals
+|-
+|''[[wiktionary:hit#English|hit]] - hit - hit''
+:''[[wiktionary:mishit|mishit]] - mishit - mishit''
+:''[[wiktionary:overhit|overhit]] - overhit - overhit''
+:''[[wiktionary:underhit|underhit]] - underhit - underhit''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:hoise|hoise]] – hoist – hoist''
+| &nbsp;
+|-
+|''[[wiktionary:hold#English|hold]] - held - held''
+:''[[wiktionary:behold|behold]] - beheld - beheld''
+:''[[wiktionary:inhold|inhold]] - inheld - inheld''
+:''[[wiktionary:mishold|mishold]] - misheld - misheld''
+:''[[wiktionary:uphold|uphold]] - upheld - upheld''
+:''[[wiktionary:withhold|withhold]] - withheld - withheld''
+| [[Germanic strong verb#Class 7|Strong, class 7]]
+|-
+|''[[wiktionary:hurt|hurt]] – hurt – hurt''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:keep|keep]] - kept - kept''
+:''[[wiktionary:miskeep|miskeep]] – miskept – miskept''
+:''[[wiktionary:underkeep|underkeep]] - underkept - underkept''
+| [[Germanic weak verb|Weak]] with vowel reduction and assimilation of dentals
+|-
+|*''[[wiktionary:ken#English|ken]] – kenned/kent – kenned/kent''
+:''[[wiktionary:misken|misken]] – miskenned/miskent – miskenned/miskent''
+| &nbsp;
+|-
+|''[[wiktionary:kneel|kneel]] – knelt/kneeled – knelt/kneeled ''
+| [[Germanic weak verb|Weak]] with vowel reduction and assimilation of dentals
+|-
+|''[[wiktionary:knit#English|knit]] – knit/knitted – knit/knitted''
+| [[Germanic weak verb|Weak]] with assimilation of dentals 
+|-
+|''[[wiktionary:know#English|know]] - knew - known''
+:''[[wiktionary:acknow|*acknow]] – acknew – acknown''
+:''[[wiktionary:foreknow|foreknow]] – foreknew – foreknown''
+:''[[wiktionary:misknow|misknow]] – misknew – misknown''
+| [[Germanic strong verb#Class 7|Strong, class 7]]
+|-
+|''[[wiktionary:lade#English|lade]] - laded - laden/laded''
+:''[[wiktionary:overlade|overlade]] - overladed - overladen/overladed''
+| [[Germanic strong verb#Class 6|Strong, class 6]]
+|-
+|''[[wiktionary:laugh#English|laugh]] - laughed/*laught - laughed/*laught''
+|- 
+|''[[wiktionary:lay#English|lay]] - laid - laid''
+:''[[wiktionary:forelay|*forelay]] – forelaid – forelaid''
+:''[[wiktionary:forlay|*forlay]] – forlaid – forlaid''
+:''[[wiktionary:inlay|inlay]] - inlaid - inlaid''
+:''[[wiktionary:mislay|mislay]] - mislaid - mislaid''
+:''[[wiktionary:outlay|outlay]] - outlaid - outlaid''
+:''[[wiktionary:overlay|overlay]] - overlaid - overlaid''
+:''[[wiktionary:re-lay|re-lay]] - re-laid - re-laid''
+:''[[wiktionary:underlay|underlay]] - underlaid - underlaid''
+:''[[wiktionary:uplay|uplay]] - uplaid - uplaid''
+:''[[wiktionary:waylay|waylay]] – waylaid – waylaid''
+| [[Germanic weak verb|Weak]]; 
+|-
+|''[[wiktionary:lead#English|lead]] – led – led''
+:''[[wiktionary:belead|belead]] – beled – beled''
+:''[[wiktionary:mislead|mislead]] – misled – misled''
+| [[Germanic weak verb|Weak]] with vowel reduction and assimilation of dentals
+|-
+|''[[wiktionary:lean|lean]] - leaned/leant - leaned/leant''
+| [[Germanic weak verb|Weak]] with vowel reduction and assimilation of dentals
+|-
+|''[[wiktionary:leap|leap]] – leaped/leapt – leaped/leapt''
+:''[[wiktionary:outleap|outleap]] – outleaped/outleapt – outleaped/outleapt''
+| [[Germanic strong verb#Class 7|Strong, class 7]]
+|-
+|''[[wiktionary:learn|learn]] - learned/learnt - learned/learnt''
+:''[[wiktionary:mislearn|mislearn]] – mislearned/mislearnt - mislearned/mislearnt''
+:''[[wiktionary:unlearn|unlearn]] - unlearned/unlearnt - unlearned/unlearnt''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:leave|leave]] - left - left''
+:''[[wiktionary:forleave|*forleave]] forleft forleft/forlaft''
+| [[Germanic weak verb|Weak]] with vowel reduction and assimilation of dentals
+|-
+|''[[wiktionary:lend|lend]] – lent – lent''
+:''[[wiktionary:forlend|*forlend]] – forlent – forlent''
+| [[Germanic weak verb|Weak]] with vowel reduction and assimilation of dentals
+|-
+|''[[wiktionary:let#English|let]] (allow) – let – let''
+:''[[wiktionary:forlet|*forlet]] – forlet – forlet''
+:''[[wiktionary:sublet|sublet]] – sublet – sublet''
+:''[[wiktionary:underlet|*underlet]] – underlet – underlet''
+| [[Germanic strong verb#Class 7|Strong, class 7]]
+|-
+|''[[wiktionary:lie#English|lie]] (posture) – lay – lain''
+:''[[wiktionary:forelie|*forelie]] – forelay – forelain''
+:''[[wiktionary:forlie|*forlie]] – forlay – forlain''
+:''[[wiktionary:overlie|overlie]] – overlay – overlain''
+:''[[wiktionary:underlie|underlie]] – underlay – underlain''
+| [[Germanic strong verb#Class 5|Strong, class 5]]
+|-
+|''[[wiktionary:light|light]] – lit/lighted – lit/lighted''
+:''[[wiktionary:backlight|backlight]] - backlit/backlighted - backlit/backlighted''
+:''[[wiktionary:green-light|green-light]] - green-lit/green-lighted - green-lit/green-lighted''
+:''[[wiktionary:relight|relight]] - relit/relighted - relit/relighted''
+| [[Germanic weak verb|Weak]] with vowel reduction and assimilation of dentals
+|-
+|''[[wiktionary:lose|lose]] - lost - lost''
+| [[Germanic strong verb#Class 2|Strong, class 2]]
+|-
+|''[[wiktionary:make|make]] – made – made''
+:''[[wiktionary:remake|remake]] – remade – remade''
+:''[[wiktionary:unmake|unmake]] – unmade – unmade''
+| [[Germanic weak verb|Weak]] contraction of "maked"
+|-
+|''[[wiktionary:may#English|may]] – might – (none)''
+| [[Preterite-present verb|Preterite-present]], [[Defective verb|defective]]
+|-
+|''[[wiktionary:mean#English|mean]] - meant - meant''
+| [[Germanic weak verb|Weak]] with vowel reduction and assimilation of dentals
+|-
+|''[[wiktionary:meet#English|meet]] - met - met''
+| [[Germanic weak verb|Weak]] with vowel reduction and assimilation of dentals
+|-
+|''[[wiktionary:melt|melt]] - melted/*molt - melted/*molten''
+| [[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|''[[wiktionary:mow|mow]] - mowed - mowed/mown ''
+| [[Germanic strong verb#Class 7|Strong, class 7]]
+|-
+|''[[wiktionary:pay#English|pay]] - paid - paid''
+:''[[wiktionary:overpay|overpay]] overpaid overpaid''
+:''[[wiktionary:prepay|prepay]] prepaid prepaid''
+:''[[wiktionary:repay|repay]] repaid repaid''
+:''[[wiktionary:underpay|underpay]] underpaid underpaid''
+| [[Germanic weak verb|Weak]]; irregular only in spelling, but not in pronunciation
+|-
+|''[[wiktionary:pen#Etymology_1|pen]] - penned/pent - penned/pent''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:plead|plead]] - pleaded/pled - pleaded/pled''
+| [[Germanic weak verb|Weak]] with vowel reduction and assimilation of dentals
+|-
+|''[[wiktionary:prove|prove]] - proved - proved/proven''
+| borrowed [[French verb]]
+|-
+|''[[wiktionary:put|put]] - put - put''
+:''[[wiktionary:input|input]] - input - input''
+:''[[wiktionary:output|output]] - output - output''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:queath|*queath]] or [[wiktionary:quethe|quethe]] – quoth – quoth/quethen''
+:''[[wiktionary:bequeath|bequeath]] – bequeathed/bequoth – bequoth/bequethen''
+| [[Germanic strong verb#Class 5|Strong, class 5]]
+|-
+|''[[wiktionary:quit|quit]] – quit – quit''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:reach|reach]] – *raught/reached – *raught/reached
+|-
+|''[[wiktionary:read|read]] – read – read''
+:''[[wiktionary:lipread|lipread]] – lipread – lipread''
+:''[[wiktionary:misread|misread]] – misread – misread''
+:''[[wiktionary:proofread|proofread]] – proofread – proofread''
+:''[[wiktionary:reread|reread]] – reread – reread''
+| [[Germanic weak verb|Weak]] with vowel reduction and assimilation of dentals; irregular in pronunciation
+|-
+|''[[wiktionary:reave|*reave]] – reft – reft''
+:''[[wiktionary:bereave|bereave]] – bereaved/bereft – bereaved/bereft''
+| [[Germanic weak verb|Weak]] with vowel reduction and assimilation of dentals
+|-
+|''[[wiktionary:rend|rend]] - rent - rent''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:rid#English|rid]] - rid/ridded - rid/ridden/ridded''
+| &nbsp;
+|-
+|''[[wiktionary:ride|ride]] – rode – ridden''
+:''[[wiktionary:outride|outride]] – outrode – outridden''
+:''[[wiktionary:override|override]] – overrode – overridden''
+| [[Germanic strong verb#Class 1|Strong, class 1]]
+|-
+|''[[wiktionary:ring|ring]] - rang - rung''
+| [[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|''[[wiktionary:rise|rise]] - rose - risen''
+:''[[wiktionary:arise|arise]] - arose - arisen''
+:''[[wiktionary:uprise|uprise]] - uprose - uprisen''
+| [[Germanic strong verb#Class 1|Strong, class 1]]
+|-
+|''[[wiktionary:rive|*rive]] - rived/rove - rived/riven''
+| [[Germanic strong verb#Class 1|Strong, class 1]]
+|-
+|''[[wiktionary:run|run]] - ran - run''
+:''[[wiktionary:forerun|*forerun]] - foreran - forerun''
+:''[[wiktionary:outrun|outrun]] - outran - outrun''
+:''[[wiktionary:overrun|overrun]] - overran - overrun''
+:''[[wiktionary:rerun|rerun]] - reran - rerun''
+:''[[wiktionary:underrun|underrun]] - underran - underrun''
+| [[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|''[[wiktionary:sake|*sake]] - sook - saken ''
+| [[Germanic strong verb#Class 6|Strong, class 6]]
+|-
+|''[[wiktionary:saw|saw]] - sawed - sawed/sawn''
+| &nbsp;
+|-
+|''[[wiktionary:say|say]] [[List of English irregular verbs#Present tense irregular verbs|†]] – said – said''
+:''[[wiktionary:forsay|*forsay]] – forsaid – forsaid''
+:''[[wiktionary:gainsay|*gainsay]] – gainsaid – gainsaid''
+:''[[wiktionary:missay|missay]] – missaid – missaid''
+:''[[wiktionary:naysay|*naysay]] – naysaid – naysaid''
+:''[[wiktionary:withsay|*withsay]] – withsaid – withsaid''
+| [[Germanic weak verb|Weak]]<!--this IS irregular in pronunciation! -->
+|-
+|''[[wiktionary:see|see]] – saw – seen''
+:''[[wiktionary:besee|*besee]] – *besaw – *beseen''
+:''[[wiktionary:foresee|foresee]] – foresaw – foreseen''
+:''[[wiktionary:missee|missee]] – missaw – misseen''
+:''[[wiktionary:oversee|oversee]] – oversaw – overseen''
+:''[[wiktionary:undersee|undersee]] – undersaw – underseen''
+| [[Germanic strong verb#Class 5|Strong, class 5]]
+|-
+|''[[wiktionary:seek|seek]] – sought – sought''
+:''[[wiktionary:beseek|beseek]] – besought – besought''
+| [[Germanic weak verb|Weak]] with [[Germanic umlaut#In Germanic verbs|Rückumlaut]] and [[Germanic spirant law]]
+|-
+|''[[wiktionary:seethe|seethe]] - seethed/*sod - seethed/*sodden
+|-
+|''[[wiktionary:sell|sell]] – sold – sold''
+:''[[wiktionary:outsell|outsell]] – outsold – outsold''
+:''[[wiktionary:oversell|oversell]] – oversold – oversold''
+:''[[wiktionary:resell|resell]] – resold – resold''
+:''[[wiktionary:undersell|undersell]] – undersold – undersold''
+:''[[wiktionary:upsell|upsell]] – upsold – upsold''
+| [[Germanic weak verb|Weak]] with [[Germanic umlaut#In Germanic verbs|Rückumlaut]]
+|-
+|''[[wiktionary:send|send]] - sent - sent''
+:''[[wiktionary:missend|missend]] - missent - missent''
+:''[[wiktionary:resend|resend]] - resent - resent''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:set|set]] – set – set''
+:''[[wiktionary:beset|beset]] – beset – beset''
+:''[[wiktionary:handset|handset]] – handset – handset''
+:''[[wiktionary:inset|inset]] – inset – inset''
+:''[[wiktionary:misset|misset]] – misset – misset''
+:''[[wiktionary:overset|*overset]] – overset – overset''
+:''[[wiktionary:preset|preset]] – preset – preset''
+:''[[wiktionary:reset|reset]] - reset - reset''
+:''[[wiktionary:upset|upset]] - upset - upset''
+:''[[wiktionary:withset|*withset]] – withset – withset''
+| [[Germanic weak verb|Weak]]
+|-
+|''[[wiktionary:sew|sew]] – sewed – sewed/sewn''
+:''[[wiktionary:handsew|handsew]] – handsewed – handsewed/handsewn''
+:''[[wikt:oversew|oversew]] – oversewed – oversewed/oversewn''
+| &nbsp;
+|-
+|''[[wiktionary:shake|shake]] - shook - shaken''
+:''[[wiktionary:overshake|overshake]] overshook overshaken''
+| [[Germanic strong verb#Class 6|Strong, class 6]]
+|-
+|''[[wiktionary:shall|shall]] – should – (none)''
+| [[Preterite-present verb|Preterite-present]]; [[defective verb|defective]]; see also [[Shall and will]]
+|-
+|''[[wiktionary:shape|shape]] – shaped – shapen/shaped''
+:''[[wiktionary:forshape|*forshape]] – forshaped – forshapen/forshaped''
+:''[[wiktionary:misshape|misshape]] – misshaped – misshapen/misshaped''
+|-
+|''[[wiktionary:shave|shave]] - shove/shaved - shaven/shaved ''
+| [[Germanic strong verb#Class 6|Strong, class 6]]
+|-
+|''[[wiktionary:shear|shear]] - shore/sheared - shorn/sheared ''
+| [[Germanic strong verb#Class 4|Strong, class 4]]
+|-
+|''[[wiktionary:shed#Etymology 1|shed]] - shed - shed''
+| [[Germanic strong verb#Class 7|Strong, class 7]]
+|-
+|''[[wiktionary:shine|shine]] - shined/shone - shined/shone''
+:''[[wiktionary:beshine|*beshine]] beshone beshone''
+:''[[wiktionary:outshine|outshine]] outshined/outshone outshined/outshone''
+:''[[wiktionary:overshine|overshine]] overshined/overshone overshined/overshone''
+| [[Germanic strong verb#Class 1|Strong, class 1]]
+|-
+|''[[wiktionary:shit|shit]] - shit/shat/shitted - shit/shat/shitted''
+| [[Germanic strong verb#Class 1|Strong, class 1]];
+|-
+|''[[wiktionary:shite|*shite]] - shit/shat - shit/shat/shitten''
+| [[Germanic strong verb#Class 1|Strong, class 1]]
+|-
+|''[[wiktionary:shoe|shoe]] - shoed/shod - shoed/shod/shodden''
+| [[Germanic weak verb|Weak]] with vowel reduction 
+|-
+|''[[wiktionary:shoot|shoot]] - shot - shot''
+:''[[wiktionary:misshoot|misshoot]] misshot misshot''
+:''[[wiktionary:overshoot|overshoot]] overshot overshot''
+:''[[wiktionary:reshoot|reshoot]] reshot reshot''
+:''[[wiktionary:undershoot|undershoot]] undershot undershot''
+| [[Germanic strong verb#Class 2|Strong, class 2]]
+|-
+|''[[wiktionary:show|show]] - showed - shown/showed''
+:''[[wiktionary:reshow|reshow]] - reshowed - reshown/reshowed''
+| [[Germanic weak verb|Weak]], with participle ''shown'' perhaps by analogy with ''sow, sown''
+|-
+|''[[wiktionary:shrink|shrink]] - shrank/shrunk - shrunk/shrunken''
+:''[[wiktionary:overshrink|overshrink]] - overshrank/overshrunk - overshrunk/overshrunken''
+| [[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|''[[wiktionary:shrive|*shrive]] - shrove - shriven''
+| [[Germanic strong verb#Class 1|Strong, class 1]]
+|-
+|''[[wiktionary:shut|shut]] - shut - shut ''
+| [[Germanic weak verb|Weak]] 
+|-
+|''[[wiktionary:sing|sing]] - sang - sung''
+:''[[wiktionary:resing|resing]] - resang - resung''
+| [[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|''[[wiktionary:sink|sink]] - sank/sunk - sunk/sunken ''
+| [[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|''[[wiktionary:sit|sit]] - sat - sat/*sitten''
+:''[[wiktionary:babysit|babysit]] - babysat - babysat''
+:''[[wiktionary:withsit|*withsit]] - withsat - withsat/*withsitten''
+| [[Germanic strong verb#Class 5|Strong, class 5]]
+|-
+|''[[wiktionary:slay|slay]] - slew/slayed - slain/slayed''
+| [[Germanic strong verb#Class 6|Strong, class 6]]
+|-
+|''[[wiktionary:sleep|sleep]] – slept – slept''
+:''[[wiktionary:oversleep|oversleep]] – overslept – overslept''
+:''[[wiktionary:undersleep|undersleep]] – underslept – underslept''
+| [[Germanic strong verb#Class 7|Strong, class 7]]
+|-
+|''[[wiktionary:slide|slide]] – slid – slid/slidden''
+:''[[wiktionary:backslide|backslide]] – backslid – backslid''
+:''[[wiktionary:overslide|overslide]] – overslid – overslid/overslidden''
+| [[Germanic strong verb#Class 1|Strong, class 1]]
+|-
+|''[[wiktionary:sling|sling]] - slung/slang - slung''
+| [[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|''[[wiktionary:slink|slink]] - slunk - slunk''
+|[[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|''[[wiktionary:slip|slip]] - slipped/*slipt - slipped/*slipt''
+:''[[wiktionary:overslip|overslip]] overslipped/overslipt overslipped/overslipt''
+| &nbsp;
+|-
+|''[[wiktionary:slit|slit]] – slit – slit''
+| [[Germanic strong verb#Class 1|Strong, class 1]] 
+|-
+|''[[wiktionary:smell|smell]] - smelled/smelt - smelled/smelt''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:smite|*smite]] – smote/*smit – smitten''
+| [[Germanic strong verb#Class 1|Strong, class 1]]
+|-
+|''[[wiktionary:sneak|sneak]] – sneaked/*snuck – sneaked/snuck''
+| [[Germanic weak verb|Weak]] with s naturally-developing strong form
+|-
+|''[[wiktionary:sow|sow]] – sowed/sew – sowed/sown''
+| [[Germanic strong verb#Class 7|Strong, class 7]]
+|-
+|''[[wiktionary:speak|speak]] – spoke/*spake – spoken/spoke''
+:''[[wiktionary:bespeak|*bespeak]] – bespoke – bespoken''
+:''[[wiktionary:forespeak|*forespeak]] – forespoke – forespoken''
+:''[[wiktionary:forspeak|*forspeak]] – forspoke – forspoken''
+:''[[wiktionary:misspeak|misspeak]] – misspoke – misspoken''
+| [[Germanic strong verb#Class 5|Strong, class 5]]
+|-
+|''[[wiktionary:speed|speed]] – sped/speeded – sped/speeded''
+| [[Germanic weak verb|Weak]] with vowel reduction and assimilation of dentals
+|-
+|''[[wiktionary:spell|spell]] – spelled/spelt – spelled/spelt''
+:''[[wiktionary:misspell|misspell]] – misspelled/misspelt – misspelled/misspelt''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:spend|spend]] – spent – spent''
+:''[[wiktionary:forspend|*forspend]] – forspent – forspent''
+:''[[wiktionary:misspend|misspend]] – misspent – misspent''
+:''[[wiktionary:outspend|outspend]] – outspent – outspent''
+:''[[wiktionary:overspend|overspend]] – overspent – overspent''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:spill|spill]] - spilled/spilt - spilled/spilt''
+:''[[wiktionary:overspill|overspill*]] overspilled/overspilt overspilled/overspilt''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:spin|spin]] – span/spun – spun''
+| [[Germanic strong verb#Class 3|strong, class 3]]
+|-
+|''[[wiktionary:spit|spit]] – spit/spat – spit''
+| &nbsp;
+|-
+|''[[wiktionary:split|split]] – split – split''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:spoil|spoil]] - spoiled/spoilt - spoiled/spoilt''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:spread|spread]] - spread - spread''
+:''[[wiktionary:bespread|*bespread]] bespread bespread''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:spring|spring]] – sprang/sprung – sprung''
+:''[[wiktionary:handspring|handspring]] – handsprang – handsprung''
+| [[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|''[[wiktionary:stand|stand]] – stood – stood''
+:''[[wiktionary:misunderstand|misunderstand]] – misunderstood – misunderstood''
+:''[[wiktionary:understand|understand]] – understood – understood''
+:''[[wiktionary:upstand|upstand]] – upstood – upstood''
+:''[[wiktionary:withstand|withstand]] – withstood – withstood''
+| [[Germanic strong verb#Class 6|Strong, class 6]]
+|-
+|''[[wiktionary:stay|stay]] – stayed/*staid – stayed/*staid''
+| &nbsp;
+|-
+|''[[wiktionary:steal|steal]] – stole – stolen''
+| [[Germanic strong verb#Class 4|Strong, class 4]]
+|-
+|''[[wiktionary:stick|stick]] – stuck – stuck''
+| &nbsp;
+|-
+|''[[wiktionary:sting|sting]] – stung/stang – stung''
+| [[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|''[[wiktionary:stink|stink]] - stank/stunk - stunk''
+| [[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|''[[wiktionary:stave|stave]] - stove/staved - stove/staved''
+|-
+|''[[wiktionary:strew|strew]] - strew/strewed - strewn/strewed''
+| &nbsp;
+|-
+|''[[wiktionary:stride|stride]] – strode/strided – stridden/strided''
+:''[[wiktionary:outstride|outstride]] – outstrode – outstridden''
+:''[[wiktionary:overstride|overstride]] – overstrode – overstridden''
+| [[Germanic strong verb#Class 1|Strong, class 1]]
+|-
+|''[[wiktionary:strike|strike]] - struck - stricken/struck''
+:''[[wiktionary:overstrike|overstrike]] - overstruck - overstruck''
+| [[Germanic strong verb#Class 1|Strong, class 1]]
+|-
+|''[[wiktionary:string|string]] – strang/strung – strung''
+:''[[wiktionary:hamstring|hamstring]] – hamstrung – hamstrung''
+:''[[wiktionary:overstring|overstring]] – overstrung – overstrung''
+| [[Germanic weak verb|Weak]] with a naturally-developing strong form
+|-
+|''[[wiktionary:strive|strive]] - strove/strived - striven/strived''
+:''[[wiktionary:outstrive|outstrive]] - outstrove - outstriven''
+:''[[wiktionary:overstrive|overstrive]] - overstrove - overstriven''
+| [[Germanic strong verb#Class 1|Strong, class 1]]
+|-
+|''[[wiktionary:swear|swear]] - swore - sworn''
+:''[[wiktionary:forswear|forswear]] forswore forsworn''
+:''[[wiktionary:outswear|outswear]] outswore outsworn''
+| [[Germanic strong verb#Class 6|Strong, class 6]]
+|-
+|''[[wiktionary:sweat|sweat]] - sweat/sweated - sweat/sweated''
+| &nbsp;
+|-
+|''[[wiktionary:sweep|sweep]] - swept - swept''
+:''[[wiktionary:upsweep|upsweep]] upswept upswept''
+| [[Germanic weak verb|Weak]] with vowel reduction and assimilation of dentals
+|-
+|''[[wiktionary:swell|swell]] - swelled/swole - swelled/swollen''
+:''[[wiktionary:upswell|upswell]] - upswelled - upswelled/upswollen''
+| [[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|*''[[wiktionary:swelt|swelt]] - swolt/swelted - swolten/swelted''
+| [[Germanic strong verb#Class3|Strong, class 3]]
+|-
+|''[[wiktionary:swim|swim]] – swam – swum''
+| [[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|''[[wiktionary:swing|swing]] – swung/swang – swung/*swungen''   
+:''[[wiktionary:overswing|overswing]] – overswung – overswung''
+| [[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|''[[wiktionary:take|take]] – took – taken''
+:''[[wiktionary:betake|betake]] – betook – betaken''
+:''[[wiktionary:mistake|mistake]] – mistook – mistaken''
+:''[[wiktionary:overtake|overtake]] – overtook – overtaken''
+:''[[wiktionary:partake|partake]] – partook – partaken''
+:''[[wiktionary:retake|retake]] – retook – retaken''
+:''[[wiktionary:undertake|undertake]] – undertook – undertaken''
+:''[[wiktionary:uptake|*uptake]] – uptakeed/uptook – uptaken''
+| [[Germanic strong verb#Class 6|Strong, class 6]]
+|-
+|''[[wiktionary:teach|teach]] – taught – taught''
+| [[Germanic weak verb|Weak]] with [[Germanic umlaut#In Germanic verbs|Rückumlaut]] and [[Germanic spirant law]]
+|-
+|''[[wiktionary:tear|tear]] – tore – torn''
+:''[[wiktionary:uptear|uptear]] – uptore – uptorn''
+| [[Germanic strong verb#Class 4|Strong, class 4]]
+|-
+|''[[wiktionary:tell|tell]] – told – told''
+:''[[wiktionary:foretell|foretell]] – foretold – foretold''
+:''[[wiktionary:retell|retell]] – retold – retold''
+:''[[wiktionary:outtell|*outtell]] – outtold – outtold''
+| [[Germanic weak verb|Weak]] with [[Germanic umlaut#In Germanic verbs|Rückumlaut]]
+|-
+|''[[wiktionary:think|think]] – thought – thought''
+:''[[wiktionary:outthink|outthink]] – outthought – outthought''
+:''[[wiktionary:rethink|rethink]] – rethought – rethought''
+| [[Germanic weak verb|Weak]] with [[Germanic umlaut#In Germanic verbs|Rückumlaut]] and [[Germanic spirant law]]
+|-
+|''[[wiktionary:thrive|thrive]] – thrived/throve – thrived/thriven''
+| [[Germanic strong verb#Class 1|Strong, class 1]]
+|-
+|''[[wiktionary:throw|throw]] – threw – thrown''
+:''[[wiktionary:misthrow|misthrow]] – misthrew – misthrown''
+:''[[wiktionary:outthrow|outthrow]] – outthrew – outthrown''
+:''[[wiktionary:overthrow|overthrow]] – overthrew – overthrown''
+:''[[wiktionary:underthrow|underthrow]] – underthrew – underthrown''
+:''[[wiktionary:upthrow|upthrow]] – upthrew – upthrown''
+| [[Germanic strong verb#Class 7|Strong, class 7]]
+|-
+|''[[wiktionary:thrust|thrust]] – thrust/thrusted – thrust/thrusted''
+:''[[wiktionary:outthrust|outthrust]] – outthrust – outthrust''
+| &nbsp;
+|-
+|''[[wiktionary:tread|tread]] – trod – trodden/trod''
+:''[[wiktionary:retread|retread]] – retrod – retrodden/retrod''
+| [[Germanic strong verb#Class 5|Strong, class 5]]
+|-
+|''[[wiktionary:wake|wake]] – woke – woken''
+| [[Germanic strong verb#Class 6|Strong, class 6]]
+|-
+|''[[wiktionary:wax|wax]] – waxed – waxed/waxen''
+| [[Germanic strong verb#Class 7|Strong, class 7]]
+|-
+|''[[wiktionary:wear|wear]] – wore – worn''
+:''[[wiktionary:forwear|*forwear]] – forwore – forworn''
+:''[[wiktionary:outwear|outwear]] – outwore – outworn''
+:''[[wiktionary:overwear|overwear]] – overwore – overworn''
+| [[Germanic weak verb|Weak]] with strong form based on "bear"
+|-
+|''[[wiktionary:weave|weave]] – weaved/wove – woven''
+:''[[wiktionary:interweave|interweave]] – interwove – interwoven''
+:''[[wiktionary:unweave|unweave]] – unwove – unwoven''
+| [[Germanic strong verb#Class 7|Strong, class 7]]
+|-
+|''[[wiktionary:wed#English|wed]] – wed/wedded – wed/wedded''
+:''[[wiktionary:rewed#English|rewed]] – rewed/rewedded – rewed/rewedded''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:weep|weep]] – wept – wept''
+:''[[wiktionary:beweep|*beweep]] – bewept – bewept''
+| [[Germanic strong verb#Class 7|Strong, class 7]]
+|-
+|''[[wiktionary:wend|wend]] – wended/*went – wended/*went''
+| [[Germanic weak verb|weak]] with assimilation of dentals
+|-
+|''[[wiktionary:wet|wet]] – wet/wetted – wet/wetted''
+:''[[wiktionary:overwet|overwet]] – overwet/overwetted – overwet/overwetted''
+| [[Germanic weak verb|Weak]] with assimilation of dentals
+|-
+|''[[wiktionary:will|will]] (auxiliary verb only) – would – (none)''
+| [[Preterite-present verb|Preterite-present]], [[Defective verb|defective]]; see also [[Shall and will]]
+|-
+|''[[wiktionary:win|win]] – won – won''
+| [[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|''[[wiktionary:wind|wind]] – wound – wound''
+:''[[wiktionary:rewind|rewind]] – rewound – rewound''
+:''[[wiktionary:unwind|unwind]] – unwound – unwound''
+| [[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|''[[wiktionary:work|work]] - worked/*wrought - worked/*wrought''
+:''[[wiktionary:overwork|overwork]] - overworked/*overwrought - overworked/*overwrought''
+| [[Germanic weak verb|Weak]] with [[Rückumlaut]] and metathesis of r and o
+|-
+|''[[wiktionary:worth|*worth]] - *worth/*worthed - *worth/*worthed/*worthen''
+| [[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|''[[wiktionary:wreak|wreak]] – wreaked/wrack – wreaked/wreaken/*wroken''
+|-
+|''[[wiktionary:wring|wring]] – wrang/wrung – wrung''
+| [[Germanic strong verb#Class 3|Strong, class 3]]
+|-
+|''[[wiktionary:write|write]] - wrote/*writ - written''
+:''[[wiktionary:ghostwrite|ghostwrite]] - ghostwrote - ghostwritten''
+:''[[wiktionary:miswrite|miswrite]] - miswrote - miswritten''
+:''[[wiktionary:overwrite|overwrite]] - overwrote - overwritten''
+:''[[wiktionary:rewrite|rewrite]] - rewrote - rewritten''
+:''[[wiktionary:underwrite|underwrite]] - underwrote - underwritten''
+|[[Germanic strong verb#Class 1|Strong, class 1]]
+|-
+|''[[wiktionary:writhe|writhe]] – writhed/*wrothe – writhed/*writhen ''
+| [[Germanic strong verb#Class 1|Strong, class 1]]
+|}
+

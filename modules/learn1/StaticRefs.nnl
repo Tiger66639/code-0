@@ -1,0 +1,25 @@
+//references to the statically defined neurons.
+
+Neuron Code: 48 {}
+
+neuron true: 60 {}
+neuron false: 61 {}
+
+Neuron neuron: 86 {}
+Neuron NeuronCluster: 87 {}
+Neuron DoubleNeuron: 88 {}
+Neuron IntNeuron: 89 {}
+Neuron TextNeuron: 90 {}
+Neuron BoolExpression: 91 {}
+Neuron ConditionalPart: 92 {}
+Neuron ConditionalStatement: 93 {}
+Neuron Statement: 94 {}
+Neuron ResultStatement: 95 {}
+Neuron Variable: 96 {}
+
+neuron Rule: 322 {}
+Neuron OutputPatterns: 323 {}
+
+neuron ParsedPatternStart: 326 {}
+neuron ParsedPatternPart: 327 {}
+neuron ParsedPatternOutput: 328 {}

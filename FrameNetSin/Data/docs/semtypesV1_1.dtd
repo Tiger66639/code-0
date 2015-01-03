@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This is the DTD for the semtypes.xml file, which contains information
+about the semantic types. Its format can be summarized as:
+
+<semTypes>
+  <semType>*
+    <definition>
+    <superTypes>
+       <superType>*
+
+-->
+<!ELEMENT semTypes (semType*)>
+
+<!ATTLIST semTypes 
+          XMLCreated  CDATA     #REQUIRED>
+
+<!ELEMENT semType (definition, superTypes)>
+
+<!ATTLIST semType 
+          ID       NMTOKEN         #REQUIRED
+          name      CDATA         #REQUIRED
+          abbrev       CDATA    #REQUIRED
+          cDate     CDATA         #IMPLIED> 
+
+<!ELEMENT definition (#PCDATA)>
+
+<!ELEMENT superTypes (superType*)>
+
+<!ELEMENT superType EMPTY>
+
+<!ATTLIST superType
+          superTypeName CDATA    #REQUIRED
+          supId NMTOKEN #REQUIRED>
+
+<!ELEMENT annotation (annotated, total)>
+
+<!ELEMENT annotated (#PCDATA)>
+
+<!ELEMENT total (#PCDATA)>
+
+

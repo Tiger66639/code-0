@@ -1,0 +1,670 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DesignerDataFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TemplateVersion>1.4</TemplateVersion>
+  <Name>Chatbot</Name>
+  <Chatbotdata>
+    <BotID>1029</BotID>
+    <CreatorID>1032</CreatorID>
+    <RefToUserID>1017</RefToUserID>
+    <NameID>1030</NameID>
+    <BirthdayID>1034</BirthdayID>
+    <BotType>0</BotType>
+    <GenderID>1233</GenderID>
+    <MaleID>1234</MaleID>
+    <FemaleID>1236</FemaleID>
+    <HermaID>1238</HermaID>
+    <SynonymResolveSwitchID>1232</SynonymResolveSwitchID>
+    <UseOutputVarSwitchID>1235</UseOutputVarSwitchID>
+    <UseSTTWeightID>1239</UseSTTWeightID>
+    <SingleTopPatternResultID>1240</SingleTopPatternResultID>
+    <ParserMap>
+      <ID>1250</ID>
+      <ID>1253</ID>
+      <ID>1021</ID>
+      <ID>1022</ID>
+      <ID>1023</ID>
+      <ID>1024</ID>
+      <ID>1025</ID>
+      <ID>1026</ID>
+      <ID>1027</ID>
+      <ID>1029</ID>
+      <ID>1017</ID>
+      <ID>1336</ID>
+      <ID>1252</ID>
+      <ID>1337</ID>
+    </ParserMap>
+    <DoFunctionMap />
+  </Chatbotdata>
+  <Debugmode>Off</Debugmode>
+  <BreakOnException>false</BreakOnException>
+  <BreakPoints />
+  <PlaySpeed />
+  <ToolBoxItems>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>General</Category>
+      <ItemTypeName>JaStDev.HAB.Neuron, JaStDev.HabCore, Version=1.3.4839.34256, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Neuron</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>General</Category>
+      <ItemTypeName>JaStDev.HAB.NeuronCluster, JaStDev.HabCore, Version=1.3.4839.34256, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Cluster</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>General</Category>
+      <ItemTypeName>JaStDev.HAB.TextNeuron, JaStDev.HabCore, Version=1.3.4839.34256, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Text neuron</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>General</Category>
+      <ItemTypeName>JaStDev.HAB.TextSin, JaStDev.HabCore, Version=1.3.4839.34256, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Text Sin</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>General</Category>
+      <ItemTypeName>JaStDev.HAB.IntNeuron, JaStDev.HabCore, Version=1.3.4839.34256, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Int neuron</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>General</Category>
+      <ItemTypeName>JaStDev.HAB.DoubleNeuron, JaStDev.HabCore, Version=1.3.4839.34256, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Double neuron</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>Code</Category>
+      <ItemTypeName>JaStDev.HAB.Assignment, JaStDev.HabCore, Version=1.3.4839.34256, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Assignment</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>Code</Category>
+      <ItemTypeName>JaStDev.HAB.Statement, JaStDev.HabCore, Version=1.3.4839.34256, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Statement</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>Code</Category>
+      <ItemTypeName>JaStDev.HAB.ResultStatement, JaStDev.HabCore, Version=1.3.4839.34256, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Result statement</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>Code</Category>
+      <ItemTypeName>JaStDev.HAB.ExpressionsBlock, JaStDev.HabCore, Version=1.3.4839.34256, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Code block</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>Code</Category>
+      <ItemTypeName>JaStDev.HAB.LockExpression, JaStDev.HabCore, Version=1.3.4839.34256, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Lock</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>Code</Category>
+      <ItemTypeName>JaStDev.HAB.ConditionalStatement, JaStDev.HabCore, Version=1.3.4839.34256, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Condional statement</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>Code</Category>
+      <ItemTypeName>JaStDev.HAB.ConditionalExpression, JaStDev.HabCore, Version=1.3.4839.34256, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>condional part</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>Code</Category>
+      <ItemTypeName>JaStDev.HAB.BoolExpression, JaStDev.HabCore, Version=1.3.4839.34256, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>bool expression</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>Code</Category>
+      <ItemTypeName>JaStDev.HAB.Variable, JaStDev.HabCore, Version=1.3.4839.34256, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Variable</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>Code</Category>
+      <ItemTypeName>JaStDev.HAB.Global, JaStDev.HabCore, Version=1.3.4839.34256, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Global</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>Code</Category>
+      <ItemTypeName>JaStDev.HAB.Local, JaStDev.HabCore, Version=1.3.4839.34256, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Local</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>Code</Category>
+      <ItemTypeName>JaStDev.HAB.ByRefExpression, JaStDev.HabCore, Version=1.3.4839.34256, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>ByRef</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Global values</Category>
+      <ItemID>99</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Global values</Category>
+      <ItemID>154</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Global values</Category>
+      <ItemID>155</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Global values</Category>
+      <ItemID>114</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Global values</Category>
+      <ItemID>100</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Global values</Category>
+      <ItemID>101</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Global values</Category>
+      <ItemID>102</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Global values</Category>
+      <ItemID>103</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Global values</Category>
+      <ItemID>295</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Global values</Category>
+      <ItemID>407</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Global values</Category>
+      <ItemID>60</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Global values</Category>
+      <ItemID>61</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Operators</Category>
+      <ItemID>53</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Operators</Category>
+      <ItemID>54</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Operators</Category>
+      <ItemID>55</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Operators</Category>
+      <ItemID>56</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Operators</Category>
+      <ItemID>57</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Operators</Category>
+      <ItemID>58</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Operators</Category>
+      <ItemID>59</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Operators</Category>
+      <ItemID>269</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Operators</Category>
+      <ItemID>119</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Operators</Category>
+      <ItemID>120</ItemID>
+    </ToolBoxItem>
+  </ToolBoxItems>
+  <DefaultMeaningIds>
+    <ID>1000</ID>
+    <ID>1001</ID>
+    <ID>1002</ID>
+    <ID>1003</ID>
+    <ID>1004</ID>
+    <ID>1005</ID>
+    <ID>1006</ID>
+    <ID>1007</ID>
+    <ID>1008</ID>
+    <ID>1011</ID>
+    <ID>1012</ID>
+    <ID>1013</ID>
+    <ID>1014</ID>
+    <ID>1015</ID>
+    <ID>1016</ID>
+    <ID>1017</ID>
+    <ID>1018</ID>
+    <ID>1019</ID>
+    <ID>1232</ID>
+    <ID>1235</ID>
+    <ID>1239</ID>
+    <ID>1240</ID>
+    <ID>1020</ID>
+    <ID>1021</ID>
+    <ID>1022</ID>
+    <ID>1023</ID>
+    <ID>1024</ID>
+    <ID>1025</ID>
+    <ID>1026</ID>
+    <ID>1027</ID>
+    <ID>136</ID>
+    <ID>1246</ID>
+    <ID>1247</ID>
+    <ID>48</ID>
+    <ID>1286</ID>
+    <ID>1289</ID>
+    <ID>1290</ID>
+    <ID>1291</ID>
+    <ID>1343</ID>
+    <ID>1344</ID>
+    <ID>1345</ID>
+  </DefaultMeaningIds>
+  <ModulePropIds>
+    <ID>1381</ID>
+    <ID>1382</ID>
+    <ID>1383</ID>
+    <ID>1384</ID>
+    <ID>1385</ID>
+    <ID>1390</ID>
+    <ID>1394</ID>
+  </ModulePropIds>
+  <AssetPronounIds>
+    <ID>1021</ID>
+    <ID>1022</ID>
+    <ID>1023</ID>
+    <ID>1024</ID>
+    <ID>1025</ID>
+    <ID>1026</ID>
+    <ID>1027</ID>
+  </AssetPronounIds>
+  <PersonMapIds>
+    <ID>1000</ID>
+    <ID>1001</ID>
+    <ID>1014</ID>
+    <ID>1015</ID>
+    <ID>1016</ID>
+    <ID>1017</ID>
+    <ID>1018</ID>
+    <ID>1019</ID>
+    <ID>1020</ID>
+  </PersonMapIds>
+  <NeuronInfo>
+    <NrOfTables>8</NrOfTables>
+  </NeuronInfo>
+  <Instructions>
+    <ID>250</ID>
+    <ID>249</ID>
+    <ID>248</ID>
+    <ID>251</ID>
+    <ID>252</ID>
+    <ID>418</ID>
+    <ID>6</ID>
+    <ID>5</ID>
+    <ID>4</ID>
+    <ID>184</ID>
+    <ID>417</ID>
+    <ID>416</ID>
+    <ID>430</ID>
+    <ID>429</ID>
+    <ID>414</ID>
+    <ID>399</ID>
+    <ID>436</ID>
+    <ID>296</ID>
+    <ID>115</ID>
+    <ID>445</ID>
+    <ID>142</ID>
+    <ID>219</ID>
+    <ID>223</ID>
+    <ID>314</ID>
+    <ID>176</ID>
+    <ID>305</ID>
+    <ID>304</ID>
+    <ID>29</ID>
+    <ID>30</ID>
+    <ID>28</ID>
+    <ID>306</ID>
+    <ID>240</ID>
+    <ID>175</ID>
+    <ID>224</ID>
+    <ID>150</ID>
+    <ID>151</ID>
+    <ID>152</ID>
+    <ID>153</ID>
+    <ID>186</ID>
+    <ID>241</ID>
+    <ID>274</ID>
+    <ID>11</ID>
+    <ID>270</ID>
+    <ID>290</ID>
+    <ID>291</ID>
+    <ID>379</ID>
+    <ID>218</ID>
+    <ID>14</ID>
+    <ID>15</ID>
+    <ID>10</ID>
+    <ID>146</ID>
+    <ID>453</ID>
+    <ID>410</ID>
+    <ID>16</ID>
+    <ID>434</ID>
+    <ID>261</ID>
+    <ID>424</ID>
+    <ID>423</ID>
+    <ID>463</ID>
+    <ID>461</ID>
+    <ID>177</ID>
+    <ID>178</ID>
+    <ID>17</ID>
+    <ID>376</ID>
+    <ID>118</ID>
+    <ID>122</ID>
+    <ID>148</ID>
+    <ID>131</ID>
+    <ID>149</ID>
+    <ID>280</ID>
+    <ID>216</ID>
+    <ID>229</ID>
+    <ID>370</ID>
+    <ID>371</ID>
+    <ID>283</ID>
+    <ID>256</ID>
+    <ID>124</ID>
+    <ID>228</ID>
+    <ID>128</ID>
+    <ID>318</ID>
+    <ID>254</ID>
+    <ID>129</ID>
+    <ID>126</ID>
+    <ID>227</ID>
+    <ID>193</ID>
+    <ID>444</ID>
+    <ID>443</ID>
+    <ID>316</ID>
+    <ID>315</ID>
+    <ID>317</ID>
+    <ID>200</ID>
+    <ID>127</ID>
+    <ID>198</ID>
+    <ID>199</ID>
+    <ID>104</ID>
+    <ID>253</ID>
+    <ID>264</ID>
+    <ID>262</ID>
+    <ID>255</ID>
+    <ID>268</ID>
+    <ID>217</ID>
+    <ID>201</ID>
+    <ID>202</ID>
+    <ID>204</ID>
+    <ID>203</ID>
+    <ID>205</ID>
+    <ID>369</ID>
+    <ID>206</ID>
+    <ID>207</ID>
+    <ID>209</ID>
+    <ID>208</ID>
+    <ID>210</ID>
+    <ID>257</ID>
+    <ID>263</ID>
+    <ID>211</ID>
+    <ID>215</ID>
+    <ID>213</ID>
+    <ID>212</ID>
+    <ID>214</ID>
+    <ID>334</ID>
+    <ID>333</ID>
+    <ID>330</ID>
+    <ID>332</ID>
+    <ID>329</ID>
+    <ID>331</ID>
+    <ID>433</ID>
+    <ID>320</ID>
+    <ID>187</ID>
+    <ID>456</ID>
+    <ID>267</ID>
+    <ID>145</ID>
+    <ID>266</ID>
+    <ID>144</ID>
+    <ID>473</ID>
+    <ID>360</ID>
+    <ID>147</ID>
+    <ID>452</ID>
+    <ID>411</ID>
+    <ID>7</ID>
+    <ID>393</ID>
+    <ID>8</ID>
+    <ID>9</ID>
+    <ID>244</ID>
+    <ID>470</ID>
+    <ID>24</ID>
+    <ID>26</ID>
+    <ID>25</ID>
+    <ID>140</ID>
+    <ID>139</ID>
+    <ID>395</ID>
+    <ID>401</ID>
+    <ID>402</ID>
+    <ID>405</ID>
+    <ID>403</ID>
+    <ID>404</ID>
+    <ID>308</ID>
+    <ID>271</ID>
+    <ID>245</ID>
+    <ID>179</ID>
+    <ID>378</ID>
+    <ID>180</ID>
+    <ID>440</ID>
+    <ID>432</ID>
+    <ID>272</ID>
+    <ID>242</ID>
+    <ID>243</ID>
+    <ID>27</ID>
+    <ID>297</ID>
+    <ID>298</ID>
+    <ID>419</ID>
+    <ID>420</ID>
+    <ID>428</ID>
+    <ID>427</ID>
+    <ID>464</ID>
+    <ID>460</ID>
+    <ID>422</ID>
+    <ID>421</ID>
+    <ID>465</ID>
+    <ID>462</ID>
+    <ID>18</ID>
+    <ID>19</ID>
+    <ID>426</ID>
+    <ID>425</ID>
+    <ID>466</ID>
+    <ID>459</ID>
+    <ID>12</ID>
+    <ID>400</ID>
+    <ID>13</ID>
+    <ID>439</ID>
+    <ID>474</ID>
+    <ID>20</ID>
+    <ID>397</ID>
+    <ID>396</ID>
+    <ID>2</ID>
+    <ID>409</ID>
+    <ID>437</ID>
+    <ID>3</ID>
+    <ID>408</ID>
+    <ID>458</ID>
+    <ID>398</ID>
+    <ID>21</ID>
+    <ID>275</ID>
+    <ID>23</ID>
+    <ID>276</ID>
+    <ID>22</ID>
+    <ID>277</ID>
+    <ID>278</ID>
+    <ID>282</ID>
+    <ID>281</ID>
+    <ID>185</ID>
+    <ID>469</ID>
+    <ID>183</ID>
+    <ID>438</ID>
+    <ID>412</ID>
+    <ID>441</ID>
+    <ID>220</ID>
+    <ID>394</ID>
+    <ID>475</ID>
+    <ID>130</ID>
+    <ID>105</ID>
+    <ID>467</ID>
+    <ID>141</ID>
+    <ID>446</ID>
+    <ID>132</ID>
+    <ID>377</ID>
+    <ID>451</ID>
+    <ID>476</ID>
+    <ID>287</ID>
+    <ID>221</ID>
+    <ID>299</ID>
+    <ID>181</ID>
+    <ID>182</ID>
+    <ID>225</ID>
+    <ID>226</ID>
+    <ID>454</ID>
+    <ID>415</ID>
+    <ID>413</ID>
+    <ID>279</ID>
+    <ID>455</ID>
+    <ID>116</ID>
+    <ID>431</ID>
+    <ID>125</ID>
+    <ID>435</ID>
+    <ID>138</ID>
+    <ID>117</ID>
+  </Instructions>
+  <Operators>
+    <ID>53</ID>
+    <ID>54</ID>
+    <ID>55</ID>
+    <ID>56</ID>
+    <ID>57</ID>
+    <ID>58</ID>
+    <ID>59</ID>
+    <ID>269</ID>
+    <ID>119</ID>
+    <ID>120</ID>
+  </Operators>
+  <Watches />
+  <CommChannels>
+    <ChatBotChannel>
+      <IsVisible>True</IsVisible>
+      <NeuronID>1010</NeuronID>
+      <Resources />
+      <AudioInOn />
+      <AudioOutOn />
+      <InputText />
+      <SelectedCharacter />
+      <SelectedVoice />
+      <TextSin>1009</TextSin>
+      <ShowFloatingChar />
+      <Zoom>1</Zoom>
+      <ShowAdvancedInput />
+    </ChatBotChannel>
+    <ReflectionChannel>
+      <IsVisible />
+      <NeuronID>1248</NeuronID>
+      <Resources />
+      <Assemblies />
+      <OpCodeIds />
+    </ReflectionChannel>
+  </CommChannels>
+  <Editors>
+    <EditorFolder>
+      <Name>Assets</Name>
+      <FlowDocument />
+      <EditorCollection>
+        <AssetEditor>
+          <Name>Bot</Name>
+          <Item>1029</Item>
+        </AssetEditor>
+        <AssetEditor>
+          <Name>user</Name>
+          <Item>1032</Item>
+        </AssetEditor>
+      </EditorCollection>
+      <IsExpanded>True</IsExpanded>
+    </EditorFolder>
+    <TextPatternEditor>
+      <Name>AutoLearned</Name>
+      <Item>1287</Item>
+      <HasDuplicateName />
+      <IsParsed>True</IsParsed>
+      <IsTopicsFiltersExpanded />
+      <MasterDetailWidth>120</MasterDetailWidth>
+      <SelectedRule>-1</SelectedRule>
+    </TextPatternEditor>
+    <TextPatternEditor>
+      <Name>Question</Name>
+      <Item>12432</Item>
+      <HasDuplicateName />
+      <IsParsed>True</IsParsed>
+      <IsTopicsFiltersExpanded />
+      <MasterDetailWidth>120</MasterDetailWidth>
+      <SelectedRule />
+    </TextPatternEditor>
+    <TextPatternEditor>
+      <Name>Thee</Name>
+      <Item>11518</Item>
+      <HasDuplicateName />
+      <IsParsed>True</IsParsed>
+      <IsTopicsFiltersExpanded />
+      <MasterDetailWidth>120</MasterDetailWidth>
+      <SelectedRule />
+    </TextPatternEditor>
+    <TextPatternEditor>
+      <Name>yes</Name>
+      <Item>11169</Item>
+      <HasDuplicateName />
+      <IsParsed>True</IsParsed>
+      <IsTopicsFiltersExpanded />
+      <MasterDetailWidth>120</MasterDetailWidth>
+      <SelectedRule />
+    </TextPatternEditor>
+  </Editors>
+  <Thesaurus>
+    <Relationships>
+      <ID>1286</ID>
+    </Relationships>
+    <SelectedRelationshipIndex />
+    <NoRecursiveRelationships />
+    <Conjugations>
+      <ID>1000</ID>
+      <ID>1002</ID>
+      <ID>1003</ID>
+      <ID>1004</ID>
+      <ID>1005</ID>
+      <ID>1006</ID>
+      <ID>1007</ID>
+      <ID>1008</ID>
+      <ID>1011</ID>
+      <ID>1012</ID>
+      <ID>1013</ID>
+      <ID>1246</ID>
+      <ID>1247</ID>
+      <ID>1289</ID>
+      <ID>1290</ID>
+      <ID>1291</ID>
+      <ID>1343</ID>
+      <ID>1344</ID>
+      <ID>1345</ID>
+    </Conjugations>
+    <SelectedPosFilterIndex />
+    <IsSubItemsLoaded>True</IsSubItemsLoaded>
+  </Thesaurus>
+  <Overlays />
+  <SplitPaths />
+  <OpenDocuments>
+    <ProjectPath>2</ProjectPath>
+    <ProjectPath>3</ProjectPath>
+    <ProjectPath>4</ProjectPath>
+  </OpenDocuments>
+</DesignerDataFile>

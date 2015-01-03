@@ -1,0 +1,13 @@
+class Common
+{
+
+   int index(duplicate);   //a global to keep track of index values. Duplicates during splits.
+   Global splitresult(copy) {}      //used in many split callbacks, as the result to store the values in.
+   Global OutputSin(copy) {}       //the sin to use for rendering output.
+   Variable pattern {}          //pattern is used both during the pattern-matching as for extracting values from the result, as a globally accessible value, but not as a global (accross multiple link resolutions), so it is declared 1 time. 
+   Variable filtermeaning {}        //commonly used in filter instructions
+   Variable filterfrom {}           //commonly used in filter instructions
+   Variable filtervar {}            //commonly used in filter instructions
+   
+   
+}

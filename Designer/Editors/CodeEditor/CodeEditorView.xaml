@@ -1,0 +1,65 @@
+﻿<self:CtrlEditorBase x:Class="JaStDev.HAB.Designer.CodeEditorView"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+                     xmlns:jc="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+                     jc:Help.Topic="assembyview.html"
+                     x:Name="this">
+    <self:CtrlEditorBase.CommandBindings>
+        <CommandBinding Command="Play" CanExecute="RunNeuron_CanExecute" Executed="RunNeuron_Executed" />
+    </self:CtrlEditorBase.CommandBindings>
+    <!--<UserControl.InputBindings>
+      <KeyBinding Command="self:App.DeleteNeuronCmd" Key="Delete"/>
+   </UserControl.InputBindings>-->
+    <DockPanel>
+        <Expander Style="{StaticResource SimpleExpandDownStyle}"
+                  IsExpanded="{Binding Source={x:Static self:Properties.Settings.Default}, Path=ToolbarExpandedCodeEditor, Mode=TwoWay}"
+                  Focusable="False"
+                  DockPanel.Dock="Top">
+            <ToolBar>
+                <ToggleButton ToolTip="Add page"
+                              x:Name="BtnAddPage"
+                              Style="{StaticResource TlbToggleButtonsStyle}">
+                    <Image
+                        Source="{Binding ElementName=BtnAddPage, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Flow/AddFlow.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+                <Popup IsOpen="{Binding ElementName=BtnAddPage, Path=IsChecked, Mode=TwoWay}"
+                       x:Name="PopupAddPage"
+                       PlacementTarget="{Binding ElementName=BtnAddPage}"
+                       Placement="Bottom"
+                       Height="300"
+                       Width="180">
+                    <ListBox ItemsSource="{Binding Path=PossiblePages}"
+                             x:Name="LstPossiblePages"
+                             DisplayMemberPath="DisplayTitle"
+                             MouseDoubleClick="LstPossiblePages_MouseDoubleClick" />
+                </Popup>
+            </ToolBar>
+        </Expander>
+        <TabControl TabStripPlacement="Bottom"
+                    x:Name="TabPages"
+                    ItemsSource="{Binding Path=EntryPoints}"
+                    SelectedIndex="{Binding Path=SelectedIndex}"
+                    ItemTemplate="{StaticResource HeaderCodePageTemplate}"
+                    ContentTemplate="{StaticResource CodePageTemplate}">
+            <TabControl.ContextMenu>
+                <ContextMenu Opened="CodeEditorViewContextMenu_Opened">
+                    <MenuItem Header="Show in project"
+                              IsCheckable="True"
+                              IsChecked="{Binding Mode=TwoWay,RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.ShowInProject}" />
+                    <Separator />
+                    <MenuItem Click="MnuAddCodePage_Click"
+                              Header="Add new code page"
+                              ItemsSource="{Binding Path=PossiblePages}"
+                              DisplayMemberPath="DisplayTitle" />
+                    <!--The next menuItem needs to be with event, cause the command isn't handled correctly -->
+                    <MenuItem Header="Remove page"
+                              Name="MnuItemRemovePage"
+                              Click="MnuItemRemovePage_Click"
+                              ToolTip="Removes the entire code cluster and when no longer used elsewhere, deletes all the related neurons." />
+                </ContextMenu>
+            </TabControl.ContextMenu>
+        </TabControl>
+    </DockPanel>
+</self:CtrlEditorBase>

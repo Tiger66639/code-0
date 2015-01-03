@@ -1,0 +1,15 @@
+
+class PatternMatcher.Callbacks
+{
+   using PathCommon;
+   //When assigned to: stores the values in the 'topicsBuffer' cluster, to pass along to the next input statement.
+   //when read: the content of the 'topicsBuffer' cluster is returned.
+   NeuronCluster NextTopics(Statics.Code) : 1288
+   {
+      this()
+      {
+         callbackout = GetChildren(nexttopicsbuffer);
+      }
+   }
+
+}

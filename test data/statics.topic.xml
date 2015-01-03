@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>statics</Name>
+  <Rules>
+    <Rule>
+      <Name>new rule 1</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>hi</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>hello</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <DoPatterns />
+      <Evaluate />
+      <Calculate />
+    </Rule>
+    <Rule>
+      <Name>new rule 2</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>hi there</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>hello you too</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <DoPatterns />
+      <Evaluate />
+      <Calculate />
+    </Rule>
+    <Rule>
+      <Name>new rule 3</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>what's your name</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>aici</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <DoPatterns />
+      <Evaluate />
+      <Calculate />
+    </Rule>
+  </Rules>
+  <Questions />
+</Topic>

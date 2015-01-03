@@ -1,0 +1,596 @@
+﻿<ResourceDictionary x:Class="JaStDev.HAB.Designer.FrameItems"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:dd="clr-namespace:DnD"
+                    xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+                    xmlns:hab="clr-namespace:JaStDev.HAB;assembly=JaStDev.HabCore"
+                    xmlns:Ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls">
+    <!--Contains all resources for frames.-->
+
+    <self:FrameElementListDropAdvisor x:Key="FrameElementListDropAdvisor" />
+    <self:FrameSequenceListDropAdvisor x:Key="FrameSequenceListDropAdvisor" />
+
+    <self:FrameElementListItemDropAdvisor x:Key="FrameElementListItemDropAdvisor" />
+    <self:FrameSequenceListItemDropAdvisor x:Key="FrameSequenceListItemDropAdvisor" />
+
+    <self:FrameElementListItemDragAdvisor x:Key="FrameElementListItemDragAdvisor" />
+    <!--<self:FrameEvokerListItemDragAdvisor x:Key="FrameEvokerListItemDragAdvisor"/>-->
+
+    <self:FrameSequenceListItemDragAdvisor x:Key="FrameSequenceListItemDragAdvisor" />
+
+    <self:FERestrictionsDropAdvisor x:Key="FEResctrictionDropAdvisor" />
+
+    <self:FrameDragAdvisor x:Key="FrameDragAdvisor" />
+    <self:FrameListDropAdvisor x:Key="FrameListDropAdvisor" />
+    <self:FrameDropAdvisor x:Key="FrameDropAdvisor" />
+
+
+    <!--The default style for images on the toolbars.-->
+    <Style x:Key="TlbFrameImageStyle" TargetType="{x:Type Image}">
+        <Setter Property="Width" Value="16" />
+        <Setter Property="Height" Value="16" />
+    </Style>
+
+    <ContextMenu x:Key="FramesEditorContextMenu">
+        <MenuItem Header="Add frame" Command="self:App.AddFrameCmd"
+                  ToolTip="Add a new frame." />
+    </ContextMenu>
+
+    <ContextMenu x:Key="ObjectFramesEditorContextMenu">
+        <MenuItem Header="Add frame" Command="self:App.AddFrameCmd"
+                  ToolTip="Add a new frame." />
+        <Separator />
+        <MenuItem Header="Show in project"
+                  IsCheckable="True"
+                  IsChecked="{Binding Mode=TwoWay,RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.ShowInProject}" />
+    </ContextMenu>
+
+    <!--context menu for frames (main frame editor).-->
+    <ContextMenu x:Key="FrameListContextMenu">
+        <MenuItem Header="Add frame"
+                  Command="self:App.AddFrameCmd" />
+        <Separator />
+        <MenuItem Command="Cut">
+            <MenuItem.Icon>
+                <Image Source="/Images/Edit/Cut_Enabled.png"
+                       Style="{StaticResource TlbFrameImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Command="Copy">
+            <MenuItem.Icon>
+                <Image Source="/Images/Edit/Copy_Enabled.png"
+                       Style="{StaticResource TlbFrameImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Command="Paste">
+            <MenuItem.Icon>
+                <Image Source="/Images/Edit/Paste_Enabled.png"
+                       Style="{StaticResource TlbFrameImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <Separator />
+        <MenuItem Header="Delete"
+                  ToolTip="Remove the frame from the editor and delete it from the network if no longer referenced, toghether with the entire branch."
+                  Command="Delete"
+                  InputGestureText="Del" />
+        <Separator />
+        <MenuItem Command="self:App.RenameCmd"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                  Header="Rename"
+                  InputGestureText="F2" />
+        <MenuItem Header="Change to" ItemsSource="{StaticResource ChangeToMenuItems}" />
+        <MenuItem Header="Synchronize"
+                  InputGestureText="F4"
+                  ToolTip="Synchronize the currently selected frame with the explorer."
+                  Command="self:App.SyncCmd">
+            <MenuItem.Icon>
+                <Image Source="/Images/Sync_Enabled.png"
+                       Style="{StaticResource TlbFrameImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="Browse neuron"
+                  Command="self:GlobalCommands.BrowseNeuronCmd"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                  ToolTip="Look at all the relationships of the neuron through a neuron debug view."
+                  InputGestureText="F8">
+            <MenuItem.Icon>
+                <Image Source="/Images/BrowseNeuron_Enabled.png"
+                       Style="{StaticResource TlbFrameImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <Separator />
+        <MenuItem Header="Share link"
+                  ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=NeuronInfo.OverlayedItems, Mode=OneWay}"
+                  ItemTemplate="{StaticResource ShareLinkMenuItemTemplate}" />
+        <Separator />
+        <MenuItem Header="View frames..." Command="self:GlobalCommands.ViewAttachedFramessCmd"
+                  ToolTip="Show the object-frames editor for the selected item."
+                  InputGestureText="Shift+F6"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+            <MenuItem.Icon>
+                <Image Source="/Images/Frame/Object_Frames_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="View asset..." Command="self:GlobalCommands.ViewAttachedAssetsCmd"
+                  ToolTip="Show the asset editor for the selected item."
+                  InputGestureText="Shift+F5"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+            <MenuItem.Icon>
+                <Image Source="/Images/Asset/objectAsset_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="View code..." Command="self:GlobalCommands.ViewCodeCmd"
+                  ToolTip="Open and show a code editor for the selected item."
+                  InputGestureText="Shift+F4"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+            <MenuItem.Icon>
+                <Image Source="/Images/ViewCode_Enabled.png"
+                       Style="{StaticResource TlbFrameImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+    </ContextMenu>
+
+    <!--context menu for sequences.-->
+    <ContextMenu x:Key="SequenceListContextMenu">
+        <MenuItem Header="Add sequence"
+                  Command="self:App.AddFrameSequenceCmd" />
+        <Separator />
+        <MenuItem Command="Cut">
+            <MenuItem.Icon>
+                <Image Source="/Images/Edit/Cut_Enabled.png"
+                       Style="{StaticResource TlbFrameImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Command="Copy">
+            <MenuItem.Icon>
+                <Image Source="/Images/Edit/Copy_Enabled.png"
+                       Style="{StaticResource TlbFrameImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Command="Paste">
+            <MenuItem.Icon>
+                <Image Source="/Images/Edit/Paste_Enabled.png"
+                       Style="{StaticResource TlbFrameImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <Separator />
+        <MenuItem Header="Delete"
+                  ToolTip="Remove the frame from the editor and delete it from the network if no longer referenced, toghether with the entire branch."
+                  Command="Delete"
+                  InputGestureText="Del" />
+        <Separator />
+
+        <MenuItem Command="self:App.RenameCmd"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                  Header="Rename"
+                  InputGestureText="F2" />
+        <MenuItem Header="Change to" ItemsSource="{StaticResource ChangeToMenuItems}" />
+        <MenuItem Header="Synchronize"
+                  InputGestureText="F4"
+                  ToolTip="Synchronize the currently selected frame with the explorer."
+                  Command="self:App.SyncCmd">
+            <MenuItem.Icon>
+                <Image Source="/Images/Sync_Enabled.png"
+                       Style="{StaticResource TlbFrameImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="Browse neuron"
+                  Command="self:GlobalCommands.BrowseNeuronCmd"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                  ToolTip="Look at all the relationships of the neuron through a neuron debug view."
+                  InputGestureText="F8">
+            <MenuItem.Icon>
+                <Image Source="/Images/BrowseNeuron_Enabled.png"
+                       Style="{StaticResource TlbFrameImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <Separator />
+        <MenuItem Header="Share link"
+                  ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=NeuronInfo.OverlayedItems, Mode=OneWay}"
+                  ItemTemplate="{StaticResource ShareLinkMenuItemTemplate}" />
+        <Separator />
+        <MenuItem Header="View asset..." Command="self:GlobalCommands.ViewAttachedAssetsCmd"
+                  ToolTip="Show the asset editor for the selected item."
+                  InputGestureText="Shift+F5"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+            <MenuItem.Icon>
+                <Image Source="/Images/Asset/objectAsset_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="View code..." Command="self:GlobalCommands.ViewCodeCmd"
+                  ToolTip="Open and show a code editor for the selected item."
+                  InputGestureText="Shift+F4"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+            <MenuItem.Icon>
+                <Image Source="/Images/ViewCode_Enabled.png"
+                       Style="{StaticResource TlbFrameImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+    </ContextMenu>
+
+    <!--Context menu for custom filters.-->
+    <ContextMenu x:Key="CustomFilterContextMenu">
+        <MenuItem Header="Delete"
+                  ToolTip="Remove the selected custom filter."
+                  Command="Delete"
+                  InputGestureText="Del" />
+        <Separator />
+        <MenuItem Header="View asset..." Command="self:GlobalCommands.ViewAttachedAssetsCmd"
+                  ToolTip="Show the asset editor for the selected item."
+                  InputGestureText="Shift+F5"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+            <MenuItem.Icon>
+                <Image Source="/Images/Asset/objectAsset_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="View code..." Command="self:GlobalCommands.ViewCodeCmd"
+                  ToolTip="Open and show a code editor for the selected item."
+                  InputGestureText="Shift+F4"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+            <MenuItem.Icon>
+                <Image Source="/Images/ViewCode_Enabled.png"
+                       Style="{StaticResource TlbFrameImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+    </ContextMenu>
+
+    <!--Used as the ItemContainerStyle for the frames in the main listbox-->
+    <Style x:Key="FrameStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="IsSelected" Value="{Binding Path=IsSelected}" />
+        <Setter Property="ContextMenu" Value="{StaticResource FrameListContextMenu}" />
+        <Setter Property="dd:DragDropManager.DragSource" Value="{StaticResource FrameDragAdvisor}" />
+        <Setter Property="dd:DragDropManager.DropTarget" Value="{StaticResource FrameDropAdvisor}" />
+
+    </Style>
+
+
+    <!--Style for frame elements-->
+    <Style x:Key="FrameElementDataGridRow" TargetType="{x:Type ListViewItem}">
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="IsSelected" Value="{Binding Path=IsSelected}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                    <Border BorderThickness="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="2"
+                            SnapsToDevicePixels="true"
+                            dd:DragDropManager.DragSource="{StaticResource FrameElementListItemDragAdvisor}">
+                        <Border Name="InnerBorder"
+                                CornerRadius="1"
+                                BorderThickness="1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition MaxHeight="11" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Rectangle Name="UpperHighlight"
+                                           Visibility="Collapsed"
+                                           Fill="#75FFFFFF" />
+                                <GridViewRowPresenter Grid.RowSpan="2"
+                                                      Margin="0"
+                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </Grid>
+                        </Border>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" Value="{StaticResource ListItemHoverFill}" />
+                            <Setter Property="BorderBrush" Value="#FFCCF0FF" />
+                            <Setter TargetName="UpperHighlight" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter Property="Background" Value="{StaticResource ListItemSelectedFill}" />
+                            <Setter Property="BorderBrush" Value="#FF98DDFB" />
+                            <Setter TargetName="InnerBorder" Property="BorderBrush" Value="#80FFFFFF" />
+                            <Setter TargetName="UpperHighlight" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="UpperHighlight" Property="Fill" Value="#40FFFFFF" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="true" />
+                                <Condition Property="Selector.IsSelectionActive" Value="false" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" Value="{StaticResource ListItemSelectedInactiveFill}" />
+                            <Setter Property="BorderBrush" Value="#FFCFCFCF" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="true" />
+                                <Condition Property="IsMouseOver" Value="true" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" Value="{StaticResource ListItemSelectedHoverFill}" />
+                            <Setter Property="BorderBrush" Value="#FF98DDFB" />
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--Default style for ListBoxItems that represent frame sequences.-->
+    <Style x:Key="FrameSequenceListBoxItem" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="dd:DragDropManager.DropTarget" Value="{StaticResource FrameSequenceListItemDropAdvisor}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="ContextMenu" Value="{StaticResource SequenceListContextMenu}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border Name="Bd"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="true"
+                            dd:DragDropManager.DragSource="{StaticResource FrameSequenceListItemDragAdvisor}">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter TargetName="Bd" Property="Background"
+                                    Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="true" />
+                                <Condition Property="Selector.IsSelectionActive" Value="false" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Bd" Property="Background"
+                                    Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--For the listboxes that display the segments of a frame element restriction.-->
+    <Style x:Key="RestrictionSegementsStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            Padding="{TemplateBinding Padding}">
+                        <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--This datatemplate is for the DataGridComboBoxColumn 'Importance' so that all neurons are displayed with their text value-->
+    <DataTemplate DataType="{x:Type hab:Neuron}">
+        <TextBlock Text="{Binding Converter={StaticResource NeuronToInfoConv}}" />
+    </DataTemplate>
+
+    <!--Defines the view for a single segment in a frame element restriction.-->
+    <DataTemplate DataType="{x:Type self:FERestrictionSegment}">
+        <StackPanel>
+            <ComboBox ToolTip="The direction to search in the thesaurus when there is no direct match"
+                      SelectedValue="{Binding Path=SearchDirection}"
+                      SelectedValuePath="Item"
+                      DisplayMemberPath="NeuronInfo.DisplayTitle">
+                <ComboBox.ItemsSource>
+                    <CompositeCollection>
+                        <CollectionContainer
+                            Collection="{Binding Source={x:Static self:BrainData.Current}, Path=Thesaurus.Relationships}" />
+                        <CollectionContainer
+                            Collection="{Binding Source={x:Static self:BrainData.Current}, Path=Thesaurus.NoRecursiveRelationships}" />
+                    </CompositeCollection>
+                </ComboBox.ItemsSource>
+            </ComboBox>
+
+            <Ctrls:DropDownNSSelector SelectedNeuron="{Binding Path=Restriction, Mode=TwoWay}"
+                                      x:Name="Selector"
+                                      VerticalAlignment="Stretch"
+                                      Visibility="{Binding Path=RequiresRestriction, Converter={StaticResource BoolToVisConv}}"
+                                      ToolTip="The object to restrict on (input items should match this neuron or one that is found through the thesaurus, using the specified search direction).">
+                <Ctrls:DropDownNSSelector.ItemsSources>
+                    <Ctrls:BrowserDataSource PageHeader="Thesaurus"
+                                             PageToolTip="All the outputs declared in the topics attached to thesaurus items"
+                                             ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=Thesaurus.BrowsableItems, Mode=OneWay}"
+                                             AsTree="True" />
+                </Ctrls:DropDownNSSelector.ItemsSources>
+            </Ctrls:DropDownNSSelector>
+        </StackPanel>
+    </DataTemplate>
+
+    <!--The template for custrom filters-->
+    <DataTemplate DataType="{x:Type self:FECustomRestriction}"
+                  x:Key="FECustomRestrictionTemplate">
+        <Grid Height="24"
+              ContextMenu="{StaticResource CustomFilterContextMenu}">
+            <Path Data="{Binding Source={StaticResource ImgExpressionsBlockPath}}"
+                  Stretch="Fill"
+                  Stroke="{StaticResource ImgExpressionsBlockBorderBrush}"
+                  StrokeThickness="1"
+                  Fill="{StaticResource ImgExpressionsBlockBrush}" />
+            <TextBox Text="{Binding Path=NeuronInfo.DisplayTitle}"
+                     MouseDoubleClick="CustomFilter_MouseDoubleClick"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Left"
+                     Background="Transparent"
+                     BorderThickness="0" />
+        </Grid>
+    </DataTemplate>
+
+    <!--The template for frame element restrictions-->
+    <DataTemplate DataType="{x:Type self:FERestriction}"
+                  x:Key="FERestrictionTemplate">
+        <StackPanel Orientation="Horizontal"
+                    Background="Transparent">
+            <ToggleButton IsChecked="{Binding Path=DefinesFullContent}"
+                          ToolTip="When checked, the restriction defines all the data of the element. It can't contain anything more."
+                          Height="12"
+                          Width="12" />
+            <ComboBox
+                ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=FrameElementInclusionModifiers}"
+                ToolTip="Determins if a passed restriction causes the item to be included or excluded."
+                SelectedItem="{Binding Path=InclusionModifier}"
+                VerticalAlignment="Top" />
+            <ListBox ItemsSource="{Binding Path=Segments}"
+                     Style="{StaticResource RestrictionSegementsStyle}" />
+            <Button ToolTip="Add a new segment" Command="self:App.AddFEFilterSegmentCmd">+</Button>
+        </StackPanel>
+    </DataTemplate>
+
+
+    <!--The template for frame element restrictions-->
+    <DataTemplate DataType="{x:Type self:FERestrictionBool}"
+                  x:Key="FERestrictionBoolTemplate">
+        <self:CtrlBoolExpression DataContext="{Binding Path=Filter}" />
+    </DataTemplate>
+
+
+    <!--Template for filter groups-->
+    <DataTemplate DataType="{x:Type self:FERestrictionGroup}"
+                  x:Key="FERestrictionGroupTemplate">
+        <StackPanel Orientation="Horizontal"
+                    Background="Transparent">
+            <ToggleButton IsChecked="{Binding Path=DefinesFullContent}"
+                          ToolTip="When checked, the restriction defines all the data of the element. It can't contain anything more."
+                          Height="12"
+                          Width="12" />
+            <ComboBox ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=FrameElementLogicOperators}"
+                      SelectedItem="{Binding Path=LogicOperator, Mode=TwoWay}"
+                      ToolTip="Determins if an input element should pass all the restricions or only 1" />
+        </StackPanel>
+
+    </DataTemplate>
+
+    <!--Restrictrions root-->
+    <DataTemplate DataType="{x:Type self:FERestrictionRoot}"
+                  x:Key="FERestrictionRootTemplate">
+        <Border Background="Transparent"
+                Padding="0,0,8,0">
+            <ComboBox ToolTip="Determins if an input element should pass all the restricions or only 1"
+                      ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=FrameElementLogicOperators}"
+                      SelectedItem="{Binding Path=LogicOperator, Mode=TwoWay}" />
+        </Border>
+    </DataTemplate>
+
+    <!--Semantic restriction-->
+    <DataTemplate DataType="{x:Type self:FERestriction}"
+                  x:Key="FESemanticRestrictionTemplate">
+        <StackPanel Orientation="Horizontal"
+                    Background="Transparent">
+            <ToggleButton IsChecked="{Binding Path=DefinesFullContent}"
+                          ToolTip="When checked, the restriction defines all the data of the element. It can't contain anything more."
+                          Height="12"
+                          Width="12" />
+            <ComboBox
+                ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=FrameElementInclusionModifiers}"
+                ToolTip="Determins if a passed restriction causes the item to be included or excluded."
+                SelectedItem="{Binding Path=InclusionModifier}"
+                VerticalAlignment="Top" />
+            <StackPanel>
+                <Ctrls:DropDownNSSelector SelectedNeuron="{Binding Path=ValueToInspect, Mode=TwoWay}"
+                                          ToolTip="The value attached to the role that needs to be inspected.">
+                    <Ctrls:DropDownNSSelector.ItemsSources>
+                        <Ctrls:BrowserDataSource PageHeader="Default meanings"
+                                                 PageToolTip="The available default link and cluster meanings."
+                                                 ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=DefaultMeaningsData}"
+                                                 AsTree="False" />
+                    </Ctrls:DropDownNSSelector.ItemsSources>
+                </Ctrls:DropDownNSSelector>
+
+                <ComboBox ToolTip="The direction to search in the thesaurus when there is no direct match"
+                          SelectedValue="{Binding Path=SearchDirection}"
+                          SelectedValuePath="Item"
+                          DisplayMemberPath="NeuronInfo.DisplayTitle">
+                    <ComboBox.ItemsSource>
+                        <CompositeCollection>
+                            <CollectionContainer
+                                Collection="{Binding Source={x:Static self:BrainData.Current}, Path=Thesaurus.Relationships}" />
+                            <CollectionContainer
+                                Collection="{Binding Source={x:Static self:BrainData.Current}, Path=Thesaurus.NoRecursiveRelationships}" />
+                        </CompositeCollection>
+                    </ComboBox.ItemsSource>
+                </ComboBox>
+
+                <Ctrls:DropDownNSSelector SelectedNeuron="{Binding Path=Restriction, Mode=TwoWay}"
+                                          Visibility="{Binding Path=RequiresRestriction, Converter={StaticResource BoolToVisConv}}"
+                                          ToolTip="The object to restrict on (input items should match this neuron or one that is found through the thesaurus, using the specified search direction).">
+                    <Ctrls:DropDownNSSelector.ItemsSources>
+                        <Ctrls:BrowserDataSource PageHeader="Thesaurus"
+                                                 PageToolTip="All the outputs declared in the topics attached to thesaurus items"
+                                                 ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=Thesaurus.BrowsableItems, Mode=OneWay}"
+                                                 AsTree="True" />
+                    </Ctrls:DropDownNSSelector.ItemsSources>
+                </Ctrls:DropDownNSSelector>
+
+            </StackPanel>
+        </StackPanel>
+    </DataTemplate>
+
+    <self:FEFilterTemplateSelector x:Key="FilterTemplateSelector"
+                                   Restrictions="{StaticResource FERestrictionTemplate}"
+                                   FilterGroup="{StaticResource FERestrictionGroupTemplate}"
+                                   CustomFilter="{StaticResource FECustomRestrictionTemplate}"
+                                   RootFilter="{StaticResource FERestrictionRootTemplate}"
+                                   SemanticRestriction="{StaticResource FESemanticRestrictionTemplate}"
+                                   BoolFilter="{StaticResource FERestrictionBoolTemplate}" />
+
+    <!--Style that is applied to all frame element restriction items-->
+    <Style x:Key="RestrictionContainerStyle"
+           TargetType="{x:Type Ctrls:TreeViewPanelItem}"
+           BasedOn="{StaticResource {x:Type Ctrls:TreeViewPanelItem}}">
+        <Setter Property="BorderBrush" Value="LightGray" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="2" />
+        <Setter Property="Margin" Value="2" />
+        <Setter Property="dd:DragDropManager.DropTarget" Value="{StaticResource FEResctrictionDropAdvisor}" />
+    </Style>
+
+
+    <!--Sequences-->
+    <DataTemplate x:Key="SequenceItemTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Path=ElementInfo.DisplayTitle}"
+                       Margin="0,0,4,0"
+                       VerticalAlignment="Center" />
+            <Ctrls:DropDownNSSelector SelectedNeuron="{Binding Path=ResultType, Mode=TwoWay}"
+                                      dd:DragDropManager.DropTarget="{StaticResource DDNeuronSelectorDropAdvisor}"
+                                      ShowDropDownOnMouseOver="true">
+                <Ctrls:DropDownNSSelector.ItemsSources>
+                    <Ctrls:BrowserDataSource PageHeader="Thesaurus"
+                                             PageToolTip="All the outputs declared in the topics attached to thesaurus items"
+                                             ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=Thesaurus.BrowsableItems, Mode=OneWay}"
+                                             AsTree="True" />
+                </Ctrls:DropDownNSSelector.ItemsSources>
+            </Ctrls:DropDownNSSelector>
+        </StackPanel>
+    </DataTemplate>
+
+</ResourceDictionary>

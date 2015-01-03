@@ -1,0 +1,334 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.QueryEditorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+             xmlns:dd="clr-namespace:DnD"
+             xmlns:kb="http://kent.boogaart/controls"
+             xmlns:prop="clr-namespace:JaStDev.HAB.Designer.Properties"
+             xmlns:cf="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+             mc:Ignorable="d"
+             xmlns:Ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.CommandBindings>
+        <CommandBinding Command="Play" CanExecute="RunQuery_CanExecute" Executed="RunQuery_Executed" />
+    </UserControl.CommandBindings>
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="SortedColumns" Source="{Binding Path=Columns}">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="Index" />
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+        <self:QueryColDropAdvisor x:Key="QueryColDropAdv" ColumnMoved="OnColMoved" />
+        <self:QueryColDragAdvisor x:Key="QueryColDragAdv" />
+
+        <self:AdditionalFilesSourceConverter x:Key="AddFilesConv">
+            <self:AdditionalFilesSourceConverter.ExtraItem>
+                <ListBoxItem MouseDoubleClick="NewAddtionalFile_MouseDoubleClick">
+                    <TextBlock FontStyle="Italic" Foreground="Gray"
+                               ToolTip="Double-click to add more files.">
+                        New...
+                    </TextBlock>
+                </ListBoxItem>
+            </self:AdditionalFilesSourceConverter.ExtraItem>
+        </self:AdditionalFilesSourceConverter>
+
+    </UserControl.Resources>
+
+    <DockPanel>
+        <Expander Style="{StaticResource SimpleExpandDownStyle}"
+                  Focusable="False"
+                  IsExpanded="{Binding Source={x:Static self:Properties.Settings.Default}, Path=ToolbarExpandedQueryEditor, Mode=TwoWay}"
+                  DockPanel.Dock="Top">
+
+            <ToolBar>
+                <ToggleButton x:Name="ToggleRunningResult"
+                              VerticalAlignment="Stretch"
+                              ToolTip="When selected, the result pane will only show the last result line, otherwise the full list of results is shown."
+                              IsChecked="{Binding Path=IsRunningResult, Mode=TwoWay}">
+                    <Image Source="/Images/queries/RunningResult.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+                <Separator />
+                <ComboBox ItemsSource="{Binding Source={x:Static self:QueryEditor.DataSources}}"
+                          SelectedItem="{Binding Path=SelectedDataSource}"
+                          DisplayMemberPath="Name"
+                          MinWidth="120" />
+                <ToggleButton x:Name="ToggleShowDataSourceExtra"
+                              VerticalAlignment="Stretch"
+                              IsEnabled="{Binding Path=HasDataSourceExtra}"
+                              ToolTip="Show/hide the extra settings for the datasource.">
+                    <Image
+                        Source="{Binding Path=HasDataSourceExtra, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Frame/Filter.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+
+
+                <Popup IsOpen="{Binding ElementName=ToggleShowDataSourceExtra, Path=IsChecked, Mode=TwoWay}"
+                       PlacementTarget="{Binding ElementName=ToggleShowDataSourceExtra}"
+                       AllowsTransparency="True"
+                       StaysOpen="False">
+                    <Border BorderBrush="Gray"
+                            BorderThickness="1">
+                        <Border.Background>
+                            <LinearGradientBrush
+                                StartPoint="0,0"
+                                EndPoint="0,1">
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStop Color="#FFFFFF"
+                                                  Offset="0" />
+                                    <GradientStop Color="#FFFBFF"
+                                                  Offset="0.5" />
+                                    <GradientStop Color="#F7F7F7"
+                                                  Offset="1" />
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Border.Effect>
+                            <DropShadowEffect Opacity="0.4" />
+                        </Border.Effect>
+
+                        <kb:Resizer
+                            Height="{Binding Source={x:Static prop:Settings.Default}, Path=QueryExtraDataHeight, Mode=TwoWay}"
+                            Width="{Binding Source={x:Static prop:Settings.Default}, Path=QueryExtraDataWidth, Mode=TwoWay}">
+                            <!--<ContentPresenter Content="{Binding RelativeSource={RelativeSource AncestorType=Popup}, Path=PlacementTarget.DataContext.Pipe}"/>-->
+                            <ContentPresenter Content="{Binding Path=Pipe}" />
+                        </kb:Resizer>
+                    </Border>
+                </Popup>
+                <Separator />
+
+                <ToggleButton x:Name="ToggleShowExtraFiles"
+                              VerticalAlignment="Stretch"
+                              ToolTip="Show/hide the list of additional files that will be included in the compilation.">
+                    <Image Source="/Images/queries/include.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+
+                <Popup IsOpen="{Binding ElementName=ToggleShowExtraFiles, Path=IsChecked, Mode=TwoWay}"
+                       PlacementTarget="{Binding ElementName=ToggleShowExtraFiles}"
+                       AllowsTransparency="True"
+                       StaysOpen="False">
+                    <Border BorderBrush="Gray"
+                            BorderThickness="1">
+                        <Border.Background>
+                            <LinearGradientBrush
+                                StartPoint="0,0"
+                                EndPoint="0,1">
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStop Color="#FFFFFF"
+                                                  Offset="0" />
+                                    <GradientStop Color="#FFFBFF"
+                                                  Offset="0.5" />
+                                    <GradientStop Color="#F7F7F7"
+                                                  Offset="1" />
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Border.Effect>
+                            <DropShadowEffect Opacity="0.4" />
+                        </Border.Effect>
+
+                        <kb:Resizer
+                            Height="{Binding Source={x:Static prop:Settings.Default}, Path=QueryExtraFilesHeight, Mode=TwoWay}"
+                            Width="{Binding Source={x:Static prop:Settings.Default}, Path=QueryExtraFilesWidth, Mode=TwoWay}">
+                            <ListBox ToolTip="Press 'Del' on a selected file to remove the entry."
+                                     ItemsSource="{Binding Path=AdditionalFiles, Converter={StaticResource AddFilesConv}}">
+                                <ListBox.ItemContainerStyle>
+                                    <Style>
+                                        <EventSetter Event="ListBoxItem.KeyDown" Handler="ExtraFile_KeyDown" />
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+                            </ListBox>
+                        </kb:Resizer>
+
+                    </Border>
+                </Popup>
+
+
+                <Button ToolTip="Compile the query"
+                        x:Name="BtnCompile"
+                        IsEnabled="{Binding Path=NeedsRecompile, Mode=OneWay}"
+                        Style="{StaticResource TlbButtonsStyle}"
+                        Click="BtnCompile_Click">
+                    <Image
+                        Source="{Binding ElementName=BtnCompile, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/queries/build.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+
+                <Separator />
+                <ComboBox ItemsSource="{Binding Source={x:Static self:QueryEditor.RenderTargets}}"
+                          SelectedItem="{Binding Path=SelectedRenderTarget}"
+                          DisplayMemberPath="Name"
+                          MinWidth="120" />
+                <ToggleButton x:Name="ToggleShowRenderTargetExtra"
+                              VerticalAlignment="Stretch"
+                              IsEnabled="{Binding Path=HasRenderTargetExtra}"
+                              ToolTip="Show/hide the extra settings for the render target.">
+                    <Image
+                        Source="{Binding Path=HasRenderTargetExtra, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Frame/Filter.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+
+
+                <Popup IsOpen="{Binding ElementName=ToggleShowRenderTargetExtra, Path=IsChecked, Mode=TwoWay}"
+                       PlacementTarget="{Binding ElementName=ToggleShowRenderTargetExtra}"
+                       AllowsTransparency="True"
+                       StaysOpen="False">
+                    <Border BorderBrush="Gray"
+                            BorderThickness="1">
+                        <Border.Background>
+                            <LinearGradientBrush
+                                StartPoint="0,0"
+                                EndPoint="0,1">
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStop Color="#FFFFFF"
+                                                  Offset="0" />
+                                    <GradientStop Color="#FFFBFF"
+                                                  Offset="0.5" />
+                                    <GradientStop Color="#F7F7F7"
+                                                  Offset="1" />
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Border.Effect>
+                            <DropShadowEffect Opacity="0.4" />
+                        </Border.Effect>
+
+                        <kb:Resizer
+                            Height="{Binding Source={x:Static prop:Settings.Default}, Path=QueryRTExtraDataHeight, Mode=TwoWay}"
+                            Width="{Binding Source={x:Static prop:Settings.Default}, Path=QueryRTExtraDataWidth, Mode=TwoWay}">
+                            <!--<ContentPresenter Content="{Binding RelativeSource={RelativeSource AncestorType=Popup}, Path=PlacementTarget.DataContext.Pipe}"/>-->
+                            <ContentPresenter Content="{Binding Path=RenderTarget}"
+                                              Margin="8" />
+                        </kb:Resizer>
+                    </Border>
+                </Popup>
+            </ToolBar>
+        </Expander>
+
+        <Grid Name="GrdEditor">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="{Binding Path=SourceEditorHeight, Mode=TwoWay}" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+
+            <Ctrls:CodeTextBox AcceptsReturn="True"
+                               cf:FocusManager.IsFocused="True"
+                               AcceptsTab="True"
+                               FontFamily="{Binding Source={x:Static self:Properties.Settings.Default}, Path=PatternEditorsFont, Mode=OneWay}"
+                               x:Name="TxtSource"
+                               Text="{Binding Path=Source, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                               HorizontalScrollBarVisibility="Auto"
+                               VerticalScrollBarVisibility="Auto"
+                               self:CaretBehavior.ObserveCaret="True" />
+
+            <GridSplitter Grid.Row="1"
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Stretch"
+                          ShowsPreview="True"
+                          Height="6" />
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Border BorderBrush="{Binding ElementName=LstOutput, Path=BorderBrush, Mode=OneTime}"
+                        BorderThickness="1,1,1,0"
+                        HorizontalAlignment="Stretch">
+                    <Ctrls:QueryRowView Background="LightGray"
+                                        x:Name="LstHeader"
+                                        AlternationCount="{Binding Path=ColumnCount, Mode=OneWay}"
+                                        ItemsSource="{Binding Source={StaticResource SortedColumns}}"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalContentAlignment="Center"
+                                        HorizontalContentAlignment="Left">
+                        <Ctrls:QueryRowView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource QueryHeaderBorderStyle}"
+                                        dd:DragDropManager.DragSource="{StaticResource QueryColDragAdv}"
+                                        dd:DragDropManager.DropTarget="{StaticResource QueryColDropAdv}">
+                                    <Grid>
+                                        <TextBlock Style="{StaticResource AssetHeaderTextStyle}"
+                                                   Text="{Binding Path=Name}" />
+                                        <Thumb Style="{StaticResource AssetHeaderColThumbStyle}"
+                                               DragDelta="ThumbCol_DragDelta" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </Ctrls:QueryRowView.ItemTemplate>
+                        <Ctrls:QueryRowView.ItemContainerStyle>
+                            <Style TargetType="{x:Type Ctrls:QueryDataCellControl}">
+                                <Setter Property="HorizontalAlignment" Value="Left" />
+                            </Style>
+                        </Ctrls:QueryRowView.ItemContainerStyle>
+                        <Ctrls:QueryRowView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </Ctrls:QueryRowView.ItemsPanel>
+                    </Ctrls:QueryRowView>
+                </Border>
+
+                <Ctrls:QueryGridControl x:Name="LstOutput"
+                                        ItemsSource="{Binding Path=Output}"
+                                        Grid.Row="1"
+                                        BorderThickness="1,0,1,1"
+                                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                        VirtualizingStackPanel.IsVirtualizing="True"
+                                        VirtualizingStackPanel.VirtualizationMode="Recycling">
+                    <Ctrls:QueryGridControl.ItemContainerStyle>
+                        <Style TargetType="{x:Type Ctrls:QueryRowView}">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="AlternationCount" Value="{Binding Path=ColCount, Mode=OneWay}" />
+                            <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True" />
+                            <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling" />
+                            <Setter Property="ItemsSource" Value="{Binding Path=Items}" />
+                            <Setter Property="ItemsPanel">
+                                <Setter.Value>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel Orientation="Horizontal" />
+                                    </ItemsPanelTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="ItemContainerStyle">
+                                <Setter.Value>
+                                    <Style TargetType="{x:Type Ctrls:QueryDataCellControl}">
+                                        <Setter Property="HorizontalAlignment" Value="Left" />
+                                    </Style>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Ctrls:QueryGridControl.ItemContainerStyle>
+                    <Ctrls:QueryGridControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </Ctrls:QueryGridControl.ItemsPanel>
+                    <!--<ListBox.ItemTemplate>
+                  <DataTemplate>
+                     <Ctrls:QueryRowView VirtualizingStackPanel.IsVirtualizing="True"
+                                         AlternationCount="{Binding Path=DataFormat.Count, Mode=OneTime}"
+                                         VirtualizingStackPanel.VirtualizationMode="Recycling"
+                                         ItemsSource="{Binding Path=Items}">
+                        <Ctrls:QueryRowView.ItemsPanel>
+                           <ItemsPanelTemplate>
+                              <VirtualizingStackPanel Orientation="Horizontal"/>
+                           </ItemsPanelTemplate>
+                        </Ctrls:QueryRowView.ItemsPanel>
+                     </Ctrls:QueryRowView>
+                  </DataTemplate>
+               </ListBox.ItemTemplate>-->
+                </Ctrls:QueryGridControl>
+
+            </Grid>
+
+        </Grid>
+    </DockPanel>
+
+</UserControl>

@@ -1,0 +1,188 @@
+bind $ 
+{  
+   //ex: $PrevOut(1)  returns the previous output statement (not the one currently being built).
+   //the index determins how many statements the system must go back.
+   PrevOut(int index): var
+   //ex: $PrevIn(1)  returns the previous input statement (not the current).
+   //the index determins how many statements the system must go back.
+   //to get the current input, do $input(0)
+   PrevIn(int index): var
+   //makes certain that the first letter of the words passed in as input, are in upper case.
+   ucase(var callbackin): var
+   //makes certain that al the letters of the words passed in as input, are in upper case.
+   allucase(var callbackin): var
+   //makes certain that al the letters of the words passed in as input, are in lower case.
+   AllLCase(var callbackin): var
+   //makes certain that the first letter of the first word of every sentence (simple split on .?!) in the input.
+   SentenceCase(var callbackIn): var
+   //converts the input in characters and returns this list interleaft with spaces. This is similar to the AIML 'explode' tag.
+   Explode(var toExplode): var
+   //defines how to process root path items, like in '$test.second', 'test' is the root path item. 
+   {                  
+      //gets the variable content for the spevified variable name
+      get(var name): var
+      //assigns a value to the variable
+      set(var name, var value)
+      //adds an item to the variable.
+      +=(var name, var value)                                                 
+      //removes an item from the variable.   
+      -=(var name, var value)                                        
+      //when the var path starts with 'Time'
+      Time
+      {
+         //returns the current date-time value
+         get(): var
+         :TimeFunctions
+         {
+            //get the seconds section from a time value
+            second(var callbackIn): int
+            //get the hours section from a time value
+            hour(var callbackIn): int
+            //get the hours section from a time value expressed in the 12H system
+            hour12(var callbackIn): int
+            //returns either AM or PM depending on the hour.
+            AMPM(var callbackIn): var
+            //get the minutes section from a time value
+            minute(var callbackIn): int
+            //return the current year
+            year(var callbackIn): int
+            //return the current day
+            day(var callbackIn): int
+            //return the current month
+            month(var callbackIn): int
+            //return the current day of the week.
+            dayofweek(var callbackIn): int
+         }
+      }
+      topics
+      {
+         //gets all the topics assigned to the current input.   
+         get(): var                          
+         //sets the topic of the current input
+         set(var value)                   
+         //adds a topic to the current input.   
+         +=(var value)                       
+         //removes a topic from the current input.         
+         -=(var value)                       
+      }
+      NextTopics
+      {
+         //gets all the topics assigned to be expected for the next input
+         get(): var                          
+         //sets the topic assigned to be expected for the next input
+         set(var value)                   
+         //adds a topic to be expected for the next input
+         +=(var value)                       
+         //removes a topic from the list of expected topics for the next input
+         -=(var value)                       
+      }
+      //returns the output that has been rendered so far.
+      Output
+      {
+         get(): var     ////returns the output that has been rendered so far.
+      }
+      //index accessor and setter.
+      [] VarIndex
+      {
+         //return the value at the specified index pos.
+         get(var input, int index): var
+         (VarFunctions)
+      }
+      
+      //all the functions that can be called in the var paths. 
+      : varFunctions
+      {
+         (VarFunctions)                      //you can call multiple functions after each other
+         (VarIndex)
+         //when the value was collected with a thesaurus path, this function will convert the object back to the exact words as was found in the input.
+         //this is used to make certain that the output renders the exact same word as the input, and not the first item in the object.
+         ToText(var input): var
+         //inverts I and You 
+         InvertPerson(var toInvert): var
+         //switches I and he/she
+         InvertPerson2(var toInvert): var
+         //get the seconds section from a time value
+         second(var callbackIn): int[]
+         //get the hours section from a time value
+         hour(var callbackIn): int[]
+         //get the minutes section from a time value
+         minute(var callbackIn): int[]
+         //return the year part
+         year(var callbackIn): int[]       
+         //return the day part
+         day(var callbackIn): int[]
+         //return the  month part
+         month(var callbackIn): int[]
+         //return the day of the week.
+         dayofweek(var callbackIn): int[]
+         //used in a variable path to indicate that the count of the input set should be returned.
+         Count(var callbackIn): int
+           //used in a variable path to indicate that a new value should be generated/calculated that completes the input set.
+         complete(var callbackIn): var
+         //performs an interleaf where each item to interleaf is the same
+         //used to create things like 'a, b, c'
+         Interleave(var value, var toInsert): var
+         //performs an interleaf where the last item to interleaf is another item
+         //used to create things like 'a, b, c and d'
+         Interleave(var value, var toInsert, var toInsertAtEnd): var
+          //Checks if the input is an object, compound, textneuron or Statics.PosGroup and returns true or false. There can be no more items after this path item.
+         IsAbstract(var callbackin): bool
+         //Checks if the input is a concrete item (asset) and returns true or false. There can be no more items after this path item.
+         IsConcrete(var callbackin): bool
+         /* converts to input from an asset to a child of the argument.
+            input: an asset
+            argument: a thesaurus item, (like adj.possesive).
+            Output: a child of the thesaurus item that maps to the argument (I, you, ... */
+         AssetToThes(var input, var thesValue): var
+         //for legacy, see AssetToThes.
+         ToPerson(var input, var thesValue): var
+         /* Converts the input into an asset, taking into account for 'I', 'you', 'he/she', 'it', 'plural', 'singular', 'male', 'female'. If the input can't be mapped to 'I', you,... it is interpreted as the name of something and will try to find a focused object that has the specified name.
+            I and you are first inverted, so I is interpreted as the user, while 'you' is interpreted as the bot.
+            Input has to be objects, with at least 1 thesaurus parent to perform the mappings. */ 
+         ObjectToAsset(var input): var
+         /* Converts the input into an asset, taking into account for 'I', 'you', 'he/she', 'it', 'plural', 'singular', 'male', 'female'. If the input can't be mapped to 'I', you,... it is interpreted as the name of something and will try to find a focused object that has the specified name.
+            I and you are first inverted, so I is interpreted as the user, while 'you' is interpreted as the bot.
+            Input has to be objects, with at least 1 thesaurus parent to perform the mappings. */
+         ObjectToAsset(var input, var context): var
+         //same as ObjectToAsset, for legacy.
+         ResolvePerson(var input): var
+         //same as ObjectToAsset, for legacy.
+         ResolvePerson(var input, var context): var
+         //Checks if the current input is a list and returns true or false. There can be no more items after this path item.
+         Islist(var input):bool
+         //Checks if the current asset-path result is an 'And' cluster and returns true or false. There can be no more items after this path item.
+         IsAnd(var input): bool
+          // Checks if the current asset-path result is an 'or' cluster and returns true or false. There can be no more items after this path item.
+         IsOr(var input): bool
+         //Tries to conjugatte the verb to the form that corresponds with the argument. The argument should be 1 item, usually  '#bot.MextMem.who.val'. No attempt is made to try to convert objects to conjugation mappings, all objects are treated as 'it'.
+         ConjugateVerb(var input, var relativeTo):var
+         //Tries to conjugatte the verb to the inverted form that corresponds with the argument (so 'you' becomes 'I'). The argument should be 1 item, usually  '#bot.MextMem.who.val'. No attempt is made to try to convert objects to conjugation mappings, all objects are treated as 'it'.
+         ConjugateInvVerb(var input, var relativeTo): var
+         //returns all the assets that directly link to the input as value. No effort is made to convert the value to object/text/posgroup, only a direct link is used.
+         GetAssetsFromValue(var input): var
+         //returns all the assets that directly link to the input as value for the specified attribute value. No effort is made to convert the value to object/text/posgroup, only a direct link is used.
+         GetAssetsFromValue(var input, var attribVal): var
+         //returns all the assets that directly link to the input as value.   No effort is made to convert the value to object/text/posgroup, only a direct link is used.
+         FindAssetsFromValue(var input): var
+         //returns all the assets that directly link to the input as value for the specified attribute value.  No effort is made to convert the value to object/text/posgroup, only a direct link is used.
+         FindAssetsFromValue(var input, var attribVal): var
+         //Returns the assets that have items with an attribute specified in the input.
+         AttributeFor(var input): var
+         //Returns true if the input (which should be a cluster in some form) contains any of the specified arguments as child. The arguments can be objects or text, automatic conversion is done.
+         ContainsChild(var list, var child): bool
+         // Takes in many possible values (asset clusters), and returns those who have an  outgoing-link with the data specified in the arguments.   
+         Filter(var input, var outgoing): var
+         //the attribute of the input should be calculated. This attribute can be used in an asset relationship. This is done by trying to find a thesaurus node that has a link to itself with the 'attribute' meaning.
+         Attribute(var callbackIn): var
+         //the attribute of the input should be calculated. This attribute can be used in an asset relationship. This is done by trying to find a thesaurus node that has a link to itself with the 'attribute' meaning.
+         //The callback can supply argumetns, which will be used as 'context'. The closer a result matches one of the context values, the higher the weight of the result will be.
+         Attribute(var callbackIn, var context): var
+         //Gets the immediate thesaurus parent from the input value. the 'isa' relationship is presumed.
+         ThesParent(var input): var
+         //Gets the immediate thesaurus parent from the input value. If no meaning is defined, the 'isa' relationship is presumed.
+         ThesParent(var input, var meaning): var
+         //checks if the item in the argument is a thesaurus child (with the 'is a' relationship) of the path.
+         IsaOf(var input, var toCheck): bool
+      }
+   }
+}

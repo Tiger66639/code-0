@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<LayoutRoot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <RootPanel Orientation="Vertical">
+    <LayoutPanel Orientation="Horizontal">
+      <LayoutAnchorablePane Id="2b0f53e0-96ab-48ff-a0c8-b67472789ae1" DockWidth="228" FloatingWidth="240"
+                            FloatingHeight="813" FloatingLeft="157" FloatingTop="529">
+        <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Thesaurus" ContentId="Thesaurus"
+                          FloatingLeft="157" FloatingTop="529" FloatingWidth="240" FloatingHeight="813"
+                          LastActivationTimeStamp="01/15/2013 14:10:26" />
+        <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Explorer" ContentId="Explorer"
+                          FloatingLeft="255" FloatingTop="921" FloatingWidth="240" FloatingHeight="813"
+                          LastActivationTimeStamp="01/15/2013 14:10:28"
+                          PreviousContainerId="2b0f53e0-96ab-48ff-a0c8-b67472789ae1" PreviousContainerIndex="1" />
+        <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Toolbox" ContentId="Toolbox"
+                          FloatingLeft="256" FloatingTop="529" FloatingWidth="240" FloatingHeight="813"
+                          LastActivationTimeStamp="01/15/2013 14:10:17" />
+        <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Project" IsSelected="True"
+                          ContentId="Project" FloatingLeft="242" FloatingTop="540" FloatingWidth="240"
+                          FloatingHeight="813" LastActivationTimeStamp="01/15/2013 14:10:34" />
+      </LayoutAnchorablePane>
+      <LayoutDocumentPane />
+      <LayoutAnchorablePane Id="36c5808c-5010-4418-b34c-da3f987d2a9e" DockWidth="240" />
+    </LayoutPanel>
+    <LayoutAnchorablePaneGroup Orientation="Horizontal" DockHeight="176.5" FloatingWidth="240" FloatingHeight="813"
+                               FloatingLeft="757" FloatingTop="924">
+      <LayoutAnchorablePane DockHeight="176.5" FloatingWidth="240" FloatingHeight="813" FloatingLeft="757"
+                            FloatingTop="924">
+        <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Debugger" IsSelected="True"
+                          ContentId="Debugger" FloatingLeft="767" FloatingTop="843" FloatingWidth="240"
+                          FloatingHeight="813" LastActivationTimeStamp="01/15/2013 14:10:59" />
+        <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Timers" ContentId="Timers"
+                          FloatingLeft="773" FloatingTop="850" FloatingWidth="240" FloatingHeight="813"
+                          LastActivationTimeStamp="01/15/2013 14:10:56" />
+        <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Description" ContentId="Description"
+                          FloatingLeft="761" FloatingTop="856" FloatingWidth="240" FloatingHeight="813"
+                          LastActivationTimeStamp="01/15/2013 14:10:50" />
+        <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Log" ContentId="Log" FloatingLeft="757"
+                          FloatingTop="924" FloatingWidth="240" FloatingHeight="813"
+                          LastActivationTimeStamp="01/15/2013 14:10:44" />
+      </LayoutAnchorablePane>
+    </LayoutAnchorablePaneGroup>
+  </RootPanel>
+  <TopSide />
+  <RightSide />
+  <LeftSide />
+  <BottomSide />
+  <FloatingWindows />
+  <Hidden>
+    <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Neuron profiler" IsSelected="True"
+                      ContentId="MemProfiler" LastActivationTimeStamp="01/15/2013 14:11:30"
+                      PreviousContainerId="36c5808c-5010-4418-b34c-da3f987d2a9e" PreviousContainerIndex="0" />
+    <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Search results" IsSelected="True"
+                      ContentId="SearchResults" LastActivationTimeStamp="01/15/2013 14:11:30"
+                      PreviousContainerId="36c5808c-5010-4418-b34c-da3f987d2a9e" PreviousContainerIndex="0" />
+  </Hidden>
+</LayoutRoot>

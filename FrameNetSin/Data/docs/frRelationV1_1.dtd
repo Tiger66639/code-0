@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This is the DTD for the frRelation.xml file, which contains information
+about the frame-to-frame relations.  Its format can be summarized as:
+
+<fr-relations>
+  <frame-relation-type>*
+    <frame-relations>
+      <frame-relation>*
+        <fe-relation>*
+-->
+<!ELEMENT fr-relations (frame-relation-type*)>
+
+<!ATTLIST fr-relations 
+          XMLCreated  CDATA     #REQUIRED>
+
+<!ELEMENT frame-relation-type (frame-relations*)>
+
+<!ATTLIST frame-relation-type
+             ID NMTOKEN #REQUIRED
+             name CDATA #REQUIRED
+             superFrameName CDATA #REQUIRED
+             subFrameName CDATA #REQUIRED>
+
+<!ELEMENT frame-relations (frame-relation*)>
+
+<!ELEMENT frame-relation (fe-relation*)>
+<!ATTLIST frame-relation
+             ID NMTOKEN #REQUIRED
+             name CDATA #IMPLIED
+             superFrameName CDATA #REQUIRED
+             supId NMTOKEN #REQUIRED
+             subFrameName CDATA #REQUIRED
+             subId NMTOKEN #REQUIRED>
+
+<!ELEMENT fe-relation EMPTY>
+
+<!ATTLIST fe-relation
+          ID NMTOKEN #REQUIRED
+             name CDATA #IMPLIED
+             superFEName CDATA #REQUIRED
+             supId NMTOKEN #REQUIRED
+             subFEName CDATA #REQUIRED
+             subId NMTOKEN #REQUIRED>

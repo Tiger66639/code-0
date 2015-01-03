@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>Apologies</Name>
+  <Rules>
+    <Rule>
+      <Name>apologies</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>My apologies</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>That's ok, no need for apologies.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>No need for apologies.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>That's just fine, there's no need for apologies.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Rule>
+    <Rule>
+      <Name>I'm sorry</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>I ('m|am) sorry</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>That's ok, No need to be sorry.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>No need for for being sorry.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>That's just fine, there's no need for being sorry.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Rule>
+  </Rules>
+</Topic>

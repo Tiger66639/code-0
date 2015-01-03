@@ -1,0 +1,1 @@
+<?xml version="1.0"?><TestCase><RunOn>1010</RunOn><IsEnabledWidth>50</IsEnabledWidth><ResultWidth>140</ResultWidth><TestWidth>140</TestWidth><VerifyWidth>140</VerifyWidth><item><InputString>this is a test</InputString><ValidationRegex>I hope it is working</ValidationRegex><IsEnabled>True</IsEnabled><SubItems /></item></TestCase>

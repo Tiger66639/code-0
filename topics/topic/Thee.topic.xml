@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>Thee</Name>
+  <TopicFilters>
+    <Pattern>
+      <Expression>Thee</Expression>
+    </Pattern>
+  </TopicFilters>
+  <Rules>
+    <Rule>
+      <Name>new rule 1</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>yes</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>excellent, I like thee as well</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <Do>
+        <Expression>#user -= 'topic';</Expression>
+      </Do>
+    </Rule>
+  </Rules>
+</Topic>

@@ -1,0 +1,1700 @@
+//-----------------------------------------------------------------------
+// <copyright file="assets.nnl">
+//     Copyright (c) 2008-2012 Jan Bogaerts. All rights reserved.
+// </copyright> 
+// <authorJan Bogaerts</author>
+// <email>Jan.Bogaerts@telenet.be</email>
+// <date>22/09/2012</date>
+//-----------------------------------------------------------------------
+class Assets
+{
+   using common;
+   using PathCommon;
+   
+   //used as the meaing for clusters to indicate that it is an asset.
+   neuron asset: 309 {}
+   Neuron Not: 1252 {}
+   
+   
+   Variable childofasset{}                //used in many asset operations. should be cleaned up in the future.
+   Variable AssetItem {}                  //some callbacks manupulate this variable which is normally local to the Get and set thes path operations.
+
+   //represents the chatbot itself. 
+   Cluster Bot(Asset): 1029
+   {
+   }
+   
+   //represents the default user, for when it's not an online bot.
+   Cluster DefaultUser(Asset): 1032{}
+   
+   Neuron Who: 1021;
+   Neuron What: 1022;
+   Neuron How: 1023;
+   Neuron Where: 1024;
+   Neuron When: 1025;
+   Neuron Then: 1026;
+   Neuron Why: 1027;
+   Neuron Extra: 1285;
+   
+   Cluster AssetPronouns
+   {
+      this() { Who; What; How; Where; When; Then; Why; }
+   }
+   
+   bind # BindAsset register
+   {
+      var fToCallAtEnd;           //stores the callback that needs to be used at the end. This allows us to use the same code for both get and set operations) 
+      var fAssetItem;            //the child of the asset that contains the attrib/value pair. This var always contains max 1 item, because of the splits that are done to make certain of this.
+      
+      //starting point for a thes set operation (makes certain that it is done in a blocked call so we can use splits without interfering with the caller.
+      //can be called in 2 ways: with the cluster that needs to be called as argument, or without any argument. The latter is useful in case that the cluster-to-call needs to be passed to another function
+      //like in this case.
+      //this(var toCall)
+      this() 
+      {
+         PushValue(PatternMatcher.SplitResults);             //pass along the data
+         PushValue(OutputSin);                               //also need this data.
+         BlockedCall(DoBindAssetSet);                        //always call the same blocked function, so we can still set some vars.
+      }
+      
+      //this function gets called in the new thread and then calls the actual function, this allows us to set some variables.
+      DoBindAssetSet(var context, var splitResults, var toCall)
+      {
+         BindAsset.fToCallAtEnd = Empty.emptycallback;
+         OutputSin = context;
+         PatternMatcher.SplitResults = splitResults;                                //so we know the results of the parse (values for the variables that were declared in the pattens)
+         if(count(splitResults) > 0)
+            LoadPatternResults();
+         call(toCall);
+         //there is no result for a set operation.
+      }
+      
+      //starting point for a thes get operation (makes certain that it is done in a blocked call so we can use splits without interfering with the caller.
+      this(): var
+      {  
+         PushValue(PatternMatcher.SplitResults);             //pass along the data
+         PushValue(OutputSin);                               //also need this data.
+         BlockedCall(DoBindAssetGet);                                                    //the result value of the function that gets called, will be moved to the current process after toCall is done, so there is no need to return anything, the value is already waiting on the result stack.
+      }
+      
+      //this function gets called in the new thread and then calls the actual function, this allows us to set some variables.
+      DoBindAssetGet(var context, var splitResults, var toCall)
+      {
+         Split(endofgetassetpathresult, ref(BindAsset.fToCallAtEnd), endofgetassetpathresult);  //with this split, we prepare the callback in 2 ways: other callers know which one to call + the callback is already set.
+         OutputSin = context;
+         PatternMatcher.SplitResults = splitResults;                                      //so we know the results of the parse (values for the variables that were declared in the pattens)
+         if(count(splitResults) > 0)
+            LoadPatternResults();
+         Call(toCall);
+         AddSplitresult(Statics.ReturnValue);                                             //the result of the call still needs to be added too the split result. This is important in case that there are muliple results + making certain that the result stack doesn't get corrupted.
+      }
+      
+      //root
+      {
+         //for things like #xx  where xx = value
+         get(var value): var
+         {
+            if(count(value) > 0)
+            {
+               if(GetClusterMeaning(value) == Statics.Asset)
+                  return value;
+               else
+               {
+                  var iRes = GetFirstOut(value, Statics.Asset);
+                  if(count(iRes) == 0)
+                  {
+                     iRes = MakeCluster(Statics.Asset);
+                     AddLink(value, iRes, Statics.Asset);
+                  }
+                  return iRes;
+               }
+            }
+            else
+               ExitSolve();                                                                  //if there is no starting point, don't need to continue.
+         }
+         
+         
+         (SubFunctions)
+         
+         //provides access to the user.
+         User
+         {
+            get(): var
+            {
+               var iRes = GetFirstOut(outputsin, Thes.You);
+               if(Count(iRes) > 0)
+                  return iRes;
+               else
+               {
+                  error("The text sin doesn't define the current user (no outgoing 'you' link). Can't calculate the result for #user.");
+                  return;                                                                                                        //an empty result
+               }
+            }
+           
+            //removes all asset items for the specified attribute.
+            -=(var attrib)
+            {
+               var asset = GetFirstOut(outputsin, Thes.You);
+               if(count(asset) > 0)
+               {
+                  if(ContainsChildren(AssetPronouns, attrib))
+                     error('Unable to remove a pronoun value directly from an asset. Please use the #x.y -= z construct');
+                  else
+                  {
+                     var iPrev = FindAssetItems(asset, attrib);
+                     var iToClean;
+                     foreach(iPrev in iPrev)                                                    //could be multiple items, depending on wether object/text/compound/... was used as attribute (a text can match several objects).
+                     {
+                        RemoveChild(asset, iPrev);                                              //it's a clustering algorithm, so the element could be used by multiple assets. So first remove from the asset, and if no more refs, delete the asset item and possibly all related data.
+                        if(ClusterCount(iPrev) == 0)
+                        {
+                           iToClean = GetAllOutgoing(iPrev);
+                           Delete(iPrev);
+                           CleanValue(iToClean); 
+                        }
+                     }
+                  }
+               }
+            } 
+            
+            //adds a new asset as a child of the specified asset, with the specified attribute
+            +=(var attrib)
+            {
+               var asset = GetFirstOut(outputsin, Thes.You);
+               var iVal = MakeCluster(Statics.Asset);
+               fAssetItem = new(neuron);
+               AddLink(fAssetItem, attrib, Statics.Attribute);
+               AddLink(fAssetItem, iVal, Statics.Value);
+               AddChild(asset, fAssetItem);
+            }
+            
+            (SubValues)
+            (SubFunctions)
+            (AssetIndex)
+         }
+         
+         Bot
+         {
+            get(): var
+            {
+               return Assets.Bot;
+            }
+            
+           //removes all asset items for the specified attribute.
+            -=(var attrib)
+            {
+               var asset = Assets.Bot;
+               if(count(asset) > 0)
+               {
+                  if(ContainsChildren(AssetPronouns, attrib))
+                     error('Unable to remove a pronoun value directly from an asset. Please use the #x.y -= z construct');
+                  else
+                  {
+                     var iPrev = FindAssetItems(asset, attrib);
+                     var iToClean;
+                     foreach(iPrev in iPrev)                                                    //could be multiple items, depending on wether object/text/compound/... was used as attribute (a text can match several objects).
+                     {
+                        RemoveChild(asset, iPrev);                                              //it's a clustering algorithm, so the element could be used by multiple assets. So first remove from the asset, and if no more refs, delete the asset item and possibly all related data.
+                        if(ClusterCount(iPrev) == 0)
+                        {
+                           iToClean = GetAllOutgoing(iPrev);
+                           Delete(iPrev);
+                           CleanValue(iToClean); 
+                        }
+                     }
+                  }
+               }
+            } 
+            
+            //adds a new asset as a child of the specified asset, with the specified attribute
+            +=(var attrib)
+            {
+               var iVal = MakeCluster(Statics.Asset);
+               fAssetItem = new(neuron);
+               AddLink(fAssetItem, attrib, Statics.Attribute);
+               AddLink(fAssetItem, iVal, Statics.Value);
+               AddChild(Assets.Bot, fAssetItem);
+            }
+            
+            (SubValues)
+            (SubFunctions)
+            (AssetIndex)
+             
+         }
+         
+         //adds a new asset as a child of the specified asset, with the specified attribute
+         +=(var asset, var attrib)
+         {
+            var iVal = MakeCluster(Statics.Asset);
+            fAssetItem = new(neuron);
+            AddLink(fAssetItem, attrib, Statics.Attribute);
+            AddLink(fAssetItem, iVal, Statics.Value);
+            AddChild(asset, fAssetItem);
+         }
+         
+         //removes all asset items for the specified attribute.
+         -=(var asset, var attrib)
+         {
+            if(count(asset) > 0)
+            {
+               if(ContainsChildren(AssetPronouns, attrib))
+                  error('Unable to remove a pronoun value directly from an asset. Please use the #x.y -= z construct');
+               else
+               {
+                  var iPrev = FindAssetItems(asset, attrib);
+                  var iToClean;
+                  foreach(iPrev in iPrev)                                                    //could be multiple items, depending on wether object/text/compound/... was used as attribute (a text can match several objects).
+                  {
+                     RemoveChild(asset, iPrev);                                              //it's a clustering algorithm, so the element could be used by multiple assets. So first remove from the asset, and if no more refs, delete the asset item and possibly all related data.
+                     if(ClusterCount(iPrev) == 0)
+                     {
+                        iToClean = GetAllOutgoing(iPrev);
+                        Delete(iPrev);
+                        CleanValue(iToClean); 
+                     }
+                  }
+               }
+            }
+         }
+         
+         . SubValues
+         {
+            get(var from, var attrib): var
+            {
+               if(count(from) > 0)
+               {
+                  var iEl = FindAssetItems(from, attrib);
+                  if (Count(iEl) > 0)
+                  {
+                     Split(fToCallAtEnd, ref(fAssetItem), iEl);                         //the split stores the result in fAssetItem, which is common for the entire binding. This provides a way for functions to work both on the result value and the record that stores the result.
+                     return GetFirstOut(fAssetItem, Statics.Value);
+                  }
+                  else if(BindAsset.fToCallAtEnd == Empty.emptycallback)                     //when we are doing a set, we make certain that there always is a path, so if we couldn't find the element, create it now.
+                  {
+                     fAssetItem = New(neuron);
+                     AddChild(from, fAssetItem);
+                     var iRes = MakeCluster(Asset);
+                     AddLink(fAssetItem, attrib, Statics.Attribute);
+                     AddLink(fAssetItem, iRes, Statics.Value);
+                     return iRes;
+                  }
+                  else
+                     ExitSolve();                                                            //didn't find a result, so exit the thread without a result.
+               }
+               return;                                                                       //if there is no asset, can't find the data.
+            }
+            
+            //assign a value, create an attribute-value pair and add it to the asset.
+            //if the asset already had a value for the specified attribute, this gets removed first
+            set(var asset, var attrib, var value)
+            {
+               var iEl = SetAssetValue(asset, attrib, value);
+            }
+            
+            //add the value to the asset for the specified attribute. If there already is a value, a bag will be created with all the values. The bag is a cluster with meaning Statics.List
+            ;=(var asset, var attrib, var value)
+            {
+               if(count(asset) > 0)
+               {
+                  var iEl;
+                  switch (GetClusterMeaning(attrib))                                   //check the type of attribute: textneuron, object, posgroup or compound
+                  {
+                     case Statics.Object:
+                        iEl = GetChildrenFiltered(asset, ref(filtervar), ref(((GetFirstOut(filtervar, Statics.Attribute) == attrib) || (ContainsChildren(attrib, GetFirstOut(filtervar, Statics.Attribute)) || ContainsChildren(GetFirstOut(filtervar, Statics.Attribute), attrib)))));
+                     case Statics.PosGroup:
+                        iEl = GetChildrenFiltered(asset, ref(filtervar), ref(((GetFirstOut(filtervar, Statics.Attribute) == attrib) || ContainsChildren(attrib, GetFirstOut(filtervar, Statics.Attribute)))));
+                     default:
+                     {
+                        iEl = GetChildrenFiltered(asset, ref(filtervar), ref(((GetFirstOut(filtervar, Statics.Attribute) == attrib) || (ContainsChildren(attrib, GetFirstOut(filtervar, Statics.Attribute)) || ContainsChildren(GetFirstOut(filtervar, Statics.Attribute), attrib)))));
+                        if (Count(iEl) == 0)
+                        {
+                           var found = GetClustersWithMeaning(attrib, Statics.object);
+                           if (Count(found) > 0)
+                           {
+                              foreach (attrib in found)
+                                 Add(ref(iEl), GetChildrenFiltered(asset, ref(filtervar), ref(((GetFirstOut(filtervar, Statics.Attribute) == attrib) || ContainsChildren(attrib, GetFirstOut(filtervar, Statics.Attribute))))));
+                           }
+                        }
+                     }
+                  }
+                  if (Count(iEl) == 0)
+                  {
+                     iEl = new(Neuron);
+                     AddLink(iEl, attrib, Statics.Attribute);
+                     AddLink(iEl, value, Statics.Value);
+                     AddChild(asset, iEl);
+                  }
+                  else
+                  {
+                     Split(fToCallAtEnd, ref(fAssetItem), iEl);                         //the split stores the result in fAssetItem, which is common for the entire binding. This provides a way for functions to work both on the result value and the record that stores the result.
+                     var iVal = GetFirstOut(fAssetItem, Statics.Value);
+                     if(GetClusterMeaning(iVal) != Statics.List)
+                     {
+                        iVal = MakeCluster(Statics.List, iVal, value);                    //create a cluster that represents a list of values, add the original value and the new one to it.
+                        SetFirstOut(fAssetItem, iVal, Statics.Value);                 //make certain that the record points to the new cluster.
+                     }
+                     else
+                        AddChild(iVal, value);
+                  }
+               }
+            }
+           
+            //creates a new asset object and adds it to the asset.
+            +=(var asset, var attrib)
+            {
+               if(count(asset) > 0)
+               {
+                  var iNew = MakeCluster(Asset);
+                  var iEl = new(Neuron);
+                  AddLink(iEl, attrib, Statics.Attribute);
+                  AddLink(iEl, iNew, Statics.Value);
+                  AddChild(asset, iEl);
+               }
+            }
+            
+            //removes all asset items for the specified attribute.
+            -=(var asset, var attrib)
+            {
+               if(count(asset) > 0)
+               {
+                  if(ContainsChildren(AssetPronouns, attrib))
+                     RemoveAssetPronoun(attrib);
+                  else
+                  {
+                     var iPrev = FindAssetItems(asset, attrib);
+                     var iToClean;
+                     foreach(iPrev in iPrev)                                                    //could be multiple items, depending on wether object/text/compound/... was used as attribute (a text can match several objects).
+                     {
+                        RemoveChild(asset, iPrev);                                              //it's a clustering algorithm, so the element could be used by multiple assets. So first remove from the asset, and if no more refs, delete the asset item and possibly all related data.
+                        if(ClusterCount(iPrev) == 0)
+                        {
+                           iToClean = GetAllOutgoing(iPrev);
+                           Delete(iPrev);
+                           CleanValue(iToClean); 
+                        }
+                     }
+                  }
+               }
+            }
+           
+            ==(var left, var right): bool                                     //compare 2 values
+            {
+               return ComparePathValues(left, right);
+            }
+                 
+            /*
+                 extra information about the asset item (data like adverb). This uses the 'child of Asset' to get the item. If no item is found, a new asset cluster is created and added as link (meaning 'where')
+               Warning: when a new asset cluster is created, this is not frozen, cause asset paths are usually solved in a seperate thread.
+               This is only used for assets
+                */ 
+            Extra
+            {
+               //get the value attached to the current elemetn for 'When'
+               get(var asset): var
+               {
+                  return GetAssetPronounValue(asset, Extra);
+               }
+               
+               //sets a value for 'When'
+               set(var asset, var value)
+               {
+                  SetAssetPronounVaue(asset, value, Extra);
+               }
+               (SubValues)
+               (SubFunctions)
+               (AssetIndex)
+            }  
+
+            //the static '*' selects all asset items
+            *
+            {
+               //get the value attached to the current elemetn for 'When'
+               get(var asset): var
+               {
+                  Split(fToCallAtEnd, ref(fAssetItem), GetChildren(asset));               //we need to make a split now so that fAssetItem is always correctly filled in for each path.
+                  return GetFirstOut(fAssetItem, Statics.Value);
+               }
+               
+               (SubValues)
+               (SubFunctions)
+               (AssetIndex)
+            }               
+
+            :SubFunctions
+            {
+               //adds the value to the asset and makes certain it is set to 'isnot'
+               SetIsNot(var asset, var attrib, var value)
+               {
+                  value = MakeOperandResSingle(value);                                          //make certain that 'value' is a single neuron
+                  var iEl = SetAssetValue(asset, attrib, value);
+                  if(count(iEl) > 0)
+                  {
+                     var iInfo = GetInfo(iEl, value, statics.Value);
+                     if(iInfo !contains Not)
+                        AddInfo(iEl, value, statics.Value, Not);
+                  }
+               }
+               
+               //adds the value to the asset and makes certain it is set to 'Hasnot'
+               SetHasNot(var asset, var attrib, var value)
+               {
+                  value = MakeOperandResSingle(value);                                          //make certain that 'value' is a single neuron
+                  var iEl = SetAssetValue(asset, attrib, value);
+                  if(count(iEl) > 0)
+                  {
+                     var iInfo = GetInfo(iEl, attrib, statics.Attribute);
+                     if(iInfo !contains Not)
+                        AddInfo(iEl, attrib, statics.Attribute, Not);
+                  }
+               }
+            
+               //returns either the name of the attribute or the value (of the last  item).
+               NameOrValue(var value): var
+               {
+                  var iAttrib = GetFirstOut(fAssetItem, Statics.Attribute);
+                  if(#(@iAttrib).UseNameWhenSet == true)
+                     return iAttrib;
+                  else
+                     return value;
+               }
+               
+               
+               //get the seconds section from a time value
+               second(var callbackIn): int
+               {
+                  if (GetClusterMeaning(callbackin) == ref(time))
+                     return GetChildAt(callbackin, 5);
+                  else
+                     return GetChildAt(callbackin, 3);
+               }
+
+               //get the hours section from a time value
+               hour(var callbackIn): int
+               {
+                  if (GetClusterMeaning(callbackin) == ref(time))
+                     return GetChildAt(callbackin, 3);
+                  else
+                     return GetChildAt(callbackin, 1);
+               }
+               
+               //get the hours section from a time value expressed in the 12H system
+               hour12(var callbackIn): int
+               {
+                  int iRes;
+                  if (GetClusterMeaning(callbackin) == ref(time))
+                     iRes = GetChildAt(callbackin, 3);
+                  else
+                     iRes = GetChildAt(callbackin, 1);
+                  if(iRes > 12)
+                     return iRes - 12;
+                  else
+                     return iRes;
+               }
+               
+               //returns either AM or PM depending on the hour.
+               AMPM(var callbackIn): var
+               {
+                  int iRes;
+                  if (GetClusterMeaning(callbackin) == ref(time))
+                     iRes = GetChildAt(callbackin, 3);
+                  else
+                     iRes = GetChildAt(callbackin, 1);
+                  if(iRes > 12)
+                     return 'PM';
+                  else
+                     return 'AM';
+               }
+               
+               //get the minutes section from a time value
+               minute(var callbackIn): int
+               {
+                  if (GetClusterMeaning(callbackin) == ref(time))
+                     return GetChildAt(callbackin, 4);
+                  else
+                     return GetChildAt(callbackin, 2);
+               }
+               
+               year(var callbackIn): int
+               {
+                  if (GetClusterMeaning(callbackin) == ref(time))
+                     return GetChildAt(callbackin, 0);
+                  else
+                     return;                                //no value to return.
+               }
+               
+               day(var callbackIn): int
+               {
+                  if (GetClusterMeaning(callbackin) == ref(time))
+                     return GetChildAt(callbackin, 2);
+                  else
+                     return GetChildAt(callbackin, 0);
+               }
+               month(var callbackIn): int
+               {
+                  if (GetClusterMeaning(callbackin) == ref(time))
+                     return GetChildAt(callbackin, 1);
+                  else
+                     return;                                //no value to return.
+               }
+               dayofweek(var callbackIn): int
+               {
+                  if (GetClusterMeaning(callbackin) == ref(time))
+                     return GetChildAt(callbackin, 6);
+                  else
+                     return;                                      //no value to return.
+               }
+               
+               
+               /*
+                 used in a variable path to indicate that the count of the input set should be returned.
+                */
+               Count(var callbackIn): int
+               {
+                  return Count(callbackin);
+               }
+               
+               /*
+                 used in a variable path to indicate that a new value should be generated/calculated that completes the input set.
+                */
+               complete(var callbackIn): var
+               {
+                  var exec = New(neuron);
+                  var callresult = New(neuroncluster);
+                  AddLink(exec, callresult, DoComplete);
+                  AddInfo(exec, callresult, DoComplete, callbackin);
+                  BlockedSolve(exec);
+                  var callbackout = GetChildren(callresult);
+                  Freeze(callresult, GetChildren(callresult));
+                  AddSplitResult(callbackout);
+                  ExitSolve();
+               }
+               
+               //performs an interleaf where each item to interleaf is the same
+               //used to create things like 'a, b, c'
+               Interleave(var value, var toInsert): var
+               {
+                  return Interleaf(ref(value), ref(toInsert));
+               }
+               
+               //performs an interleaf where the last item to interleaf is another item
+               //used to create things like 'a, b, c and d'
+               Interleave(var value, var toInsert, var toInsertAtEnd): var
+               {
+                  return Interleaf(ref(value), ref(toInsert), ref(toInsertAtEnd));
+               }
+               
+               
+                //Checks if the input is an object, compound, textneuron or Statics.PosGroup and returns true or false. There can be no more items after this path item.  
+               IsAbstract(var callbackin): bool
+               {
+                  if(count(callbackIn) > 0)
+                     return (Statics.Object, Statics.CompoundWord, Statics.PosGroup Contains GetClusterMeaning(callbackin)) || (TypeOf(callbackin) == textneuron);
+                  else
+                     return false;
+               }
+               
+               //Checks if the input is a concrete item (asset) and returns true or false. There can be no more items after this path item. 
+               IsConcrete(var callbackin): bool
+               {
+                  if(count(callbackIn) > 0)
+                     return GetClusterMeaning(callbackin) == Assets.Asset; 
+                  else
+                     return false;
+               }
+               
+               //the attribute of the input should be calculated. This attribute can be used in an asset relationship. This is done by trying to find a thesaurus node that has a link to itself with the 'attribute' meaning.
+               Attribute(var callbackIn): var
+               {
+                  if(count(callbackIn) > 0)
+                     return waitfor CalculateAttribute(callbackIn, OutputSin, PatternMatcher.SplitResults);
+                  else
+                     return;
+               }
+               //the attribute of the input should be calculated. This attribute can be used in an asset relationship. This is done by trying to find a thesaurus node that has a link to itself with the 'attribute' meaning.
+               //The callback can supply argumetns, which will be used as 'context'. The closer a result matches one of the context values, the higher the weight of the result will be.
+               Attribute(var callbackIn, var context): var
+               {
+                  if(count(callbackIn) > 0)
+                     return waitfor CalculateAttribute.WithContext(callbackIn, OutputSin, PatternMatcher.SplitResults, context);
+                  else
+                     return;
+               }
+               
+               //Gets the immediate thesaurus parent from the input value. the 'isa' relationship is presumed.
+               ThesParent(var input): var
+               {
+                  if(count(input) > 0)
+                     return GetThesParent(input);
+                  else
+                     return;
+               }
+               
+               //Gets the immediate thesaurus parent from the input value. If no meaning is defined, the 'isa' relationship is presumed.
+               ThesParent(var input, var meaning): var
+               {
+                  if(count(input) > 0)
+                     return GetThesParent.ForMeaning(input, meaning);
+                  else
+                     return;
+               }
+               
+               //returns the attribute part of the asset item instead of the value.
+               Property(var input): var
+               {
+                  if(count(input) > 0)
+                     return GetFirstOut(fAssetItem, Statics.attribute);
+                  else
+                     return;
+               }
+               
+               //Checks if the argument is registered as 'not'. This can only be done for asset data., so CallbackIn must be the result of an assetquery. The value is actually retrieved from 'child of asset' cause this is the asset item that references 'callbackIn' and which defines the 'not' value. this is a terminator (an Addsplitresult is done with exit solve)
+               IsNot(var input): bool
+               {
+                  if(count(input) > 0)
+                     return GetInfo(fAssetItem, input, Statics.Value) Contains Not;
+                  else
+                     return false;
+               }
+               
+               //Checks if the argument is registered as 'not'. This can only be done for asset data., so CallbackIn must be the result of an assetquery. The value is actually retrieved from 'child of asset' cause this is the asset item that references 'callbackIn' and which defines the 'not' value. this is a terminator (an Addsplitresult is done with exit solve)
+               HasNot(var input): bool
+               {
+                  if(count(input) > 0)
+                     return GetInfo(fAssetItem, input, Statics.Value) Contains Not;
+                  else
+                     return false;
+               }
+               
+                /*
+                    converts to input from an asset to a child of the argument.
+                  input: an asset
+                  argument: a thesaurus item, (like adj.possesive).
+                  Output: a child of the thesaurus item that maps to the argument (I, you, ...
+                   */
+               AssetToThes(var input, var thesValue): var
+               {
+                  return Convert.AssetToThes(input, thesValue);
+               }
+              
+               //for legacy, see AssetToThes
+               ToPerson(var input, var thesValue): var
+               {
+                  return Convert.AssetToThes(input, thesValue);
+               }
+               
+                /*
+                    Converts the input into an asset, taking into account for 'I', 'you', 'he/she', 'it', 'plural', 'singular', 'male', 'female'. If the input can't be mapped to 'I', you,... it is interpreted as the name of something and will try to find a focused object that has the specified name.
+                  I and you are first inverted, so I is interpreted as the user, while 'you' is interpreted as the bot.
+                  Input has to be objects, with at least 1 thesaurus parent to perform the mappings.
+                   */
+               ObjectToAsset(var input): var
+               {
+                  return Convert.ObjectToAsset(input, ());
+               }
+               
+               /*
+                    Converts the input into an asset, taking into account for 'I', 'you', 'he/she', 'it', 'plural', 'singular', 'male', 'female'. If the input can't be mapped to 'I', you,... it is interpreted as the name of something and will try to find a focused object that has the specified name.
+                  I and you are first inverted, so I is interpreted as the user, while 'you' is interpreted as the bot.
+                  Input has to be objects, with at least 1 thesaurus parent to perform the mappings.
+                   */
+               ObjectToAsset(var input, var context): var
+               {
+                  return Convert.ObjectToAsset(input, context);
+               }
+               
+               //same as ObjectToAsset, for legacy.
+               ResolvePerson(var input): var
+               {
+                  return Convert.ObjectToAsset(input, ());
+               }
+               
+               //same as ObjectToAsset, for legacy.
+               ResolvePerson(var input, var context): var
+               {
+                  return Convert.ObjectToAsset(input, context);
+               }
+               
+               /*
+                 Tries to conjugatte the verb to the form that corresponds with the argument. The argument should be 1 item, usually  '#bot.MextMem.who.val'. No attempt is made to try to convert objects to conjugation mappings, all objects are treated as 'it'.
+                */
+               ConjugateVerb(var input, var relativeTo):var
+               {
+                  return Convert.ConjugateVerb(input, relativeTo);
+               }
+               
+               /*
+                 Tries to conjugatte the verb to the inverted form that corresponds with the argument (so 'you' becomes 'I'). The argument should be 1 item, usually  '#bot.MextMem.who.val'. No attempt is made to try to convert objects to conjugation mappings, all objects are treated as 'it'.
+                */
+               ConjugateInvVerb(var input, var relativeTo): var
+               {
+                  return Convert.ConjugateVerb.Inv(input, relativeTo);
+               }
+               
+               /*
+                 Checks if the current input is a list and returns true or false. There can be no more items after this path item.
+                */
+               Islist(var input):bool
+               {
+                  return Statics.Argument, Statics.List Contains GetClusterMeaning(input);
+               }
+               /*
+                 Checks if the current asset-path result is an 'And' cluster and returns true or false. There can be no more items after this path item.
+                */
+               IsAnd(var input): bool
+               {
+                  return Statics.AndAnd == GetClusterMeaning(input);
+               }
+               /*
+                 Checks if the current asset-path result is an 'or' cluster and returns true or false. There can be no more items after this path item.
+                */ 
+               IsOr(var input): bool
+               {
+                  return Statics.OrOr == GetClusterMeaning(input);
+               }
+               
+               //returns all the assets that directly link to the input as value.   No effort is made to convert the value to object/text/posgroup, only a direct link is used.
+               GetAssetsFromValue(var input): var
+               {
+                  return Search.GetAssetsFromValue(input, ());
+               }
+               
+               //returns all the assets that directly link to the input as value for the specified attribute value.  No effort is made to convert the value to object/text/posgroup, only a direct link is used.
+               GetAssetsFromValue(var input, var attribVal): var
+               {
+                  return Search.GetAssetsFromValue(input, attribVal);
+               }
+               
+               //returns all the assets that directly link to the input as value.   No effort is made to convert the value to object/text/posgroup, only a direct link is used.
+               FindAssetsFromValue(var input): var
+               {
+                  return Search.FindAssetsFromValue(input, ());
+               }
+               
+               //returns all the assets that directly link to the input as value for the specified attribute value.  No effort is made to convert the value to object/text/posgroup, only a direct link is used.
+               FindAssetsFromValue(var input, var attribVal): var
+               {
+                  return Search.FindAssetsFromValue(input, attribVal);
+               }
+               
+               //Returns the assets that have items with an attribute specified in the input.
+               AttributeFor(var input): var
+               {
+                  return Search.GetAttributeFor(input);
+               }
+               
+               //Returns true if the input (which should be a cluster in some form) contains any of the specified arguments as child. The arguments can be objects or text, automatic conversion is done.
+               ContainsChild(var list, var child): bool
+               {
+                  return CalculateContainsChild(list, child);
+               }
+               
+               // Takes in many possible values (asset clusters), and returns those who have an  outgoing-link with the data specified in the arguments.  
+               Filter(var input, var outgoing): var
+               {
+                  return waitFor Search.FilterAssets(input, outgoing);
+               }
+               
+               //checks if the item in the argument is a thesaurus child (with the 'is a' relationship) of the path.
+               IsaOf(var input, var toCheck): bool
+               {
+                  return waitFor Search.IsaOf(input, toCheck);
+               }
+               
+               //Tries to convert the input to a number. The input should be an object or something that can be mapped to an object. The first number found in the objects, is returned.
+               ToNumber(var input): var
+               {
+                  return Convert.ToNumber(input);
+               }
+               
+               /* input: an object
+                 output: The instruction contained in the object. */
+               GetInstruction(var callbackIn): var
+               {
+                  return GetChildrenOfType(callbackin, Statics.Instruction);
+               }
+               
+               //returns the last child of the &&, || or ; cluster and removes the item from the list.
+               popchild(var callbackIn): var
+               {
+                  var iRes = GetLastChild(callbackin);
+                  RemoveChildAt(callbackin, (ChildCount(callbackin) - 1));
+                  return iRes;
+               }
+               
+               /*  input: a cluster containing a list of numbers and possibly instructions.
+                  output: the result of the value and instructions on the stack.
+                  calculation: get the last element on the stack, while this is a multiply-leveled instruction ( * / % ), get the next 2 items from the stack and calculate the result (which is returned). All items are removed from the list. */ 
+               solvemultiplystack(var callbackIn): var
+               {
+                  return Convert.solvemultiplystack(callbackIn);
+               }
+               
+               /* input: a cluster containing a list of numbers and possibly instructions.
+                  output: the result of the value and instructions on the stack.
+                  calculation: get the last element on the stack, while this is an add-leveled iInstruction (+-), get the next 2 items from the stack and calculate the result (which is returned). All items are removed from the list. */ 
+               solveaddstack(var callbackIn): var
+               {
+                  return Convert.solveaddstack(callbackIn);
+               }
+               
+               //inverts I and You
+               InvertPerson(var toInvert): var
+               {
+                  split(fToCallAtEnd, ref(toInvert), toInvert);
+                  return Convert.InvertPerson(toInvert);
+               }
+               
+               //switches I and he/she 
+               InvertPerson2(var toInvert): var
+               {
+                  split(fToCallAtEnd, ref(toInvert), toInvert);
+                  return Convert.InvertPerson2(toInvert);
+               }
+               
+               (SubFunctions)
+               (SubValues)
+               (AssetIndex)
+            }
+            (SubValues)
+            (AssetIndex)
+         }
+         [] AssetIndex
+         {
+            //gets the item at the specified index.
+            get(var asset, int index): var
+            {
+               fAssetItem = GetChildAt(asset, index);
+               if(count(fAssetItem) > 0)
+                  return GetFirstOut(fAssetItem, Statics.Value);
+               return;                                                           //if there is no value, return an empty result.
+            }
+            
+            (SubFunctions)
+            (SubValues)
+            (AssetIndex)
+         }
+      }
+   }
+
+   
+   SetAssetValue(var asset, var attrib, var value): var
+   {
+      if(count(asset) > 0 && count(value) > 0 && count(attrib) > 0)                                         //if there is no asset, attrib or value, can't do a set.
+      {
+         value = MakeOperandResSingle(value);                                          //make certain that 'value' is a single neuron
+         var iEl;
+         bool iExists = false;                                                    //keep track of wether the attrib-value pair was already found or not.
+         var iPrev = FindAssetItems(asset, attrib);
+         foreach(iPrev in iPrev)                                                    //could be multiple items, depending on wether object/text/compound/... was used as attribute (a text can match several objects).
+         {
+            if(GetFirstOut(iPrev, Statics.Value) != value)
+            {
+               RemoveChild(asset, iPrev);                                              //it's a clustering algorithm, so the element could be used by multiple assets. So first remove from the asset, and if no more refs, delete the asset item and possibly all related data.
+               TryDeleteAssetItemExcept(iPrev, attrib);                                     //we can't delete the attrib, cause we still need it.
+            }
+            else
+            {
+               iExists = true;                                                      //the attrib-value combination already exists, don't need to recreate it, can simply keep the old value.      
+               iEl = iPrev;
+               break();
+            }
+         }
+         if(iExists == false)                                                       //only create a new asset item if the attrib-value pair didn't exist already.
+         {
+            iEl = Filter(ref(filterVar), ref( LinkOutCount(filterVar) == 2),  GetCommonIn(attrib, value));                         //Filter all the neurons that attribute and value get a link from, and where those neurons only have 2 links (the attribute and value).
+            if(Count(iEl) != 1 || LinkExists(iEl, attrib, Statics.Attribute) == false || LinkExists(iEl, value, Statics.Value) == false) //if no record was found, or there
+            {
+               iEl = new(neuron);
+               AddLink(iEl, attrib, Statics.Attribute);
+               AddLink(iEl, value, Statics.Value);
+            }
+            AddChild(asset, iEl);
+         }
+         return iEl;
+      }
+      return;                                                                    //if we can't perform the operation, return an empty value
+   }
+   
+   //assigns a pronoun value (what, where, when, who, how,..) to the currently loaded fAssetItem, which should be a child of asset
+   //should only be called from within an asset binding path
+   SetAssetPronounVaue(var asset, var value, var pron)
+   {
+      value = MakeOperandResSingle(value);                                          //make certain that 'value' is a single neuron
+      var iPrev = GetFirstOut(BindAsset.fAssetItem, pron);
+      bool iExists = false;
+      if(iPrev != value)
+      {
+         if(ClusterCount(BindAsset.fAssetItem) == 1)                                    //only 1 asset references this item so we can reuse it.
+         {
+            if(count(iPrev) > 0)                                                 //there is a previous pronoun attached to the item, so remove it first.
+            {
+               RemoveLink(BindAsset.fAssetItem, iPrev, pron);
+               CleanValue(iPrev);                                    
+            }
+         }
+         else                                                              //multiple assets are using this asset item, but it has changed, so lets create a new one (or find an already existing one that also points to the new 'what'
+         {
+            RemoveChild(asset, BindAsset.fAssetItem);
+            var iEl = GetCommonIn(GetAllOutgoing(BindAsset.fAssetItem), value);
+            if(count(iEl) == 1 && LinkOutCount(iEl) == LinkOutCount(BindAsset.fAssetItem) + 1)   //if we found exactly 1 item with the same nr of links as the original item, we can be certain that we found the 
+               iExists = true;
+            else
+            {
+               iEl = new(neuron);
+               select(var ito, iMeaning from out BindAsset.fAssetItem)
+                  AddLink(iEl, iTo, iMeaning);
+            }
+            AddChild(asset, iEl);
+         }
+      }
+      else
+         iExists = true;                                                      //the attrib-value combination already exists, don't need to recreate it, can simply keep the old value.      
+      if(iExists == false)                                                       //only create a new asset item if the attrib-value pair didn't exist already.
+         SetFirstOut(BindAsset.fAssetItem, value, pron);
+   }
+   
+   //gets the pronoun value attached to the current asset item.
+   GetAssetPronounValue(var from, var pron): var
+   {
+      var iRes = GetFirstOut(BindAsset.fAssetItem, pron);
+      if (Count(iRes) == 0)            
+      {
+         if(BindAsset.fToCallAtEnd == Empty.emptycallback)                          //when we are doing a set, we make certain that there always is a path, so if we couldn't find the element, create it now.            
+         {
+            iRes = MakeCluster(Asset);
+            AddLink(BindAsset.fAssetItem, iRes, pron);
+         }
+         else
+            ExitSolve();                                                            //didn't find a result, so exit the thread without a result.
+      }
+      return iRes;
+   }
+   
+   //removes an asset pronoun reference
+   RemoveAssetPronoun(var pron)
+   {
+      var iRes = GetFirstOut(BindAsset.fAssetItem, pron);
+      if (Count(iRes) > 0)            
+      {
+         RemoveLink(BindAsset.fAssetItem, iRes, pron);
+         CleanValue(iRes); 
+      }
+   }
+   
+   //searches the specified asset and returns all the elements that have the specified attrib value.
+   FindAssetItems(var asset, var attrib): var
+   {
+      var iEl;
+      switch (GetClusterMeaning(attrib))                                   //check the type of attribute: textneuron, object, posgroup or compound
+      {
+         case Statics.Object:
+            iEl = GetChildrenFiltered(asset, ref(filtervar), ref(((GetFirstOut(filtervar, Statics.Attribute) == attrib) || (ContainsChildren(attrib, GetFirstOut(filtervar, Statics.Attribute)) || ContainsChildren(GetFirstOut(filtervar, Statics.Attribute), attrib)))));
+         case Statics.PosGroup:
+            iEl = GetChildrenFiltered(asset, ref(filtervar), ref(((GetFirstOut(filtervar, Statics.Attribute) == attrib) || ContainsChildren(attrib, GetFirstOut(filtervar, Statics.Attribute)))));
+         default:
+         {
+            iEl = GetChildrenFiltered(asset, ref(filtervar), ref(((GetFirstOut(filtervar, Statics.Attribute) == attrib) || (ContainsChildren(attrib, GetFirstOut(filtervar, Statics.Attribute)) || ContainsChildren(GetFirstOut(filtervar, Statics.Attribute), attrib)))));
+            if (Count(iEl) == 0)
+            {
+               var found = GetClustersWithMeaning(attrib, Statics.object);
+               if (Count(found) > 0)
+               {
+                  foreach (attrib in found)
+                     Add(ref(iEl), GetChildrenFiltered(asset, ref(filtervar), ref(((GetFirstOut(filtervar, Statics.Attribute) == attrib) || ContainsChildren(attrib, GetFirstOut(filtervar, Statics.Attribute))))));
+               }
+            }
+         }
+      }
+      return iEl;
+   }
+  
+   
+   //checks if the asset-item is still referenced by another asset. If not, delete the
+   //asset item and possibly the value, but not the specified values.
+   TryDeleteAssetItemExcept(var item, var toExclude)
+   {
+      if(ClusterCount(item) == 0)
+      {
+         var iToClean = GetAllOutgoing(item);
+         iToClean = Complement(ref(iToClean), ref(toExclude));                            //remove items that can't be deleted.
+         Delete(item);
+         CleanValue(iToClean);   //Cleans out a logical group (&& or ||), object, compound or asset when there are no more links or parents.     Input: Clean = possibly 1 or more clusters with meaning &&, ||, object, asset or compound. It will delete the cluster + all children which are no longer reffed, recusrively.    
+      }
+   }
+      
+   
+   ExpressionsBlock GetassetPathResult
+   {
+      statements(var assetPath):var
+      {
+         var exec = New(neuron);
+         var callresult = New(neuroncluster);
+         AddLink(exec, callresult, GetassetPathResult);
+         AddInfo(exec, callresult, GetassetPathResult, assetpath, PatternMatcher.SplitResults, outputsin);
+         BlockedSolve(exec);
+         var assetpathresult = GetChildren(callresult);
+         Delete(callresult);
+         return assetpathresult;
+      }
+      exec()
+      {
+         var iPrevPathItemValue; 
+         var pathItem;
+         var upperRange;
+         var lastpathitem;
+         splitresult = Statics.currentto;
+         Delete(Statics.CurrentFrom);
+         var assetpath = GetFirst(Statics.CurrentInfo);
+         outputsin = GetLast(Statics.CurrentInfo);
+         if (Count(Statics.CurrentInfo) > 2)
+         {
+            PatternMatcher.SplitResults = GetAt(1, Statics.CurrentInfo);
+            LoadPatternResults();
+         }
+         ResolveOperands(GetOutgoing(assetpath, Statics.operand));
+         Split(endofgetassetpathresult, ref(splitresult), splitresult);
+         index = New(IntNeuron);
+         Execute(ref(index)) = 1;
+         assetitem = SolveSubPath(GetFirstChild(assetpath));
+         if (Count(assetitem) > 0)
+         {
+            Split(endofgetassetpathresult, ref(assetitem), assetitem);
+            if (GetClusterMeaning(assetitem) != Asset)
+            {
+               if (assetitem == Thes.You)
+                  assetitem = GetFirstOut(outputsin, Thes.You);
+               else if(ContainsLinksOut(assetitem, Asset))
+                  assetitem = GetFirstOut(assetitem, Asset);
+               else
+                  Clear(ref(assetitem));
+            }
+            if (Count(assetitem) > 0)
+            {
+               if (ChildCount(assetpath) == 1)
+               {
+                  if (Count(assetitem) > 0)
+                     AddSplitResult(assetitem);
+               }
+               else
+               {
+                  lastpathitem = GetLastChild(assetpath);
+                  if (typeOf(lastpathitem) == neuron)
+                     upperrange = ChildCount(assetpath) - 1;
+                  else
+                  {
+                     upperrange = ChildCount(assetpath);
+                     lastpathitem = Statics.Value;
+                  }
+                  while (index < upperrange)
+                  {
+                     pathitem = GetChildAt(assetpath, index);
+                     switch (GetClusterMeaning(pathitem))
+                     {
+                        case Statics.code:
+                        {
+                           callbackin = assetitem;
+                           Call(pathitem);
+                           childofasset = callbackout;
+                           Clear(ref(callbackargs));
+                        }
+                        case Statics.arguments:
+                        {
+                           callbackargs = Union(callbackargs, pathitem);
+                           Index++;
+                           Continue();
+                        }
+                        case Statics.Index:
+                        {
+                           pathitem = GetFirstChild(pathitem);
+                           if (TypeOf(pathitem) == Statics.resultstatement)
+                              pathitem = Execute(pathitem);
+                           else if(TypeOf(pathitem) != IntNeuron)
+                           {
+                              Error("Unknown index expression in asset path");
+                              ExitSolve();
+                           }
+                           childofasset = GetChildAt(assetitem, pathitem);
+                        }
+                        default:
+                        {
+                           if (TypeOf(pathitem) == neuron)
+                              childofasset = GetChildren(assetitem);
+                           else
+                           {
+                              pathItem = SolveSubPath(pathItem);
+                              if (Count(pathitem) > 0)
+                              {
+                                 switch (GetClusterMeaning(pathitem))
+                                 {
+                                    case Statics.Object:
+                                       childofasset = GetChildrenFiltered(assetitem, ref(filtervar), ref(((GetFirstOut(filtervar, Statics.Attribute) == pathitem) || (ContainsChildren(pathitem, GetFirstOut(filtervar, Statics.Attribute)) || ContainsChildren(GetFirstOut(filtervar, Statics.Attribute), pathitem)))));
+                                    case Statics.PosGroup:
+                                       childofasset = GetChildrenFiltered(assetitem, ref(filtervar), ref(((GetFirstOut(filtervar, Statics.Attribute) == pathitem) || ContainsChildren(pathitem, GetFirstOut(filtervar, Statics.Attribute)))));
+                                    default:
+                                    {
+                                       childofasset = GetChildrenFiltered(assetitem, ref(filtervar), ref(((GetFirstOut(filtervar, Statics.Attribute) == pathitem) || (ContainsChildren(pathitem, GetFirstOut(filtervar, Statics.Attribute)) || ContainsChildren(GetFirstOut(filtervar, Statics.Attribute), pathitem)))));
+                                       if (Count(childofasset) == 0)
+                                       {
+                                          var found = GetClustersWithMeaning(pathitem, Statics.object);
+                                          if (Count(found) > 0)
+                                          {
+                                             iPrevPathItemValue = pathitem;
+                                             foreach (pathitem in found)
+                                                childofasset = Union(childofasset, GetChildrenFiltered(assetitem, ref(filtervar), ref(((GetFirstOut(filtervar, Statics.Attribute) == pathitem) || ContainsChildren(pathitem, GetFirstOut(filtervar, Statics.Attribute))))));
+                                             if (Count(childofasset) == 0)
+                                                pathitem = iPrevPathItemValue;
+                                          }
+                                       }
+                                    }
+                                 }
+                                 
+                              }
+                              else
+                                 Error("Left part of asset operation can't be resolved: ", GetFirstIn(GetFirstIn(assetPath, Statics.ParsedAssetVariable), Statics.ParsedDoPattern));
+                           }
+                        }
+                     }
+                     
+                     if (Count(childofasset) > 0)
+                     {
+                        Split(endofgetassetpathresult, ref(childofasset), childofasset);
+                        if (ContainsLinksOut(childofasset, Statics.Value) && ContainsLinksOut(childofasset, Statics.Attribute))
+                           assetitem = GetFirstOut(childofasset, Statics.Value);
+                        else
+                           assetitem = childofasset;   //Some code callbacks don't return an asset item but an actual result.    
+                     }
+                     else
+                        ExitSolve();
+                     Index++;
+                  }
+                  switch (lastpathitem)
+                  {
+                     case Statics.Value:
+                        AddSplitResult(assetitem);
+                     case Not:
+                     {
+                        if (GetInfo(childofasset, GetFirstOut(childofasset, Statics.Value), Statics.Value) == Not)
+                           AddSplitResult(true);
+                     }
+                     default:
+                        AddSplitResult(GetFirstOut(childofasset, lastpathitem));
+                  }
+                  
+               }
+            }
+         }
+      }
+   }
+   
+   //used as a split-callback by several methods.
+   NeuronCluster endofgetassetpathresult
+   {
+      this():var
+      {
+         return GetSplitResults();
+      }
+   }
+   
+   /*
+     Takes in many possible values (asset clusters), and returns those who have an  outgoing-link with the data specified in the context.
+   multiple arguments allowed, they will be used as additional context to search for.
+    */
+   NeuronCluster FilterContext(Statics.Code): 1299
+   {
+      this()
+      {
+         var exec = New(neuron);
+         var callresult = New(neuroncluster);
+         AddChild(callresult, callbackin);
+         AddLink(exec, callresult, FilterContext);
+         AddInfo(exec, callresult, FilterContext);
+         BlockedSolve(exec);
+         callbackout = GetChildren(callresult);
+         Delete(callresult);
+      }
+      exec()
+      {
+         splitresult = Statics.CurrentTo;
+         Delete(Statics.CurrentFrom);
+         OutputSin = GetFirst(Statics.CurrentInfo);
+         PatternMatcher.SplitResults = GetAt(1, Statics.CurrentInfo);
+         LoadPatternResults();
+         if (Count(Statics.CurrentInfo) > 2)
+            callbackargs = Substract(ref(Statics.CurrentInfo), OutputSin, PatternMatcher.SplitResults);
+         BuildCallbackArgs();   //converts the cluster found in 'CallbackArgs' into a list of items, as defined by it's children, which can be static neurons or variables.    
+         var iAsset = GetChildrenFiltered(Statics.CurrentTo, ref(filtervar), ref((GetClusterMeaning(filtervar) == Asset)));
+         ClearChildren(Statics.CurrentTo);
+         if (Count(iAsset) > 0)
+         {
+            Split(AttributeFinished, ref(iAsset), iAsset);
+            if (ChildCount(iAsset) > 0)
+            {
+               Split(AttributeFinished, ref(assetitem), GetChildren(iAsset));
+               Split(AttributeFinished, ref(callbackargs), callbackargs, GetChildren(GetFirstOut(Bot, Statics.context)));
+               var iParsedResult = GetFirstOut(callbackargs, Statics.ParsedPatternOutput);
+               if (Count(iParsedResult) > 0)
+               {
+                  PatternMatcher.RenderPatternItems(iParsedResult);
+                  Split(AttributeFinished, ref(callbackargs), PatternMatcher.RenderPatternItems.ContentToRender);
+               }
+               var iLinkMeaning = GetLinkMeaning(assetitem, callbackargs);
+               if (Count(iLinkMeaning) > 0)
+                  AddSplitResult(iAsset);
+            }
+         }
+      }
+   }
+   NeuronCluster FilterTime(Statics.Code): 1300
+   {
+      this()
+      {
+         var exec = New(neuron);
+         var callresult = New(neuroncluster);
+         AddChild(callresult, callbackin);
+         AddLink(exec, callresult, FilterTime);
+         AddInfo(exec, callresult, FilterTime, OutputSin, PatternMatcher.SplitResults, callbackargs);
+         BlockedSolve(exec);
+         callbackout = GetChildren(callresult);
+      }
+      exec()
+      {
+         splitresult = Statics.CurrentTo;
+         Delete(Statics.CurrentFrom);
+         OutputSin = GetFirst(Statics.CurrentInfo);
+         PatternMatcher.SplitResults = GetAt(1, Statics.CurrentInfo);
+         LoadPatternResults();
+         if (Count(Statics.CurrentInfo) > 2)
+            callbackargs = Substract(ref(Statics.CurrentInfo), OutputSin, PatternMatcher.SplitResults);
+         BuildCallbackArgs();   //converts the cluster found in 'CallbackArgs' into a list of items, as defined by it's children, which can be static neurons or variables.    
+         var iAsset = GetChildrenFiltered(Statics.CurrentTo, ref(filtervar), ref((GetClusterMeaning(filtervar) == Asset)));
+         if (ChildCount(iAsset) > 0)
+         {
+            Split(AttributeFinished, ref(assetitem), GetChildren(iAsset));
+            Split(AttributeFinished, ref(callbackargs), callbackargs);
+            var iValueToCompItem, iCallbackArgsItem, valuetocomp;
+            valuetocomp = GetFirstOut(assetitem, When);
+            if (Count(valuetocomp) > 0)
+            {
+   :obj6483    switch (GetClusterMeaning(callbackargs))
+               {
+                  case Statics.AndAnd:
+                  {
+                     foreach (valuetocomp in GetChildren(callbackargs))
+                     {
+                        obj6483;
+                     }
+                  }
+                  :obj6491 case Statics.OrOr:
+                  {
+                     foreach (callbackargs in GetChildren(callbackargs))
+                     {
+                        switch (GetClusterMeaning(callbackargs))
+                        {
+                           case Statics.AndAnd:
+                           {
+                              foreach (valuetocomp in GetChildren(callbackargs))
+                              {
+                                 obj6483;
+                              }
+                           }
+                           obj6491;
+                           case Asset:
+                           {
+                              foreach (callbackargs in GetChildren(callbackargs))
+                              {
+                                 iCallbackArgsItem = GetFirstOut(callbackargs, Statics.Attribute);
+                                 iValueToCompItem = GetFirstOut(valuetocomp, Statics.Attribute);
+                                 if (GetInfo(callbackargs, iCallbackArgsItem, Statics.Attribute) Contains Not)
+                                 {
+                                    if (GetInfo(valuetocomp, iValueToCompItem, Statics.Attribute) !Contains Not)
+                                       Continue();
+                                 }
+                                 else if(GetInfo(valuetocomp, iValueToCompItem, Statics.Attribute) Contains Not)
+                                 {
+                                    if (GetInfo(callbackargs, iCallbackArgsItem, Statics.Attribute) !Contains Not)
+                                       Continue();
+                                 }
+                                 if (Search.IsThesRelated(iCallbackArgsItem, iValueToCompItem, Thes.IsA))
+                                    Break();
+                                 iCallbackArgsItem = GetFirstOut(callbackargs, Statics.Value);
+                                 iValueToCompItem = GetFirstOut(valuetocomp, Statics.Value);
+                                 if (GetInfo(callbackargs, iCallbackArgsItem, Statics.Value) Contains Not)
+                                 {
+                                    if (GetInfo(valuetocomp, iValueToCompItem, Statics.Value) !Contains Not)
+                                       Continue();
+                                 }
+                                 else if(GetInfo(valuetocomp, iValueToCompItem, Statics.Value) Contains Not)
+                                 {
+                                    if (GetInfo(callbackargs, iCallbackArgsItem, Statics.Value) !Contains Not)
+                                       Continue();
+                                 }
+                                 if (Search.IsThesRelated(iValueToCompItem, iCallbackArgsItem, Thes.IsA))
+                                    Break();
+                              }
+                           }
+                           case Statics.Argument:
+                           {
+                              if ((GetClusterMeaning(valuetocomp) == Statics.Argument) && (GetChildren(valuetocomp) == GetChildren(callbackargs)))
+                                 Break();
+                           }
+                           default:
+                           {
+                              if (Union(Statics.AndAnd, Statics.OrOr) Contains GetClusterMeaning(valuetocomp))
+                                 Split(AttributeFinished, ref(valuetocomp), GetChildren(valuetocomp));
+                              if (Search.IsThesRelated(valuetocomp, callbackargs, Thes.IsA) == true)
+                                 Break();
+                           }
+                        }
+                        
+                     }
+                  }
+                  case Asset:
+                  {
+                     foreach (callbackargs in GetChildren(callbackargs))
+                     {
+                        iCallbackArgsItem = GetFirstOut(callbackargs, Statics.Attribute);
+                        iValueToCompItem = GetFirstOut(valuetocomp, Statics.Attribute);
+                        if (GetInfo(callbackargs, iCallbackArgsItem, Statics.Attribute) Contains Not)
+                        {
+                           if (GetInfo(valuetocomp, iValueToCompItem, Statics.Attribute) !Contains Not)
+                              ExitSolve();
+                        }
+                        else if(GetInfo(valuetocomp, iValueToCompItem, Statics.Attribute) Contains Not)
+                        {
+                           if (GetInfo(callbackargs, iCallbackArgsItem, Statics.Attribute) !Contains Not)
+                              ExitSolve();
+                        }
+                        if (Search.IsThesRelated(iValueToCompItem, iCallbackArgsItem, Thes.IsA) != true)
+                           ExitSolve();
+                        iCallbackArgsItem = GetFirstOut(callbackargs, Statics.Value);
+                        iValueToCompItem = GetFirstOut(valuetocomp, Statics.Value);
+                        if (GetInfo(callbackargs, iCallbackArgsItem, Statics.Value) Contains Not)
+                        {
+                           if (GetInfo(valuetocomp, iValueToCompItem, Statics.Value) !Contains Not)
+                              ExitSolve();
+                        }
+                        else if(GetInfo(valuetocomp, iValueToCompItem, Statics.Value) Contains Not)
+                        {
+                           if (GetInfo(callbackargs, iCallbackArgsItem, Statics.Value) !Contains Not)
+                              ExitSolve();
+                        }
+                        if (Search.IsThesRelated(iValueToCompItem, iCallbackArgsItem, Thes.IsA) != true)
+                           ExitSolve();
+                     }
+                  }
+                  case Statics.Argument:
+                  {
+                     if (GetClusterMeaning(valuetocomp) == Statics.Argument)
+                     {
+                        if (GetChildren(valuetocomp) != GetChildren(callbackargs))
+                           ExitSolve();
+                     }
+                     else
+                        ExitSolve();
+                  }
+                  default:
+                  {
+                     if (Union(Statics.AndAnd, Statics.OrOr) Contains GetClusterMeaning(valuetocomp))
+                        Split(AttributeFinished, ref(valuetocomp), GetChildren(valuetocomp));
+                     if (Search.IsThesRelated(valuetocomp, callbackargs, Thes.IsA) != true)
+                        ExitSolve();
+                  }
+               }
+               
+               AddSplitResult(iAsset);
+            }
+         }
+      }
+   }
+   NeuronCluster FilterLoc(Statics.Code): 1301
+   {
+      this()
+      {
+         var exec = New(neuron);
+         var callresult = New(neuroncluster);
+         AddChild(callresult, callbackin);
+         AddLink(exec, callresult, FilterLoc);
+         AddInfo(exec, callresult, FilterLoc, OutputSin, PatternMatcher.SplitResults, callbackargs);
+         BlockedSolve(exec);
+         callbackout = GetChildren(callresult);
+         Delete(callresult);
+      }
+      exec()
+      {
+         splitresult = Statics.CurrentTo;
+         Delete(Statics.CurrentFrom);
+         OutputSin = GetFirst(Statics.CurrentInfo);
+         PatternMatcher.SplitResults = GetAt(1, Statics.CurrentInfo);
+         LoadPatternResults();
+         if (Count(Statics.CurrentInfo) > 2)
+            callbackargs = Substract(ref(Statics.CurrentInfo), OutputSin, PatternMatcher.SplitResults);
+         BuildCallbackArgs();   //converts the cluster found in 'CallbackArgs' into a list of items, as defined by it's children, which can be static neurons or variables.    
+         var iAsset = GetChildrenFiltered(Statics.CurrentTo, ref(filtervar), ref((GetClusterMeaning(filtervar) == Asset)));
+         if (ChildCount(iAsset) > 0)
+         {
+            Split(AttributeFinished, ref(assetitem), GetChildren(iAsset));
+            Split(AttributeFinished, ref(callbackargs), callbackargs);
+            var iValueToCompItem, iCallbackArgsItem, valuetocomp;
+            valuetocomp = GetFirstOut(assetitem, Where);
+            if (Count(valuetocomp) > 0)
+            {
+               obj6483;
+               AddSplitResult(iAsset);
+            }
+         }
+      }
+   }
+   NeuronCluster FilterTimeLoc(Statics.Code): 1302
+   {
+      this()
+      {
+         var exec = New(neuron);
+         var callresult = New(neuroncluster);
+         AddChild(callresult, callbackin);
+         AddLink(exec, callresult, FilterTimeLoc);
+         AddInfo(exec, callresult, FilterTimeLoc, OutputSin, PatternMatcher.SplitResults, callbackargs);
+         BlockedSolve(exec);
+         callbackout = GetChildren(callresult);
+         Delete(callresult);
+      }
+      exec()
+      {
+         splitresult = Statics.CurrentTo;
+         Delete(Statics.CurrentFrom);
+         OutputSin = GetFirst(Statics.CurrentInfo);
+         PatternMatcher.SplitResults = GetAt(1, Statics.CurrentInfo);
+         LoadPatternResults();
+         if (Count(Statics.CurrentInfo) > 2)
+            callbackargs = Substract(ref(Statics.CurrentInfo), OutputSin, PatternMatcher.SplitResults);
+         var iTimeArg, iLocArg;
+         if (Count(callbackargs) == 2)
+         {
+            iLocArg = GetLast(callbackargs);
+            callbackargs = GetFirst(callbackargs);
+            BuildCallbackArgs();   //converts the cluster found in 'CallbackArgs' into a list of items, as defined by it's children, which can be static neurons or variables.    
+            iTimeArg = callbackargs;
+            callbackargs = iLocArg;
+            BuildCallbackArgs();   //converts the cluster found in 'CallbackArgs' into a list of items, as defined by it's children, which can be static neurons or variables.    
+            iLocArg = callbackargs;
+         }
+         else
+         {
+            Error("FilterTimeLoc requires 2 arguments.");
+            ExitSolve();
+         }
+         var iAsset = GetChildrenFiltered(Statics.CurrentTo, ref(filtervar), ref((GetClusterMeaning(filtervar) == Asset)));
+         if (ChildCount(iAsset) > 0)
+         {
+            Split(AttributeFinished, ref(assetitem), GetChildren(iAsset));
+            Split(AttributeFinished, ref(iLocArg), iLocArg);
+            Split(AttributeFinished, ref(iTimeArg), iTimeArg);
+            var iLocAssetItem = GetFirstOut(assetitem, Where);
+            var iTimeAssetItem = GetFirstOut(assetitem, When);
+            if ((Count(iLocAssetItem) > 0) && (Count(iTimeAssetItem) > 0))
+            {
+               var valuetocomp = iTimeAssetItem;
+               callbackargs = iTimeArg;
+               obj6483;
+               
+               valuetocomp = iLocAssetItem;
+               callbackargs = iLocArg;
+               obj6483;
+               
+               AddSplitResult(iAsset);
+            }
+         }
+      }
+   }
+   /*
+     used in a variable path to indicate that the attribute of the input should be calculated. This attribute can be used in an asset relationship. This is done by trying to find a thesaurus node that has a link to itself with the 'attribute' meaning.
+   The callback can supply argumetns, which will be used as 'context'. The closer a result matches one of the context values, the higher the weight of the result will be.
+    */
+   NeuronCluster CalculateAttribute
+   {
+      var iCurLocInThes, iContext; 
+      this(var callbackIn, var OutputSin, var splitResults): var
+      {
+         PatternMatcher.SplitResults = splitResults;
+         LoadPatternResults();
+         iContext = Reverse(GetChildren(GetFirstOut(Bot, Statics.context)));   //we reverse the children so that we can do an easy weighted split with increasing values (so 0 remains lowest)    
+         iCurLocInThes = callbackIn;
+
+         return GetAttribute();
+      }
+      
+      WithContext(var callbackIn, var OutputSin, var splitResults, var context): var
+      {
+         PatternMatcher.SplitResults = splitResults;
+         LoadPatternResults();
+         iContext = Union(Reverse(context), Reverse(GetChildren(GetFirstOut(Bot, Statics.context))));   //we reverse the children so that we can do an easy weighted split with increasing values (so 0 remains lowest)    
+         iCurLocInThes = callbackIn;
+         
+         return GetAttribute();
+      }
+      
+      GetAttribute(): var
+      {
+         if (GetClusterMeaning(iCurLocInThes) == Statics.PosGroup)
+         {
+            var found = GetChildrenFiltered(iCurLocInThes, ref(filtervar), ref((GetClusterMeaning(filtervar) == Statics.Object)));
+            if (Count(found) == 0)
+            {
+               found = GetFirst(GetChildrenFiltered(iCurLocInThes, ref(filtervar), ref(ContainsLinksIn(filtervar, Thes.Plural))));
+               if (Count(found) > 0)
+               {
+                  iCurLocInThes = GetFirstIn(found, Thes.Plural);
+                  iCurLocInThes = GetClustersWithMeaning(iCurLocInThes, Statics.Object);
+               }
+               else
+                  iCurLocInThes = found;
+            }
+            else
+               iCurLocInThes = found;
+            if (Count(iCurLocInThes) == 0)
+               return;
+            else
+               Split(AttributeFinished, ref(iCurLocInThes), iCurLocInThes);
+         }
+         else if(GetClusterMeaning(iCurLocInThes) != Statics.Object)
+         {
+            iCurLocInThes = GetClustersWithMeaning(iCurLocInThes, Statics.Object);
+            if (Count(iCurLocInThes) == 0)
+               return;
+            else
+               Split(AttributeFinished, ref(iCurLocInThes), iCurLocInThes);
+         }
+         var related = GetInFiltered(iCurLocInThes, ref(filtermeaning), ref(filterfrom), ref((GetChildren(Thes.AllConjugations) Contains filtermeaning)));
+         Split(AttributeFinished, ref(iCurLocInThes), iCurLocInThes, related);
+         var isacluster = GetClustersWithMeaning(iCurLocInThes, Thes.IsA);
+         var iFullPath;
+         while (Count(isacluster) > 0)
+         {
+            Split(AttributeFinished, ref(isacluster), isacluster);
+            if (iFullPath !Contains isacluster)
+               Add(ref(iFullPath), isacluster);
+            else
+            {
+               Clear(ref(iCurLocInThes));
+               Break();
+            }   //we need to check for recursion in the thesaurus.    
+            iCurLocInThes = GetFirstIn(isacluster, Thes.IsA);
+            Split(AttributeFinished, ref(iCurLocInThes), iCurLocInThes, GetFirstOut(iCurLocInThes, Thes.Noun));
+            if (LinkExists(iCurLocInThes, iCurLocInThes, Statics.Attribute))
+               Break();
+            else
+               isacluster = GetClustersWithMeaning(iCurLocInThes, Thes.IsA);
+         }
+         else
+         {
+            Clear(ref(iCurLocInThes));
+            Break();
+         }
+         if (Count(iCurLocInThes) > 0)
+         {
+            AddSplitResult(iCurLocInThes);
+            if (Count(iContext) > 0)
+            {
+               PatternMatcher.SplitResults = iCurLocInThes;
+               SplitWeighted(AttributeFinished, 1, ref(iContext), iContext);
+               IncreaseWeight(1);   //we increase the weight so that the firxt context already has an increased weight.     
+               var iParsedResult = GetFirstOut(iContext, Statics.ParsedPatternOutput);
+               if (Count(iParsedResult) > 0)
+               {
+                  PatternMatcher.RenderPatternItems(iParsedResult);
+                  SplitWeighted(AttributeFinished, (1 / Count(PatternMatcher.RenderPatternItems.ContentToRender)), ref(iContext), PatternMatcher.RenderPatternItems.ContentToRender);
+               }
+               while (GetClusterMeaning(iContext) == Asset)
+               {
+                  Split(AttributeFinished, ref(iContext), GetChildren(iContext));
+                  Split(AttributeFinished, ref(iContext), GetFirstOut(iContext, Statics.Attribute), GetFirstOut(iContext, Statics.Value));
+               }
+               else while(Union(Statics.AndAnd, Statics.OrOr) Contains GetClusterMeaning(iContext))
+                  Split(AttributeFinished, ref(iContext), GetChildren(iContext));
+               else while(GetClusterMeaning(iContext) != Statics.Object)
+               {
+                  iContext = GetClustersWithMeaning(iContext, Statics.Object);
+                  Split(AttributeFinished, ref(iContext), iContext);
+               }
+               if (iCurLocInThes == iContext)
+               {
+                  AddSplitResult(PatternMatcher.SplitResults);
+                  ExitSolve();
+               }
+               else
+               {
+                  Clear(ref(iFullPath));
+                  isacluster = GetClustersWithMeaning(iContext, Thes.IsA);
+                  while (Count(isacluster) > 0)
+                  {
+                     Split(AttributeFinished, ref(isacluster), isacluster);
+                     if (iFullPath !Contains isacluster)
+                        add(ref(iFullPath), isacluster);
+                     else
+                        Break();
+                     iContext = GetFirstIn(isacluster, Thes.IsA);
+                     if (iCurLocInThes == iContext)
+                     {
+                        AddSplitResult(PatternMatcher.SplitResults);
+                        ExitSolve();
+                     }
+                     else
+                        isacluster = GetClustersWithMeaning(iContext, Thes.IsA);
+                  }
+               }
+            }
+         }
+         return;                                                                 //when we get here, didn't find anything.
+      }
+   }
+   
+   
+   //used by multiple functions.
+   Cluster AttributeFinished
+   {
+      this(): var 
+      {
+         return GetMaxWeight();
+      }
+   }
+   
+   /*
+     creates a new asset object (root) and creates an asset item with the input as value and the argument as attribute.
+   expects 1 argument: the data for the attribute part.
+    */
+   NeuronCluster CreateAsset(Statics.Code): 1261
+   {
+      this()
+      {
+         BuildCallbackArgs();   //converts the cluster found in 'CallbackArgs' into a list of items, as defined by it's children, which can be static neurons or variables.    
+         if (Count(callbackargs) == 1)
+         {
+            callbackout = MakeCluster(Asset);
+            assetitem = New(neuron);
+            AddLink(assetitem, callbackargs, Statics.Attribute);
+            AddLink(assetitem, callbackin, Statics.Value);
+            AddChild(callbackout, assetitem);
+         }
+         else
+            Error("Invalid argument count for CreateAsset: ", Count(callbackargs), ", 1 expected");
+      }
+   }
+   
+   
+   //Checks if the operand result is 1 value or multiple. When multiple, the values are put into an 'arguments' cluster (to make certain that spacing is maintained.
+   MakeOperandResSingle(var toConv): var
+   {
+      if (Count(toConv) > 1)
+      {
+         var iOperand = GetCommonParentsFiltered(ref(filtervar), ref(((GetClusterMeaning(filtervar) == Statics.Argument) && (GetChildren(filtervar) == toConv))), toConv);
+         if (Count(iOperand) == 0)
+            return MakeCluster(Statics.Argument, toConv);
+         else if(Count(iOperand) > 1)
+         {
+            Error("Multiple compound/argument found for the same set of words:", toConv);
+            return GetFirst(iOperand);
+         }
+      }
+      return toConv;
+   }
+   
+}

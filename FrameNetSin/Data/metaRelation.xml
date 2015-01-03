@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE meta-relations SYSTEM "docs/metaRelationV1_2.dtd">
+
+<meta-relations XMLCreated="Wed Jul 26 14:36:44 PDT 2006">
+  <meta-relation-type ID="1" name="Order" A-relation="Earlier" B-relation="Later" relation_type="2">
+    <meta-relation ID="1" name="MetaRelation" A-relation="Subframe: Crime_scenario --&gt; Committing_" A-relationId="517" B-relation="Subframe: Crime_scenario --&gt; Criminal_in" B-relationId="516" />
+    <meta-relation ID="2" name="MetaRelation" A-relation="Subframe: Crime_scenario --&gt; Criminal_in" A-relationId="516" B-relation="Subframe: Crime_scenario --&gt; Criminal_pr" B-relationId="515" />
+    <meta-relation ID="3" name="MetaRelation" A-relation="" A-relationId="264" B-relation="" B-relationId="237" />
+    <meta-relation ID="4" name="MetaRelation" A-relation="" A-relationId="237" B-relation="" B-relationId="238" />
+    <meta-relation ID="5" name="MetaRelation" A-relation="" A-relationId="238" B-relation="" B-relationId="236" />
+    <meta-relation ID="6" name="MetaRelation" A-relation="" A-relationId="240" B-relation="" B-relationId="241" />
+    <meta-relation ID="7" name="MetaRelation" A-relation="" A-relationId="241" B-relation="" B-relationId="239" />
+    <meta-relation ID="8" name="MetaRelation" A-relation="Subframe: Trial --&gt; Court_examination" A-relationId="862" B-relation="" B-relationId="299" />
+    <meta-relation ID="9" name="MetaRelation" A-relation="" A-relationId="299" B-relation="" B-relationId="297" />
+    <meta-relation ID="10" name="MetaRelation" A-relation="Subframe: Employment --&gt; Employment_start" A-relationId="1178" B-relation="Subframe: Employment --&gt; Employment_continue" B-relationId="1179" />
+    <meta-relation ID="11" name="MetaRelation" A-relation="Subframe: Employment --&gt; Employment_continue" A-relationId="1179" B-relation="Subframe: Employment --&gt; Employment_end" B-relationId="1180" />
+    <meta-relation ID="12" name="MetaRelation" A-relation="Subframe: Employer's_scenario --&gt; Hiring" A-relationId="1435" B-relation="Subframe: Employer's_scenario --&gt; Employing" B-relationId="1436" />
+    <meta-relation ID="13" name="MetaRelation" A-relation="Subframe: Employer's_scenario --&gt; Employing" A-relationId="1436" B-relation="Subframe: Employer's_scenario --&gt; Firing" B-relationId="1437" />
+    <meta-relation ID="14" name="MetaRelation" A-relation="Subframe: Employee's_scenario --&gt; Get_a_job" A-relationId="1432" B-relation="Subframe: Employee's_scenario --&gt; Being_employed" B-relationId="1433" />
+    <meta-relation ID="15" name="MetaRelation" A-relation="Subframe: Employee's_scenario --&gt; Being_employed" A-relationId="1433" B-relation="Subframe: Employee's_scenario --&gt; Quitting" B-relationId="1434" />
+    <meta-relation ID="16" name="MetaRelation" A-relation="" A-relationId="236" B-relation="Using: Criminal_process --&gt; Appeal" B-relationId="855" />
+  </meta-relation-type>
+</meta-relations>
+

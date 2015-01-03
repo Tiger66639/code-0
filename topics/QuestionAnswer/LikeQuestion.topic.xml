@@ -1,0 +1,314 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>LikeQuestion</Name>
+  <Rules>
+    <Rule>
+      <Name>SubjectLikeObject</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^s:pronoun.subject like $var ?</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>Do ^s:pronoun.subject like $var [?|,]</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals>
+        <Conditional>
+          <Condition>
+            <Expression>$result == 'yes'</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>Yes, #bot.mem.who.inv do.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+        <Conditional>
+          <Condition>
+            <Expression>$result == 'maybe'</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>I'm not certain, sometimes #bot.mem.who.inv do, sometimes #bot.mem.who.inv don't. It's all very confusing.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+        <Conditional>
+          <Condition>
+            <Expression>$result == 'no'</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>It turns out #bot.mem.who.inv don't like $var\.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+            <Output>
+              <Expression>No, #bot.mem.who.inv don't like $var\.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+      </Conditionals>
+      <Outputs>
+        <Output>
+          <Expression>I have no idea. Do #bot.mem.who.inv like $var?</Expression>
+          <QuestionCanFollow />
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <Do>
+        <Expression>$topics = ~like;
+#bot.NextQuestion.value = $var;
+#bot.NextQuestion.who = #bot.mem.who;</Expression>
+      </Do>
+      <ToCal>
+        <Expression>#bot.mem.who.val = $s:resolvePerson;
+#bot.mem.who.inv = $s:invertPerson;
+#bot.mem.obj.val = 'like';
+#bot.mem.obj.filter = $var;
+$result = #bot.mem.who.Val.like.($var);</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>SubjectDontLikeObject</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^s:pronoun.subject don't like $var ?</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>Don't ^s:pronoun.subject like $var ?</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals>
+        <Conditional>
+          <Condition>
+            <Expression>$result == 'yes'</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>It turns out #bot.mem.who.inv does like $var\.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+        <Conditional>
+          <Condition />
+          <Outputs>
+            <Output>
+              <Expression>I'm not certain, sometimes #bot.mem.who.inv do, sometimes #bot.mem.who.inv don't. It's all very confusing.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+        <Conditional>
+          <Condition>
+            <Expression>$result == 'no'</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>No, #bot.mem.who.inv don't like $var\.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+      </Conditionals>
+      <Outputs>
+        <Output>
+          <Expression>I have no idea. Don't #bot.mem.who.inv like $var?</Expression>
+          <QuestionCanFollow />
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <Do>
+        <Expression>$topics = ~like;
+#bot.NextQuestion.value = $var;
+#bot.NextQuestion.who = #bot.mem.who;</Expression>
+      </Do>
+      <ToCal>
+        <Expression>#bot.mem.who.val = $s:resolvePerson;
+#bot.mem.who.inv = $s:invertPerson;
+#bot.mem.obj.val = 'like';
+#bot.mem.obj.filter = $var;
+$result = #bot.mem.who.Val.like.($var);</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>Yes</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>[yes[,] ] $var</Expression>
+          <DuplicationMode>partial</DuplicationMode>
+        </Pattern>
+      </Patterns>
+      <ResponsesFor>
+        <ResponseForGroup>
+          <ResponsesForItems>
+            <ResponseFor>
+              <topic>LikeQuestion</topic>
+              <questions>True</questions>
+              <condition>$result == 'yes'</condition>
+              <output>Would you like to know something else that #bot.mem.who.inv like?</output>
+            </ResponseFor>
+          </ResponsesForItems>
+          <Conditionals>
+            <Conditional>
+              <Condition>
+                <Expression>$result == 'yes'</Expression>
+              </Condition>
+              <Outputs>
+                <Output>
+                  <Expression>Yes, #bot.mem.who.inv do.</Expression>
+                  <QuestionCanFollow>True</QuestionCanFollow>
+                </Output>
+              </Outputs>
+              <IsOutputSequenced />
+            </Conditional>
+            <Conditional>
+              <Condition>
+                <Expression>$result == 'maybe'</Expression>
+              </Condition>
+              <Outputs />
+              <IsOutputSequenced />
+            </Conditional>
+            <Conditional>
+              <Condition>
+                <Expression>$result == 'no'</Expression>
+              </Condition>
+              <Outputs>
+                <Output>
+                  <Expression>I'm affraid that #bot.mem.who.inv don't like $var\.</Expression>
+                  <QuestionCanFollow>True</QuestionCanFollow>
+                </Output>
+              </Outputs>
+              <IsOutputSequenced />
+            </Conditional>
+            <Conditional>
+              <Condition />
+              <Outputs>
+                <Output>
+                  <Expression>I have no idea.</Expression>
+                  <QuestionCanFollow>True</QuestionCanFollow>
+                </Output>
+              </Outputs>
+              <IsOutputSequenced />
+            </Conditional>
+          </Conditionals>
+        </ResponseForGroup>
+        <ResponseForGroup>
+          <ResponsesForItems>
+            <ResponseFor>
+              <topic>LikeQuestion</topic>
+              <questions>True</questions>
+              <output>Would you like to know something else that #bot.mem.who.inv don't like?</output>
+            </ResponseFor>
+          </ResponsesForItems>
+          <Conditionals>
+            <Conditional>
+              <Condition>
+                <Expression>count($result) == 0</Expression>
+              </Condition>
+              <Outputs>
+                <Output>
+                  <Expression>I have no idea.</Expression>
+                  <QuestionCanFollow>True</QuestionCanFollow>
+                </Output>
+              </Outputs>
+              <IsOutputSequenced />
+            </Conditional>
+            <Conditional>
+              <Condition>
+                <Expression>$result == 'yes'</Expression>
+              </Condition>
+              <Outputs>
+                <Output>
+                  <Expression>I'm affraid that #bot.mem.who.inv do like $var\.</Expression>
+                  <QuestionCanFollow>True</QuestionCanFollow>
+                </Output>
+              </Outputs>
+              <IsOutputSequenced />
+            </Conditional>
+            <Conditional>
+              <Condition>
+                <Expression>$result == 'maybe'</Expression>
+              </Condition>
+              <Outputs>
+                <Output>
+                  <Expression>I'm not really certain that #bot.mem.who.inv like $var\.</Expression>
+                  <QuestionCanFollow>True</QuestionCanFollow>
+                </Output>
+                <Output>
+                  <Expression>I'm not certain, sometimes #bot.mem.who.inv do, sometimes #bot.mem.who.inv don't. It's all very confusing.</Expression>
+                  <QuestionCanFollow>True</QuestionCanFollow>
+                </Output>
+              </Outputs>
+              <IsOutputSequenced />
+            </Conditional>
+            <Conditional>
+              <Condition>
+                <Expression>$result == 'no'</Expression>
+              </Condition>
+              <Outputs>
+                <Output>
+                  <Expression>No, #bot.mem.who.inv don't like that.</Expression>
+                  <QuestionCanFollow>True</QuestionCanFollow>
+                </Output>
+              </Outputs>
+              <IsOutputSequenced />
+            </Conditional>
+            <Conditional>
+              <Condition />
+              <Outputs>
+                <Output>
+                  <Expression>I have absolutely no idea.</Expression>
+                  <QuestionCanFollow>True</QuestionCanFollow>
+                </Output>
+              </Outputs>
+              <IsOutputSequenced />
+            </Conditional>
+          </Conditionals>
+        </ResponseForGroup>
+      </ResponsesFor>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.who.Val = #bot.question.who;
+#bot.mem.obj.val = 'like';
+#bot.mem.obj.filter = $var;
+$result = #bot.mem.who.Val.like.($var);</Expression>
+      </ToCal>
+    </Rule>
+  </Rules>
+  <Questions>
+    <Conditional>
+      <Condition>
+        <Expression>$result == 'yes'</Expression>
+      </Condition>
+      <Outputs>
+        <Output>
+          <Expression>Would you like to know something else that #bot.mem.who.inv like?</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Conditional>
+    <Conditional>
+      <Condition />
+      <Outputs>
+        <Output>
+          <Expression>Would you like to know something else that #bot.mem.who.inv don't like?</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Conditional>
+  </Questions>
+</Topic>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>Subject</Name>
+  <Rules>
+    <Rule>
+      <Name>Single subject</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>~(simple subject)</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+    </Rule>
+  </Rules>
+</Topic>

@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>Simple subject</Name>
+  <Rules>
+    <Rule>
+      <Name>subj</Name>
+      <Patterns>
+        <Pattern><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph><Run FontFamily="Segoe UI" FontSize="12">I, you</Run></Paragraph></FlowDocument><Expression>^subj:pronoun.subject</Expression></Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.who.inv = $subj:InvertPerson;
+#bot.mem.who.val= $subj:ResolvePerson;</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>name</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^subj:noun.name</Expression>
+          <DuplicationMode>partial</DuplicationMode>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.who.inv = $subj;
+#bot.mem.who.val = $subj:FindAssetsFromValue('name');
+</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>possesiveadj condition</Name>
+      <Patterns>
+        <Pattern><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph><Run FontFamily="Segoe UI" FontSize="12">my color</Run></Paragraph></FlowDocument><Expression>^subj:adj.possesive ^p:noun.condition</Expression><DuplicationMode>partial</DuplicationMode></Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.who.val = $subj:ResolvePerson;
+#bot.mem.attrib.val = $p;
+#bot.mem.who.inv = L($subj:InvertPerson $p);
+</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>possesiveadj matter</Name>
+      <Patterns>
+        <Pattern><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph><Run FontFamily="Segoe UI" FontSize="12">my house</Run></Paragraph></FlowDocument><Expression>^subj:adj.possesive ^p:noun.matter</Expression><DuplicationMode>partial</DuplicationMode></Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.who.inv = L($subj:InvertPerson $p);
+var iSubj = $subj:ResolvePerson;
+var iResolvedSubj = #(@iSubj).(^p);
+if(count(iResolvedSubj) &gt; 0)
+   #bot.mem.who.val = iResolvedSubj;
+else
+{
+   #bot.mem.who.val = iSubj;
+   #bot.mem.Who.Path = ^p;
+}</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>possesiveadj Filter matter</Name>
+      <Patterns>
+        <Pattern><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph><Run FontFamily="Segoe UI" FontSize="12">my pretty girl</Run></Paragraph></FlowDocument><Expression>^subj:adj.possesive ^subjFilter:adj ^s:noun.matter</Expression><DuplicationMode>partial</DuplicationMode></Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.who.inv = L($subj:InvertPerson $subjFilter $s);
+var iSubj = $Subj:ResolvePerson;
+var iPerson = #(@iSubj).($s);
+if(count(iPerson) &gt; 0)
+{
+   var iFiltered = #(@iPerson):Filter($subjFilter);
+   if(count(iFiltered) &gt; 0)
+      #bot.mem.who.val = iFiltered;
+   else
+   {
+      #bot.mem.who.val = iPerson;
+      #bot.mem.Who.Filter = $subjFilter;
+   }
+}
+else
+{
+   #bot.mem.who.val = iSubj;
+   #bot.mem.Who.Filter = $subjFilter;
+   #bot.mem.Who.Path = $s;   
+}
+</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>single adj or noun</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^subj:adj</Expression>
+          <DuplicationMode>partial</DuplicationMode>
+        </Pattern>
+        <Pattern>
+          <Expression>^subj:noun</Expression>
+          <DuplicationMode>partial</DuplicationMode>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.who.inv = $subj;
+#bot.mem.who.val = $subj;
+</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>art noun</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^art:art ^subj:noun</Expression>
+          <DuplicationMode>partial</DuplicationMode>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.who.inv = L($art $subj);
+#bot.mem.who.val = $subj;
+</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>the cond of matter</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>the ^p:noun.condition of ( ~(simple subject).(possesiveAdj matter) | ~(simple subject).(single adj or noun) | ~(simple subject).(art noun) )</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.attrib.val = $p;
+#bot.mem.who.inv = L(the $p of #bot.mem.who.inv);</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>a group of subj</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^a:art ^g:noun.collection of ( ~(simple subject).(possesiveAdj matter) | ~(simple subject).(single adj or noun) | ~(simple subject).(art noun) )</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.who.amount = $g;
+#bot.mem.who.inv = L($a $g of #bot.mem.who.inv);</Expression>
+      </ToCal>
+    </Rule>
+  </Rules>
+</Topic>

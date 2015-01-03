@@ -1,0 +1,85 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+                    xmlns:ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls">
+
+    <!--All the resource, used by the NeuronDataBrowser. These are declared in a seperate dict, which is included at the application
+   level, to save resources: it's is inlcuded only 1 time, instead of every time a Browser is used.-->
+
+    <ControlTemplate x:Key="NSBrowserControlTemplate" TargetType="{x:Type TreeViewItem}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="19" Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <ToggleButton x:Name="Expander"
+                          Visibility="Hidden"
+                          Style="{StaticResource ExpandCollapseToggleStyle}"
+                          IsChecked="{Binding Path=IsExpanded}"
+                          ClickMode="Press" />
+            <Border Name="Bd"
+                    Grid.Column="1"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Padding="{TemplateBinding Padding}"
+                    SnapsToDevicePixels="true">
+                <ContentPresenter x:Name="PART_Header"
+                                  ContentSource="Header"
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            </Border>
+            <ItemsPresenter x:Name="ItemsHost"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="2" />
+        </Grid>
+        <ControlTemplate.Triggers>
+            <DataTrigger Binding="{Binding Path=IsExpanded}" Value="false">
+                <Setter TargetName="ItemsHost" Property="Visibility" Value="Collapsed" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Path=HasChildren}" Value="true">
+                <Setter TargetName="Expander" Property="Visibility" Value="Visible" />
+            </DataTrigger>
+            <Trigger Property="IsSelected" Value="true">
+                <Setter TargetName="Bd" Property="Background"
+                        Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsSelected" Value="true" />
+                    <Condition Property="IsSelectionActive" Value="false" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="Bd" Property="Background"
+                        Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+            </MultiTrigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+
+    <ctrls:DropDownNSSelectorDropAdvisor x:Key="DDNeuronSelectorDropAdvisor" />
+
+    <ctrls:NDBrowserItemSelector x:Key="NdbBrowserItemSelector">
+        <ctrls:NDBrowserItemSelector.NeuronDataTemplate>
+            <DataTemplate>
+                <TextBlock Text="{Binding Path=DisplayTitle}" />
+            </DataTemplate>
+        </ctrls:NDBrowserItemSelector.NeuronDataTemplate>
+        <ctrls:NDBrowserItemSelector.NeuronInfoTemplate>
+            <DataTemplate>
+                <TextBlock Text="{Binding Path=NeuronInfo.DisplayTitle}" />
+            </DataTemplate>
+        </ctrls:NDBrowserItemSelector.NeuronInfoTemplate>
+    </ctrls:NDBrowserItemSelector>
+
+</ResourceDictionary>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="a660f267-23ff-4e2c-9246-d6344c97dc21" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:24301/AiciService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="AiciService.disco" MetadataType="Disco" ID="7d523537-be7d-4d9a-8b06-31b2956b32ff" SourceId="1" SourceUrl="http://localhost:24301/AiciService.svc?disco" />
+    <MetadataFile FileName="AiciService.xsd" MetadataType="Schema" ID="471e0b97-a979-4bc0-8e75-f37574f95afd" SourceId="1" SourceUrl="http://localhost:24301/AiciService.svc?xsd=xsd0" />
+    <MetadataFile FileName="AiciService1.xsd" MetadataType="Schema" ID="3342f0cb-c145-4467-8acc-a3f48bc42315" SourceId="1" SourceUrl="http://localhost:24301/AiciService.svc?xsd=xsd1" />
+    <MetadataFile FileName="AiciService.wsdl" MetadataType="Wsdl" ID="ace2d66e-9f8d-46bc-9556-837de7ea4bc2" SourceId="1" SourceUrl="http://localhost:24301/AiciService.svc?wsdl" />
+    <MetadataFile FileName="AiciService2.xsd" MetadataType="Schema" ID="75c1a8c0-fd38-4f19-9ba8-9b316b79b6a4" SourceId="1" SourceUrl="http://localhost:24301/AiciService.svc?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

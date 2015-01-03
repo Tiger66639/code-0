@@ -1,0 +1,122 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls">
+
+
+    <PathGeometry x:Key="TreeViewPanelItemTreeArrow">
+        <PathGeometry.Figures>
+            <PathFigureCollection>
+                <PathFigure IsFilled="True" StartPoint="0 0" IsClosed="True">
+                    <PathFigure.Segments>
+                        <PathSegmentCollection>
+                            <LineSegment Point="0 6" />
+                            <LineSegment Point="6 0" />
+                        </PathSegmentCollection>
+                    </PathFigure.Segments>
+                </PathFigure>
+            </PathFigureCollection>
+        </PathGeometry.Figures>
+    </PathGeometry>
+    <Style x:Key="TreeViewPanelExpandCollapseToggleStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Width" Value="16" />
+        <Setter Property="Height" Value="16" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border Width="16"
+                            Height="16"
+                            Background="Transparent"
+                            Padding="5,5,5,5">
+                        <Path x:Name="ExpandPath"
+                              Fill="Transparent"
+                              Stroke="#FF989898"
+                              Data="{StaticResource TreeViewPanelItemTreeArrow}">
+                            <Path.RenderTransform>
+                                <RotateTransform Angle="135"
+                                                 CenterX="3"
+                                                 CenterY="3" />
+                            </Path.RenderTransform>
+                        </Path>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ExpandPath" Property="Stroke" Value="#FF1BBBFA" />
+                            <Setter TargetName="ExpandPath" Property="Fill" Value="Transparent" />
+                        </Trigger>
+
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="ExpandPath" Property="RenderTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="180" CenterX="3" CenterY="3" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="ExpandPath" Property="Fill" Value="#FF595959" />
+                            <Setter TargetName="ExpandPath" Property="Stroke" Value="#FF262626" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--The default style for TreeViewPanelItem-->
+    <Style TargetType="{x:Type ctrls:TreeViewPanelItem}">
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="IsSelected" Value="{Binding Path=IsSelected}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ctrls:TreeViewPanelItem}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition MinWidth="19" Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <ToggleButton x:Name="Expander"
+                                      Style="{StaticResource TreeViewPanelExpandCollapseToggleStyle}"
+                                      IsChecked="{Binding Path=IsExpanded, Mode=TwoWay}"
+                                      Visibility="{Binding Path=HasChildren, Mode=OneWay, Converter={StaticResource BoolToVisConv}}"
+                                      ClickMode="Press"
+                                      VerticalAlignment="Center" />
+                        <Border Name="Bd"
+                                Grid.Column="1"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}"
+                                SnapsToDevicePixels="true">
+                            <ContentPresenter ContentSource="Content"
+                                              x:Name="PART_CONTENT"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter TargetName="Bd" Property="Background"
+                                    Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="true" />
+                                <Condition Property="IsKeyboardFocusWithin" Value="false" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Bd" Property="Background"
+                                    Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" />
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+</ResourceDictionary>

@@ -1,0 +1,33 @@
+
+//performs a blocked call on 'ToCall' with 'ChildData' as children of 'CurrentTo', and info as CurrentInfo
+Cluster BlockedCallCI
+{
+   this(var toCall, var ChildData, var info): var 
+   {
+      exec = new(neuron);
+      call_Result = new(NeuronCluster);
+      AddChild(Call_Result, ChildData);
+      AddLink(exec, call_result, toCall);
+      AddInfo(exec, call_result, toCall, info);
+      blockedSolve(exec);
+      var iRes = GetChildren(Call_result);
+      delete(call_result);
+      return iRes;
+   }
+}
+
+//performs a blocked call on 'ToCall' with info as CurrentInfo
+Cluster BlockedCallI
+{
+   this(var toCall, var info): var 
+   {
+      exec = new(neuron);
+      call_Result = new(NeuronCluster);
+      AddLink(exec, call_result, toCall);
+      AddInfo(exec, call_result, toCall, info);
+      blockedSolve(exec);
+      var iRes = GetChildren(Call_result);
+      delete(call_result);
+      return iRes;
+   }
+}

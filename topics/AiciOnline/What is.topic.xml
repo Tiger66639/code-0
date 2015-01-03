@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>What is</Name>
+  <Rules>
+    <Rule>
+      <Name>what is</Name>
+      <Patterns>
+        <Pattern><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph><Run FontFamily="Segoe UI" FontSize="12">What is your name?</Run></Paragraph></FlowDocument><Expression>What ^v:verb.be ~subject</Expression></Pattern>
+        <Pattern>
+          <Expression>What ~subject ^v:verb.be</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals>
+        <Conditional>
+          <Condition>
+            <Expression>count($result) &gt; 0</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>$result:Interleave("\, ")</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+      </Conditionals>
+      <Outputs>
+        <Output>
+          <Expression>I don't know what #bot.mem.who.inv is. Could you tell me?</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>var iWho = #bot.mem.Who.val;
+var iAttrib = #bot.mem.attrib.val;
+if(count(iWho) &gt; 0 &amp;&amp; count(iAttrib) &gt; 0 &amp;&amp; #(@iWho):IsConcrete == true)
+   $result = #(@iWho).(@iAttrib);
+if(count($result) == 0)
+{
+   if(GetClusterMeaning(iWho) != Statics.Asset)   //it's not an asset, so abstract.
+   {
+      iAttrib = ^(@iWho):ThesParent , ^(#bot.mem.who.inv):ThesParent ; //we also try the 'inv' value, maybe it stores something like 'band of brothers'
+      if(count(iAttrib) &gt; 0)
+         $result = iAttrib; 
+   }
+   else
+   {
+      var iWhat = #(@iWho).what;     //perhaps the entity has a special 'what' clause, use this.
+      if(count(iWhat) == 0)
+         iWhat = #(@iWho).entity; //perhas the asset has a label 'entity' which indicates the type
+      if(count(iWhat) &gt; 0)
+         $result = iWhat;
+   }
+}</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>what is it [~(sentence end)]</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>What is it</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals>
+        <Conditional>
+          <Condition>
+            <Expression>count($result) &gt; 0</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>$result:Interleave("\, ")</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+        <Conditional>
+          <Condition>
+            <Expression>count(#bot.mem.who) &gt; 0</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>I don't know what #bot.mem.who.inv is. Could you tell me?</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+      </Conditionals>
+      <Outputs>
+        <Output>
+          <Expression>Mmm, I think I have a memory error, for some reason I forgot the details of the previous statement (the rest as well by the way).</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>Oh oh, I think I need a visit to the brain doctor. Dementia is starting already, I forgot what the previous statement was all about.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>I feel pretty dumn right now: I didn't record the details of the previous sentence correctly.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem = #bot.prevmem;
+if(#bot.mem.obj.val)          //we are asking 'what', not 'who', so if the prev sentence had an object value, use this instead of 'who'
+   #bot.Mem.Who = #bot.Mem.Obj;
+var iWho = #bot.mem.Who.val;
+var iAttrib = #bot.mem.attrib.val;   
+
+if(count(iWho) &gt; 0 &amp;&amp; count(iAttrib) &gt; 0 &amp;&amp; #(@iWho):IsConcrete == true)
+   $result = #(@iWho).(@iAttrib);
+if(count($result) == 0)
+{
+   if(GetClusterMeaning(iWho) != Statics.Asset)   //it's not an asset, so abstract.
+   {
+      var iAttrib = ^(@iWho):attribute;  //extract the attribute of the abstract word (blue -&gt; color )
+      if(count(iAttrib) &gt; 0)
+         $result = iAttrib;
+      else
+      {
+         iAttrib = ^(@iWho):ThesParent;
+         if(count(iAttrib) &gt; 0)
+            $result = iAttrib; 
+      }
+   }
+   else
+   {
+      var iWhat = #(@iWho).what;     //perhaps the entity has a special 'what' clause, use this.
+      if(count(iWhat) == 0)
+         iWhat = #(@iWho).entity; //perhas the asset has a label 'entity' which indicates the type
+      if(count(iWhat) &gt; 0)
+         $result = iWhat;
+   }
+}</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>What is Unknown</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>What ^v:verb.be ~Unknown</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>Unknown word: #bot.mem.Unknown.val</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Rule>
+  </Rules>
+</Topic>

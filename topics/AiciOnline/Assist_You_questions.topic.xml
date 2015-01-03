@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>Assist_You_questions</Name>
+  <Rules>
+    <Rule>
+      <Name>help me</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>help me</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>I need (assistence|help)</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>help required</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>Ok, </Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Rule>
+  </Rules>
+  <Questions>
+    <Conditional>
+      <Condition />
+      <Outputs>
+        <Output>
+          <Expression>How may I assist you?</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>How can I be of assistance?</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>What can I do for you?</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>What can I do?</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>Do you have an inquiry?</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Conditional>
+  </Questions>
+</Topic>

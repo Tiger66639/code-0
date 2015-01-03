@@ -1,0 +1,67 @@
+﻿<ResourceDictionary x:Class="JaStDev.HAB.Designer.Search.SearchResources"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:search="clr-namespace:JaStDev.HAB.Designer.Search">
+
+
+    <!--DisplayPath-->
+    <DataTemplate DataType="{x:Type search:DisplayPath}">
+        <TextBlock Text="{Binding Path=Title}" />
+    </DataTemplate>
+
+    <!--Data template for SearchResults-->
+    <DataTemplate DataType="{x:Type search:DisplayPathSet}">
+        <ListBox ItemsSource="{Binding Path=Items}"
+                 SelectedIndex="{Binding Path=SelectedIndex}">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <EventSetter Event="MouseDoubleClick" Handler="DisplayPath_MouseDoubleClick" />
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
+    </DataTemplate>
+
+    <!--template for children of a folder. These children are usually DisplayPathSets-->
+    <HierarchicalDataTemplate x:Key="SearchResultsSubTemplate"
+                              ItemsSource="{Binding Path=Items}">
+        <HierarchicalDataTemplate.ItemContainerStyle>
+            <Style TargetType="{x:Type TreeViewItem}">
+                <EventSetter Event="MouseDoubleClick" Handler="DisplayPath_MouseDoubleClick" />
+                <Setter Property="Focusable" Value="False" />
+            </Style>
+        </HierarchicalDataTemplate.ItemContainerStyle>
+        <TextBlock Text="{Binding Path=Title}" />
+    </HierarchicalDataTemplate>
+
+    <DataTemplate DataType="{x:Type search:DisplayPathSetFolder}">
+        <TreeView ItemsSource="{Binding Path=Items}"
+                  Focusable="False"
+                  ItemTemplate="{StaticResource SearchResultsSubTemplate}">
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="TreeViewItem">
+                    <Setter Property="Focusable" Value="False" />
+                    <Setter Property="IsExpanded" Value="True" />
+                </Style>
+            </TreeView.ItemContainerStyle>
+        </TreeView>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type search:DisplayPathSet}"
+                  x:Key="SearchResultSetHeaderTemplate">
+        <TextBlock Text="{Binding Path=Title}" />
+    </DataTemplate>
+
+    <ContextMenu x:Key="SearchResultSetContextMenu">
+        <MenuItem Header="Close"
+                  Click="CloseSearchSet_Click" />
+        <MenuItem Header="Close all but this"
+                  Click="CloseAllSearchSetsButActive_Click" />
+        <MenuItem Header="Close all"
+                  Click="CloseAllSearchSets_Click" />
+    </ContextMenu>
+
+    <Style x:Key="SearchResultSetStyle" TargetType="{x:Type TabItem}">
+        <Setter Property="ContextMenu" Value="{StaticResource SearchResultSetContextMenu}" />
+    </Style>
+
+</ResourceDictionary>

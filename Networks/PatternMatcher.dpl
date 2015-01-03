@@ -1,0 +1,2621 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DesignerDataFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TemplateVersion>0.9.1</TemplateVersion>
+  <Name>Chatbot</Name>
+  <Chatbotdata>
+    <BotID>1003</BotID>
+    <CreatorID>1001</CreatorID>
+    <RefToUserID>1004</RefToUserID>
+    <NameID>1002</NameID>
+    <BirthdayID>1000</BirthdayID>
+    <BotType>0</BotType>
+    <GenderID>1005</GenderID>
+    <MaleID>1006</MaleID>
+    <FemaleID>1007</FemaleID>
+    <HermaID>1008</HermaID>
+    <SynonymResolveSwitchID>7436</SynonymResolveSwitchID>
+    <UseOutputVarSwitchID>3682</UseOutputVarSwitchID>
+    <UseSTTWeightID>9105</UseSTTWeightID>
+    <SingleTopPatternResultID>7173</SingleTopPatternResultID>
+    <ParserMap>
+      <ID>1217</ID>
+      <ID>1218</ID>
+      <ID>1003</ID>
+      <ID>1228</ID>
+      <ID>1229</ID>
+      <ID>1004</ID>
+      <ID>3698</ID>
+      <ID>3774</ID>
+      <ID>3911</ID>
+      <ID>3991</ID>
+      <ID>4084</ID>
+      <ID>4115</ID>
+      <ID>4155</ID>
+      <ID>4399</ID>
+      <ID>4400</ID>
+      <ID>4401</ID>
+      <ID>4402</ID>
+      <ID>4403</ID>
+      <ID>4404</ID>
+      <ID>4405</ID>
+      <ID>4424</ID>
+      <ID>4760</ID>
+      <ID>4761</ID>
+      <ID>4824</ID>
+      <ID>2943</ID>
+      <ID>5205</ID>
+      <ID>4390</ID>
+      <ID>5549</ID>
+      <ID>5590</ID>
+      <ID>5779</ID>
+      <ID>6311</ID>
+      <ID>6312</ID>
+      <ID>6396</ID>
+      <ID>6395</ID>
+      <ID>6394</ID>
+      <ID>6393</ID>
+      <ID>6751</ID>
+      <ID>7431</ID>
+      <ID>7682</ID>
+      <ID>7683</ID>
+      <ID>4975</ID>
+      <ID>7742</ID>
+      <ID>7743</ID>
+      <ID>7744</ID>
+      <ID>7760</ID>
+      <ID>7799</ID>
+      <ID>7800</ID>
+      <ID>7801</ID>
+      <ID>7802</ID>
+      <ID>7803</ID>
+      <ID>7804</ID>
+      <ID>7805</ID>
+      <ID>7806</ID>
+      <ID>7831</ID>
+      <ID>7887</ID>
+      <ID>7886</ID>
+      <ID>7894</ID>
+      <ID>8032</ID>
+      <ID>8046</ID>
+      <ID>8227</ID>
+      <ID>8229</ID>
+      <ID>8240</ID>
+      <ID>8244</ID>
+      <ID>8245</ID>
+      <ID>8246</ID>
+      <ID>8279</ID>
+      <ID>8301</ID>
+      <ID>8300</ID>
+      <ID>8299</ID>
+      <ID>8298</ID>
+      <ID>8333</ID>
+      <ID>5332</ID>
+      <ID>8457</ID>
+      <ID>8438</ID>
+      <ID>8742</ID>
+      <ID>8818</ID>
+      <ID>8900</ID>
+      <ID>2919</ID>
+      <ID>9340</ID>
+      <ID>4881</ID>
+      <ID>7179</ID>
+      <ID>9944</ID>
+      <ID>9945</ID>
+      <ID>10068</ID>
+      <ID>10097</ID>
+      <ID>10096</ID>
+      <ID>10095</ID>
+      <ID>10203</ID>
+      <ID>10202</ID>
+      <ID>10221</ID>
+      <ID>10330</ID>
+      <ID>1219</ID>
+      <ID>1220</ID>
+      <ID>1221</ID>
+      <ID>1222</ID>
+      <ID>1223</ID>
+      <ID>1224</ID>
+      <ID>1225</ID>
+      <ID>1226</ID>
+      <ID>1227</ID>
+      <ID>4239</ID>
+      <ID>4240</ID>
+      <ID>10428</ID>
+      <ID>10432</ID>
+      <ID>10431</ID>
+      <ID>10430</ID>
+      <ID>10429</ID>
+      <ID>10507</ID>
+      <ID>10536</ID>
+    </ParserMap>
+    <DoFunctionMap />
+  </Chatbotdata>
+  <Debugmode>Normal</Debugmode>
+  <BreakOnException>false</BreakOnException>
+  <BreakPoints />
+  <PlaySpeed />
+  <ToolBoxItems>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>General</Category>
+      <ItemTypeName>JaStDev.HAB.Neuron, JaStDev.HabCore, Version=0.8.4688.20016, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Neuron</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>General</Category>
+      <ItemTypeName>JaStDev.HAB.NeuronCluster, JaStDev.HabCore, Version=0.8.4688.20016, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Cluster</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>General</Category>
+      <ItemTypeName>JaStDev.HAB.TextNeuron, JaStDev.HabCore, Version=0.8.4688.20016, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Text neuron</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>General</Category>
+      <ItemTypeName>JaStDev.HAB.TextSin, JaStDev.HabCore, Version=0.8.4688.20016, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Text Sin</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>General</Category>
+      <ItemTypeName>JaStDev.HAB.IntNeuron, JaStDev.HabCore, Version=0.8.4688.20016, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Int neuron</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>General</Category>
+      <ItemTypeName>JaStDev.HAB.DoubleNeuron, JaStDev.HabCore, Version=0.8.4688.20016, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Double neuron</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>Code</Category>
+      <ItemTypeName>JaStDev.HAB.Assignment, JaStDev.HabCore, Version=0.8.4688.20016, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Assignment</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>Code</Category>
+      <ItemTypeName>JaStDev.HAB.Statement, JaStDev.HabCore, Version=0.8.4688.20016, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Statement</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>Code</Category>
+      <ItemTypeName>JaStDev.HAB.ResultStatement, JaStDev.HabCore, Version=0.8.4688.20016, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Result statement</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>Code</Category>
+      <ItemTypeName>JaStDev.HAB.ExpressionsBlock, JaStDev.HabCore, Version=0.8.4688.20016, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Code block</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>Code</Category>
+      <ItemTypeName>JaStDev.HAB.LockExpression, JaStDev.HabCore, Version=0.8.4688.20016, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Lock</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>Code</Category>
+      <ItemTypeName>JaStDev.HAB.ConditionalStatement, JaStDev.HabCore, Version=0.8.4688.20016, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Condional statement</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>Code</Category>
+      <ItemTypeName>JaStDev.HAB.ConditionalExpression, JaStDev.HabCore, Version=0.8.4688.20016, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>condional part</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>Code</Category>
+      <ItemTypeName>JaStDev.HAB.BoolExpression, JaStDev.HabCore, Version=0.8.4688.20016, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>bool expression</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>Code</Category>
+      <ItemTypeName>JaStDev.HAB.Variable, JaStDev.HabCore, Version=0.8.4688.20016, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Variable</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>Code</Category>
+      <ItemTypeName>JaStDev.HAB.Global, JaStDev.HabCore, Version=0.8.4688.20016, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Global</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>Code</Category>
+      <ItemTypeName>JaStDev.HAB.Local, JaStDev.HabCore, Version=0.8.4688.20016, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>Local</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="TypeToolBoxItem">
+      <Category>Code</Category>
+      <ItemTypeName>JaStDev.HAB.ByRefExpression, JaStDev.HabCore, Version=0.8.4688.20016, Culture=neutral, PublicKeyToken=null</ItemTypeName>
+      <DisplayTitle>ByRef</DisplayTitle>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Global values</Category>
+      <ItemID>99</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Global values</Category>
+      <ItemID>154</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Global values</Category>
+      <ItemID>155</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Global values</Category>
+      <ItemID>114</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Global values</Category>
+      <ItemID>100</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Global values</Category>
+      <ItemID>101</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Global values</Category>
+      <ItemID>102</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Global values</Category>
+      <ItemID>103</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Global values</Category>
+      <ItemID>295</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Global values</Category>
+      <ItemID>407</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Global values</Category>
+      <ItemID>60</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Global values</Category>
+      <ItemID>61</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Operators</Category>
+      <ItemID>53</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Operators</Category>
+      <ItemID>54</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Operators</Category>
+      <ItemID>55</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Operators</Category>
+      <ItemID>56</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Operators</Category>
+      <ItemID>57</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Operators</Category>
+      <ItemID>58</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Operators</Category>
+      <ItemID>59</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Operators</Category>
+      <ItemID>269</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Operators</Category>
+      <ItemID>119</ItemID>
+    </ToolBoxItem>
+    <ToolBoxItem xsi:type="NeuronToolBoxItem">
+      <Category>Operators</Category>
+      <ItemID>120</ItemID>
+    </ToolBoxItem>
+  </ToolBoxItems>
+  <DefaultMeaningIds>
+    <ID>1208</ID>
+    <ID>1209</ID>
+    <ID>1211</ID>
+    <ID>1213</ID>
+    <ID>1214</ID>
+    <ID>1216</ID>
+    <ID>1218</ID>
+    <ID>1217</ID>
+    <ID>1219</ID>
+    <ID>1220</ID>
+    <ID>1221</ID>
+    <ID>1222</ID>
+    <ID>1223</ID>
+    <ID>1224</ID>
+    <ID>1225</ID>
+    <ID>1226</ID>
+    <ID>1227</ID>
+    <ID>1228</ID>
+    <ID>1229</ID>
+    <ID>1230</ID>
+    <ID>48</ID>
+    <ID>73</ID>
+    <ID>4881</ID>
+    <ID>5544</ID>
+    <ID>5545</ID>
+    <ID>5546</ID>
+    <ID>5547</ID>
+    <ID>5548</ID>
+    <ID>1004</ID>
+    <ID>5549</ID>
+    <ID>375</ID>
+    <ID>374</ID>
+    <ID>373</ID>
+    <ID>368</ID>
+    <ID>367</ID>
+    <ID>366</ID>
+    <ID>365</ID>
+    <ID>310</ID>
+    <ID>311</ID>
+    <ID>309</ID>
+    <ID>321</ID>
+    <ID>322</ID>
+    <ID>8045</ID>
+    <ID>136</ID>
+    <ID>389</ID>
+    <ID>9466</ID>
+    <ID>62</ID>
+    <ID>89</ID>
+    <ID>88</ID>
+  </DefaultMeaningIds>
+  <AssetPronounIds>
+    <ID>1208</ID>
+    <ID>1209</ID>
+    <ID>1211</ID>
+    <ID>1213</ID>
+    <ID>1214</ID>
+    <ID>1216</ID>
+    <ID>8045</ID>
+  </AssetPronounIds>
+  <PersonMapIds>
+    <ID>1217</ID>
+    <ID>1218</ID>
+    <ID>5545</ID>
+    <ID>5544</ID>
+    <ID>5546</ID>
+    <ID>1004</ID>
+    <ID>5547</ID>
+    <ID>5548</ID>
+    <ID>9608</ID>
+  </PersonMapIds>
+  <NeuronInfo>
+    <NrOfTables>8</NrOfTables>
+  </NeuronInfo>
+  <Instructions>
+    <ID>250</ID>
+    <ID>249</ID>
+    <ID>248</ID>
+    <ID>251</ID>
+    <ID>252</ID>
+    <ID>418</ID>
+    <ID>6</ID>
+    <ID>5</ID>
+    <ID>4</ID>
+    <ID>184</ID>
+    <ID>417</ID>
+    <ID>416</ID>
+    <ID>430</ID>
+    <ID>429</ID>
+    <ID>414</ID>
+    <ID>399</ID>
+    <ID>436</ID>
+    <ID>296</ID>
+    <ID>115</ID>
+    <ID>142</ID>
+    <ID>219</ID>
+    <ID>223</ID>
+    <ID>314</ID>
+    <ID>176</ID>
+    <ID>305</ID>
+    <ID>304</ID>
+    <ID>29</ID>
+    <ID>30</ID>
+    <ID>28</ID>
+    <ID>306</ID>
+    <ID>240</ID>
+    <ID>175</ID>
+    <ID>224</ID>
+    <ID>150</ID>
+    <ID>151</ID>
+    <ID>152</ID>
+    <ID>153</ID>
+    <ID>186</ID>
+    <ID>241</ID>
+    <ID>274</ID>
+    <ID>11</ID>
+    <ID>270</ID>
+    <ID>290</ID>
+    <ID>291</ID>
+    <ID>379</ID>
+    <ID>218</ID>
+    <ID>14</ID>
+    <ID>15</ID>
+    <ID>10</ID>
+    <ID>146</ID>
+    <ID>410</ID>
+    <ID>16</ID>
+    <ID>434</ID>
+    <ID>261</ID>
+    <ID>424</ID>
+    <ID>423</ID>
+    <ID>177</ID>
+    <ID>178</ID>
+    <ID>17</ID>
+    <ID>376</ID>
+    <ID>118</ID>
+    <ID>122</ID>
+    <ID>148</ID>
+    <ID>131</ID>
+    <ID>149</ID>
+    <ID>280</ID>
+    <ID>216</ID>
+    <ID>229</ID>
+    <ID>370</ID>
+    <ID>371</ID>
+    <ID>283</ID>
+    <ID>256</ID>
+    <ID>124</ID>
+    <ID>228</ID>
+    <ID>128</ID>
+    <ID>318</ID>
+    <ID>254</ID>
+    <ID>129</ID>
+    <ID>126</ID>
+    <ID>227</ID>
+    <ID>193</ID>
+    <ID>316</ID>
+    <ID>315</ID>
+    <ID>317</ID>
+    <ID>200</ID>
+    <ID>127</ID>
+    <ID>198</ID>
+    <ID>199</ID>
+    <ID>104</ID>
+    <ID>253</ID>
+    <ID>264</ID>
+    <ID>262</ID>
+    <ID>255</ID>
+    <ID>268</ID>
+    <ID>217</ID>
+    <ID>201</ID>
+    <ID>202</ID>
+    <ID>204</ID>
+    <ID>203</ID>
+    <ID>205</ID>
+    <ID>369</ID>
+    <ID>145</ID>
+    <ID>206</ID>
+    <ID>207</ID>
+    <ID>209</ID>
+    <ID>208</ID>
+    <ID>210</ID>
+    <ID>257</ID>
+    <ID>263</ID>
+    <ID>211</ID>
+    <ID>215</ID>
+    <ID>213</ID>
+    <ID>212</ID>
+    <ID>214</ID>
+    <ID>334</ID>
+    <ID>333</ID>
+    <ID>330</ID>
+    <ID>332</ID>
+    <ID>329</ID>
+    <ID>331</ID>
+    <ID>433</ID>
+    <ID>320</ID>
+    <ID>187</ID>
+    <ID>144</ID>
+    <ID>267</ID>
+    <ID>266</ID>
+    <ID>360</ID>
+    <ID>147</ID>
+    <ID>411</ID>
+    <ID>7</ID>
+    <ID>393</ID>
+    <ID>8</ID>
+    <ID>9</ID>
+    <ID>244</ID>
+    <ID>24</ID>
+    <ID>26</ID>
+    <ID>25</ID>
+    <ID>140</ID>
+    <ID>139</ID>
+    <ID>395</ID>
+    <ID>401</ID>
+    <ID>402</ID>
+    <ID>405</ID>
+    <ID>403</ID>
+    <ID>404</ID>
+    <ID>308</ID>
+    <ID>271</ID>
+    <ID>245</ID>
+    <ID>179</ID>
+    <ID>378</ID>
+    <ID>180</ID>
+    <ID>440</ID>
+    <ID>432</ID>
+    <ID>272</ID>
+    <ID>242</ID>
+    <ID>243</ID>
+    <ID>27</ID>
+    <ID>297</ID>
+    <ID>298</ID>
+    <ID>419</ID>
+    <ID>420</ID>
+    <ID>428</ID>
+    <ID>427</ID>
+    <ID>422</ID>
+    <ID>421</ID>
+    <ID>18</ID>
+    <ID>19</ID>
+    <ID>426</ID>
+    <ID>425</ID>
+    <ID>12</ID>
+    <ID>400</ID>
+    <ID>13</ID>
+    <ID>439</ID>
+    <ID>20</ID>
+    <ID>397</ID>
+    <ID>396</ID>
+    <ID>2</ID>
+    <ID>409</ID>
+    <ID>437</ID>
+    <ID>3</ID>
+    <ID>408</ID>
+    <ID>398</ID>
+    <ID>21</ID>
+    <ID>275</ID>
+    <ID>23</ID>
+    <ID>276</ID>
+    <ID>22</ID>
+    <ID>277</ID>
+    <ID>278</ID>
+    <ID>282</ID>
+    <ID>281</ID>
+    <ID>185</ID>
+    <ID>183</ID>
+    <ID>438</ID>
+    <ID>412</ID>
+    <ID>441</ID>
+    <ID>220</ID>
+    <ID>394</ID>
+    <ID>130</ID>
+    <ID>105</ID>
+    <ID>141</ID>
+    <ID>132</ID>
+    <ID>377</ID>
+    <ID>287</ID>
+    <ID>221</ID>
+    <ID>299</ID>
+    <ID>181</ID>
+    <ID>182</ID>
+    <ID>225</ID>
+    <ID>226</ID>
+    <ID>415</ID>
+    <ID>413</ID>
+    <ID>279</ID>
+    <ID>116</ID>
+    <ID>431</ID>
+    <ID>125</ID>
+    <ID>435</ID>
+    <ID>138</ID>
+    <ID>117</ID>
+  </Instructions>
+  <Operators>
+    <ID>53</ID>
+    <ID>54</ID>
+    <ID>55</ID>
+    <ID>56</ID>
+    <ID>57</ID>
+    <ID>58</ID>
+    <ID>59</ID>
+    <ID>269</ID>
+    <ID>119</ID>
+    <ID>120</ID>
+  </Operators>
+  <Watches>
+    <Watch>
+      <ID>100</ID>
+      <AttachValuesToProcessor>false</AttachValuesToProcessor>
+    </Watch>
+    <Watch>
+      <ID>101</ID>
+      <AttachValuesToProcessor>false</AttachValuesToProcessor>
+    </Watch>
+    <Watch>
+      <ID>102</ID>
+      <AttachValuesToProcessor>false</AttachValuesToProcessor>
+    </Watch>
+    <Watch>
+      <ID>103</ID>
+      <AttachValuesToProcessor>false</AttachValuesToProcessor>
+    </Watch>
+  </Watches>
+  <CommChannels>
+    <ChatBotChannel>
+      <IsVisible />
+      <NeuronID>1010</NeuronID>
+      <Resources />
+      <AudioInOn />
+      <AudioOutOn />
+      <InputText />
+      <SelectedCharacter />
+      <SelectedVoice />
+      <TextSin>1009</TextSin>
+      <ShowFloatingChar />
+      <Zoom>1</Zoom>
+      <ShowAdvancedInput />
+    </ChatBotChannel>
+    <ReflectionChannel>
+      <IsVisible />
+      <NeuronID>5504</NeuronID>
+      <Resources />
+      <Assemblies />
+      <OpCodeIds />
+    </ReflectionChannel>
+  </CommChannels>
+  <Editors>
+    <EditorFolder>
+      <Name>Assets</Name>
+      <FlowDocument />
+      <EditorCollection>
+        <AssetEditor>
+          <Name>bot</Name>
+          <Item>1003</Item>
+        </AssetEditor>
+        <AssetEditor>
+          <Name>user</Name>
+          <Item>1001</Item>
+        </AssetEditor>
+      </EditorCollection>
+      <IsExpanded>True</IsExpanded>
+    </EditorFolder>
+    <EditorFolder>
+      <Name>Mind maps</Name>
+      <FlowDocument />
+      <EditorCollection>
+        <MindMap>
+          <Name>bot propertis page</Name>
+          <FlowDocument />
+          <Zoom>1</Zoom>
+          <MindMapNeuron>
+            <ZIndex>1</ZIndex>
+            <X>83</X>
+            <Y>199</Y>
+            <Width>90</Width>
+            <Height>50</Height>
+            <Neuron>1002</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>2</ZIndex>
+            <X>92</X>
+            <Y>251</Y>
+            <Width>90</Width>
+            <Height>50</Height>
+            <Neuron>1000</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>3</ZIndex>
+            <X>368</X>
+            <Y>9</Y>
+            <Width>90</Width>
+            <Height>50</Height>
+            <Neuron>1004</Neuron>
+          </MindMapNeuron>
+          <MindMapCluster>
+            <ZIndex>4</ZIndex>
+            <X>76</X>
+            <Y>12.207106590271</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>1003</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>5</ZIndex>
+            <X>229</X>
+            <Y>4.207106590271</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>1001</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapNeuron>
+            <ZIndex>6</ZIndex>
+            <X>194</X>
+            <Y>252</Y>
+            <Width>91</Width>
+            <Height>50</Height>
+            <Neuron>1005</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>7</ZIndex>
+            <X>148</X>
+            <Y>372</Y>
+            <Width>90</Width>
+            <Height>50</Height>
+            <Neuron>1006</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>8</ZIndex>
+            <X>377</X>
+            <Y>374</Y>
+            <Width>90</Width>
+            <Height>50</Height>
+            <Neuron>1007</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>9</ZIndex>
+            <X>261</X>
+            <Y>371</Y>
+            <Width>90</Width>
+            <Height>50</Height>
+            <Neuron>1008</Neuron>
+          </MindMapNeuron>
+          <MindMapCluster>
+            <ZIndex />
+            <X>62</X>
+            <Y>136.207106590271</Y>
+            <Width>244</Width>
+            <Height>191</Height>
+            <Neuron>8632</Neuron>
+            <ChildrenIds>
+              <ID>1002</ID>
+              <ID>1000</ID>
+              <ID>1005</ID>
+            </ChildrenIds>
+          </MindMapCluster>
+          <MindMapNote>
+            <Height>160</Height>
+            <Width>206</Width>
+            <X>585</X>
+            <Y>178</Y>
+            <Title>common chatbot properties</Title><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph><Run FontFamily="Segoe UI" FontSize="12" xml:space="preserve" /></Paragraph></FlowDocument></MindMapNote>
+          <MindMapLink>
+            <ZIndex>10</ZIndex>
+            <To>1005</To>
+            <From>1006</From>
+            <Description />
+            <Points />
+            <TextOffset>
+              <X />
+              <Y />
+            </TextOffset>
+            <Angle>111.181349500266</Angle>
+          </MindMapLink>
+          <MindMapLink>
+            <ZIndex>11</ZIndex>
+            <To>1005</To>
+            <From>1008</From>
+            <Description />
+            <Points />
+            <TextOffset>
+              <X />
+              <Y />
+            </TextOffset>
+            <Angle>60.8025139539355</Angle>
+          </MindMapLink>
+          <MindMapLink>
+            <ZIndex>12</ZIndex>
+            <To>1005</To>
+            <From>1007</From>
+            <Description />
+            <Points />
+            <TextOffset>
+              <X />
+              <Y />
+            </TextOffset>
+            <Angle>33.7624563434493</Angle>
+          </MindMapLink>
+        </MindMap>
+        <MindMap>
+          <Name>mappings</Name>
+          <FlowDocument />
+          <Zoom>0.877521022998968</Zoom>
+          <MindMapCluster>
+            <ZIndex>10</ZIndex>
+            <X>174.306491219157</X>
+            <Y>20.6154380260461</Y>
+            <Width>126</Width>
+            <Height>50</Height>
+            <Neuron>1219</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>11</ZIndex>
+            <X>312.306491219157</X>
+            <Y>18.7428923287402</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>1220</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>12</ZIndex>
+            <X>428.306491219157</X>
+            <Y>15.7428923287402</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>1221</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>13</ZIndex>
+            <X>544.306491219157</X>
+            <Y>16.9996002210261</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>1222</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>14</ZIndex>
+            <X>657.306491219157</X>
+            <Y>13.9996002210261</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>1223</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>15</ZIndex>
+            <X>52.306491219157</X>
+            <Y>83.9996002210262</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>1224</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>16</ZIndex>
+            <X>164.306491219157</X>
+            <Y>82.9996002210262</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>1225</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>17</ZIndex>
+            <X>285.306491219157</X>
+            <Y>81.9996002210262</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>1226</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>18</ZIndex>
+            <X>402.306491219157</X>
+            <Y>79.9996002210262</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>1227</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>19</ZIndex>
+            <X>35.9731578858237</X>
+            <Y>249.734279702225</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>1228</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>20</ZIndex>
+            <X>178.973157885824</X>
+            <Y>250.734279702225</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>1229</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapNeuron>
+            <ZIndex>24</ZIndex>
+            <X>26.6274788734782</X>
+            <Y>397.704389418299</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>3698</Neuron>
+          </MindMapNeuron>
+          <MindMapCluster>
+            <ZIndex>25</ZIndex>
+            <X>146.627478873478</X>
+            <Y>391.692055790416</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>3911</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>26</ZIndex>
+            <X>278.627478873478</X>
+            <Y>389.736124863231</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>3991</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>27</ZIndex>
+            <X>415.627478873478</X>
+            <Y>395.869866900929</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>4084</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>28</ZIndex>
+            <X>43.6274788734781</X>
+            <Y>324.481790733407</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>4115</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>29</ZIndex>
+            <X>522.373947651809</X>
+            <Y>869.4550606067</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>4155</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>30</ZIndex>
+            <X>33.8990838117497</X>
+            <Y>483.266989060761</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>4399</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>31</ZIndex>
+            <X>179.89908381175</X>
+            <Y>473.266989060761</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>4400</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>32</ZIndex>
+            <X>315.89908381175</X>
+            <Y>477.266989060761</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>4401</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>33</ZIndex>
+            <X>463.89908381175</X>
+            <Y>479.266989060761</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>4402</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>34</ZIndex>
+            <X>598.89908381175</X>
+            <Y>477.266989060761</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>4403</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>35</ZIndex>
+            <X>735.89908381175</X>
+            <Y>474.266989060761</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>4404</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>36</ZIndex>
+            <X>869.89908381175</X>
+            <Y>476.266989060761</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>4405</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>37</ZIndex>
+            <X>308.973157885824</X>
+            <Y>249.384449393247</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>4424</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>38</ZIndex>
+            <X>650.373947651809</X>
+            <Y>871.4550606067</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>4760</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>39</ZIndex>
+            <X>38.3739476518081</X>
+            <Y>788.4550606067</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>4761</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>40</ZIndex>
+            <X>921.627478873477</X>
+            <Y>144.736124863231</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>4824</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>42</ZIndex>
+            <X>467.973157885824</X>
+            <Y>248.921310048416</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>4881</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>43</ZIndex>
+            <X>615.973157885824</X>
+            <Y>247.921310048416</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>5205</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>44</ZIndex>
+            <X>39.7262443055767</X>
+            <Y>568.254643381749</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>4390</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>51</ZIndex>
+            <X>753.973157885824</X>
+            <Y>247.921310048416</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>5549</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>53</ZIndex>
+            <X>894.973157885824</X>
+            <Y>245.158013183103</Y>
+            <Width>137</Width>
+            <Height>55</Height>
+            <Neuron>5590</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>50</ZIndex>
+            <X>38.1159260249869</X>
+            <Y>712.687995865057</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>6311</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>55</ZIndex>
+            <X>181.115926024987</X>
+            <Y>711.687995865057</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>6312</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>56</ZIndex>
+            <X>317.115926024987</X>
+            <Y>717.687995865057</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>6393</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>57</ZIndex>
+            <X>450.115926024987</X>
+            <Y>712.687995865057</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>6394</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>58</ZIndex>
+            <X>587.115926024987</X>
+            <Y>712.687995865057</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>6395</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>59</ZIndex>
+            <X>534.306491219157</X>
+            <Y>81.8225446163171</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>6396</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>60</ZIndex>
+            <X>670.306491219157</X>
+            <Y>79.8225446163171</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>6751</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>61</ZIndex>
+            <X>39.306491219157</X>
+            <Y>162.822544616317</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>7431</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>63</ZIndex>
+            <X>326.306491219157</X>
+            <Y>637.438953551793</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>7682</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>64</ZIndex>
+            <X>455.306491219157</X>
+            <Y>634.438953551793</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>7683</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>65</ZIndex>
+            <X>175.052959997488</X>
+            <Y>786.541480359786</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>4975</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>65</ZIndex>
+            <X>46.306491219157</X>
+            <Y>639.822544616317</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>7742</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>66</ZIndex>
+            <X>185.306491219157</X>
+            <Y>638.822544616317</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>7743</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>67</ZIndex>
+            <X>591.306491219157</X>
+            <Y>628.822544616317</Y>
+            <Width>119</Width>
+            <Height>55</Height>
+            <Neuron>7744</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>69</ZIndex>
+            <X>11.0529599974881</X>
+            <Y>870.541480359786</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>7799</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>70</ZIndex>
+            <X>136.052959997488</X>
+            <Y>869.541480359786</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>7800</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>71</ZIndex>
+            <X>264.052959997488</X>
+            <Y>869.541480359786</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>7801</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>72</ZIndex>
+            <X>391.052959997488</X>
+            <Y>867.541480359786</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>7802</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>73</ZIndex>
+            <X>788.052959997488</X>
+            <Y>874.541480359786</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>7803</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>74</ZIndex>
+            <X>924.052959997488</X>
+            <Y>869.541480359786</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>7804</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>75</ZIndex>
+            <X>1057.05295999749</X>
+            <Y>869.541480359786</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>7805</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>76</ZIndex>
+            <X>1184.05295999749</X>
+            <Y>873.541480359786</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>7806</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>77</ZIndex>
+            <X>1311.05295999749</X>
+            <Y>875.277425704149</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>7831</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>78</ZIndex>
+            <X>22.0529599974881</X>
+            <Y>941.541480359786</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>7886</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>79</ZIndex>
+            <X>156.052959997488</X>
+            <Y>936.541480359786</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>7887</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>80</ZIndex>
+            <X>183.306491219157</X>
+            <Y>162.822544616317</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>7894</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>81</ZIndex>
+            <X>287.052959997488</X>
+            <Y>938.541480359786</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>7965</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>82</ZIndex>
+            <X>35.306491219157</X>
+            <Y>17.8225446163171</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>8032</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>84</ZIndex>
+            <X>417.052959997488</X>
+            <Y>936.541480359786</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>8046</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>85</ZIndex>
+            <X>319.306491219157</X>
+            <Y>159.626081567311</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>8227</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>86</ZIndex>
+            <X>462.306491219157</X>
+            <Y>162.626081567311</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>8229</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>88</ZIndex>
+            <X>31.0529599974881</X>
+            <Y>1017.54148035979</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>8240</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>88</ZIndex>
+            <X>169.406082164374</X>
+            <Y>1010.21301635661</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>8244</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>89</ZIndex>
+            <X>313.052959997488</X>
+            <Y>786.57992295258</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>8245</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>90</ZIndex>
+            <X>458.052959997488</X>
+            <Y>787.57992295258</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>8246</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>91</ZIndex>
+            <X>749.306491219157</X>
+            <Y>156.822544616317</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>8279</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>92</ZIndex>
+            <X>1450.11446341435</X>
+            <Y>867.541480359786</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>8298</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>93</ZIndex>
+            <X>1580.59327608434</X>
+            <Y>872.555605246461</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>8299</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>94</ZIndex>
+            <X>1711.24755351129</X>
+            <Y>867.555605246461</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>8300</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>95</ZIndex>
+            <X>1846.24755351129</X>
+            <Y>863.555605246461</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>8301</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>96</ZIndex>
+            <X>611.306491219157</X>
+            <Y>160.822544616317</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>8333</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>97</ZIndex>
+            <X>168.306491219157</X>
+            <Y>323.822544616317</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>5332</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>98</ZIndex>
+            <X>293.306491219157</X>
+            <Y>320.822544616317</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>8457</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>99</ZIndex>
+            <X>423.306491219157</X>
+            <Y>323.822544616317</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>8438</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>77</ZIndex>
+            <X>31.2341396964771</X>
+            <Y>1081.58082012463</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>8742</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>78</ZIndex>
+            <X>554</X>
+            <Y>400.207106590271</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>8818</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapNeuron>
+            <ZIndex>79</ZIndex>
+            <X>693.118733001314</X>
+            <Y>396.237506579088</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>7760</Neuron>
+          </MindMapNeuron>
+          <MindMapCluster>
+            <ZIndex>80</ZIndex>
+            <X>595.65165345064</X>
+            <Y>784.600445284517</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>8900</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>81</ZIndex>
+            <X>177.123290818541</X>
+            <Y>1084.95308434761</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>2919</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>82</ZIndex>
+            <X>830.169724357603</X>
+            <Y>75.1168490798062</Y>
+            <Width>159.30380583947</Width>
+            <Height>50</Height>
+            <Neuron>9340</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>83</ZIndex>
+            <X>323.267889743041</X>
+            <Y>1085.10894120483</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>9447</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>84</ZIndex>
+            <X>467.85419331602</X>
+            <Y>1081.10894120483</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>9448</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>85</ZIndex>
+            <X>1202.3899728021</X>
+            <Y>63.00025837676</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>7179</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>86</ZIndex>
+            <X>43.0722994622506</X>
+            <Y>1155.64760347926</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>9944</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>87</ZIndex>
+            <X>183.79817687311</X>
+            <Y>1157.20589883079</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>9945</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>88</ZIndex>
+            <X>552.461804994958</X>
+            <Y>942.857801750526</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>10068</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>89</ZIndex>
+            <X>1205.99590945217</X>
+            <Y>139.491279352653</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>10095</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>90</ZIndex>
+            <X>1211.88099377799</X>
+            <Y>219.261448004307</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>10096</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>91</ZIndex>
+            <X>1202.6478123719</X>
+            <Y>301.310764331723</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>10097</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>92</ZIndex>
+            <X>571.834560238931</X>
+            <Y>328.611220113446</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>10202</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>93</ZIndex>
+            <X>705.166374299856</X>
+            <Y>322.913350924042</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>10203</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>94</ZIndex>
+            <X>822.773985978795</X>
+            <Y>399.732835903113</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>10221</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>95</ZIndex>
+            <X>742.026800461975</X>
+            <Y>634.355055572519</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>10330</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>96</ZIndex>
+            <X>174.402438494301</X>
+            <Y>566.980625299672</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>4239</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>97</ZIndex>
+            <X>317.292547906749</X>
+            <Y>563.724460758745</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>4240</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>98</ZIndex>
+            <X>467.067741645024</X>
+            <Y>564.003608434507</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>10428</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>99</ZIndex>
+            <X>603.164699270983</X>
+            <Y>557.887017731461</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>10429</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>100</ZIndex>
+            <X>745.074441760517</X>
+            <Y>556.445313082984</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>10430</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>101</ZIndex>
+            <X>884.962876144092</X>
+            <Y>555.724460758745</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>10431</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>102</ZIndex>
+            <X>1038.22239074277</X>
+            <Y>551.837701404045</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>10432</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>103</ZIndex>
+            <X>1046.85131052767</X>
+            <Y>248.332072437684</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>10507</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>104</ZIndex>
+            <X>695.025125433101</X>
+            <Y>945.228881965626</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>10536</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+        </MindMap>
+        <MindMap>
+          <Name>Neuron mappings</Name>
+          <FlowDocument />
+          <Zoom>1</Zoom>
+          <MindMapNeuron>
+            <ZIndex />
+            <X>28</X>
+            <Y>12.4944846560205</Y>
+            <Width>90</Width>
+            <Height>50</Height>
+            <Neuron>1208</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>1</ZIndex>
+            <X>600</X>
+            <Y>19.7015912462915</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>8045</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>2</ZIndex>
+            <X>38</X>
+            <Y>322.701591246291</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>2943</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>3</ZIndex>
+            <X>772</X>
+            <Y>13.7015912462915</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>1216</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>4</ZIndex>
+            <X>496</X>
+            <Y>22.4944846560205</Y>
+            <Width>90</Width>
+            <Height>50</Height>
+            <Neuron>1214</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>5</ZIndex>
+            <X>390</X>
+            <Y>24.4944846560205</Y>
+            <Width>90</Width>
+            <Height>50</Height>
+            <Neuron>1213</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>7</ZIndex>
+            <X>292</X>
+            <Y>30.4944846560205</Y>
+            <Width>90</Width>
+            <Height>50</Height>
+            <Neuron>1211</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>8</ZIndex>
+            <X>184</X>
+            <Y>24.4944846560205</Y>
+            <Width>90</Width>
+            <Height>50</Height>
+            <Neuron>1209</Neuron>
+          </MindMapNeuron>
+          <MindMapCluster>
+            <ZIndex>9</ZIndex>
+            <X>52.1358024691358</X>
+            <Y>100.769287191648</Y>
+            <Width>132</Width>
+            <Height>50</Height>
+            <Neuron>1003</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapNeuron>
+            <ZIndex>10</ZIndex>
+            <X>181.135802469136</X>
+            <Y>105.269287191648</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>3774</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>11</ZIndex>
+            <X>302</X>
+            <Y>106.980795617293</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>5779</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>12</ZIndex>
+            <X>49</X>
+            <Y>196.222273805649</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>7760</Neuron>
+          </MindMapNeuron>
+          <MindMapCluster>
+            <ZIndex>13</ZIndex>
+            <X>161.123456790123</X>
+            <Y>184.472397204378</Y>
+            <Width>533</Width>
+            <Height>284.153591224912</Height>
+            <Neuron>5551</Neuron>
+            <ChildrenIds>
+              <ID>5548</ID>
+              <ID>5547</ID>
+              <ID>5546</ID>
+              <ID>5545</ID>
+              <ID>5544</ID>
+              <ID>1004</ID>
+              <ID>1218</ID>
+              <ID>1217</ID>
+              <ID>9608</ID>
+            </ChildrenIds>
+          </MindMapCluster>
+          <MindMapNeuron>
+            <ZIndex>14</ZIndex>
+            <X>558.123456790123</X>
+            <Y>375.685300594118</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>5548</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>15</ZIndex>
+            <X>440.123456790123</X>
+            <Y>373.685300594118</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>5547</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>16</ZIndex>
+            <X>198.123456790123</X>
+            <Y>376.685300594118</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>5546</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>17</ZIndex>
+            <X>314.123456790123</X>
+            <Y>310.685300594118</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>5545</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>18</ZIndex>
+            <X>198.123456790123</X>
+            <Y>311.685300594118</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>5544</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>19</ZIndex>
+            <X>327.123456790123</X>
+            <Y>377.153565149188</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>1004</Neuron>
+          </MindMapNeuron>
+          <MindMapCluster>
+            <ZIndex>21</ZIndex>
+            <X>313.123456790123</X>
+            <Y>245.729105096668</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>1218</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>22</ZIndex>
+            <X>199.123456790123</X>
+            <Y>245.472397204378</Y>
+            <Width>116</Width>
+            <Height>50</Height>
+            <Neuron>1217</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapCluster>
+            <ZIndex>22</ZIndex>
+            <X>718</X>
+            <Y>100</Y>
+            <Width>107</Width>
+            <Height>70.0000000000001</Height>
+            <Neuron>9374</Neuron>
+            <ChildrenIds />
+          </MindMapCluster>
+          <MindMapNeuron>
+            <ZIndex>23</ZIndex>
+            <X>908</X>
+            <Y>111.207106590271</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>9378</Neuron>
+          </MindMapNeuron>
+          <MindMapNote>
+            <Height>120</Height>
+            <Width>260</Width>
+            <X>833</X>
+            <Y>210</Y>
+            <Title>wordnet decleration</Title><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph><Run FontFamily="Segoe UI" FontSize="12">the object 'wordnet meaning' needs to pre-exist so that we can use it in the queries.</Run></Paragraph><Paragraph><Run FontFamily="Segoe UI" FontSize="12">The synset link needs to exist because this is used by wordnet to find the word.</Run></Paragraph></FlowDocument></MindMapNote>
+          <MindMapNeuron>
+            <ZIndex>26</ZIndex>
+            <X>808</X>
+            <Y>419.707106590271</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>82</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>27</ZIndex>
+            <X>806</X>
+            <Y>365.707106590271</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>83</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>28</ZIndex>
+            <X>810</X>
+            <Y>484.707106590271</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>84</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>29</ZIndex>
+            <X>812</X>
+            <Y>543.707106590271</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>85</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>30</ZIndex>
+            <X>818</X>
+            <Y>667.707106590271</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>108</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>31</ZIndex>
+            <X>818</X>
+            <Y>604.707106590271</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>106</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>32</ZIndex>
+            <X>1126</X>
+            <Y>502.207106590271</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>9466</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>33</ZIndex>
+            <X>960</X>
+            <Y>377.207106590271</Y>
+            <Width>139</Width>
+            <Height>31</Height>
+            <Neuron>9467</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>34</ZIndex>
+            <X>959</X>
+            <Y>432.207106590271</Y>
+            <Width>142</Width>
+            <Height>34</Height>
+            <Neuron>9468</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>35</ZIndex>
+            <X>955</X>
+            <Y>494.207106590271</Y>
+            <Width>159</Width>
+            <Height>37</Height>
+            <Neuron>9469</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>36</ZIndex>
+            <X>966</X>
+            <Y>547.207106590271</Y>
+            <Width>154</Width>
+            <Height>33</Height>
+            <Neuron>9470</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>37</ZIndex>
+            <X>972</X>
+            <Y>610.207106590271</Y>
+            <Width>160</Width>
+            <Height>28</Height>
+            <Neuron>9471</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>38</ZIndex>
+            <X>975</X>
+            <Y>674.207106590271</Y>
+            <Width>162</Width>
+            <Height>26</Height>
+            <Neuron>9472</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>45</ZIndex>
+            <X>434</X>
+            <Y>312.207106590271</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>9608</Neuron>
+          </MindMapNeuron>
+          <MindMapCluster>
+            <ZIndex>46</ZIndex>
+            <X>238</X>
+            <Y>533.707106590271</Y>
+            <Width>341</Width>
+            <Height>168</Height>
+            <Neuron>143</Neuron>
+            <ChildrenIds>
+              <ID>1230</ID>
+            </ChildrenIds>
+          </MindMapCluster>
+          <MindMapNeuron>
+            <ZIndex>47</ZIndex>
+            <X>254</X>
+            <Y>589.707106590271</Y>
+            <Width>56</Width>
+            <Height>25</Height>
+            <Neuron>1230</Neuron>
+          </MindMapNeuron>
+          <MindMapLink>
+            <ZIndex>20</ZIndex>
+            <To>1004</To>
+            <From>5546</From>
+            <Description />
+            <Points />
+            <TextOffset>
+              <X />
+              <Y />
+            </TextOffset>
+            <Angle>180.207980347761</Angle>
+          </MindMapLink>
+          <MindMapLink>
+            <ZIndex>24</ZIndex>
+            <To>9378</To>
+            <From>9374</From>
+            <Description />
+            <Points />
+            <TextOffset>
+              <X />
+              <Y />
+            </TextOffset>
+            <Angle>180.370837250852</Angle>
+          </MindMapLink>
+          <MindMapLink>
+            <ZIndex>39</ZIndex>
+            <To>9467</To>
+            <From>83</From>
+            <Description />
+            <Points />
+            <TextOffset>
+              <X />
+              <Y />
+            </TextOffset>
+            <Angle>180.660440828658</Angle>
+          </MindMapLink>
+          <MindMapLink>
+            <ZIndex>40</ZIndex>
+            <To>9468</To>
+            <From>82</From>
+            <Description />
+            <Points />
+            <TextOffset>
+              <X />
+              <Y />
+            </TextOffset>
+            <Angle>181.498675606024</Angle>
+          </MindMapLink>
+          <MindMapLink>
+            <ZIndex>41</ZIndex>
+            <To>9469</To>
+            <From>84</From>
+            <Description />
+            <Points />
+            <TextOffset>
+              <X />
+              <Y />
+            </TextOffset>
+            <Angle>180.984930698955</Angle>
+          </MindMapLink>
+          <MindMapLink>
+            <ZIndex>42</ZIndex>
+            <To>9470</To>
+            <From>85</From>
+            <Description />
+            <Points />
+            <TextOffset>
+              <X />
+              <Y />
+            </TextOffset>
+            <Angle>178.417646077381</Angle>
+          </MindMapLink>
+          <MindMapLink>
+            <ZIndex>43</ZIndex>
+            <To>9471</To>
+            <From>106</From>
+            <Description />
+            <Points />
+            <TextOffset>
+              <X />
+              <Y />
+            </TextOffset>
+            <Angle>178.287864220731</Angle>
+          </MindMapLink>
+          <MindMapLink>
+            <ZIndex>44</ZIndex>
+            <To>9472</To>
+            <From>108</From>
+            <Description />
+            <Points />
+            <TextOffset>
+              <X />
+              <Y />
+            </TextOffset>
+            <Angle>178.324271646003</Angle>
+          </MindMapLink>
+        </MindMap>
+        <MindMap>
+          <Name>Type declerations</Name>
+          <FlowDocument />
+          <Zoom>1</Zoom>
+          <MindMapNote>
+            <Height>152</Height>
+            <Width>230</Width>
+            <X>85</X>
+            <Y>34</Y>
+            <Title>info</Title><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph><Run FontFamily="Segoe UI" FontSize="12" xml:space="preserve">This is a temp mind map to declare some types so that certain processes can be optimized according to type info.  This has to be built into the designer, but not yet done.</Run></Paragraph></FlowDocument></MindMapNote>
+          <MindMapNeuron>
+            <ZIndex>1</ZIndex>
+            <X>422.719513727326</X>
+            <Y>50.0038133018538</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>1278</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>2</ZIndex>
+            <X>420.280486272674</X>
+            <Y>125.003813301854</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>1272</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>3</ZIndex>
+            <X>426.79289317131</X>
+            <Y>188.740901170819</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>8756</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>7</ZIndex>
+            <X>668.79289317131</X>
+            <Y>44.7409011708187</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>7110</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>5</ZIndex>
+            <X>679</X>
+            <Y>118.652460447067</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>1504</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>6</ZIndex>
+            <X>686.585786342621</X>
+            <Y>194.554216415424</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>9225</Neuron>
+          </MindMapNeuron>
+          <MindMapNeuron>
+            <ZIndex>8</ZIndex>
+            <X>830.378679513931</X>
+            <Y>36.5284138031194</Y>
+            <Width>100</Width>
+            <Height>50</Height>
+            <Neuron>10965</Neuron>
+          </MindMapNeuron>
+        </MindMap>
+      </EditorCollection>
+      <IsExpanded>True</IsExpanded>
+    </EditorFolder>
+    <EditorFolder>
+      <Name>Code</Name>
+      <FlowDocument />
+      <EditorCollection>
+        <EditorFolder>
+          <Name>Common</Name>
+          <FlowDocument />
+          <EditorCollection>
+            <CodeEditor>
+              <Name>Clean value</Name>
+              <Item>2891</Item>
+            </CodeEditor>
+            <EditorFolder>
+              <Name>Log</Name>
+              <FlowDocument />
+              <EditorCollection>
+                <CodeEditor>
+                  <Name>Log incomming</Name>
+                  <Item>1238</Item>
+                </CodeEditor>
+                <CodeEditor>
+                  <Name>Match Patterns with log</Name>
+                  <Item>2053</Item>
+                </CodeEditor>
+                <CodeEditor>
+                  <Name>End of match with log</Name>
+                  <Item>2073</Item>
+                </CodeEditor>
+                <CodeEditor>
+                  <Name>Log outgoing</Name>
+                  <Item>3528</Item>
+                </CodeEditor>
+                <CodeEditor>
+                  <Name>MoveLogToHistory</Name>
+                  <Item>3589</Item>
+                </CodeEditor>
+                <CodeEditor>
+                  <Name>Handle repetition</Name>
+                  <Item>3752</Item>
+                </CodeEditor>
+              </EditorCollection>
+              <IsExpanded>True</IsExpanded>
+            </EditorFolder>
+            <EditorFolder>
+              <Name>Thesaurus</Name>
+              <FlowDocument />
+              <EditorCollection>
+                <CodeEditor>
+                  <Name>GetPosOfItem</Name>
+                  <Item>1626</Item>
+                </CodeEditor>
+                <CodeEditor>
+                  <Name>GetThesPathResult</Name>
+                  <Item>1792</Item>
+                </CodeEditor>
+                <CodeEditor>
+                  <Name>End of GetThesaurusCallback</Name>
+                  <Item>1694</Item>
+                </CodeEditor>
+                <CodeEditor>
+                  <Name>IsThesRelated</Name>
+                  <Item>6511</Item>
+                </CodeEditor>
+              </EditorCollection>
+              <IsExpanded>True</IsExpanded>
+            </EditorFolder>
+            <EditorFolder>
+              <Name>Assets</Name>
+              <FlowDocument />
+              <EditorCollection>
+                <CodeEditor>
+                  <Name>Get AssetPath result</Name>
+                  <Item>2448</Item>
+                </CodeEditor>
+                <CodeEditor>
+                  <Name>End of GetAssetPathResult</Name>
+                  <Item>2404</Item>
+                </CodeEditor>
+              </EditorCollection>
+              <IsExpanded>True</IsExpanded>
+            </EditorFolder>
+            <EditorFolder>
+              <Name>Do patterns</Name><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph><Run FontFamily="Segoe UI" FontSize="12">Calls all the do patterns that were delayed.</Run></Paragraph></FlowDocument><EditorCollection><CodeEditor><Name>Execute do patterns</Name><Item>5202</Item></CodeEditor><CodeEditor><Name>Execute do pattern</Name><Item>2760</Item></CodeEditor><CodeEditor><Name>Do var operation</Name><Item>2777</Item></CodeEditor><CodeEditor><Name>Do thesaurus operation</Name><Item>2773</Item></CodeEditor><CodeEditor><Name>Do asset operation</Name><Item>2775</Item></CodeEditor><CodeEditor><Name>Call global do-statements</Name><Item>3896</Item></CodeEditor><CodeEditor><Name>Call delayed do-satements</Name><Item>5488</Item></CodeEditor><CodeEditor><Name>Call OS function</Name><Item>5502</Item></CodeEditor><CodeEditor><Name>Make OperandRes single</Name><Item>7021</Item></CodeEditor><CodeEditor><Name>Execute Evaluate</Name><Item>9403</Item></CodeEditor><CodeEditor><Name>End of Evaluate</Name><Item>9427</Item></CodeEditor><CodeEditor><Name>Execute Evaluate internal</Name><Item>9785</Item></CodeEditor></EditorCollection><IsExpanded>True</IsExpanded></EditorFolder>
+          </EditorCollection>
+          <IsExpanded />
+        </EditorFolder>
+        <EditorFolder>
+          <Name>Pattern matcher</Name>
+          <FlowDocument />
+          <EditorCollection>
+            <CodeEditor>
+              <Name>ContainsWord(in)</Name>
+              <Item>33</Item>
+            </CodeEditor>
+            <EditorFolder>
+              <Name>Resolve synonyms</Name>
+              <FlowDocument />
+              <EditorCollection>
+                <CodeEditor>
+                  <Name>Resolve synonyms</Name>
+                  <Item>1275</Item>
+                </CodeEditor>
+                <CodeEditor>
+                  <Name>ResetCurrentLength</Name>
+                  <Item>1282</Item>
+                </CodeEditor>
+                <CodeEditor>
+                  <Name>Get range and common</Name>
+                  <Item>1313</Item>
+                </CodeEditor>
+                <CodeEditor>
+                  <Name>Process complete common parents</Name>
+                  <Item>1343</Item>
+                </CodeEditor>
+              </EditorCollection>
+              <IsExpanded />
+            </EditorFolder>
+            <CodeEditor>
+              <Name>PatternMatch finished</Name>
+              <Item>1365</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>Collect values for Var</Name>
+              <Item>1485</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>CollectThes values at start</Name>
+              <Item>1609</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>Try collect values for thes var</Name>
+              <Item>5899</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>Try collect pattern result</Name>
+              <Item>2031</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>Load and convert pattern results</Name>
+              <Item>2275</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>Load pattern results</Name>
+              <Item>2396</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>ResolvePatternCondition</Name>
+              <Item>2374</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>Calculate Operand</Name>
+              <Item>2412</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>Get var result</Name>
+              <Item>3719</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>AppendQuestion</Name>
+              <Item>3116</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>End of ResolvePatternCondition</Name>
+              <Item>2386</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>BuildCallbackArgs</Name>
+              <Item>4828</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>GetValidSubPatternsFromTopic</Name>
+              <Item>6933</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>GetValidSubPatternsFromRule</Name>
+              <Item>6914</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>GetPossibleNextsForVar</Name>
+              <Item>6278</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>PrepareForSubPatterns</Name>
+              <Item>5920</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>Collect results</Name>
+              <Item>6225</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>AdjustResultMeanings</Name>
+              <Item>2498</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>ResolveDuplicates</Name>
+              <Item>2912</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>New extract words from input</Name>
+              <Item>9701</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>Process SplitResult</Name>
+              <Item>9806</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>Check Plurals of words</Name>
+              <Item>10594</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>Collect thes values</Name>
+              <Item>10725</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>GetPosDuringThesParse</Name>
+              <Item>10814</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>EndOfParseWithThesTree</Name>
+              <Item>10704</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>Collect restricted thes values</Name>
+              <Item>10924</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>VerifyWeightIsMax</Name>
+              <Item>11061</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>CalculatePathIsUnique</Name>
+              <Item>11324</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>Try Match with ThesVar2</Name>
+              <Item>5114</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>Stage2 CollectThesValues</Name>
+              <Item>11021</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>Try collect restricted for ThesVar</Name>
+              <Item>11354</Item>
+            </CodeEditor>
+          </EditorCollection>
+          <IsExpanded />
+        </EditorFolder>
+        <EditorFolder>
+          <Name>System events</Name>
+          <FlowDocument />
+          <EditorCollection>
+            <CodeEditor>
+              <Name>OnStarted</Name>
+              <Item>301</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>OnSinDestroyed</Name>
+              <Item>381</Item>
+            </CodeEditor>
+            <CodeEditor>
+              <Name>OnSinCreated</Name>
+              <Item>380</Item>
+            </CodeEditor>
+          </EditorCollection>
+          <IsExpanded />
+        </EditorFolder>
+        <EditorFolder>
+          <Name>Var path modifiers</Name><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"><Paragraph><Run FontFamily="Segoe UI" FontSize="12" xml:space="preserve" /></Paragraph></FlowDocument><EditorCollection><EditorFolder><Name>ThesPathModifiers</Name><FlowDocument /><EditorCollection><CodeEditor><Name>Plural</Name><Item>1217</Item></CodeEditor><CodeEditor><Name>Singular</Name><Item>1218</Item></CodeEditor><CodeEditor><Name>superlative</Name><Item>1228</Item></CodeEditor><CodeEditor><Name>comparative</Name><Item>1229</Item></CodeEditor><CodeEditor><Name>FirstPersonPresent</Name><Item>1219</Item></CodeEditor><CodeEditor><Name>ThesParent</Name><Item>10507</Item></CodeEditor><CodeEditor><Name>SecondPersonpresent</Name><Item>1220</Item></CodeEditor><CodeEditor><Name>ThirdPersonPresent</Name><Item>1221</Item></CodeEditor><CodeEditor><Name>PluralFirstPresent</Name><Item>1222</Item></CodeEditor><CodeEditor><Name>PluralSecondPresent</Name><Item>1223</Item></CodeEditor><CodeEditor><Name>PluralthirdPresent</Name><Item>1224</Item></CodeEditor><CodeEditor><Name>Pasttense</Name><Item>1225</Item></CodeEditor><CodeEditor><Name>PresentParticle</Name><Item>1226</Item></CodeEditor><CodeEditor><Name>PastParticle</Name><Item>1227</Item></CodeEditor><CodeEditor><Name>invertperson</Name><Item>5549</Item></CodeEditor><CodeEditor><Name>ResolvePerson</Name><Item>5590</Item></CodeEditor><CodeEditor><Name>ResolvePersonFinished</Name><Item>5708</Item></CodeEditor><CodeEditor><Name>Conjugate</Name><Item>6396</Item></CodeEditor><CodeEditor><Name>Infinitive</Name><Item>8032</Item></CodeEditor><CodeEditor><Name>ConjugateInv</Name><Item>6751</Item></CodeEditor><CodeEditor><Name>FindAssetFromValue</Name><Item>8900</Item></CodeEditor><CodeEditor><Name>FindAssetFromValueFinished</Name><Item>8958</Item></CodeEditor><CodeEditor><Name>WordNetMeaning</Name><Item>9340</Item></CodeEditor><CodeEditor><Name>GetThesRelated</Name><Item>7179</Item></CodeEditor><CodeEditor><Name>GetInstruction</Name><Item>10095</Item></CodeEditor></EditorCollection><IsExpanded>True</IsExpanded></EditorFolder><EditorFolder><Name>asset path modifiers</Name><FlowDocument /><EditorCollection><CodeEditor><Name>extra</Name><Item>4390</Item></CodeEditor><CodeEditor><Name>Filter</Name><Item>6311</Item></CodeEditor><CodeEditor><Name>FilterContext</Name><Item>6312</Item></CodeEditor><CodeEditor><Name>FilterTime</Name><Item>6393</Item></CodeEditor><CodeEditor><Name>FilterLoc</Name><Item>6394</Item></CodeEditor><CodeEditor><Name>FilterTimeLoc</Name><Item>6395</Item></CodeEditor><CodeEditor><Name>attribute</Name><Item>4761</Item></CodeEditor><CodeEditor><Name>attributeFinished</Name><Item>5764</Item></CodeEditor><CodeEditor><Name>Property</Name><Item>4975</Item></CodeEditor><CodeEditor><Name>IsNot</Name><Item>10330</Item></CodeEditor><CodeEditor><Name>what</Name><Item>4239</Item></CodeEditor><CodeEditor><Name>where</Name><Item>4240</Item></CodeEditor><CodeEditor><Name>when</Name><Item>10428</Item></CodeEditor><CodeEditor><Name>why</Name><Item>10432</Item></CodeEditor><CodeEditor><Name>then</Name><Item>10431</Item></CodeEditor><CodeEditor><Name>who</Name><Item>10430</Item></CodeEditor><CodeEditor><Name>how</Name><Item>10429</Item></CodeEditor><CodeEditor><Name>ValueFor</Name><Item>8245</Item></CodeEditor><CodeEditor><Name>AttributeFor</Name><Item>8246</Item></CodeEditor></EditorCollection><IsExpanded /></EditorFolder><EditorFolder><Name>time related</Name><FlowDocument /><EditorCollection><CodeEditor><Name>second</Name><Item>4404</Item></CodeEditor><CodeEditor><Name>year</Name><Item>4399</Item></CodeEditor><CodeEditor><Name>hour</Name><Item>4403</Item></CodeEditor><CodeEditor><Name>minute</Name><Item>4402</Item></CodeEditor><CodeEditor><Name>day</Name><Item>4401</Item></CodeEditor><CodeEditor><Name>month</Name><Item>4400</Item></CodeEditor><CodeEditor><Name>dayofweek</Name><Item>4405</Item></CodeEditor><CodeEditor><Name>ToDate</Name><Item>8227</Item></CodeEditor></EditorCollection><IsExpanded /></EditorFolder><EditorFolder><Name>math</Name><FlowDocument /><EditorCollection><CodeEditor><Name>Modulus</Name><Item>7831</Item></CodeEditor><CodeEditor><Name>Avg</Name><Item>7806</Item></CodeEditor><CodeEditor><Name>Max</Name><Item>7805</Item></CodeEditor><CodeEditor><Name>Min</Name><Item>7804</Item></CodeEditor><CodeEditor><Name>StDev</Name><Item>7803</Item></CodeEditor><CodeEditor><Name>count</Name><Item>4760</Item></CodeEditor><CodeEditor><Name>complete</Name><Item>4155</Item></CodeEditor><CodeEditor><Name>Divide</Name><Item>7802</Item></CodeEditor><CodeEditor><Name>Multiply</Name><Item>7801</Item></CodeEditor><CodeEditor><Name>Subtract</Name><Item>7800</Item></CodeEditor><CodeEditor><Name>Add</Name><Item>7799</Item></CodeEditor><CodeEditor><Name>Union</Name><Item>8301</Item></CodeEditor><CodeEditor><Name>Distinct</Name><Item>8300</Item></CodeEditor><CodeEditor><Name>Reverse</Name><Item>8299</Item></CodeEditor><CodeEditor><Name>Complement</Name><Item>8298</Item></CodeEditor><CodeEditor><Name>SolveMultiplyStack</Name><Item>10096</Item></CodeEditor><CodeEditor><Name>SolveAddStack</Name><Item>10097</Item></CodeEditor><CodeEditor><Name>random</Name><Item>4424</Item></CodeEditor></EditorCollection><IsExpanded /></EditorFolder><EditorFolder><Name>Lists</Name><FlowDocument /><EditorCollection><CodeEditor><Name>IsList</Name><Item>7744</Item></CodeEditor><CodeEditor><Name>IsAnd</Name><Item>7682</Item></CodeEditor><CodeEditor><Name>IsOr</Name><Item>7683</Item></CodeEditor><CodeEditor><Name>LastChild</Name><Item>7886</Item></CodeEditor><CodeEditor><Name>FirstChild</Name><Item>7887</Item></CodeEditor><CodeEditor><Name>ChildAt</Name><Item>7965</Item></CodeEditor><CodeEditor><Name>ContainsChild</Name><Item>8046</Item></CodeEditor><CodeEditor><Name>PopChild</Name><Item>10068</Item></CodeEditor><CodeEditor><Name>Children</Name><Item>10536</Item></CodeEditor></EditorCollection><IsExpanded /></EditorFolder><EditorFolder><Name>Conversion</Name><FlowDocument /><EditorCollection><CodeEditor><Name>ToNumber</Name><Item>7894</Item></CodeEditor><CodeEditor><Name>ToTime</Name><Item>8229</Item></CodeEditor><CodeEditor><Name>ToPerson</Name><Item>7431</Item></CodeEditor><CodeEditor><Name>CreateAsset</Name><Item>8279</Item></CodeEditor><CodeEditor><Name>ToTimeSpan</Name><Item>8333</Item></CodeEditor></EditorCollection><IsExpanded /></EditorFolder><EditorFolder><Name>Pattern related</Name><FlowDocument /><EditorCollection><CodeEditor><Name>topics</Name><Item>3911</Item></CodeEditor><CodeEditor><Name>alltopics</Name><Item>4084</Item></CodeEditor><CodeEditor><Name>rules</Name><Item>3991</Item></CodeEditor><CodeEditor><Name>getresultfromrule</Name><Item>4115</Item></CodeEditor><CodeEditor><Name>GetResultFromRuleSave</Name><Item>4125</Item></CodeEditor><CodeEditor><Name>GetTopic</Name><Item>5332</Item></CodeEditor><CodeEditor><Name>GetRule</Name><Item>8457</Item></CodeEditor><CodeEditor><Name>Render</Name><Item>8438</Item></CodeEditor><CodeEditor><Name>GetTopicFinished</Name><Item>8623</Item></CodeEditor><CodeEditor><Name>ProcessInput</Name><Item>2919</Item></CodeEditor><CodeEditor><Name>Input</Name><Item>8818</Item></CodeEditor><CodeEditor><Name>IncreaseWeight</Name><Item>9447</Item></CodeEditor><CodeEditor><Name>DecreaseWeight</Name><Item>9448</Item></CodeEditor></EditorCollection><IsExpanded /></EditorFolder><CodeEditor><Name>CompleteFinished</Name><Item>4282</Item></CodeEditor><CodeEditor><Name>interleaf</Name><Item>4824</Item></CodeEditor><CodeEditor><Name>opposite</Name><Item>4881</Item></CodeEditor><CodeEditor><Name>isaof</Name><Item>5205</Item></CodeEditor><CodeEditor><Name>IsaOfFinished</Name><Item>5228</Item></CodeEditor><CodeEditor><Name>allucase</Name><Item>9945</Item></CodeEditor><CodeEditor><Name>ucase</Name><Item>9944</Item></CodeEditor><CodeEditor><Name>IsAbstract</Name><Item>7742</Item></CodeEditor><CodeEditor><Name>IsConcrete</Name><Item>7743</Item></CodeEditor><EditorFolder><Name>get</Name><FlowDocument /><EditorCollection><CodeEditor><Name>GetCommonDates</Name><Item>8240</Item></CodeEditor><CodeEditor><Name>GetDates</Name><Item>8244</Item></CodeEditor></EditorCollection><IsExpanded /></EditorFolder></EditorCollection><IsExpanded>True</IsExpanded></EditorFolder>
+        <EditorFolder>
+          <Name>wordnet</Name><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph><Run FontFamily="Segoe UI" FontSize="12">this folder contains the code used by the wordnet sin to load data from a device (like the contacts list of an android).</Run></Paragraph></FlowDocument><EditorCollection><CodeEditor><Name>LoadAssetItem</Name><Item>390</Item></CodeEditor><CodeEditor><Name>SynSetID</Name><Item>136</Item></CodeEditor></EditorCollection><IsExpanded /></EditorFolder>
+      </EditorCollection>
+      <IsExpanded>True</IsExpanded>
+    </EditorFolder>
+    <EditorFolder>
+      <Name>Weights</Name>
+      <FlowDocument />
+      <EditorCollection>
+        <CodeEditor>
+          <Name>1</Name>
+          <Item>2151</Item>
+        </CodeEditor>
+        <CodeEditor>
+          <Name>Addition(0,5,Multiply(1,ChildCount(var(1482)))) - 5902</Name>
+          <Item>5902</Item>
+        </CodeEditor>
+        <CodeEditor>
+          <Name>Divide(1,Count(var(1310))) - 5895</Name>
+          <Item>5895</Item>
+        </CodeEditor>
+        <CodeEditor>
+          <Name>0,01</Name>
+          <Item>4006</Item>
+        </CodeEditor>
+        <CodeEditor>
+          <Name>0,01</Name>
+          <Item>7022</Item>
+        </CodeEditor>
+        <CodeEditor>
+          <Name>15</Name>
+          <Item>8386</Item>
+        </CodeEditor>
+      </EditorCollection>
+      <IsExpanded />
+    </EditorFolder>
+    <EditorFolder>
+      <Name>Default topics</Name>
+      <FlowDocument />
+      <EditorCollection>
+        <TextPatternEditor>
+          <Name>Autolearned</Name>
+          <Item>5597</Item>
+          <HasDuplicateName />
+          <IsParsed>True</IsParsed>
+        </TextPatternEditor>
+      </EditorCollection>
+      <IsExpanded />
+    </EditorFolder>
+  </Editors>
+  <Thesaurus>
+    <Relationships>
+      <ID>1230</ID>
+    </Relationships>
+    <SelectedRelationshipIndex />
+    <NoRecursiveRelationships>
+      <ID>4881</ID>
+    </NoRecursiveRelationships>
+    <Conjugations>
+      <ID>1217</ID>
+      <ID>1219</ID>
+      <ID>1220</ID>
+      <ID>1221</ID>
+      <ID>1222</ID>
+      <ID>1223</ID>
+      <ID>1224</ID>
+      <ID>1225</ID>
+      <ID>1226</ID>
+      <ID>1227</ID>
+      <ID>1228</ID>
+      <ID>1229</ID>
+    </Conjugations>
+    <SelectedPosFilterIndex />
+    <IsSubItemsLoaded>True</IsSubItemsLoaded>
+  </Thesaurus>
+  <Overlays />
+  <SplitPaths />
+  <OpenDocuments />
+</DesignerDataFile>

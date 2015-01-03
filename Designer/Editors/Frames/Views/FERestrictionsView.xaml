@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.FERestrictionsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls"
+             xmlns:dd="clr-namespace:DnD">
+
+
+    <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ScrollBar Grid.Column="0"
+                   Grid.Row="1"
+                   x:Name="ScrollHor"
+                   Value="{Binding Path=ThesHorScrollPos, Mode=TwoWay}"
+                   Minimum="0"
+                   Maximum="{Binding ElementName=ThesPanel, Path=HorizontalMax, Mode=OneWay}"
+                   ViewportSize="{Binding ElementName=ThesPanel, Path=ActualWidth}"
+                   SmallChange="10"
+                   LargeChange="{Binding ElementName=ThesPanel, Path=ActualWidth}"
+                   Orientation="Horizontal"
+                   HorizontalAlignment="Stretch"
+                   Visibility="{Binding ElementName=ThesPanel, Path=HorBarVisibility}" />
+        <ScrollBar Grid.Column="1"
+                   Grid.Row="0"
+                   x:Name="ScrollVer"
+                   Value="{Binding Path=ThesVerScrollPos, Mode=TwoWay}"
+                   Minimum="0"
+                   ViewportSize="{Binding ElementName=ThesPanel, Path=VerViewportSize}"
+                   SmallChange="1"
+                   LargeChange="{Binding ElementName=ThesPanel, Path=VerLargeChange}"
+                   Maximum="{Binding ElementName=ThesPanel, Path=VerticalMax, Mode=OneWay}"
+                   Orientation="Vertical"
+                   VerticalAlignment="Stretch"
+                   Visibility="{Binding ElementName=ThesPanel, Path=VerBarVisibility}" />
+        <AdornerDecorator ClipToBounds="True">
+            <ctrls:TreeViewPanel HorizontalAlignment="Stretch"
+                                 Background="Transparent"
+                                 VerticalAlignment="Stretch"
+                                 ItemsSource="{Binding }"
+                                 ItemContainerStyle="{StaticResource RestrictionContainerStyle}"
+                                 ItemTemplateSelector="{StaticResource FilterTemplateSelector}"
+                                 x:Name="ThesPanel"
+                                 ClipToBounds="True"
+                                 HorizontalOffset="{Binding Path=HorScrollPos, Mode=TwoWay}"
+                                 VerticalOffset="{Binding Path=VerScrollPos, Mode=TwoWay}"
+                                 ctrls:TiltWheelProvider.TiltWheel="ThesPanel_TiltWheel"
+                                 MouseDown="TreeItems_PreviewMouseDown"
+                                 dd:DragDropManager.DropTarget="{StaticResource FEResctrictionDropAdvisor}" />
+        </AdornerDecorator>
+    </Grid>
+</UserControl>

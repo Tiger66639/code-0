@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aici", "Aici\Aici.csproj", "{A9FBF87C-7126-473B-88FE-A8368A3D45D1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug basic|Any CPU = Debug basic|Any CPU
+		Debug PRO|Any CPU = Debug PRO|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Release Basic 32|Any CPU = Release Basic 32|Any CPU
+		Release basic|Any CPU = Release basic|Any CPU
+		Release PRO|Any CPU = Release PRO|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A9FBF87C-7126-473B-88FE-A8368A3D45D1}.Debug basic|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9FBF87C-7126-473B-88FE-A8368A3D45D1}.Debug basic|Any CPU.Build.0 = Debug|Any CPU
+		{A9FBF87C-7126-473B-88FE-A8368A3D45D1}.Debug PRO|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9FBF87C-7126-473B-88FE-A8368A3D45D1}.Debug PRO|Any CPU.Build.0 = Debug|Any CPU
+		{A9FBF87C-7126-473B-88FE-A8368A3D45D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9FBF87C-7126-473B-88FE-A8368A3D45D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9FBF87C-7126-473B-88FE-A8368A3D45D1}.Release Basic 32|Any CPU.ActiveCfg = Release|Any CPU
+		{A9FBF87C-7126-473B-88FE-A8368A3D45D1}.Release Basic 32|Any CPU.Build.0 = Release|Any CPU
+		{A9FBF87C-7126-473B-88FE-A8368A3D45D1}.Release basic|Any CPU.ActiveCfg = Release|Any CPU
+		{A9FBF87C-7126-473B-88FE-A8368A3D45D1}.Release basic|Any CPU.Build.0 = Release|Any CPU
+		{A9FBF87C-7126-473B-88FE-A8368A3D45D1}.Release PRO|Any CPU.ActiveCfg = Release|Any CPU
+		{A9FBF87C-7126-473B-88FE-A8368A3D45D1}.Release PRO|Any CPU.Build.0 = Release|Any CPU
+		{A9FBF87C-7126-473B-88FE-A8368A3D45D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9FBF87C-7126-473B-88FE-A8368A3D45D1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

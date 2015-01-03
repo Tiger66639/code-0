@@ -1,0 +1,92 @@
+class ML
+{  
+   //used to identify a cluster that is the root of a decision tree.
+   Neuron DTreeRoot;
+   
+   //provides functionality to build and use a decision tree.
+   class DTree
+   {
+      //the entry point of the tree. Use this to save a new or reload a previously created decision tree for testing.
+      var Root;
+   
+      //adds the specified list of values to the tree for training (building the decision tree).
+      Train(var values, var result)
+      {
+         if(count(root) == 0)
+         {
+            root = new(Neuron);
+            var iTotal = new(IntNeuron, 1);
+            AddLink(root, iTotal, 'total');
+         }
+         else
+         {
+            int iTotal = GetFirstOut(root, 'total');
+            iTotal++;
+         }
+         var iCurrent = root;   
+         //we can only attach 1 neuron to a link so create a cluster if need be.
+         if(count(result) > 1)           
+            result = MakeCluster(Statics.list, result);
+         
+         foreach(var i in values)     
+         {
+            var iNext = GetFirstOut(iCurrent, i);     //perhaps the branch already exists?   
+            if(count(iNext) == 0)
+            {
+               iNext = new(neuron);
+               AddLink(iCurrent, iNext, i);
+            }
+            iCurrent = iNext;
+         }
+         if(ContainsLinksOut(iCurrent, Statics.PatternRule) == false)
+            AddLink(iCurrent, result, Statics.PatternRule);
+         int iCount = GetFirstOut(iCurrent, result);
+         if(count(iCount) == 0)
+         {
+            iCount = new(IntNeuron);
+            AddLink(iCurrent, iCount, result);
+         }
+         else
+            iCount++;
+      }
+      
+      //pushes the specified list of values through the decision tree and returns the result with the biggest weight.
+      Test(var values): var
+      {
+         var iCur, iNext; 
+         //set up the call back and to iCur = root
+         split(TestDone, ref(iCur), root);
+         foreach(var i in values) 
+         {
+            GetResult(iCur);
+            iNext = GetOutgoing(iCur, i, Statics.Empty);  //also include the 'empty' value
+            if(count(iNext) == 0)
+               ExitSolve();
+            else
+               SplitAccum(TestDone, ref(iCur), iNext);  //create a new thread for each path
+         }
+         GetResult(iCur);
+         //don't need to return a value, this is done by 'TestDone' which is automatically
+         //called when we get all split paths are done (only 1 in this case)
+      }
+      
+      TestDone(): var
+      {
+         return GetMaxWeight();
+      }
+      
+      //adds all the results to the Result list
+      GetResult(var curPos)
+      {
+         //get all the results for this stage.
+         var iFound = GetOutgoing(curPos, Statics.PatternRule);  
+         foreach(var i in iFound)
+         {
+            //assign the count of the result as it's weight
+            IncreaseWeightOf(i, GetFirstOut(CurPos, i));
+            //and add it as a splitresult. The one with the biggest weight will be the final result.
+            AddSplitResult(i);
+         }
+      }
+   }
+}

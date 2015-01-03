@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CBDGlobals>
+  <ArrayOfExportableReflectionSinEntryPoint xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+  <DoOnStartup>
+    <Expression>Chatbot.GlobalTimer.Start(~OnIdle);</Expression>
+  </DoOnStartup>
+  <OpeningStatements>
+    <Output>
+      <Expression>After about 3 seconds, I'll render another output.
+This is done through the 'idle' topic. In the 'Do after output', there is an extra statement to activate/reset the timer every time an output was rendered.
+When using timers, make certain that you set the correc interval from the tool window (view/tool windows/timers).</Expression>
+    </Output>
+  </OpeningStatements>
+  <Fallbacks />
+  <Context />
+  <DoAfterStatement>
+    <Expression>Chatbot.GlobalTimer.Start(~OnIdle);</Expression>
+  </DoAfterStatement>
+  <Repetitions />
+  <ModuleProperties>
+    <UseOutputVar />
+    <AutoResolveSyns />
+    <UseSTTWeight />
+    <SingleTopPatternResult />
+    <UseSTTWeight>True</UseSTTWeight>
+    <SingleTopPatternResult>True</SingleTopPatternResult>
+    <UseOutputVar />
+    <AutoResolveSyns />
+    <ErrorOnDuplicates />
+    <ToSkip>
+      <text>\s</text>
+      <text>\r</text>
+      <text>\n</text>
+      <text>\t</text>
+      <static>356</static>
+      <static>357</static>
+      <static>468</static>
+    </ToSkip>
+    <SentenceSigns>
+      <text>.</text>
+      <text>!</text>
+      <text>?</text>
+    </SentenceSigns>
+  </ModuleProperties>
+</CBDGlobals>

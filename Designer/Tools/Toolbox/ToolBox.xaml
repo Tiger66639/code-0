@@ -1,0 +1,253 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.ToolBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+             xmlns:dd="clr-namespace:DnD"
+             xmlns:cf="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+             xmlns:eff="clr-namespace:LearnWPF.Effects;assembly=LearnWPF.Effects"
+             cf:Help.Topic="toolbox.html"
+             x:Name="thisToolBox">
+    <UserControl.Resources>
+
+        <self:TypeToResourceConverter x:Key="TypeToImgConv" />
+        <self:ToolboxDragSourceAdvisor x:Key="DragAdvisor" />
+
+        <Style x:Key="ToolboxImageStyle" TargetType="{x:Type Image}">
+            <Setter Property="Width" Value="22" />
+            <Setter Property="Height" Value="22" />
+            <Setter Property="Margin" Value="4,0,0,4" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="dd:DragDropManager.IsVisualFor"
+                    Value="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}}" />
+        </Style>
+
+        <Style x:Key="ToolboxItemTextStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="Margin" Value="4" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="dd:DragDropManager.IsVisualFor"
+                    Value="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}}" />
+            <Setter Property="dd:DragDropManager.DragEffect">
+                <Setter.Value>
+                    <eff:NegativeEffect />
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <DataTemplate DataType="{x:Type self:NeuronToolBoxItem}">
+            <StackPanel Orientation="Horizontal">
+                <StackPanel.ToolTip>
+                    <ToolTip Height="200"
+                             Width="350"
+                             StaysOpen="True">
+                        <FlowDocumentPageViewer Document="{Binding Path=NeuronInfo.Description, Mode=OneTime}" />
+                    </ToolTip>
+                </StackPanel.ToolTip>
+                <Image Source="{Binding Path=Item, Converter={StaticResource NeuronToImgConv}}"
+                       Style="{StaticResource ToolboxImageStyle}" />
+                <TextBlock Text="{Binding Path=Title}"
+                           Style="{StaticResource ToolboxItemTextStyle}" />
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type self:TypeToolBoxItem}">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="{Binding Path=ItemType, Converter={StaticResource TypeToImgConv}}"
+                       Style="{StaticResource ToolboxImageStyle}" />
+                <TextBlock Text="{Binding Path=Title}"
+                           Style="{StaticResource ToolboxItemTextStyle}" />
+            </StackPanel>
+        </DataTemplate>
+
+        <ContextMenu x:Key="ItemsContextMenu">
+            <MenuItem Header="Collapse all"
+                      Click="MnuItemsCollapsItems_Click" />
+            <MenuItem Header="Expand all"
+                      Click="MnuItemsExpandItems_Click" />
+            <Separator />
+            <MenuItem Header="Export defaults" Click="ExportDefaults_Click" />
+            <Separator />
+            <MenuItem Header="View frames..." Command="self:GlobalCommands.ViewAttachedFramessCmd"
+                      ToolTip="Show the object-frames editor for the selected item."
+                      InputGestureText="Shift+F6"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem.Item}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Frame/Object_Frames_Enabled.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="View asset..." Command="self:GlobalCommands.ViewAttachedAssetsCmd"
+                      ToolTip="Show the asset editor for the selected item."
+                      InputGestureText="Shift+F5"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem.Item}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Asset/objectAsset_Enabled.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="View code..." Command="self:GlobalCommands.ViewCodeCmd"
+                      ToolTip="Open and show a code editor for the selected item."
+                      InputGestureText="Shift+F4"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem.Item}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/ViewCode_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
+
+        <ContextMenu x:Key="InstructionsContextMenu">
+            <MenuItem Header="Collapse all"
+                      Click="MnuInstructionsCollapsItems_Click" />
+            <MenuItem Header="Expand all"
+                      Click="MnuInstructionsExpandItems_Click" />
+            <Separator />
+            <MenuItem Header="Export defaults" Click="ExportDefaults_Click" />
+            <Separator />
+            <MenuItem Header="View frames..." Command="self:GlobalCommands.ViewAttachedFramessCmd"
+                      ToolTip="Show the object-frames editor for the selected item."
+                      InputGestureText="Shift+F6"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem.Item}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Frame/Object_Frames_Enabled.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="View asset..." Command="self:GlobalCommands.ViewAttachedAssetsCmd"
+                      ToolTip="Show the asset editor for the selected item."
+                      InputGestureText="Shift+F5"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem.Item}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Asset/objectAsset_Enabled.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="View code..."
+                      Command="self:GlobalCommands.ViewCodeCmd"
+                      ToolTip="Open and show a code editor for the selected item."
+                      InputGestureText="Shift+F4"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem.Item}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/ViewCode_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
+
+        <CollectionViewSource x:Key="GroupedToolboxItems"
+                              Source="{Binding Source={x:Static self:BrainData.Current}, Path=ToolBoxItems, Mode=OneWay}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Category" />
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
+
+        <!--<CollectionViewSource x:Key="GroupedInstructions" Source="{Binding Source={x:Static self:BrainData.Current}, Path=InstructionToolBoxItems}">
+         <CollectionViewSource.GroupDescriptions>
+            <PropertyGroupDescription PropertyName="Category"/>
+         </CollectionViewSource.GroupDescriptions>
+      </CollectionViewSource>-->
+
+        <Style x:Key="ToolboxItemStyle">
+            <Setter Property="dd:DragDropManager.DragSource" Value="{StaticResource DragAdvisor}" />
+
+        </Style>
+
+
+        <Style x:Key="ToolBoxGroupItemStyle" TargetType="{x:Type GroupItem}">
+            <Setter Property="Margin" Value="0,0,0,5" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                        <Expander IsExpanded="{Binding ElementName=thisToolBox, Path=AllItemsOpen, Mode=OneWay}"
+                                  BorderBrush="#FFA4B97F"
+                                  BorderThickness="0,0,0,1">
+                            <Expander.Header>
+                                <DockPanel>
+                                    <TextBlock FontWeight="Bold"
+                                               Text="{Binding Path=Name}"
+                                               Margin="8,0,0,0" />
+                                </DockPanel>
+                            </Expander.Header>
+                            <Expander.Content>
+                                <ItemsPresenter />
+                            </Expander.Content>
+                        </Expander>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ToolBoxGroupInstructionStyle" TargetType="{x:Type GroupItem}">
+            <Setter Property="Margin" Value="0,0,0,5" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                        <Expander IsExpanded="{Binding ElementName=thisToolBox, Path=AllInstructionsOpen, Mode=OneWay}"
+                                  BorderBrush="#FFA4B97F"
+                                  BorderThickness="0,0,0,1">
+                            <Expander.Header>
+                                <DockPanel>
+                                    <TextBlock FontWeight="Bold"
+                                               Text="{Binding Path=Name}"
+                                               Margin="8,0,0,0" />
+                                </DockPanel>
+                            </Expander.Header>
+                            <Expander.Content>
+                                <ItemsPresenter />
+                            </Expander.Content>
+                        </Expander>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </UserControl.Resources>
+
+    <DockPanel>
+        <Expander Style="{StaticResource SimpleExpandDownStyle}"
+                  IsExpanded="{Binding Source={x:Static self:Properties.Settings.Default}, Path=ToolboxExpandedNeuronExplorer, Mode=TwoWay}"
+                  Focusable="False"
+                  DockPanel.Dock="Top">
+            <ToolBar MinWidth="80">
+                <RadioButton ToolTip="Show the regular toolbox items"
+                             x:Name="ToggleItems"
+                             IsChecked="True"
+                             GroupName="ToolboxSource"
+                             Style="{StaticResource TlbToggleButtonsStyle}">
+                    Items
+                </RadioButton>
+                <RadioButton ToolTip="Show the instruction"
+                             GroupName="ToolboxSource"
+                             x:Name="ToggleInstructions"
+                             Style="{StaticResource TlbToggleButtonsStyle}">
+                    Instructions
+                </RadioButton>
+                <Separator />
+                <Button x:Name="BtnReset"
+                        ToolTip="Reset the toolbox content to the default state."
+                        Style="{StaticResource TlbButtonsStyle}"
+                        Click="BtnReset_Click">
+                    <Image Source="/Images/Reset.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </Button>
+            </ToolBar>
+        </Expander>
+        <Grid>
+            <ListBox ItemsSource="{Binding Source={StaticResource GroupedToolboxItems}}"
+                     BorderThickness="0"
+                     Visibility="{Binding ElementName=ToggleItems, Path=IsChecked, Converter={StaticResource BoolToVisConv}}"
+                     ContextMenu="{StaticResource ItemsContextMenu}"
+                     ItemContainerStyle="{StaticResource ToolboxItemStyle}">
+                <ListBox.GroupStyle>
+                    <GroupStyle ContainerStyle="{StaticResource ToolBoxGroupItemStyle}" />
+                </ListBox.GroupStyle>
+            </ListBox>
+            <ListBox
+                ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=InstructionsView, Mode=OneWay}"
+                BorderThickness="0"
+                Visibility="{Binding ElementName=ToggleInstructions, Path=IsChecked, Converter={StaticResource BoolToVisConv}}"
+                ContextMenu="{StaticResource InstructionsContextMenu}"
+                ItemContainerStyle="{StaticResource ToolboxItemStyle}"><!--{Binding Source={StaticResource GroupedInstructions}}-->
+                <ListBox.GroupStyle>
+                    <GroupStyle ContainerStyle="{StaticResource ToolBoxGroupInstructionStyle}" />
+                </ListBox.GroupStyle>
+            </ListBox>
+        </Grid>
+    </DockPanel>
+
+</UserControl>

@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>variables</Name>
+  <Rules>
+    <Rule>
+      <Name>new rule 1</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>$all</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>you said: $all</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <DoPatterns />
+      <Evaluate />
+      <Calculate />
+    </Rule>
+    <Rule>
+      <Name>new rule 2</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>the $value</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>the, you said: the $value</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <DoPatterns />
+      <Evaluate />
+      <Calculate />
+    </Rule>
+    <Rule>
+      <Name>new rule 3</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>$value me</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>me, you said: $value me</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <DoPatterns />
+      <Evaluate />
+      <Calculate />
+    </Rule>
+    <Rule>
+      <Name>new rule 4</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>oho $value me</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>oh, you said: oho $value me</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <DoPatterns />
+      <Evaluate />
+      <Calculate />
+    </Rule>
+    <Rule>
+      <Name>new rule 5</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>range $all:1</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>single word: $all</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <DoPatterns />
+      <Evaluate />
+      <Calculate />
+    </Rule>
+    <Rule>
+      <Name>new rule 6</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>range $all:4-6</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>4 to 6 words: $all</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <DoPatterns />
+      <Evaluate />
+      <Calculate />
+    </Rule>
+    <Rule>
+      <Name>new rule 7</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>$all:1 range</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>var first range: $all</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <DoPatterns />
+      <Evaluate />
+      <Calculate />
+    </Rule>
+    <Rule>
+      <Name>new rule 8</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>$all:4-6 range</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>var first 6 range: $all</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <DoPatterns />
+      <Evaluate />
+      <Calculate />
+    </Rule>
+    <Rule>
+      <Name>new rule 9</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>range $all:1 range</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>front back range: $all</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <DoPatterns />
+      <Evaluate />
+      <Calculate />
+    </Rule>
+    <Rule>
+      <Name>new rule 10</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>range $all:4-6 range</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>front back 6 range: $all</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <DoPatterns />
+      <Evaluate />
+      <Calculate />
+    </Rule>
+  </Rules>
+  <Questions />
+</Topic>

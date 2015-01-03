@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.WPF.Controls.CtrlCustomConduitSelector"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <DockPanel>
+            <Button DockPanel.Dock="Right"
+                    BorderThickness="0"
+                    Tag="dll"
+                    Width="20"
+                    ToolTip="Show a file browser to select the dll."
+                    Click="BtnMore_Click">
+                ...
+            </Button>
+            <TextBox Text="{Binding Path=CustomDll, UpdateSourceTrigger=PropertyChanged}"
+                     Name="TxtCustomDll"
+                     ToolTip="The dll that will perform the custom processing." />
+        </DockPanel>
+
+        <ComboBox Grid.Row="1"
+                  Margin="0,8,0,0"
+                  ToolTip="Select the entry point in the dll that should be used (lists all classes that implement the 'iCustomConduit' interface)"
+                  Name="CmbEntryPoints"
+                  ItemsSource="{Binding Path=EntryPoints, Mode=OneWay}"
+                  SelectedIndex="{Binding Path=SelectedEntryPoint}" />
+
+        <DockPanel Grid.Row="2"
+                   Margin="0,8,0,0">
+            <Button DockPanel.Dock="Right"
+                    Tag="source"
+                    Width="20"
+                    BorderThickness="0"
+                    ToolTip="Show a file browser to select the source location."
+                    Click="BtnMore_Click">
+                ...
+            </Button>
+            <TextBox Text="{Binding Path=Source, UpdateSourceTrigger=PropertyChanged}"
+                     Name="TxtSource"
+                     ToolTip="Select the source location where the custom process should get data from." />
+        </DockPanel>
+
+        <DockPanel Grid.Row="3"
+                   Margin="0,8,0,0"
+                   Visibility="{Binding Path=NeedsDestination, Mode=OneWay, Converter={StaticResource BoolToVisConv}}">
+            <Button DockPanel.Dock="Right"
+                    Tag="destination"
+                    Width="20"
+                    BorderThickness="0"
+                    ToolTip="Show a file browser to select the destination location."
+                    Click="BtnMore_Click">
+                ...
+            </Button>
+            <TextBox Text="{Binding Path=Destination, UpdateSourceTrigger=PropertyChanged}"
+                     Name="TxtDest"
+                     ToolTip="Select the destination location where the custom process should render data to." />
+        </DockPanel>
+
+        <!--important: Visibility has to come before content, otherwise 'HasConduitSettings is bound against 'content' == process, which is not correct.-->
+        <ContentPresenter Grid.Row="4"
+                          Margin="0,8,0,0"
+                          Visibility="{Binding Path=HasConduitSettings, Converter={StaticResource BoolToVisConv}}"
+                          Content="{Binding Path=Process}" />
+
+    </Grid>
+</UserControl>

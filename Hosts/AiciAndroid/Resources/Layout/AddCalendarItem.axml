@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/CalendarData"
+                android:layout_width="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1">
+   <TableRow>
+      <!-- Column 1 -->
+      <TextView android:id="@+id/LblTitle"
+                android:text="@string/AddCalWhat"
+                android:gravity="right"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+      <!-- Column 2 -->
+      <TextView android:id="@+id/LblTitleData"
+                android:gravity="left"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+   </TableRow>
+
+   <TableRow>
+      <!-- Column 1 -->
+      <TextView android:id="@+id/LblDate"
+                android:text="@string/AddCalWhen"
+                android:gravity="right"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+      <!-- Column 2 -->
+      <TextView android:id="@+id/LblDateData"
+                android:gravity="left"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+   </TableRow>
+
+   <TableRow>
+      <!-- Column 1 -->
+      <TextView android:id="@+id/LblEndDate"
+                android:text="@string/AddCalUntil"
+                android:gravity="right"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+      <!-- Column 2 -->
+      <TextView android:id="@+id/LblEndDateData"
+                android:gravity="left"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+   </TableRow>
+
+
+   <TableRow>
+      <!-- Column 1 -->
+      <TextView android:id="@+id/LblLocation"
+                android:text="@string/AddCalWhere"
+                android:gravity="right"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+      <!-- Column 2 -->
+      <TextView android:id="@+id/LblLocationData"
+                android:gravity="left"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+   </TableRow>
+
+   <TableRow>
+      <!-- Column 1 -->
+      <TextView android:id="@+id/LblDescription"
+                android:text="@string/AddCalExtra"
+                android:gravity="right"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+      <!-- Column 2 -->
+      <TextView android:id="@+id/LblDescriptionData"
+                android:gravity="left"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+   </TableRow>
+
+   <!--<TableRow>
+      <CheckBox android:checked="false"
+                android:text="@string/AddCalRecurring"
+                android:gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_span="2"
+                android:id="@+id/ChkIsRecurring"/>
+   </TableRow>-->
+
+   <TableRow>
+      <!-- Column 1 -->
+      <Button
+         android:id="@+id/BtnAddCalOk"
+         android:layout_width="0dip"
+         android:layout_height="wrap_content"
+         android:text="@string/AddCalOk"
+         android:layout_weight="1" />
+
+      <!-- Column 2 -->
+      <Button
+         android:id="@+id/BtnAddCalSpeak"
+         android:layout_width="0dip"
+         android:layout_height="wrap_content"
+         android:layout_weight="1"
+         android:text="@string/AddCalSpeak" />
+   </TableRow>
+
+</TableLayout>

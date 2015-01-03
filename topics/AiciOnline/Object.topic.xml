@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>Object</Name>
+  <Rules>
+    <Rule>
+      <Name>Simple object</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>~(simple object)</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+    </Rule>
+  </Rules>
+</Topic>

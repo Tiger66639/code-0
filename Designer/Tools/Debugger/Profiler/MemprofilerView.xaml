@@ -1,0 +1,130 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.Profiler.MemprofilerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:profiler="clr-namespace:JaStDev.HAB.Designer.Profiler"
+             xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+             xmlns:ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls">
+    <UserControl.CommandBindings>
+        <CommandBinding Command="self:App.MemProfilerGotoStartCmd" Executed="GotoStart_Executed"
+                        CanExecute="GotoStart_CanExecute" />
+        <CommandBinding Command="self:App.MemProfilerGotoUnfreezeCmd" Executed="GotoUnfreeze_Executed"
+                        CanExecute="GotoUnfreeze_CanExecute" />
+        <CommandBinding Command="self:App.MemProfilerGotoEndCmd" Executed="GotoEnd_Executed"
+                        CanExecute="GotoEnd_CanExecute" />
+        <CommandBinding Command="self:App.StoreSplitPathCmd" Executed="StoreSplitPath_Executed"
+                        CanExecute="StoreSplitPath_CanExecute" />
+    </UserControl.CommandBindings>
+    <DockPanel>
+        <Expander Style="{StaticResource SimpleExpandDownStyle}"
+                  IsExpanded="{Binding Source={x:Static self:Properties.Settings.Default}, Path=ToolbarExpandedMemProfiler, Mode=TwoWay}"
+                  Focusable="False"
+                  DockPanel.Dock="Top">
+            <ToolBar>
+                <Button ToolTip="Go to the location at which the neuron was created"
+                        Command="self:App.MemProfilerGotoStartCmd"
+                        x:Name="BtnGotoCreate"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    <Image
+                        Source="{Binding ElementName=BtnGotoCreate, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/MemProfiler/GotoStart.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+
+                <Button ToolTip="Go to the location at which the neuron got unfrozen"
+                        Command="self:App.MemProfilerGotoUnfreezeCmd"
+                        x:Name="BtnGotoUnfreeze"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    <Image
+                        Source="{Binding ElementName=BtnGotoUnfreeze, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/MemProfiler/GotoUnfreeze.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+
+                <Button ToolTip="Go to the location at which the processor exited"
+                        Command="self:App.MemProfilerGotoEndCmd"
+                        x:Name="BtnGotoExit"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    <Image
+                        Source="{Binding ElementName=BtnGotoExit, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/MemProfiler/GotoEnd.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Separator />
+                <Button ToolTip="Store the splitpath of the processor for further debugging."
+                        Command="self:App.StoreSplitPathCmd"
+                        x:Name="BtnStoreSplithPath"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    <Image
+                        Source="{Binding ElementName=BtnStoreSplithPath, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/MemProfiler/StoreSplitPath.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+            </ToolBar>
+        </Expander>
+        <ctrls:MyTreeView BorderThickness="0"
+                          ScrollViewer.CanContentScroll="True"
+                          ItemsSource="{Binding Source={x:Static profiler:MemProfiler.Current}, Path=Items, Mode=OneWay}"
+                          x:Name="Trvleaks">
+            <!--VirtualizingStackPanel.IsVirtualizing="True"
+                         VirtualizingStackPanel.VirtualizationMode="Recycling"-->
+            <ctrls:MyTreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Path=Items}">
+                    <HierarchicalDataTemplate.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Path=Variables}">
+                            <HierarchicalDataTemplate.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="{Binding Path=Item, Converter={StaticResource NeuronToImgConv}}"
+                                               Style="{StaticResource DebugNeuronImageStyle}" />
+                                        <TextBlock Text="{Binding Path=NeuronInfo.DisplayTitle}"
+                                                   Margin="4,0,0,0">
+                                            <TextBlock.ToolTip>
+                                                <ToolTip Content="{Binding Path=Item.ID}"
+                                                         ContentStringFormat="{}Variable {0} contained the leaking neuron when the processor stopped" />
+                                            </TextBlock.ToolTip>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </HierarchicalDataTemplate.ItemTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding Path=Item, Converter={StaticResource NeuronToImgConv}}"
+                                       Style="{StaticResource DebugNeuronImageStyle}" />
+                                <TextBlock Text="{Binding Path=NeuronInfo.DisplayTitle}"
+                                           Margin="4,0,0,0">
+                                    <TextBlock.ToolTip>
+                                        <ToolTip Content="{Binding Path=Item.ID}"
+                                                 ContentStringFormat="{}Neuron {0} was a leak" />
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+                                <StackPanel Orientation="Horizontal"
+                                            Visibility="{Binding Path=HasDuplicatedFor, Mode=OneWay, Converter={StaticResource BoolToVisConv}}">
+                                    <TextBlock>(</TextBlock>
+                                    <Image
+                                        Source="{Binding Path=DuplicatedFor.Item, Converter={StaticResource NeuronToImgConv}}"
+                                        Style="{StaticResource DebugNeuronImageStyle}" />
+                                    <TextBlock Text="{Binding Path=DuplicatedFor.NeuronInfo.DisplayTitle}"
+                                               Margin="4,0,0,0">
+                                        <TextBlock.ToolTip>
+                                            <ToolTip Content="{Binding Path=DuplicatedFor.Item.ID}"
+                                                     ContentStringFormat="{}Global {0} was the cause of the leak when the split occured." />
+                                        </TextBlock.ToolTip>
+                                    </TextBlock>
+                                    <TextBlock>)</TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                    </HierarchicalDataTemplate.ItemTemplate>
+                    <HierarchicalDataTemplate.ItemContainerStyle>
+                        <Style TargetType="{x:Type TreeViewItem}">
+                            <Setter Property="IsSelected" Value="{Binding Path=IsSelected}" />
+                        </Style>
+                    </HierarchicalDataTemplate.ItemContainerStyle>
+                    <TextBlock Text="{Binding Path=Name}"
+                               ToolTip="This processor leaked neurons" />
+                </HierarchicalDataTemplate>
+            </ctrls:MyTreeView.ItemTemplate>
+            <ctrls:MyTreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Setter Property="IsExpanded" Value="{Binding Path=IsExpanded}" />
+                    <Setter Property="IsSelected" Value="{Binding Path=IsSelected}" />
+                </Style>
+            </ctrls:MyTreeView.ItemContainerStyle>
+        </ctrls:MyTreeView>
+    </DockPanel>
+</UserControl>

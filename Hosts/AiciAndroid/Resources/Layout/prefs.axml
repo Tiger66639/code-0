@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:ColorPick="http://ColorPicker.MonoDroid.com">
+   <PreferenceCategory android:title="General">
+      <ListPreference android:id="@+id/BrainPref"
+                      android:summary="@string/BrainPrefSummary"
+                       android:title="@string/BrainPrefTitle"
+                       android:key="@string/BrainPrefKey"/>
+
+      <PreferenceScreen android:title="Appearance"
+                        android:summary="Change the look of the application">
+         <PreferenceScreen android:title="Background"
+                           android:summary="Change the background properties">
+            <aiciandroid.activities.ColorPickerPreference android:title="Color"
+                                                         android:key="BackgroundColor"
+                                                          ColorPick:default="#000000"
+                                                         android:summary="Change the background color"/>
+            <aiciandroid.activities.ImagePickerPreference android:title="Image"
+                                                          android:key="BackgroundImage"
+                                                          android:summary="Select an image to be displayed in the background"/>
+         </PreferenceScreen>
+
+         
+         <PreferenceScreen android:title="Bot"
+                           android:summary="Change the bot's settings">
+
+            <ListPreference android:id="@+id/FontPref"
+                      android:summary="Select the font used for text for the bot"
+                       android:title="Font"
+                       android:key="BotFont">
+            </ListPreference>
+            <common.IntEditTextPreference
+                            android:key="BotFontSize"
+                            android:title="Font size"
+                            android:summary="Change the size of the font used for the bot"
+                            android:numeric="integer"
+                            android:defaultValue="14"/>
+            <aiciandroid.activities.ColorPickerPreference android:title="Color"
+                                                          ColorPick:default="#00ff00"
+                                                         android:key="BotTextColor"
+                                                         android:summary="Change the text color for the bot"/>
+            
+         </PreferenceScreen>
+
+         <PreferenceScreen android:title="User"
+                           android:summary="Change the User's settings">
+
+            <ListPreference android:id="@+id/FontPref"
+                      android:summary="Select the font used for text for the user"
+                       android:title="Font"
+                       android:key="UserFont">
+            </ListPreference>
+            <common.IntEditTextPreference
+                            android:key="UserFontSize"
+                            android:title="Font size"
+                            android:summary="Change the size of the font used for the user"
+                            android:numeric="integer"
+                            android:defaultValue="14"/>
+            <aiciandroid.activities.ColorPickerPreference android:title="Color"
+                                                         android:key="UserTextColor"
+                                                          ColorPick:default="#0000ff"
+                                                         android:summary="Change the text color for the user"/>
+
+         </PreferenceScreen>
+
+
+
+      </PreferenceScreen>
+
+         <PreferenceScreen android:title="Input"
+                        android:summary="Settings that effect voice and text input">
+         <CheckBoxPreference android:key="AlwaysShowTextInput"
+                             android:title="Show text input"
+                             android:summary="When checked, you can give inputs with a virtual keyboard and voice. When unchecked, only voice input is available."
+                             android:defaultValue="true"/>
+         <ListPreference android:id="@+id/LangPref"
+                      android:summary="@string/LanguagePrefSummary"
+                       android:title="@string/LanguagePrefTitle"
+                       android:key="@string/LanguagePrefKey">
+         </ListPreference>
+
+         <common.IntEditTextPreference
+                         android:key="@string/InputVarCountPrefKey"
+                         android:title="@string/InputVarCountPrefTitle"
+                         android:summary="@string/InputVarCountPrefSummary"
+                         android:numeric="integer"
+                         android:defaultValue="8"
+                         android:maxLength="2"/>
+         <CheckBoxPreference android:key="PreFilterInput"
+                             android:title="Pre-filter"
+                             android:summary="When checked, you have to select the correct voice input command manually before any processing is done. When unchecked, the network will try to resolve the correct input automatically (slower)."
+                             android:defaultValue="true"/>
+
+      </PreferenceScreen>
+
+      <PreferenceScreen android:title="Output"
+                        android:summary="Settings that effect voice output">
+
+         <CheckBoxPreference android:key="TTSActivated"
+                             android:title="TTS activated"
+                             android:summary="When checked, output will be spoken using the text-to-speech engine, otherwise it will only be visible as text."
+                             android:defaultValue="true"/>
+         
+      </PreferenceScreen>
+      
+      <CheckBoxPreference android:key="LogToServer"
+                             android:title="Log to server"
+                             android:summary="When checked, chatlogs will be logged (anonymously) on the developer's server for future improvements of the system."
+                             android:defaultValue="true"/>
+
+      <PreferenceScreen android:title="@string/SpeedOptPrefTitle"
+                        android:summary="@string/SpeedOptPrefSummary">
+
+         <!--<CheckBoxPreference android:key="FindMultiplePatterns"
+                             android:title="Find Multiple patterns"
+                             android:summary="When checked, the system is able to detect multiple patterns in a single input (ex: Hello. What is your name?) This can have a seriously slow the app down."
+                             android:defaultValue="true"/>-->
+
+         <common.IntEditTextPreference
+                         android:key="@string/MinReservedBlockedProcPrefKey"
+                         android:title="@string/MinReservedBlockedProcPrefTitle"
+                         android:summary="@string/MinReservedBlockedProcPrefSummary"
+                         android:numeric="integer"
+                         android:defaultValue="30"
+                         android:maxLength="3"/>
+
+         <common.IntEditTextPreference
+                         android:key="@string/MaxConcurrentProcPrefKey"
+                         android:title="@string/MaxConcurrentProcPrefTitle"
+                         android:summary="@string/MaxConcurrentProcPrefSummary"
+                         android:numeric="integer"
+                         android:defaultValue="25"
+                         android:maxLength="3"/>
+         
+      </PreferenceScreen>
+
+   </PreferenceCategory>
+</PreferenceScreen>

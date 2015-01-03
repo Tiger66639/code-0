@@ -1,0 +1,78 @@
+﻿<self:CtrlEditorItem x:Class="JaStDev.HAB.Designer.WPF.Controls.CtrlCodeItemLockExp"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:hab="clr-namespace:JaStDev.HAB;assembly=JaStDev.HabCore"
+                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                     xmlns:dd="clr-namespace:DnD"
+                     xmlns:Ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls"
+                     xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+                     Background="Transparent"
+                     Focusable="True"
+                     x:Name="this">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Path Data="{Binding Source={StaticResource ImgLockExpressionTopPath}}"
+              Visibility="{Binding Path=IsMultiUsed, Converter={StaticResource BoolToVisConv}}"
+              Stretch="Fill"
+              Stroke="#FFA20F0F"
+              StrokeThickness="1"
+              Fill="{StaticResource ImgLockExpressionBrush}">
+            <Path.RenderTransform>
+                <TranslateTransform X="4" Y="-4" />
+            </Path.RenderTransform>
+        </Path>
+
+        <Path Data="{Binding Source={StaticResource ImgLockExpressionBottomPath}}"
+              Visibility="{Binding Path=IsMultiUsed, Converter={StaticResource BoolToVisConv}}"
+              Stretch="Fill"
+              Stroke="#FFA20F0F"
+              StrokeThickness="1"
+              Fill="{StaticResource ImgLockExpressionBrush}"
+              Grid.Row="2">
+            <Path.RenderTransform>
+                <TranslateTransform X="4" Y="-4" />
+            </Path.RenderTransform>
+        </Path>
+
+        <Path Data="{Binding Source={StaticResource ImgLockExpressionTopPath}}"
+              Margin="0,-1,0,0"
+              VerticalAlignment="Stretch"
+              Stretch="Fill"
+              Stroke="#FFA20F0F"
+              StrokeThickness="1"
+              Fill="{StaticResource ImgLockExpressionBrush}" />
+
+        <Path Data="{Binding Source={StaticResource ImgLockExpressionBottomPath}}"
+              Margin="0,-1,0,0"
+              VerticalAlignment="Stretch"
+              Grid.Row="2"
+              Stretch="Fill"
+              Stroke="#FFA20F0F"
+              StrokeThickness="1"
+              Fill="{StaticResource ImgLockExpressionBrush}" />
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="2"
+                    Margin="8">
+            <Ctrls:ArgumentsItemsControl ItemsSource="{Binding Path=NeuronsToLock.Items}"
+                                         ItemContainerStyle="{StaticResource LockCodeListItemStyle}"
+                                         Style="{StaticResource NeuronsToLockList}"
+                                         dd:DragDropManager.DropTarget="{StaticResource ResultCodeListDropAdvisor}" />
+            <Path Data="F1 M 0.0,0.0 V1.0"
+                  VerticalAlignment="Stretch"
+                  Stretch="Fill"
+                  Stroke="#FFA20F0F"
+                  StrokeThickness="1" />
+            <Ctrls:ArgumentsItemsControl ItemsSource="{Binding Path=LinksToLock.Items}"
+                                         ItemContainerStyle="{StaticResource LockCodeListItemStyle}"
+                                         Style="{StaticResource LinksToLockList}"
+                                         dd:DragDropManager.DropTarget="{StaticResource ResultCodeListDropAdvisor}" />
+        </StackPanel>
+        <ToggleButton Style="{StaticResource DebugToggleButton}"
+                      Grid.Row="2"
+                      IsChecked="{Binding Path=IsBreakPoint}" />
+    </Grid>
+</self:CtrlEditorItem>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<LinkDefsDict>
+  <item>
+    <key>
+      <string>hypernym</string>
+    </key>
+    <value>
+      <unsignedLong>2890</unsignedLong>
+    </value>
+  </item>
+  <item>
+    <key>
+      <string>hyponym</string>
+    </key>
+    <value>
+      <unsignedLong>7663</unsignedLong>
+    </value>
+  </item>
+  <item>
+    <key>
+      <string>is a</string>
+    </key>
+    <value>
+      <unsignedLong>27132</unsignedLong>
+    </value>
+  </item>
+</LinkDefsDict>

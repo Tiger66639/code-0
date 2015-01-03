@@ -1,0 +1,299 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="NeuronIDFormat" xml:space="preserve">
+    <value>NeuronIDFormat</value>
+    <comment>Identifies a neuron id on the clipboard/dragdrop</comment>
+  </data>
+  <data name="XamlFormat" xml:space="preserve">
+    <value>XAML</value>
+    <comment>Identifies xaml text on the clipboard/dragdrop</comment>
+  </data>
+  <data name="MindMapItemFormat" xml:space="preserve">
+    <value>MINDMAPITEM</value>
+    <comment>Identifies a mindmap item on the clipboard/dragdrop</comment>
+  </data>
+  <data name="MindMapLinkSide" xml:space="preserve">
+    <value>MindMapLinkSide</value>
+  </data>
+  <data name="UIElementFormat" xml:space="preserve">
+    <value>UIElement</value>
+    <comment>Identifies a UIElement on the clipboard/dragdrop</comment>
+  </data>
+  <data name="MultiMindMapItemFormat" xml:space="preserve">
+    <value>MultiMindMapItemFormat</value>
+    <comment>Identifies multiple mindmap items on the clipboard/dragdrop</comment>
+  </data>
+  <data name="MultiUIElementFormat" xml:space="preserve">
+    <value>MultiUIElementFormat</value>
+    <comment>Identifies multiple UIElements on the clipboard/dragdrop</comment>
+  </data>
+  <data name="MultiNeuronIDFormat" xml:space="preserve">
+    <value>MultiNeuronIDFormat</value>
+    <comment>Identifies multiple neuron id's on the clipboard/dragdrop</comment>
+  </data>
+  <data name="DelayLoadFormat" xml:space="preserve">
+    <value>DelayLoadFormat</value>
+  </data>
+  <data name="ToolboxItemFormat" xml:space="preserve">
+    <value>ToolboxItemFormat</value>
+    <comment>Identifies a Toolbox on the clipboard/dragdrop</comment>
+  </data>
+  <data name="CodeItemFormat" xml:space="preserve">
+    <value>CODEITEMFORMAT</value>
+  </data>
+  <data name="DelayLoadResultType" xml:space="preserve">
+    <value>DelayLoadResultType</value>
+  </data>
+  <data name="FrameSequenceFormat" xml:space="preserve">
+    <value>FRAMESEQUENCEFORMAT</value>
+  </data>
+  <data name="FrameEvokerFormat" xml:space="preserve">
+    <value>FRAMEEVOKERFORMAT</value>
+  </data>
+  <data name="FrameElementFormat" xml:space="preserve">
+    <value>FRAMEELEMENTFORMAT</value>
+  </data>
+  <data name="EDITORFORMAT" xml:space="preserve">
+    <value>EditorOverviewFORMAT</value>
+  </data>
+  <data name="FLOWITEMFORMAT" xml:space="preserve">
+    <value>FLOWITEMFORMAT</value>
+  </data>
+  <data name="APPREFFORMAT" xml:space="preserve">
+    <value>APP_REF_FORMAT</value>
+  </data>
+  <data name="WebSite" xml:space="preserve">
+    <value>http://bragisoft.com</value>
+  </data>
+  <data name="NoProjectTreeItemSelected" xml:space="preserve">
+    <value>There is no Tree item selected in the project overview to put new items in.</value>
+  </data>
+  <data name="FRAMEFORMAT" xml:space="preserve">
+    <value>FRAMEFORMAT</value>
+  </data>
+  <data name="FERestrictionFormat" xml:space="preserve">
+    <value>FERESTRICTIONFORMAT</value>
+  </data>
+  <data name="FrameOriginFormat" xml:space="preserve">
+    <value>FRAMEORIGINFORMAT</value>
+  </data>
+  <data name="ThesaurusRelationshipFormat" xml:space="preserve">
+    <value>ThesaurusRelationshipFormat</value>
+  </data>
+  <data name="IsThesRelRecursiveFormat" xml:space="preserve">
+    <value>IsThesRelRecursiveFormat</value>
+  </data>
+  <data name="CUTOPERATION" xml:space="preserve">
+    <value>CUTOPERATION</value>
+  </data>
+  <data name="FLOWEDITORFORMAT" xml:space="preserve">
+    <value>FLOWEDITORFORMAT</value>
+  </data>
+  <data name="ASSETRECORDFORMAT" xml:space="preserve">
+    <value>ASSETRECORDFORMAT</value>
+  </data>
+  <data name="MULTIASSETRECORDFORMAT" xml:space="preserve">
+    <value>MULTIASSETRECORDFORMAT</value>
+  </data>
+  <data name="VISUALFRAMEFORMAT" xml:space="preserve">
+    <value>VISUALFRAMEFORMAT</value>
+  </data>
+  <data name="MIXEDTEXTPATTERNFORMAT" xml:space="preserve">
+    <value>MIXEDTEXTPATTERNFORMAT</value>
+  </data>
+  <data name="TEXTPATTERNDEFFORMAT" xml:space="preserve">
+    <value>TEXTPATTERNDEFFORMAT</value>
+  </data>
+  <data name="TEXTPATTERNFORMAT" xml:space="preserve">
+    <value>TEXTPATTERNFORMAT</value>
+  </data>
+  <data name="TopicFileFilter" xml:space="preserve">
+    <value>Topic files (*.topic.xml)|*.topic.xml|All files (*.*)|*.*</value>
+    <comment>File filter for topics</comment>
+  </data>
+  <data name="ThesaurusFileFilter" xml:space="preserve">
+    <value>thesaurus files (*.thesaurus.xml)|*.thesaurus.xml|All files (*.*)|*.*</value>
+    <comment>File filter for thesaurus files</comment>
+  </data>
+  <data name="ThesaurusSectionFileFilter" xml:space="preserve">
+    <value>thesaurus section files (*.section.xml)|*.section.xml|</value>
+  </data>
+  <data name="CSVFileFilter" xml:space="preserve">
+    <value>csv files (*.csv)|*.csv|All files (*.*)|*.*</value>
+  </data>
+  <data name="globalsFileFilter" xml:space="preserve">
+    <value>global pattern files (*.global.xml)|*.global.xml|All files (*.*)|*.*</value>
+  </data>
+  <data name="CONDITIONPATTERNFORMAT" xml:space="preserve">
+    <value>CONDITIONPATTERNFORMAT</value>
+  </data>
+  <data name="DOPATTERNFORMAT" xml:space="preserve">
+    <value>DOPATTERNFORMAT</value>
+  </data>
+  <data name="INVALIDPATTERNFORMAT" xml:space="preserve">
+    <value>INVALIDPATTERNFORMAT</value>
+  </data>
+  <data name="OUTPUTPATTERNFORMAT" xml:space="preserve">
+    <value>OUTPUTPATTERNFORMAT</value>
+  </data>
+  <data name="AssetFileFilter" xml:space="preserve">
+    <value>Asset files (*.asset.xml)|*.asset.xml|All files (*.*)|*.*</value>
+    <comment>File filter for assets</comment>
+  </data>
+  <data name="CustomSpellingDict" xml:space="preserve">
+    <value>CustomDict.lex</value>
+  </data>
+  <data name="IgnoreAllDict" xml:space="preserve">
+    <value>IgnoreAllDict.lex</value>
+    <comment>the file that contains the spellings that need to be ignored for this session.</comment>
+  </data>
+  <data name="PatternsForText" xml:space="preserve">
+    <value>Patterns for </value>
+  </data>
+  <data name="AttachedTopicsFileName" xml:space="preserve">
+    <value>attachedTopics.bin</value>
+  </data>
+  <data name="ASSETCOLUMN" xml:space="preserve">
+    <value>ASSETCOLUMN</value>
+  </data>
+  <data name="WORDNETDRAGFORMAT" xml:space="preserve">
+    <value>WORDNETDRAGFORMAT</value>
+  </data>
+  <data name="NNLFileFilter" xml:space="preserve">
+    <value>Neural network files (*.nnl)|*.nnl|All files (*.*)|*.*</value>
+    <comment>source code module files</comment>
+  </data>
+  <data name="ModuleFileFilter" xml:space="preserve">
+    <value>module files (*.nnm)|*.nnm|All files (*.*)|*.*</value>
+  </data>
+  <data name="SourceFilesFilter" xml:space="preserve">
+    <value>source files (*.nnl)|*.nnl|All files (*.*)|*.*</value>
+  </data>
+  <data name="QueryFileFilter" xml:space="preserve">
+    <value>Queries (*.xnq)|*.xnq|All files (*.*)|*.*</value>
+  </data>
+  <data name="ChatLogFileFilter" xml:space="preserve">
+    <value>chatlog files (*.xcl)|*.xcl|All files (*.*)|*.*</value>
+  </data>
+  <data name="ImportTopicFileFilter" xml:space="preserve">
+    <value>Topic files (*.topic.xml)|*.topic.xml|AIML files (*.aiml)|*.aiml|All files (*.*)|*.*</value>
+    <comment>File filter for importing topics</comment>
+  </data>
+</root>

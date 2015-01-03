@@ -1,0 +1,1208 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.ThesaurusView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+             xmlns:ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls"
+             xmlns:db="clr-namespace:JaStDev.HAB;assembly=JaStDev.HabCore"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:cf="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+             xmlns:dg="http://schemas.microsoft.com/wpf/2008/toolkit"
+             xmlns:dd="clr-namespace:DnD"
+             cf:Help.Topic="thesaurus.html"
+             xmlns:diagnostics="clr-namespace:System.Diagnostics;assembly=WindowsBase">
+    <UserControl.CommandBindings>
+        <CommandBinding Command="self:App.AddThesaurusRelationshipCmd" Executed="AddThesaurusRelationshipCmd_Executed" />
+        <CommandBinding Command="self:App.AddNoRecursiveThesRelCmd" Executed="AddNoRecursiveThesRelCmd_Executed"
+                        CanExecute="AddNoRecursiveThesRelCmd_CanExecute" />
+        <CommandBinding Command="self:App.AddConjugationCmd" CanExecute="AddConj_CanExecute"
+                        Executed="AddConj_Executed" />
+        <CommandBinding Command="self:App.AddPosRelatedCmd" CanExecute="AddPosRelated_CanExecute"
+                        Executed="AddAddPosRelated_Executed" />
+        <CommandBinding Command="self:App.AddObjectRelatedCmd" CanExecute="AddPosRelated_CanExecute"
+                        Executed="AddObjectRelated_Executed" />
+        <CommandBinding Command="Find" Executed="Find_Executed" />
+        <CommandBinding Command="Copy" Executed="Copy_Executed" CanExecute="Copy_CanExecute" />
+        <CommandBinding Command="self:App.FindNextCmd" Executed="FindNextCmd_Executed"
+                        CanExecute="FindNextCmd_CanExecute" />
+        <CommandBinding Command="self:App.DeleteSpecialCmd" CanExecute="DeleteSpecial_CanExecute"
+                        Executed="DeleteSpecial_Executed" />
+        <CommandBinding Command="self:App.NewSynonymCmd" Executed="NewSynonymCmd_Executed"
+                        CanExecute="NewSynonymCmd_CanExecute" />
+
+        <CommandBinding Command="self:GlobalCommands.ImportCmd" Executed="ImportCmd_Executed" />
+        <CommandBinding Command="self:GlobalCommands.ExportCmd" Executed="ExportCmd_Executed" />
+        <CommandBinding Command="self:GlobalCommands.ImportWordListCmd" Executed="ImportWordListCmd_Executed"
+                        CanExecute="ImportWordListCmd_CanExecute" />
+        <CommandBinding Command="self:GlobalCommands.ImportClipboardWordListCmd"
+                        Executed="ImportClipboardWordListCmd_Executed"
+                        CanExecute="ImportClipboardWordListCmd_CanExecute" />
+        <CommandBinding Command="self:GlobalCommands.ExportWordListCmd" Executed="ExportWordListCmd_Executed"
+                        CanExecute="ExportWordListCmd_CanExecute" />
+    </UserControl.CommandBindings>
+    <UserControl.InputBindings>
+        <KeyBinding Key="Del" Command="Delete" />
+        <KeyBinding Key="F3" Command="self:App.FindNextCmd" />
+    </UserControl.InputBindings>
+    <UserControl.Resources>
+
+        <self:SubThesaurusItemDragAdvisor x:Key="SubItemDragAdvisor" />
+        <self:ThesaurusListItemDragAdvisor x:Key="DragAdvisor" />
+        <self:ThesaurusListItemDropAdvisor x:Key="ThesaurusItemDropAdvisor" />
+        <self:ThesaurusListDropAdvisor x:Key="DropAdvisor" />
+        <self:SubThesaurusCollectionDropAdvisor x:Key="SubColDropAdvisor" />
+        <self:SubRelationshipsDropAdvisor x:Key="SubRelationsDropAdvisor" />
+        <self:RelatedObjectDropAdvisor x:Key="RelObjDropAdvisor" />
+        <self:DataToSearchConverter x:Key="DataToSearchConv" />
+
+        <Style x:Key="ThesMenuRadioBtn" TargetType="{x:Type RadioButton}">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="GroupName" Value="OptionGroupThesSearchType" />
+            <Setter Property="IsHitTestVisible" Value="False" />
+        </Style>
+
+        <ctrls:NeuronBrowserPopup x:Key="ThesBrowserPopup">
+            <ctrls:NeuronBrowserPopup.ItemsSources>
+                <ctrls:BrowserDataSource PageHeader="Thesaurus"
+                                         PageToolTip="All the thesaurus items"
+                                         ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=Thesaurus.BrowsableItems, Mode=OneWay}"
+                                         AsTree="True" />
+            </ctrls:NeuronBrowserPopup.ItemsSources>
+        </ctrls:NeuronBrowserPopup>
+
+        <DataTemplate DataType="{x:Type self:ThesaurusItem}">
+            <StackPanel dd:DragDropManager.DragSource="{StaticResource DragAdvisor}"
+                        dd:DragDropManager.DropTarget="{StaticResource ThesaurusItemDropAdvisor}"
+                        Background="Transparent"
+                        Orientation="Horizontal">
+                <Image Source="/Images/TextPatterns/TextPattern_Enabled.png"
+                       Margin="0,0,4,0"
+                       Visibility="{Binding Path=HasTextPattern, Mode=OneWay, Converter={StaticResource BoolToVisConv}}" />
+                <TextBlock DataContext="{Binding Path=NeuronInfo}"
+                           x:Name="TxtTitle"
+                           Text="{Binding Path=DisplayTitle, Mode=OneWay}" />
+                <CheckBox Style="{StaticResource HiddenContentCheckBox}"
+                          IsChecked="{Binding Path=IsAttribute, Mode=TwoWay}">
+                    <TextBlock VerticalAlignment="Top"
+                               FontSize="9"
+                               Margin="2,0,0,0"
+                               Foreground="Blue"
+                               Typography.Variants="Superscript">
+                        <Bold>a</Bold>
+                    </TextBlock>
+                </CheckBox>
+            </StackPanel>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding Path=IsPlaceHolder}" Value="true">
+                    <Setter TargetName="TxtTitle" Property="FontStyle" Value="Italic" />
+                    <Setter TargetName="TxtTitle" Property="Foreground" Value="DarkGray" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+
+        <!--The root context menu for the thesaurus.-->
+        <ContextMenu x:Key="ThesaurusContextMenu">
+            <MenuItem Header="New object"
+                      Command="self:App.NewObjectCmd"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                      ToolTip="Add a new object at the root." />
+            <MenuItem Header="Add relationship"
+                      Command="self:App.AddThesaurusRelationshipCmd"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                      ToolTip="Add a new, recursive thesaurus relationship.">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Thesaurus/Relationship.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <Separator
+                Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}" />
+            <MenuItem Header="Build"
+                      Click="MnuItem_Click"
+                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}"
+                      ToolTip="Rebuild the entire thesaurus by extracting all objects from the network." />
+            <Separator />
+            <MenuItem Header="Import">
+                <MenuItem Header="Thesaurus"
+                          Command="self:GlobalCommands.ImportCmd"
+                          ToolTip="Imports a thesaurus file and adds the content as children of the selected item/relationship" />
+            </MenuItem>
+            <MenuItem Header="Export">
+                <MenuItem Header="Thesaurus"
+                          ToolTip="Export the entire thesaurus to file."
+                          Command="self:GlobalCommands.ExportCmd" />
+                <MenuItem Header="Compact thesaurus"
+                          ToolTip="Export the entire thesaurus to file while compacting the data as much as possible (for wordnet)."
+                          Click="MenuItem_Click" />
+            </MenuItem>
+        </ContextMenu>
+
+        <!--The contextmenu for the thesaurusitems.-->
+        <ContextMenu x:Key="ThesaurusItemContextMenu">
+            <MenuItem Header="New object"
+                      Command="self:App.NewObjectCmd"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                      ToolTip="Add a new object as child of the selected item." />
+            <MenuItem Header="New synonym"
+                      Command="self:App.NewSynonymCmd"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                      ToolTip="Add a new synonym to the selected item (as a text-neuron)." />
+            <MenuItem Header="Add non recursive relationship"
+                      Command="self:App.AddNoRecursiveThesRelCmd"
+                      ToolTip="Add a new non recursive relationship type (a set) to the selected thesaurus item.">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Thesaurus/SubRelationship_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <Separator />
+            <!--<MenuItem Header="Build"
+                   Click="MnuItem_Click"
+                   Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}"
+                   ToolTip="Rebuild the entire thesaurus by extracting all objects from the network."/>
+         <Separator Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}"/>-->
+
+            <MenuItem Command="Copy"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Edit/Copy_Enabled.png" Style="{StaticResource TlbCodeItemsImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Command="Paste"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Edit/Paste_Enabled.png" Style="{StaticResource TlbCodeItemsImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <Separator />
+            <MenuItem Command="Delete"
+                      InputGestureText="Del"
+                      ToolTip="Delete the object from the network.">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Delete_Enabled.png" Style="{StaticResource TlbCodeItemsImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+
+
+            <MenuItem Header="Delete patterns"
+                      Click="MnuDeletePatterns_Click"
+                      IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.Content.HasTextPattern}"
+                      ToolTip="Delete the topic that is attached to this object." />
+
+            <MenuItem Header="Delete special..."
+                      InputGestureText="Ctrl+Del"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                      CommandParameter="item"
+                      Command="self:App.DeleteSpecialCmd"
+                      ToolTip="Select how the ojbect needs to be deleted from the network."
+                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}" />
+            <MenuItem Header="Remove"
+                      InputGestureText="Shift+Del"
+                      Command="self:App.RemoveCmd"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                      ToolTip="Remove the object from the thesaurus link (the object remains in the network, only the link is destroyed)." />
+            <Separator />
+            <MenuItem Command="self:App.SyncCmd"
+                      Header="Sync with explorer"
+                      InputGestureText="F4"
+                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                      ToolTip="Show this object in the explorer view.">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Sync_Enabled.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Browse neuron"
+                      Command="self:GlobalCommands.BrowseNeuronCmd"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                      ToolTip="Look at all the relationships of the neuron through a neuron debug view."
+                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}"
+                      InputGestureText="F8">
+                <MenuItem.Icon>
+                    <Image Source="/Images/BrowseNeuron_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <Separator
+                Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}" />
+            <MenuItem Header="Personal mappings"
+                      ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.PersonalMappings}">
+                <MenuItem.ItemContainerStyle>
+                    <Style TargetType="MenuItem">
+                        <Setter Property="IsCheckable" Value="True" />
+                        <Setter Property="IsChecked" Value="{Binding Path=IsSelected, Mode=TwoWay}" />
+                    </Style>
+                </MenuItem.ItemContainerStyle>
+                <MenuItem.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=NeuronInfo.DisplayTitle}" />
+                    </DataTemplate>
+                </MenuItem.ItemTemplate>
+            </MenuItem>
+            <MenuItem Header="Share link"
+                      ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=NeuronInfo.OverlayedItems, Mode=OneWay}"
+                      ItemTemplate="{StaticResource ShareLinkMenuItemTemplate}"
+                      ToolTip="Share an overlayable link on another object with this one"
+                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}" />
+            <Separator />
+
+            <MenuItem Header="View patterns..." Command="self:GlobalCommands.ViewAttachedPatternsCmd"
+                      ToolTip="Show the topic that is associated with the selected item."
+                      InputGestureText="Shift+F7"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/TextPatterns/TextPattern_Enabled.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="View frames..." Command="self:GlobalCommands.ViewAttachedFramessCmd"
+                      ToolTip="Show the object-frames editor for the selected item."
+                      InputGestureText="Shift+F6"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Frame/Object_Frames_Enabled.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="View asset..." Command="self:GlobalCommands.ViewAttachedAssetsCmd"
+                      ToolTip="Show the asset editor for the selected item."
+                      InputGestureText="Shift+F5"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=ProVisibility, Mode=OneTime}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Asset/objectAsset_Enabled.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="View code..."
+                      Command="self:GlobalCommands.ViewCodeCmd"
+                      InputGestureText="Shift+F4"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                      ToolTip="Open and show a code editor for this object."
+                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/ViewCode_Enabled.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <Separator />
+            <MenuItem Header="Import">
+                <MenuItem Header="Thesaurus"
+                          Command="self:GlobalCommands.ImportCmd"
+                          CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}"
+                          ToolTip="Imports a thesaurus file and adds the content as children of the selected item/relationship" />
+                <MenuItem Header="word list"
+                          Command="self:GlobalCommands.ImportWordListCmd"
+                          ToolTip="Import a list of words (a csv file or language plug-in) into the thesaurus and adds the imported words as children of the selected node." />
+                <MenuItem Header="word list from clipboard"
+                          Command="self:GlobalCommands.ImportClipboardWordListCmd"
+                          ToolTip="Import a list of words (comma seperated) from the clipboard into the thesaurus and adds the imported words as children of the selected node." />
+            </MenuItem>
+            <MenuItem Header="Export">
+                <MenuItem Header="Thesaurus"
+                          ToolTip="Export the selected node and all the children as a thesaurus file."
+                          CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}"
+                          Command="self:GlobalCommands.ExportCmd" />
+                <MenuItem Header="word list"
+                          ToolTip="Export the selected node and all the children as a comma seperated values file (csv-file or plug-in)."
+                          Command="self:GlobalCommands.ExportWordListCmd" />
+            </MenuItem>
+        </ContextMenu>
+
+
+        <!--The contextmenu for the sub thesaurusitems.-->
+        <ContextMenu x:Key="ThesaurusSubItemContextMenu">
+            <MenuItem Header="New"
+                      ItemsSource="{StaticResource NewObjectPOSMenuItems}" />
+            <MenuItem Header="Add non recursive relationship"
+                      Command="self:App.AddNoRecursiveThesRelCmd"
+                      ToolTip="Add a new non recursive relationship type (a set) to the selected thesaurus item.">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Thesaurus/SubRelationship_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <Separator />
+            <MenuItem Command="Copy"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Edit/Copy_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Command="Paste"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Edit/Paste_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <Separator />
+            <MenuItem Command="Delete"
+                      InputGestureText="Del"
+                      ToolTip="Delete the object from the network.">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Delete_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Delete special"
+                      InputGestureText="Ctrl+Del"
+                      Command="self:App.DeleteSpecialCmd"
+                      CommandParameter="sub"
+                      CommandTarget="{Binding ElementName=LstSubItems}"
+                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}" />
+            <MenuItem Header="Remove"
+                      InputGestureText="Shift+Del"
+                      Command="self:App.RemoveCmd"
+                      ToolTip="Remove the object from the thesaurus link (the object remains in the network, only the link is destroyed)."
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+            <Separator
+                Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}" />
+            <MenuItem Command="self:App.SyncCmd"
+                      Header="Sync with explorer"
+                      InputGestureText="F4"
+                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Sync_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Browse neuron"
+                      Command="self:GlobalCommands.BrowseNeuronCmd"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                      ToolTip="Look at all the relationships of the neuron through a neuron debug view."
+                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}"
+                      InputGestureText="F8">
+                <MenuItem.Icon>
+                    <Image Source="/Images/BrowseNeuron_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <Separator />
+            <MenuItem Header="View patterns..." Command="self:GlobalCommands.ViewAttachedPatternsCmd"
+                      ToolTip="Show the topic that is associated with the selected item."
+                      InputGestureText="Shift+F7"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/TextPatterns/TextPattern_Enabled.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="View frames..." Command="self:GlobalCommands.ViewAttachedFramessCmd"
+                      ToolTip="Show the object-frames editor for the selected item."
+                      InputGestureText="Shift+F6"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Frame/Object_Frames_Enabled.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="View asset..." Command="self:GlobalCommands.ViewAttachedAssetsCmd"
+                      ToolTip="Show the asset editor for the selected item."
+                      InputGestureText="Shift+F5"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=ProVisibility, Mode=OneTime}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Asset/objectAsset_Enabled.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="View code..."
+                      Command="self:GlobalCommands.ViewCodeCmd"
+                      ToolTip="Open and show a code editor for the selected item."
+                      InputGestureText="Shift+F4"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/ViewCode_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
+
+        <!--Contextmenu for subitem groups-->
+        <ContextMenu x:Key="ThesaurusSubRelContextMenu">
+            <MenuItem Header="New"
+                      ItemsSource="{StaticResource NewObjectPOSMenuItems}" />
+            <MenuItem Header="Add non recursive relationship"
+                      Command="self:App.AddNoRecursiveThesRelCmd"
+                      ToolTip="Add a new non recursive relationship type (a set) to the selected thesaurus item.">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Thesaurus/SubRelationship_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <Separator />
+            <MenuItem Command="Delete"
+                      InputGestureText="Del"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                      ToolTip="Delete the sub relationship (the cluster containing all the objects will be deleted, but not the objects themselves).">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Delete_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Delete special"
+                      InputGestureText="Ctrl+Del"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}"
+                      Command="self:App.DeleteSpecialCmd" />
+            <Separator
+                Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}" />
+            <MenuItem Command="self:App.SyncCmd"
+                      Header="Sync with explorer"
+                      InputGestureText="F4"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Sync_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Browse neuron"
+                      Command="self:GlobalCommands.BrowseNeuronCmd"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                      ToolTip="Look at all the relationships of the neuron through a neuron debug view."
+                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}"
+                      InputGestureText="F8">
+                <MenuItem.Icon>
+                    <Image Source="/Images/BrowseNeuron_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <Separator />
+            <MenuItem Header="View frames..." Command="self:GlobalCommands.ViewAttachedFramessCmd"
+                      ToolTip="Show the object-frames editor for the selected item."
+                      InputGestureText="Shift+F6"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Frame/Object_Frames_Enabled.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="View patterns..." Command="self:GlobalCommands.ViewAttachedPatternsCmd"
+                      ToolTip="Show the topic that is associated with the selected item."
+                      InputGestureText="Shift+F7"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/TextPatterns/TextPattern_Enabled.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="View asset..." Command="self:GlobalCommands.ViewAttachedAssetsCmd"
+                      ToolTip="Show the asset editor for the selected item."
+                      InputGestureText="Shift+F5"
+                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=ProVisibility, Mode=OneTime}"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Asset/objectAsset_Enabled.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="View code..."
+                      Command="self:GlobalCommands.ViewCodeCmd"
+                      ToolTip="Open and show a code editor for the selected item."
+                      InputGestureText="Shift+F4"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/ViewCode_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
+
+        <!--ContextMenu for subgroups root-->
+        <ContextMenu x:Key="SubGroupsRootContextMenu">
+            <MenuItem Header="Add non recursive relationship"
+                      Command="self:App.AddNoRecursiveThesRelCmd"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                      ToolTip="Add a new non recursive relationship type (a set) to the selected thesaurus item.">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Thesaurus/SubRelationship_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
+
+        <!--Context menu for conjugations-->
+        <ContextMenu x:Key="ConjugationsContextMenu">
+            <MenuItem Header="New"
+                      Command="self:App.AddConjugationCmd"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+            <MenuItem Header="Select conjugation types"
+                      Click="SelectConjTypes_Click" />
+            <Separator />
+
+            <MenuItem Command="Cut"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Edit/Cut_Enabled.png" Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Command="Copy"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Edit/Copy_Enabled.png" Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Command="Paste"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Edit/Paste_Enabled.png" Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <Separator />
+            <MenuItem Command="Delete"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+        </ContextMenu>
+
+        <!--Context menu for Pos related-->
+        <ContextMenu x:Key="PosRelatedContextMenu">
+            <MenuItem Header="New"
+                      Command="self:App.AddPosRelatedCmd"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+            <Separator />
+            <MenuItem Command="Cut"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Edit/Cut_Enabled.png" Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Command="Copy"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Edit/Copy_Enabled.png" Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Command="Paste"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Edit/Paste_Enabled.png" Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <Separator />
+            <MenuItem Command="Delete"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+        </ContextMenu>
+
+        <!--Context menu for Ojbect related-->
+        <ContextMenu x:Key="ObjectRelatedContextMenu">
+            <MenuItem Header="New"
+                      Command="self:App.AddObjectRelatedCmd"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+            <Separator />
+            <MenuItem Command="Cut"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Edit/Cut_Enabled.png" Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Command="Copy"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Edit/Copy_Enabled.png" Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Command="Paste"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Edit/Paste_Enabled.png" Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <Separator />
+            <MenuItem Command="Delete"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+        </ContextMenu>
+
+
+        <Style x:Key="ThesaurusTreeViewPanelItemTemplate" TargetType="{x:Type ctrls:TreeViewPanelItem}"
+               BasedOn="{StaticResource {x:Type ctrls:TreeViewPanelItem}}">
+            <Setter Property="ContextMenu" Value="{StaticResource ThesaurusItemContextMenu}" />
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+
+
+        <Style x:Key="ThesaurusSubItemStyle" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=OneWay}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Border Background="Transparent"
+                                x:Name="Bd"
+                                dd:DragDropManager.DragSource="{StaticResource SubItemDragAdvisor}"
+                                HorizontalAlignment="Stretch">
+                            <ctrls:NeuronDataEditor SelectedNeuron="{Binding Path=Value, Mode=TwoWay}"
+                                                    ShowDropDownOnMouseOver="true"
+                                                    Popup="{StaticResource ThesBrowserPopup}"
+                                                    VerticalAlignment="Stretch"
+                                                    CanClearValue="True"
+                                                    IconVisibility="Visible"
+                                                    dd:DragDropManager.DropTarget="{StaticResource NDEditorDropAdvisor}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter TargetName="Bd" Property="Background"
+                                        Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                                <Setter Property="Foreground"
+                                        Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="true" />
+                                    <Condition Property="Selector.IsSelectionActive" Value="false" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Bd" Property="Background"
+                                        Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+                                <Setter Property="Foreground"
+                                        Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+                            </MultiTrigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground"
+                                        Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <EventSetter Event="Selected" Handler="SubItems_Selected" />
+        </Style>
+
+        <!--used by the subitems collection listbox items.-->
+        <Style x:Key="SubItemsCollectionStyle" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=OneWay}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Expander Header="{Binding Path=RelationshipInfo.DisplayTitle}"
+                                  x:Name="Bd"
+                                  Background="{TemplateBinding Background}"
+                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                  BorderThickness="{TemplateBinding BorderThickness}"
+                                  Padding="{TemplateBinding Padding}"
+                                  IsExpanded="{Binding Path=IsExpanded}"
+                                  dd:DragDropManager.DropTarget="{StaticResource SubColDropAdvisor}"
+                                  ContextMenu="{StaticResource ThesaurusSubRelContextMenu}"
+                                  PreviewMouseDown="SubRelExpander_PreviewMouseDown">
+                            <ListBox ItemsSource="{Binding}"
+                                     BorderThickness="0"
+                                     ItemContainerStyle="{StaticResource ThesaurusSubItemStyle}" />
+                        </Expander>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter TargetName="Bd" Property="Background"
+                                        Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                                <Setter Property="Foreground"
+                                        Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="true" />
+                                    <Condition Property="Selector.IsSelectionActive" Value="false" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Bd" Property="Background"
+                                        Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+                                <Setter Property="Foreground"
+                                        Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+                            </MultiTrigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground"
+                                        Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+        <!--sub relationship's group-->
+        <!--<DataTemplate x:Key="SubRelationshipitemTemplate">
+         <Expander Header="{Binding Path=RelationshipInfo.DisplayTitle}"
+                   IsExpanded="{Binding Path=IsExpanded}"
+                   dd:DragDropManager.DropTarget="{StaticResource SubColDropAdvisor}"
+                   ContextMenu="{StaticResource ThesaurusSubRelContextMenu}"
+                   PreviewMouseDown="SubRelExpander_PreviewMouseDown">
+            <ListBox ItemsSource="{Binding}"
+                     BorderThickness="0"
+                     ItemTemplate="{StaticResource ThesaurusSubItemTemplate}"
+                     DisplayMemberPath="DebugItem"/>
+         </Expander>
+      </DataTemplate>-->
+
+        <Style TargetType="{x:Type ListViewItem}"
+               x:Key="LstPOSRelatedStyle">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+
+        <Style TargetType="{x:Type ListView}"
+               x:Key="StyleRelatedListView">
+            <Setter Property="SelectionMode" Value="Single" />
+            <Setter Property="ItemContainerStyle" Value="{StaticResource LstPOSRelatedStyle}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+
+        <Style x:Key="StyleRelatedListViewHeader"
+               TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+
+
+        <!--template for DropDownSelector's selected value.-->
+        <DataTemplate x:Key="ThesaurusDropDownSelectorValueTemplate">
+            <TextBlock Text="{Binding Converter={StaticResource NeuronToInfoConv}}"
+                       HorizontalAlignment="Left"
+                       Margin="4,0,0,0" />
+        </DataTemplate>
+
+    </UserControl.Resources>
+
+    <DockPanel>
+        <Expander Style="{StaticResource SimpleExpandDownStyle}"
+                  IsExpanded="{Binding Source={x:Static self:Properties.Settings.Default}, Path=ToolbarExpandedThesaurusView, Mode=TwoWay}"
+                  Focusable="False"
+                  DockPanel.Dock="Top">
+            <ToolBarTray FocusManager.IsFocusScope="False">
+                <ToolBar FocusManager.IsFocusScope="False"
+                         Band="1">
+                    <ComboBox x:Name="CmbPOSFilter"
+                              MinWidth="90"
+                              ItemsSource="{Binding Path=PosFilters}"
+                              DisplayMemberPath="NeuronInfo.DisplayTitle"
+                              SelectedIndex="{Binding Path=SelectedPosFilterIndex}" />
+                    <ComboBox x:Name="CmbRelationship"
+                              MinWidth="90"
+                              ItemsSource="{Binding Path=Relationships}"
+                              DisplayMemberPath="NeuronInfo.DisplayTitle"
+                              SelectedIndex="{Binding Path=SelectedRelationshipIndex}" />
+                    <Separator />
+                    <Button ToolTip="Add a new relationship type to the thesaurus."
+                            Command="self:App.AddThesaurusRelationshipCmd">
+                        <Image Source="/Images/Thesaurus/Relationship.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </Button>
+                    <Button ToolTip="Add a new non recursive relationship type (a set) to the selected thesaurus item."
+                            x:Name="BtnAddNorecursiveRel"
+                            Command="self:App.AddNoRecursiveThesRelCmd">
+                        <Image
+                            Source="{Binding ElementName=BtnAddNorecursiveRel, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Thesaurus/SubRelationship.png, Mode=OneWay}"
+                            Style="{StaticResource TlbImageStyle}" />
+                    </Button>
+                </ToolBar>
+                <ToolBar FocusManager.IsFocusScope="False"
+                         Band="2">
+                    <TextBox Name="TxtSearch"
+                             ToolTip="text to search for (Ctrl+F)"
+                             KeyDown="TxtSearch_KeyDown"
+                             MinWidth="90">
+                        <ctrls:WatermarkService.Watermark>
+                            <TextBlock>
+                                <Italic>Search here</Italic>
+                            </TextBlock>
+                        </ctrls:WatermarkService.Watermark>
+                    </TextBox>
+                    <Button Focusable="False"
+                            ToolTip="Search in the thesaurus(F3)"
+                            Command="self:App.FindNextCmd">
+                        <Image Style="{StaticResource TlbImageStyle}"
+                               Source="/Images/FindNextHS.png" /> <!--Source="/Images/Edit/Find_Enabled.png"-->
+                    </Button>
+                    <Menu>
+                        <MenuItem ToolTip="Show the search options">
+                            <MenuItem.Header>
+                                <Image Style="{StaticResource TlbImageStyle}"
+                                       Source="/Images/SearchOptions.png" />
+                            </MenuItem.Header>
+                            <MenuItem Header="all relationships"
+                                      ToolTip="When checked, all recursive relationships will be searched, when unchecked, only the selected relationship will be included."
+                                      IsCheckable="True"
+                                      IsChecked="{Binding Source={x:Static self:Properties.Settings.Default}, Path=ThesSearchAllRelationships, Mode=TwoWay}" />
+                            <Separator />
+                            <MenuItem Header="Exact match"
+                                      IsCheckable="True"
+                                      ToolTip="When checked, only words that exactly match the search criterium will be returned, otherwise the search results may contain text before and/or after the search criterium."
+                                      IsChecked="{Binding Source={x:Static self:Properties.Settings.Default}, Path=ThesSearchNeedsExactMatch, Mode=TwoWay}" />
+                            <Separator />
+                            <MenuItem Header="Only single words"
+                                      Name="MnuItemSingleWords"
+                                      ToolTip="When checked, only results that contain single words are included."
+                                      IsCheckable="True"
+                                      IsChecked="{Binding  Path=DataToSearch, Mode=TwoWay, Converter={StaticResource DataToSearchConv}, ConverterParameter={x:Static self:DataToSearch.Text}}" />
+                            <MenuItem Header="Only compounds"
+                                      Name="MnuItemCompounds"
+                                      IsCheckable="True"
+                                      ToolTip="When checked, only results that contain multiple words are included."
+                                      IsChecked="{Binding Path=DataToSearch, Mode=TwoWay, Converter={StaticResource DataToSearchConv}, ConverterParameter={x:Static self:DataToSearch.Compound}}" />
+                            <MenuItem Header="All"
+                                      Name="MnuItemAll"
+                                      ToolTip="When checked, both results with single words as well as multiple words are included."
+                                      IsCheckable="True"
+                                      IsChecked="{Binding  Path=DataToSearch, Mode=TwoWay, Converter={StaticResource DataToSearchConv}, ConverterParameter={x:Static self:DataToSearch.All}}" />
+                        </MenuItem>
+                    </Menu>
+
+                    <Separator />
+                    <ToggleButton ToolTip="Show/hide the list of additional relationships."
+                                  x:Name="ToggleAdditional"
+                                  IsChecked="{Binding Path=IsSubItemsLoaded, Mode=TwoWay}"
+                                  Style="{StaticResource TlbToggleButtonsStyle}">
+                        <Image Source="/Images/view_top_bottom.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </ToggleButton>
+                </ToolBar>
+            </ToolBarTray>
+        </Expander>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="{Binding Path=TreeRowHeight, Mode=TwoWay}" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="{Binding Path=SubItemsRowHeight, Mode=TwoWay}" />
+            </Grid.RowDefinitions>
+
+
+            <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+                  Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <ScrollBar Grid.Column="0"
+                           Grid.Row="1"
+                           x:Name="ScrollHor"
+                           Value="{Binding Path=ThesHorScrollPos, Mode=TwoWay}"
+                           Minimum="0"
+                           Maximum="{Binding ElementName=ThesPanel, Path=HorizontalMax, Mode=OneWay}"
+                           ViewportSize="{Binding ElementName=ThesPanel, Path=ActualWidth}"
+                           SmallChange="10"
+                           LargeChange="{Binding ElementName=ThesPanel, Path=ActualWidth}"
+                           Orientation="Horizontal"
+                           HorizontalAlignment="Stretch"
+                           Visibility="{Binding ElementName=ThesPanel, Path=HorBarVisibility}" />
+                <ScrollBar Grid.Column="1"
+                           Grid.Row="0"
+                           x:Name="ScrollVer"
+                           Value="{Binding Path=ThesVerScrollPos, Mode=TwoWay}"
+                           Minimum="0"
+                           ViewportSize="{Binding ElementName=ThesPanel, Path=VerViewportSize}"
+                           SmallChange="1"
+                           LargeChange="{Binding ElementName=ThesPanel, Path=VerLargeChange}"
+                           Maximum="{Binding ElementName=ThesPanel, Path=VerticalMax, Mode=OneWay}"
+                           Orientation="Vertical"
+                           VerticalAlignment="Stretch"
+                           Visibility="{Binding ElementName=ThesPanel, Path=VerBarVisibility}" />
+                <AdornerDecorator ClipToBounds="True">
+                    <ctrls:TreeViewPanel HorizontalAlignment="Stretch"
+                                         Focusable="True"
+                                         VerticalAlignment="Stretch"
+                                         Background="White"
+                                         FallbackValue="Loading..."
+                                         ItemsSource="{Binding }"
+                                         ItemContainerStyle="{StaticResource ThesaurusTreeViewPanelItemTemplate}"
+                                         ContextMenu="{StaticResource ThesaurusContextMenu}"
+                                         dd:DragDropManager.DropTarget="{StaticResource DropAdvisor}"
+                                         x:Name="ThesPanel"
+                                         ClipToBounds="True"
+                                         HorizontalOffset="{Binding Path=ThesHorScrollPos, Mode=TwoWay}"
+                                         VerticalOffset="{Binding Path=ThesVerScrollPos, Mode=TwoWay}"
+                                         ctrls:TiltWheelProvider.TiltWheel="ThesPanel_TiltWheel"
+                                         MouseDown="TreeItems_PreviewMouseDown">
+                        <ctrls:TreeViewPanel.CommandBindings>
+                            <CommandBinding Command="self:App.RemoveCmd" Executed="RemoveItemCmd_Executed"
+                                            CanExecute="RemoveItemCmd_CanExecute" />
+                            <CommandBinding Command="self:App.NewObjectCmd" Executed="NewItemCmd_Executed"
+                                            CanExecute="NewItemCmd_CanExecute" />
+                            <CommandBinding Command="Delete" CanExecute="DeleteSpecial_CanExecute"
+                                            Executed="Delete_Executed" />
+                        </ctrls:TreeViewPanel.CommandBindings>
+                        <ctrls:TreeViewPanel.InputBindings>
+                            <KeyBinding Key="Del" Modifiers="Shift" Command="self:App.RemoveCmd" />
+                            <KeyBinding Key="Del" Command="self:App.DeleteSpecialCmd" Modifiers="Control" />
+                        </ctrls:TreeViewPanel.InputBindings>
+                    </ctrls:TreeViewPanel>
+                </AdornerDecorator>
+            </Grid>
+
+            <GridSplitter Height="6"
+                          Grid.Row="1"
+                          ShowsPreview="True"
+                          Background="Transparent"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Center"
+                          Visibility="{Binding ElementName=ToggleAdditional, Path=IsChecked, Converter={StaticResource BoolToVisConv}}" />
+
+            <TabControl
+                Visibility="{Binding ElementName=ToggleAdditional, Path=IsChecked, Converter={StaticResource BoolToVisConv}}"
+                Grid.Row="2"
+                BorderThickness="0">
+                <TabItem Header="Thesaurus">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock ToolTip="Used to declare 1 to 1 relationships."
+                                   Margin="0,4,0,4"
+                                   FontWeight="Bold"
+                                   Grid.Row="0"
+                                   ContextMenu="{StaticResource ObjectRelatedContextMenu}">
+                            Singletons:
+                        </TextBlock>
+                        <ListView ItemsSource="{Binding Path=ObjectRelated.Items}"
+                                  Grid.Row="1"
+                                  SelectionChanged="LstObjectRelated_SelectionChanged"
+                                  ContextMenu="{StaticResource ObjectRelatedContextMenu}"
+                                  Style="{StaticResource StyleRelatedListView}"
+                                  x:Name="LstObjectRelated"
+                                  SelectedIndex="{Binding Path=SelectedIndex, Mode=OneWay}">
+                            <ListView.CommandBindings>
+                                <CommandBinding Command="Delete" CanExecute="DeleteObject_CanExecute"
+                                                Executed="DeleteObject_Executed" />
+                                <CommandBinding Command="Copy" CanExecute="CopyLinkedItem_CanExecute"
+                                                Executed="CopyLinkedItem_Executed" />
+                                <CommandBinding Command="Cut" CanExecute="CutLinkedItem_CanExecute"
+                                                Executed="CutLinkedItem_Executed" />
+                                <CommandBinding Command="Paste" CanExecute="PasteLinkedItem_CanExecute"
+                                                Executed="PasteLinkedItem_Executed" />
+                            </ListView.CommandBindings>
+                            <ListView.View>
+                                <GridView AllowsColumnReorder="true">
+
+                                    <GridViewColumn Width="100"
+                                                    HeaderContainerStyle="{StaticResource StyleRelatedListViewHeader}">
+                                        <GridViewColumn.Header>
+                                            <TextBlock ToolTip="The meaning part of the link.">POS</TextBlock>
+                                        </GridViewColumn.Header>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <ctrls:NeuronDataEditor
+                                                    SelectedNeuron="{Binding Path=Relationship, Mode=TwoWay}"
+                                                    ShowDropDownOnMouseOver="true"
+                                                    Popup="{StaticResource ThesBrowserPopup}"
+                                                    VerticalAlignment="Stretch"
+                                                    CanClearValue="False"
+                                                    IconVisibility="Visible"
+                                                    dd:DragDropManager.DropTarget="{StaticResource NDEditorDropAdvisor}" />
+                                                <!--SelectedNeuronTemplate="{StaticResource ThesaurusDropDownSelectorValueTemplate}"-->
+
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn Width="100"
+                                                    HeaderContainerStyle="{StaticResource StyleRelatedListViewHeader}">
+                                        <GridViewColumn.Header>
+                                            <TextBlock
+                                                ToolTip="The object related to the selected thesaurus item using the meaning that is in front of the object.">
+                                                Related
+                                            </TextBlock>
+                                        </GridViewColumn.Header>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <ctrls:NeuronDataEditor
+                                                    SelectedNeuron="{Binding Path=Related, Mode=TwoWay}"
+                                                    ShowDropDownOnMouseOver="true"
+                                                    Popup="{StaticResource ThesBrowserPopup}"
+                                                    VerticalAlignment="Stretch"
+                                                    CanClearValue="False"
+                                                    IconVisibility="Visible"
+                                                    dd:DragDropManager.DropTarget="{StaticResource NDEditorDropAdvisor}" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <TextBlock ToolTip="used to declare 1 to n relationships."
+                                   Margin="0,4,0,4"
+                                   FontWeight="Bold"
+                                   ContextMenu="{StaticResource SubGroupsRootContextMenu}"
+                                   Grid.Row="2">
+                            Sets:
+                        </TextBlock>
+                        <ListBox x:Name="LstSubItems"
+                                 Grid.Row="3"
+                                 Background="Transparent"
+                                 ItemsSource="{Binding Path=SubItems, Mode=OneWay}"
+                                 BorderThickness="0"
+                                 ScrollViewer.CanContentScroll="False"
+                                 dd:DragDropManager.DropTarget="{StaticResource SubRelationsDropAdvisor}"
+                                 ItemContainerStyle="{StaticResource SubItemsCollectionStyle}">
+                            <ListBox.CommandBindings>
+                                <CommandBinding Command="self:App.RemoveCmd" Executed="RemoveSubItemCmd_Executed"
+                                                CanExecute="RemoveSubItemCmd_CanExecute" />
+                                <CommandBinding Command="self:App.NewObjectCmd" Executed="NewSubItemCmd_Executed"
+                                                CanExecute="NewSubItemCmd_CanExecute" />
+                                <CommandBinding Command="Delete" Executed="DeleteSubItem_Executed"
+                                                CanExecute="RemoveSubItemCmd_CanExecute" />
+                            </ListBox.CommandBindings>
+                            <ListBox.InputBindings>
+                                <KeyBinding Key="Del"
+                                            Modifiers="Shift"
+                                            Command="self:App.RemoveCmd" />
+                                <KeyBinding Key="Del" Command="self:App.DeleteSpecialCmd"
+                                            Modifiers="Control" />
+                            </ListBox.InputBindings>
+                        </ListBox>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="POS">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Margin="0,4,0,4"
+                                   FontWeight="Bold"
+                                   ContextMenu="{StaticResource PosRelatedContextMenu}"
+                                   ToolTip="All the objects related to a part of speech neuron.">
+                            Part of speech related:
+                        </TextBlock>
+                        <ListView ItemsSource="{Binding Path=POSRelated.Items}"
+                                  Grid.Row="1"
+                                  Style="{StaticResource StyleRelatedListView}"
+                                  ContextMenu="{StaticResource PosRelatedContextMenu}"
+                                  SelectedIndex="{Binding Path=SelectedIndex, Mode=OneWay}"
+                                  SelectionChanged="LstPosRelated_SelectionChanged"
+                                  x:Name="LstPosRelated">
+                            <ListView.CommandBindings>
+                                <CommandBinding Command="Delete" CanExecute="DeletePos_CanExecute"
+                                                Executed="DeletePos_Executed" />
+                                <CommandBinding Command="Copy" CanExecute="CopyLinkedItem_CanExecute"
+                                                Executed="CopyLinkedItem_Executed" />
+                                <CommandBinding Command="Cut" CanExecute="CutLinkedItem_CanExecute"
+                                                Executed="CutLinkedItem_Executed" />
+                                <CommandBinding Command="Paste" CanExecute="PasteLinkedItem_CanExecute"
+                                                Executed="PasteLinkedItem_Executed" />
+                            </ListView.CommandBindings>
+                            <ListView.View>
+                                <GridView AllowsColumnReorder="true">
+
+                                    <GridViewColumn Width="100"
+                                                    HeaderContainerStyle="{StaticResource StyleRelatedListViewHeader}">
+                                        <GridViewColumn.Header>
+                                            <TextBlock
+                                                ToolTip="The meaning part of the link: the part of speech of the related item.">
+                                                POS
+                                            </TextBlock>
+                                        </GridViewColumn.Header>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <ctrls:DropDownNSSelector
+                                                    SelectedNeuron="{Binding Path=Relationship, Mode=TwoWay}"
+                                                    VerticalAlignment="Stretch"
+                                                    CanClearValue="False"
+                                                    dd:DragDropManager.DropTarget="{StaticResource DDNeuronSelectorDropAdvisor}"
+                                                    ShowDropDownOnMouseOver="true"
+                                                    SelectedNeuronTemplate="{StaticResource ThesaurusDropDownSelectorValueTemplate}">
+                                                    <ctrls:DropDownNSSelector.ItemsSources>
+                                                        <ctrls:BrowserDataSource PageHeader="POS"
+                                                                                 PageToolTip="The avaiable parts of speech"
+                                                                                 ItemsSource="{Binding ElementName=LstPosRelated, Path=DataContext.POSRelated.RelationshipsNeuronData, Mode=OneWay}"
+                                                                                 AsTree="False" />
+                                                    </ctrls:DropDownNSSelector.ItemsSources>
+                                                </ctrls:DropDownNSSelector>
+
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn Width="100"
+                                                    HeaderContainerStyle="{StaticResource StyleRelatedListViewHeader}">
+                                        <GridViewColumn.Header>
+                                            <TextBlock
+                                                ToolTip="The object related to the selected thesaurus item using the meaning that is in front of the object.">
+                                                Related
+                                            </TextBlock>
+                                        </GridViewColumn.Header>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <ctrls:NeuronDataEditor
+                                                    SelectedNeuron="{Binding Path=Related, Mode=TwoWay}"
+                                                    ShowDropDownOnMouseOver="true"
+                                                    Popup="{StaticResource ThesBrowserPopup}"
+                                                    VerticalAlignment="Stretch"
+                                                    CanClearValue="False"
+                                                    IconVisibility="Visible"
+                                                    dd:DragDropManager.DropTarget="{StaticResource NDEditorDropAdvisor}" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <TextBlock Grid.Row="2"
+                                   Margin="0,4,0,4"
+                                   FontWeight="Bold"
+                                   ToolTip="All the conjugations for a verb, an adjective,...">
+                            Conjugations:
+                        </TextBlock>
+                        <ListView ItemsSource="{Binding Path=Conjugations.Items}"
+                                  Grid.Row="3"
+                                  ContextMenu="{StaticResource ConjugationsContextMenu}"
+                                  Style="{StaticResource StyleRelatedListView}"
+                                  x:Name="LstConjugations">
+                            <ListView.CommandBindings>
+                                <CommandBinding Command="Delete" CanExecute="DeleteConj_CanExecute"
+                                                Executed="DeleteCon_Executed" />
+                                <CommandBinding Command="Copy" CanExecute="CopyLinkedItem_CanExecute"
+                                                Executed="CopyLinkedItem_Executed" />
+                                <CommandBinding Command="Cut" CanExecute="CutLinkedItem_CanExecute"
+                                                Executed="CutLinkedItem_Executed" />
+                                <CommandBinding Command="Paste" CanExecute="PasteLinkedItem_CanExecute"
+                                                Executed="PasteLinkedItem_Executed" />
+                            </ListView.CommandBindings>
+                            <ListView.View>
+                                <GridView AllowsColumnReorder="true">
+
+                                    <GridViewColumn Width="100"
+                                                    HeaderContainerStyle="{StaticResource StyleRelatedListViewHeader}">
+                                        <GridViewColumn.Header>
+                                            <TextBlock ToolTip="The type of conjugation.">POS</TextBlock>
+                                        </GridViewColumn.Header>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <ctrls:DropDownNSSelector
+                                                    SelectedNeuron="{Binding Path=Relationship, Mode=TwoWay}"
+                                                    VerticalAlignment="Stretch"
+                                                    CanClearValue="False"
+                                                    dd:DragDropManager.DropTarget="{StaticResource DDNeuronSelectorDropAdvisor}"
+                                                    ShowDropDownOnMouseOver="true"
+                                                    SelectedNeuronTemplate="{StaticResource ThesaurusDropDownSelectorValueTemplate}">
+                                                    <ctrls:DropDownNSSelector.ItemsSources>
+                                                        <ctrls:BrowserDataSource PageHeader="Conjugations"
+                                                                                 PageToolTip="The avaiable conjugations"
+                                                                                 ItemsSource="{Binding ElementName=LstConjugations, Path=DataContext.Conjugations.RelationshipsNeuronData, Mode=OneWay}"
+                                                                                 AsTree="False" />
+                                                    </ctrls:DropDownNSSelector.ItemsSources>
+                                                </ctrls:DropDownNSSelector>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn Width="100"
+                                                    HeaderContainerStyle="{StaticResource StyleRelatedListViewHeader}">
+                                        <GridViewColumn.Header>
+                                            <TextBlock ToolTip="The conjugated form of the selected thesaurus item.">Related</TextBlock>
+                                        </GridViewColumn.Header>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBox
+                                                    Text="{Binding Path=RelatedObjectWord, UpdateSourceTrigger=PropertyChanged}"
+                                                    dd:DragDropManager.DropTarget="{StaticResource RelObjDropAdvisor}" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+
+        </Grid>
+        <cf:DockPanelEx />
+
+    </DockPanel>
+</UserControl>

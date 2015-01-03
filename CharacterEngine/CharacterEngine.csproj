@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C944651B-300A-41A2-B76D-DF305E0E2937}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JaStDev.HAB.CharacterEngine</RootNamespace>
+    <AssemblyName>CharacterEngine</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="JaStDev.DataCore, Version=1.0.4174.28305, Culture=neutral, PublicKeyToken=de6f13a8ad6fc264, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\external libs\JaStDev.DataCore.dll</HintPath>
+    </Reference>
+    <Reference Include="JaStDev.LogService">
+      <HintPath>..\external libs\JaStDev.LogService.dll</HintPath>
+    </Reference>
+    <Reference Include="JaStDev.UndoSystem, Version=1.0.4173.32045, Culture=neutral, PublicKeyToken=9029e4f4ea9e2d09, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\external libs\JaStDev.UndoSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="SpeechSynth">
+      <HintPath>..\external libs\SpeechSynth.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Speech" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AnimagedImageCtrl\AnimatedImage.cs" />
+    <Compile Include="AnimagedImageCtrl\AnimatedImageFrame.cs" />
+    <Compile Include="AnimagedImageCtrl\AnimationEngineBase.cs" />
+    <Compile Include="AnimagedImageCtrl\VarTimerAnimationEngine.cs" />
+    <Compile Include="Character.cs" />
+    <Compile Include="AnimagedImageCtrl\ForwardLoopAnimationEngine.cs" />
+    <Compile Include="AnimagedImageCtrl\JojoAnimationEngine.cs" />
+    <Compile Include="AnimagedImageCtrl\SimpleAnimationEngine.cs" />
+    <Compile Include="IChatBotChannel.cs" />
+    <Compile Include="Interop\MMAudio.cs" />
+    <Compile Include="Interop\MMTimer.cs" />
+    <Compile Include="Interop\WaveNative.cs" />
+    <Compile Include="Interop\WaveOut.cs" />
+    <Compile Include="Interop\WaveStream.cs" />
+    <Compile Include="ManagedSpeechEngine.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="RecordedResult.cs" />
+    <Compile Include="SynthSpeechEngine.cs" />
+    <Compile Include="TickGenerator.cs" />
+    <Compile Include="UnmanagedSpeechEngine.cs" />
+    <Compile Include="VisemeNote.cs" />
+    <Compile Include="SpeechEngine.cs" />
+    <Compile Include="Voice.cs" />
+    <Compile Include="Voices.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Characters\Characters.csproj">
+      <Project>{27E6A73D-BA6B-4DF5-B93A-010D6FD83157}</Project>
+      <Name>Characters</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="SpeechLib">
+      <Guid>{C866CA3A-32F7-11D2-9602-00C04F8EE628}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,335 @@
+//search routines.
+class Search
+{
+   using PathCommon;
+   using common;
+
+   /*
+     Returns the assets that link to the input as value.
+     Does an indepth search: value is converted to object/texneuron/posgroup.
+     attribVal: the value should be for the specified attribute.
+    */ 
+   FindAssetsFromValue(var input, var attribVal): var
+   {
+      var iRes;
+      var found;
+      if (Count(attribVal) > 0)
+      {
+         foreach (input in input)
+         {
+            Add(iRes, GetForAttrib(input, attribVal));
+            if(TypeOf(input) == TextNeuron)
+            {
+               foreach(var iObj in GetClustersWithMeaning(input, Statics.Object))
+                  Add(iRes, GetForAttrib(input, attribVal));
+               foreach(iObj in GetClustersWithMeaning(input, Statics.PosGroup))
+                  Add(iRes, GetForAttrib(input, attribVal));
+            }
+            if(GetClusterMeaning(input) == Statics.PosGroup)
+               foreach(var iObj in GetChildren(input))
+                  Add(iRes, GetForAttrib(input, attribVal));
+            if(GetClusterMeaning(input) == Statics.Object)
+            {
+               foreach(var iObj in GetChildren(input))
+                  Add(iRes, GetForAttrib(input, attribVal));
+               foreach(iObj in GetClustersWithMeaning(input, Statics.PosGroup))
+                  Add(iRes, GetForAttrib(input, attribVal));
+            }
+         }
+      }
+      else
+      {
+         foreach (input in input)
+         {
+            Add(iRes, GetFor(input));
+            if(TypeOf(input) == TextNeuron)
+            {
+               foreach(var iObj in GetClustersWithMeaning(input, Statics.Object))
+                  Add(iRes, GetFor(input));
+               foreach(iObj in GetClustersWithMeaning(input, Statics.PosGroup))
+                  Add(iRes, GetFor(input));
+            }
+            if(GetClusterMeaning(input) == Statics.PosGroup)
+               foreach(var iObj in GetChildren(input))
+                  Add(iRes, GetFor(input));
+            if(GetClusterMeaning(input) == Statics.Object)
+            {
+               foreach(var iObj in GetChildren(input))
+                  Add(iRes, GetFor(input));
+               foreach(iObj in GetClustersWithMeaning(input, Statics.PosGroup))
+                  Add(iRes, GetFor(input));
+            }
+         }
+      }
+      return iRes;
+   }
+   
+   
+   /*
+     Returns the assets that link to the input as value.
+     attribVal: the value should be for the specified attribute.
+    */ 
+   GetAssetsFromValue(var input, var attribVal): var
+   {
+      var iRes;
+      var found;
+      if (Count(attribVal) > 0)
+      {
+         foreach (input in input)
+            Add(iRes, GetForAttrib(input, attribVal));
+      }
+      else
+      {
+         foreach (input in input)
+            Add(iRes, GetFor(input));
+      }
+      return iRes;
+   }
+   
+   //helper function for FindAssetsForValue/GetAssetsForValue.
+   GetForAttrib(var input, var attribVal): var
+   {
+      var iRes;
+      select(var iFrom, iMeaning from in input)
+      {
+         if(iMeaning == Statics.Value)
+         {
+            var iAttrib = GetOutgoing(iFrom, Statics.attribute);
+            if(iAttrib == attribVal || ContainsChildren(iAttrib, attribVal) || ContainsChildren(attribVal, iAttrib))
+               Add(iRes, GetClustersWithMeaning(iFrom, Assets.asset));
+         }
+      }
+      return iRes;
+   }
+   
+   //helper function for FindAssetsForValue/GetAssetsForValue.
+   GetFor(var input): var
+   {
+      var iRes;
+      var found = GetIncomming(input, Statics.value);
+      if (Count(found) > 0)
+      {
+         foreach(found in found)
+          Add(iRes, GetClustersWithMeaning(found, Assets.asset));
+      }
+      return iRes;
+   }
+   
+   
+   /*
+     Returns the assets that have items with an attribute specified in the input.
+     does a shallow search.
+    */
+   NeuronCluster GetAttributeFor
+   {
+      this(var input): var
+      {
+         var iRes;
+         foreach (input in input)
+         {
+            var found = GetIncomming(input, Statics.attribute);
+            if (Count(found) > 0)
+               Add(iRes, GetClustersWithMeaning(found, Assets.asset));
+         }
+         return iRes;
+      }
+   }
+   
+   
+   /*
+     Takes in many possible values (asset clusters), and returns those who have an  outgoing-link with the data specified in the arguments.
+     always call with 'waitFor'
+    */
+   NeuronCluster FilterAssets(Statics.Code): 1298
+   {
+      this(var values, var outgoing)
+      {
+         var iAsset = Filter(ref(filtervar), ref((GetClusterMeaning(filtervar) == Assets.asset)), values);
+         if (Count(iAsset) > 0)
+         {
+            Split(FilterAssetsFinished, ref(iAsset), iAsset);
+            if (ChildCount(iAsset) > 0)
+            {
+               var iAssetItem;
+               Split(FilterAssetsFinished, ref(iAssetItem), GetChildren(iAsset));
+               Split(FilterAssetsFinished, ref(outgoing), outgoing);
+               var iLinkMeaning = GetLinkMeaning(iAssetItem, outgoing);
+               if (Count(iLinkMeaning) > 0)
+                  AddSplitResult(iAsset);
+            }
+         }
+         return;                                                        //if no assets found, need to return an empty value.
+      }
+      
+      //returns all the splitresults.
+      FilterAssetsFinished(): var
+      {
+         return GetSplitResults();
+      }
+   }
+   
+   
+   //checks if the item in the argument is a thesaurus child (with the 'is a' relationship) of the path.
+   //always call with WaitFor
+   NeuronCluster IsaOf
+   {
+      this(var iCurLocInThes, var toCheck): bool
+      {
+         var thesmeaning = Thes.isa;
+         iCurLocInThes = Convert.ToObject(iCurLocInThes);
+         if (Count(iCurLocInThes) == 0)
+            ExitSolve();
+         else
+            Split(isaoffinished, ref(iCurLocInThes), iCurLocInThes); 
+         var related = GetInFiltered(iCurLocInThes, ref(filtermeaning), ref(filterfrom), ref((GetChildren(Thes.AllConjugations) Contains filtermeaning)));
+         Split(isaoffinished, ref(iCurLocInThes), iCurLocInThes, related);       //always do the split, to make certain it has been set up.
+         
+         if ((iCurLocInThes == toCheck) || (ContainsChildren(iCurLocInThes, toCheck) || (ContainsChildren(toCheck, iCurLocInThes) == true)))
+         {
+            AddSplitResult(true);
+            ExitSolve();
+         }
+         else
+         {
+            var iFullPath;
+            var isacluster = GetClustersWithMeaning(iCurLocInThes, thesmeaning);
+            while (Count(isacluster) > 0)
+            {
+               Split(isaoffinished, ref(isacluster), isacluster);
+               if (iFullPath !Contains isacluster)
+                  Add(ref(iFullPath), isacluster);
+               else
+               {
+                  Clear(ref(iCurLocInThes));
+                  Break();
+               }   //we need to check for recursion in the thesaurus.    
+               iCurLocInThes = GetFirstIn(isacluster, thesmeaning);
+               related = GetFirstOut(iCurLocInThes, Thes.Noun);
+               if(count(related) > 0)
+                  Split(isaoffinished, ref(iCurLocInThes), iCurLocInThes, related);          //always try to go to nouns, those are easiest to match.
+               
+               if ((iCurLocInThes == toCheck) || (ContainsChildren(iCurLocInThes, toCheck) || (ContainsChildren(toCheck, iCurLocInThes) == true)))
+               {
+                  AddSplitResult(true);
+                  ExitSolve();
+               }
+               else
+                  isacluster = GetClustersWithMeaning(iCurLocInThes, thesmeaning);
+            }
+         }
+      }
+   }
+   
+   //used in several methods as the split callback.
+   NeuronCluster isaoffinished
+   {
+      this(): bool
+      {
+         return GetSplitResults() Contains true;
+      }
+   }
+   
+   /*
+     Checks if the 2 items in 'ThesParts' are thesaurus related somehow, through the iRelationship specified in 'ThesMeaning'
+   input: 
+   thesfrom: 1 item1 (textneurons, compounds, objects, Statics.PosGroup or anything else that can map to an object)
+   thesto: 1 item1 (textneurons, compounds, objects, Statics.PosGroup or anything else that can map to an object)
+   thesmeaning: usually 'is a'
+   output:
+   IsThesRelatedResult: true or false
+    */
+   Cluster IsThesRelated
+   {
+      this(var thefrom, var thesTo, var thesMeaning): bool
+      {
+         if (thefrom == thesto)
+            return true;
+         else
+            return waitfor InternalDoIsTehsRelated(thefrom, thesTo, thesMeaning);
+      }
+      
+      InternalDoIsTehsRelated(var thefrom, var thesTo, var thesMeaning): bool
+      {
+         var isacluster;
+         thesTo = Convert.ToObject(thesTo);
+         if (Count(thesTo) == 0)
+            ExitSolve();
+         else
+            Split(isaoffinished, ref(thesTo), thesTo); 
+         var related = GetInFiltered(thesto, ref(filtermeaning), ref(filterfrom), ref((GetChildren(Thes.AllConjugations) Contains filtermeaning)));
+         Split(isaoffinished, ref(thesto), thesto, related);
+        
+         theFrom = Convert.ToObject(theFrom);
+         if (Count(theFrom) == 0)
+            ExitSolve();
+         else
+            Split(isaoffinished, ref(theFrom), theFrom); 
+         related = GetInFiltered(thefrom, ref(filtermeaning), ref(filterfrom), ref((GetChildren(Thes.AllConjugations) Contains filtermeaning)));
+         Split(isaoffinished, ref(thefrom), thefrom, related);
+         
+         var iCurLocInThes = thefrom;
+         callbackargs = thesto;
+         if (iCurLocInThes == callbackargs)
+         {
+            AddSplitResult(true);
+            ExitSolve();
+         }
+         else
+         {
+            var iFullPath;
+            isacluster = GetClustersWithMeaning(iCurLocInThes, thesmeaning);
+            while (Count(isacluster) > 0)
+            {
+               Split(isaoffinished, ref(isacluster), isacluster);
+               if (iFullPath !Contains isacluster)      //we need to check for recursion in the thesaurus.
+                  Add(ref(iFullPath), isacluster);
+               else
+               {
+                  Clear(ref(iCurLocInThes));
+                  Break();
+               }       
+               iCurLocInThes = GetFirstIn(isacluster, thesmeaning);
+               if (iCurLocInThes == callbackargs)
+               {
+                  AddSplitResult(true);
+                  ExitSolve();
+               }
+               else
+                  isacluster = GetClustersWithMeaning(iCurLocInThes, thesmeaning);
+            }
+         }
+         iCurLocInThes = thesto;
+         callbackargs = thefrom;
+         if (iCurLocInThes == callbackargs)
+         {
+            AddSplitResult(true);
+            ExitSolve();
+         }
+         else
+         {
+            var iFullPath;
+            isacluster = GetClustersWithMeaning(iCurLocInThes, thesmeaning);
+            while (Count(isacluster) > 0)
+            {
+               Split(isaoffinished, ref(isacluster), isacluster);
+               if (iFullPath !Contains isacluster)
+                  Add(ref(iFullPath), isacluster);
+               else
+               {
+                  Clear(ref(iCurLocInThes));
+                  Break();
+               }   //we need to check for recursion in the thesaurus.    
+               iCurLocInThes = GetFirstIn(isacluster, thesmeaning);
+               if (iCurLocInThes == callbackargs)
+               {
+                  AddSplitResult(true);
+                  ExitSolve();
+               }
+               else
+                  isacluster = GetClustersWithMeaning(iCurLocInThes, thesmeaning);
+            }
+         }
+      }
+   }
+   
+}

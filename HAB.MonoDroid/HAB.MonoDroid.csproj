@@ -1,0 +1,1265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AC38E9EF-4230-400F-BC67-724EDBB37C82}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HAB.MonoDroid</RootNamespace>
+    <AssemblyName>HAB.MonoDroid</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;ANDROID</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidLinkMode>None</AndroidLinkMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;ANDROID</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidLinkMode>SdkOnly</AndroidLinkMode>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="LogService.MonoDroid">
+      <HintPath>..\external libs\MonoDroid\LogService.MonoDroid.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Android" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\HAB\Brain\Brain.cs">
+      <Link>Brain\Brain.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\BrainHelper.cs">
+      <Link>Brain\BrainHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\CacheBuffer.cs">
+      <Link>Brain\CacheBuffer.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\DoubleNeuron.cs">
+      <Link>Brain\DoubleNeuron.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\Flusher.cs">
+      <Link>Brain\Flusher.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\functions\CodeLoader.cs">
+      <Link>Brain\functions\CodeLoader.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\functions\Deleter.cs">
+      <Link>Brain\functions\Deleter.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\functions\Duplicator.cs">
+      <Link>Brain\functions\Duplicator.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\functions\Helpers.cs">
+      <Link>Brain\functions\Helpers.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\functions\MultiDuplicator.cs">
+      <Link>Brain\functions\MultiDuplicator.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\functions\NeuronFactory.cs">
+      <Link>Brain\functions\NeuronFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\functions\NeuronFunction.cs">
+      <Link>Brain\functions\NeuronFunction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\IDManager.cs">
+      <Link>Brain\IDManager.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\IntNeuron.cs">
+      <Link>Brain\IntNeuron.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\Link.cs">
+      <Link>Brain\Link.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\Lists\BrainList.cs">
+      <Link>Brain\Lists\BrainList.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\Lists\ChildList.cs">
+      <Link>Brain\Lists\ChildList.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\Lists\ClusterList.cs">
+      <Link>Brain\Lists\ClusterList.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\Lists\LinkInfoList.cs">
+      <Link>Brain\Lists\LinkInfoList.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\Lists\OwnedBrainList.cs">
+      <Link>Brain\Lists\OwnedBrainList.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\Lists\RefCountedList.cs">
+      <Link>Brain\Lists\RefCountedList.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\MultiTrackCache.cs">
+      <Link>Brain\MultiTrackCache.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\Neuron.cs">
+      <Link>Brain\Neuron.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\NeuronCluster.cs">
+      <Link>Brain\NeuronCluster.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\NeuronIDAttribute.cs">
+      <Link>Brain\NeuronIDAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\PredefinedNeurons.cs">
+      <Link>Brain\PredefinedNeurons.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\Randomizer.cs">
+      <Link>Brain\Randomizer.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\TextNeuron.cs">
+      <Link>Brain\TextNeuron.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\Thread syncing\Accessor.cs">
+      <Link>Brain\Thread syncing\Accessor.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\Thread syncing\ChildrenAccessor.cs">
+      <Link>Brain\Thread syncing\ChildrenAccessor.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\Thread syncing\ClustersAccessor.cs">
+      <Link>Brain\Thread syncing\ClustersAccessor.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\Thread syncing\IDListAccessor.cs">
+      <Link>Brain\Thread syncing\IDListAccessor.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\Thread syncing\LinkInfoAccessor.cs">
+      <Link>Brain\Thread syncing\LinkInfoAccessor.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\Thread syncing\LinksListAccessor.cs">
+      <Link>Brain\Thread syncing\LinksListAccessor.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\Thread syncing\ListAccessor.cs">
+      <Link>Brain\Thread syncing\ListAccessor.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\Thread syncing\NeuronAccessor.cs">
+      <Link>Brain\Thread syncing\NeuronAccessor.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\Thread syncing\ProcessorSetAccessor.cs">
+      <Link>Brain\Thread syncing\ProcessorSetAccessor.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\Thread syncing\SetAccessor.cs">
+      <Link>Brain\Thread syncing\SetAccessor.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\TimerNeuron.cs">
+      <Link>Brain\TimerNeuron.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Brain\ValueNeuron.cs">
+      <Link>Brain\ValueNeuron.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Events\BrainEventArgs.cs">
+      <Link>Events\BrainEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Events\Eventargs.cs">
+      <Link>Events\Eventargs.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Events\FreezeEventAgrs.cs">
+      <Link>Events\FreezeEventAgrs.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Events\LinkChangedEvent.cs">
+      <Link>Events\LinkChangedEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Events\NeuronChangedEventArgs.cs">
+      <Link>Events\NeuronChangedEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Events\NeuronListChangedEvent.cs">
+      <Link>Events\NeuronListChangedEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Events\OutputEvent.cs">
+      <Link>Events\OutputEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Events\SplitEventArgs.cs">
+      <Link>Events\SplitEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\Assignment.cs">
+      <Link>Expressions\Assignment.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\BoolExpression.cs">
+      <Link>Expressions\BoolExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\ByRefExpression.cs">
+      <Link>Expressions\ByRefExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\ConditionalExpression.cs">
+      <Link>Expressions\ConditionalExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\ConditionalStatement.cs">
+      <Link>Expressions\ConditionalStatement.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\Expression.cs">
+      <Link>Expressions\Expression.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\ExpressionsBlock.cs">
+      <Link>Expressions\ExpressionsBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\IForEachSource.cs">
+      <Link>Expressions\IForEachSource.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\IGetBool.cs">
+      <Link>Expressions\IGetBool.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\IGetDouble.cs">
+      <Link>Expressions\IGetDouble.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\IGetInt.cs">
+      <Link>Expressions\IGetInt.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\LockExpression.cs">
+      <Link>Expressions\LockExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\ResultExpression.cs">
+      <Link>Expressions\ResultExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\ResultStatement.cs">
+      <Link>Expressions\ResultStatement.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\SearchExpression.cs">
+      <Link>Expressions\SearchExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\SelectSources\ChildrenSelectSource.cs">
+      <Link>Expressions\SelectSources\ChildrenSelectSource.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\SelectSources\ClustersSelectSource.cs">
+      <Link>Expressions\SelectSources\ClustersSelectSource.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\SelectSources\LinkInSelectSource.cs">
+      <Link>Expressions\SelectSources\LinkInSelectSource.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\SelectSources\LinkOutSelectSource.cs">
+      <Link>Expressions\SelectSources\LinkOutSelectSource.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\SimpleResultExpression.cs">
+      <Link>Expressions\SimpleResultExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\Statement.cs">
+      <Link>Expressions\Statement.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\Variables\CurrentFrom.cs">
+      <Link>Expressions\Variables\CurrentFrom.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\Variables\CurrentInfo.cs">
+      <Link>Expressions\Variables\CurrentInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\Variables\CurrentMeaning.cs">
+      <Link>Expressions\Variables\CurrentMeaning.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\Variables\CurrentSin.cs">
+      <Link>Expressions\Variables\CurrentSin.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\Variables\CurrentTo.cs">
+      <Link>Expressions\Variables\CurrentTo.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\Variables\Global.cs">
+      <Link>Expressions\Variables\Global.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\Variables\Local.cs">
+      <Link>Expressions\Variables\Local.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\Variables\ReturnValue.cs">
+      <Link>Expressions\Variables\ReturnValue.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\Variables\SystemVariable.cs">
+      <Link>Expressions\Variables\SystemVariable.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\Variables\Time.cs">
+      <Link>Expressions\Variables\Time.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Expressions\Variables\Variable.cs">
+      <Link>Expressions\Variables\Variable.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Factories\CallFrameFactory.cs">
+      <Link>Factories\CallFrameFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Factories\ChildListFactory.cs">
+      <Link>Factories\ChildListFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Factories\ClusterListFactory.cs">
+      <Link>Factories\ClusterListFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Factories\DictionaryFactory.cs">
+      <Link>Factories\DictionaryFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Factories\Factories.cs">
+      <Link>Factories\Factories.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Factories\HashSetFactory.cs">
+      <Link>Factories\HashSetFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Factories\ListAccessorsFactory.cs">
+      <Link>Factories\ListAccessorsFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Factories\ObjectListFactory.cs">
+      <Link>Factories\ObjectListFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Factories\ProcAcessorsFactory.cs">
+      <Link>Factories\ProcAcessorsFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Factories\ThreadLockPartFactory.cs">
+      <Link>Factories\ThreadLockPartFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Add\AddChildInstruction.cs">
+      <Link>Instructions\Add\AddChildInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Add\AddInfoInstruction.cs">
+      <Link>Instructions\Add\AddInfoInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Add\AddLinkInstruction.cs">
+      <Link>Instructions\Add\AddLinkInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\double\AddAssignDoubleInstruction.cs">
+      <Link>Instructions\Arithmetic\double\AddAssignDoubleInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\double\AddDoubleInstruction.cs">
+      <Link>Instructions\Arithmetic\double\AddDoubleInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\double\AddStoreDoubleInstruction.cs">
+      <Link>Instructions\Arithmetic\double\AddStoreDoubleInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\double\DivDoubleInstruction.cs">
+      <Link>Instructions\Arithmetic\double\DivDoubleInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\double\DivStoreDoubleInstruction.cs">
+      <Link>Instructions\Arithmetic\double\DivStoreDoubleInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\double\MinusAssignDoubleInstruction.cs">
+      <Link>Instructions\Arithmetic\double\MinusAssignDoubleInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\double\MinusDoubleInstruction.cs">
+      <Link>Instructions\Arithmetic\double\MinusDoubleInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\double\MinusStoreDoubleInstruction.cs">
+      <Link>Instructions\Arithmetic\double\MinusStoreDoubleInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\double\ModDoubleInstruction.cs">
+      <Link>Instructions\Arithmetic\double\ModDoubleInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\double\ModStoreDoubleInstruction.cs">
+      <Link>Instructions\Arithmetic\double\ModStoreDoubleInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\double\MultiplyDoubleInstruction.cs">
+      <Link>Instructions\Arithmetic\double\MultiplyDoubleInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\double\MultiplyStoreDoubleIntruction.cs">
+      <Link>Instructions\Arithmetic\double\MultiplyStoreDoubleIntruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\double\StoreDoubleInstruction.cs">
+      <Link>Instructions\Arithmetic\double\StoreDoubleInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\int\AddAssignIntInstruction.cs">
+      <Link>Instructions\Arithmetic\int\AddAssignIntInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\int\AddIntInstruction.cs">
+      <Link>Instructions\Arithmetic\int\AddIntInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\int\AddStoreIntInstruction.cs">
+      <Link>Instructions\Arithmetic\int\AddStoreIntInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\int\DivIntInstruction.cs">
+      <Link>Instructions\Arithmetic\int\DivIntInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\int\DivStoreIntInstruction.cs">
+      <Link>Instructions\Arithmetic\int\DivStoreIntInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\int\MinusAssignIntInstruction.cs">
+      <Link>Instructions\Arithmetic\int\MinusAssignIntInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\int\MinusIntInstruction.cs">
+      <Link>Instructions\Arithmetic\int\MinusIntInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\int\MinusStoreIntInstruction.cs">
+      <Link>Instructions\Arithmetic\int\MinusStoreIntInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\int\ModIntInstruction.cs">
+      <Link>Instructions\Arithmetic\int\ModIntInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\int\ModStoreIntInstruction.cs">
+      <Link>Instructions\Arithmetic\int\ModStoreIntInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\int\MultiplyIntInstruction.cs">
+      <Link>Instructions\Arithmetic\int\MultiplyIntInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\int\MultiplyStoreIntInstruction.cs">
+      <Link>Instructions\Arithmetic\int\MultiplyStoreIntInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\int\StoreIntInstruction.cs">
+      <Link>Instructions\Arithmetic\int\StoreIntInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\var\AdditionInstruction.cs">
+      <Link>Instructions\Arithmetic\var\AdditionInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\var\AvgInstruction.cs">
+      <Link>Instructions\Arithmetic\var\AvgInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\var\CompleteSequence.cs">
+      <Link>Instructions\Arithmetic\var\CompleteSequence.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\var\DecrementInstruction.cs">
+      <Link>Instructions\Arithmetic\var\DecrementInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\var\DivideInstruction.cs">
+      <Link>Instructions\Arithmetic\var\DivideInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\var\IncrementInstruction.cs">
+      <Link>Instructions\Arithmetic\var\IncrementInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\var\MaxInstruction.cs">
+      <Link>Instructions\Arithmetic\var\MaxInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\var\MinInstruction.cs">
+      <Link>Instructions\Arithmetic\var\MinInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\var\MinusInstruction.cs">
+      <Link>Instructions\Arithmetic\var\MinusInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\var\ModulusInstruction.cs">
+      <Link>Instructions\Arithmetic\var\ModulusInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\var\MultiplyInstruction.cs">
+      <Link>Instructions\Arithmetic\var\MultiplyInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Arithmetic\var\StDevInstruction.cs">
+      <Link>Instructions\Arithmetic\var\StDevInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Change\ChangeChildInstruction.cs">
+      <Link>Instructions\Change\ChangeChildInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Change\ChangeInfoInstruction.cs">
+      <Link>Instructions\Change\ChangeInfoInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Change\ChangeLinkFrom.cs">
+      <Link>Instructions\Change\ChangeLinkFrom.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Change\ChangeLinkMeaning.cs">
+      <Link>Instructions\Change\ChangeLinkMeaning.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Change\ChangeLinkTo.cs">
+      <Link>Instructions\Change\ChangeLinkTo.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Change\ChangeParentInstruction.cs">
+      <Link>Instructions\Change\ChangeParentInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Clear\ClearChildrenInstruction.cs">
+      <Link>Instructions\Clear\ClearChildrenInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Clear\ClearInfoInstruction.cs">
+      <Link>Instructions\Clear\ClearInfoInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Clear\ClearLinksInInstruction.cs">
+      <Link>Instructions\Clear\ClearLinksInInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Clear\ClearLinksOutInstruction.cs">
+      <Link>Instructions\Clear\ClearLinksOutInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Contains\ContainsAllChildrenInstruction.cs">
+      <Link>Instructions\Contains\ContainsAllChildrenInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Contains\ContainsChildrenInstruction.cs">
+      <Link>Instructions\Contains\ContainsChildrenInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Contains\ContainsLinksInInstruction.cs">
+      <Link>Instructions\Contains\ContainsLinksInInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Contains\ContainsLinksOutInstruction.cs">
+      <Link>Instructions\Contains\ContainsLinksOutInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Contains\IsClusteredByAnyInstruction.cs">
+      <Link>Instructions\Contains\IsClusteredByAnyInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Contains\IsClusteredByInstruction.cs">
+      <Link>Instructions\Contains\IsClusteredByInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Contains\LinkExistsInstruction.cs">
+      <Link>Instructions\Contains\LinkExistsInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Convert\CcToSInstruction.cs">
+      <Link>Instructions\Convert\CcToSInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Convert\CiToSInstruction.cs">
+      <Link>Instructions\Convert\CiToSInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Convert\DToIInstruction.cs">
+      <Link>Instructions\Convert\DToIInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Convert\DToSInstruction.cs">
+      <Link>Instructions\Convert\DToSInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Convert\IToDInstruction.cs">
+      <Link>Instructions\Convert\IToDInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Convert\IToDTInstruction.cs">
+      <Link>Instructions\Convert\IToDTInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Convert\IToSInstruction.cs">
+      <Link>Instructions\Convert\IToSInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Convert\SToCcInstruction.cs">
+      <Link>Instructions\Convert\SToCcInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Convert\SToCiInstruction.cs">
+      <Link>Instructions\Convert\SToCiInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Convert\SToDInstruction.cs">
+      <Link>Instructions\Convert\SToDInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Convert\SToIInstruction.cs">
+      <Link>Instructions\Convert\SToIInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Convert\StoLiInstruction.cs">
+      <Link>Instructions\Convert\StoLiInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Convert\ToSInstruction.cs">
+      <Link>Instructions\Convert\ToSInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\At\GetChildAtInstruction.cs">
+      <Link>Instructions\Get\At\GetChildAtInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\At\GetClusterAtInstruction.cs">
+      <Link>Instructions\Get\At\GetClusterAtInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\At\GetInAtInstruction.cs">
+      <Link>Instructions\Get\At\GetInAtInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\At\GetInfoAtInstruction.cs">
+      <Link>Instructions\Get\At\GetInfoAtInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\At\GetOutAtInstruction.cs">
+      <Link>Instructions\Get\At\GetOutAtInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\children\GetChildrenFilteredInstruction.cs">
+      <Link>Instructions\Get\children\GetChildrenFilteredInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\children\GetChildrenInstruction.cs">
+      <Link>Instructions\Get\children\GetChildrenInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\children\GetChildrenOfTypeInstruction.cs">
+      <Link>Instructions\Get\children\GetChildrenOfTypeInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\children\GetChildrenRangeInstruction.cs">
+      <Link>Instructions\Get\children\GetChildrenRangeInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\Clusters\GetClustersFilteredInstruction.cs">
+      <Link>Instructions\Get\Clusters\GetClustersFilteredInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\Clusters\GetClustersInstruction.cs">
+      <Link>Instructions\Get\Clusters\GetClustersInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\Clusters\GetClustersWithMeaningInstruction.cs">
+      <Link>Instructions\Get\Clusters\GetClustersWithMeaningInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\Common\GetCommonInInstruction.cs">
+      <Link>Instructions\Get\Common\GetCommonInInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\Common\GetCommonOutInstruction.cs">
+      <Link>Instructions\Get\Common\GetCommonOutInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\Common\GetCommonParents.cs">
+      <Link>Instructions\Get\Common\GetCommonParents.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\Common\GetCommonParentsFiltered.cs">
+      <Link>Instructions\Get\Common\GetCommonParentsFiltered.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\Common\GetCommonParentsWithMeaning.cs">
+      <Link>Instructions\Get\Common\GetCommonParentsWithMeaning.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\Count\ChildCountInstruction.cs">
+      <Link>Instructions\Get\Count\ChildCountInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\Count\ClusterCountInstruction.cs">
+      <Link>Instructions\Get\Count\ClusterCountInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\Count\InfoCountInstruction.cs">
+      <Link>Instructions\Get\Count\InfoCountInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\Count\LinkInCountInstruction.cs">
+      <Link>Instructions\Get\Count\LinkInCountInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\Count\LinkOutCountInstruction.cs">
+      <Link>Instructions\Get\Count\LinkOutCountInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\first\GetFirstChildInstruction.cs">
+      <Link>Instructions\Get\first\GetFirstChildInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\first\GetFirstClusterInstruction.cs">
+      <Link>Instructions\Get\first\GetFirstClusterInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\first\GetFirstInfoInstruction.cs">
+      <Link>Instructions\Get\first\GetFirstInfoInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\first\GetFirstInInstruction.cs">
+      <Link>Instructions\Get\first\GetFirstInInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\first\GetFirstOutInstruction.cs">
+      <Link>Instructions\Get\first\GetFirstOutInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\GetAllIncommingInstruction.cs">
+      <Link>Instructions\Get\GetAllIncommingInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\GetAllOutgoingInstruction.cs">
+      <Link>Instructions\Get\GetAllOutgoingInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\GetClusterMeaningInstruction.cs">
+      <Link>Instructions\Get\GetClusterMeaningInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\GetIncommingInstruction.cs">
+      <Link>Instructions\Get\GetIncommingInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\GetInFilteredInstruction.cs">
+      <Link>Instructions\Get\GetInFilteredInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\GetInfoFilteredInstruction.cs">
+      <Link>Instructions\Get\GetInfoFilteredInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\GetInfoInstruction.cs">
+      <Link>Instructions\Get\GetInfoInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\GetLinkMeaningInstruction.cs">
+      <Link>Instructions\Get\GetLinkMeaningInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\GetoutFilteredInstruction.cs">
+      <Link>Instructions\Get\GetoutFilteredInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\GetOutgoingInstruction.cs">
+      <Link>Instructions\Get\GetOutgoingInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\last\GetLastChildInstruction.cs">
+      <Link>Instructions\Get\last\GetLastChildInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\last\GetLastClusterInstruction.cs">
+      <Link>Instructions\Get\last\GetLastClusterInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\last\GetLastInfoInstruction.cs">
+      <Link>Instructions\Get\last\GetLastInfoInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\last\GetLastInInstruction.cs">
+      <Link>Instructions\Get\last\GetLastInInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\last\GetLastOutInstruction.cs">
+      <Link>Instructions\Get\last\GetLastOutInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\next\GetNextChildInstruction.cs">
+      <Link>Instructions\Get\next\GetNextChildInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\next\GetNextClusterInstruction.cs">
+      <Link>Instructions\Get\next\GetNextClusterInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\next\GetNextInfoInstruction.cs">
+      <Link>Instructions\Get\next\GetNextInfoInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\next\GetNextInInstruction.cs">
+      <Link>Instructions\Get\next\GetNextInInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\next\GetNextOutInstruction.cs">
+      <Link>Instructions\Get\next\GetNextOutInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\prev\GetPrevChildInstruction.cs">
+      <Link>Instructions\Get\prev\GetPrevChildInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\prev\GetPrevClusterInstruction.cs">
+      <Link>Instructions\Get\prev\GetPrevClusterInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\prev\GetPrevInfoInstruction.cs">
+      <Link>Instructions\Get\prev\GetPrevInfoInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\prev\GetPrevInInstruction.cs">
+      <Link>Instructions\Get\prev\GetPrevInInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\prev\GetPrevOutInstruction.cs">
+      <Link>Instructions\Get\prev\GetPrevOutInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\Random\GetRandomChildInstruction.cs">
+      <Link>Instructions\Get\Random\GetRandomChildInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\Random\GetRandomClusterInstruction.cs">
+      <Link>Instructions\Get\Random\GetRandomClusterInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\Random\GetRandomInfoInstruction.cs">
+      <Link>Instructions\Get\Random\GetRandomInfoInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\Random\GetRandomInInstruction.cs">
+      <Link>Instructions\Get\Random\GetRandomInInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Get\Random\GetRandomOutInstruction.cs">
+      <Link>Instructions\Get\Random\GetRandomOutInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\ICalculateBool.cs">
+      <Link>Instructions\ICalculateBool.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\ICalculateDouble.cs">
+      <Link>Instructions\ICalculateDouble.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\ICalculateInt.cs">
+      <Link>Instructions\ICalculateInt.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\IExecResultStatement.cs">
+      <Link>Instructions\IExecResultStatement.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\IExecStatement.cs">
+      <Link>Instructions\IExecStatement.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\IndexOf\IndexOfChildInstruction.cs">
+      <Link>Instructions\IndexOf\IndexOfChildInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\IndexOf\IndexOfClusterInstruction.cs">
+      <Link>Instructions\IndexOf\IndexOfClusterInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\IndexOf\IndexOfInfoInstruction.cs">
+      <Link>Instructions\IndexOf\IndexOfInfoInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\IndexOf\IndexOfLinkInstruction.cs">
+      <Link>Instructions\IndexOf\IndexOfLinkInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Insert\InsertChildInstruction.cs">
+      <Link>Instructions\Insert\InsertChildInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Insert\InsertInfoInstruction.cs">
+      <Link>Instructions\Insert\InsertInfoInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Insert\InsertLinkInstruction.cs">
+      <Link>Instructions\Insert\InsertLinkInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Instruction.cs">
+      <Link>Instructions\Instruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Move-Copy\CopyChildrenInstruction.cs">
+      <Link>Instructions\Move-Copy\CopyChildrenInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Move-Copy\CopyInfoInstruction.cs">
+      <Link>Instructions\Move-Copy\CopyInfoInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Move-Copy\MoveChildrenInstruction.cs">
+      <Link>Instructions\Move-Copy\MoveChildrenInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Move-Copy\MoveInfoInstruction.cs">
+      <Link>Instructions\Move-Copy\MoveInfoInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\MultiResultInstruction.cs">
+      <Link>Instructions\MultiResultInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Neurons\DeleteFrozenInstruction.cs">
+      <Link>Instructions\Neurons\DeleteFrozenInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Neurons\DeleteInstruction.cs">
+      <Link>Instructions\Neurons\DeleteInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Neurons\DuplicateInstruction.cs">
+      <Link>Instructions\Neurons\DuplicateInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Neurons\FreezeInstruction.cs">
+      <Link>Instructions\Neurons\FreezeInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Neurons\HasReferencesInstruction.cs">
+      <Link>Instructions\Neurons\HasReferencesInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Neurons\MakeClusterInstruction.cs">
+      <Link>Instructions\Neurons\MakeClusterInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Neurons\NewInstruction.cs">
+      <Link>Instructions\Neurons\NewInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Neurons\TypeOfInstruction.cs">
+      <Link>Instructions\Neurons\TypeOfInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Neurons\UnFreezeInstruction.cs">
+      <Link>Instructions\Neurons\UnFreezeInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\AwakeInstruction.cs">
+      <Link>Instructions\Processor\AwakeInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\call\BlockedCallInstruction.cs">
+      <Link>Instructions\Processor\call\BlockedCallInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\call\BlockedSolveInstruction.cs">
+      <Link>Instructions\Processor\call\BlockedSolveInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\call\CallInstruction.cs">
+      <Link>Instructions\Processor\call\CallInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\call\CallSaveInstruction.cs">
+      <Link>Instructions\Processor\call\CallSaveInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\call\ExecuteInstruction.cs">
+      <Link>Instructions\Processor\call\ExecuteInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\call\PerformInstruction.cs">
+      <Link>Instructions\Processor\call\PerformInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\call\PerformResultInstruction.cs">
+      <Link>Instructions\Processor\call\PerformResultInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\call\SolveInstruction.cs">
+      <Link>Instructions\Processor\call\SolveInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\ContinueInstruction.cs">
+      <Link>Instructions\Processor\ContinueInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\exit\BreakInstruction.cs">
+      <Link>Instructions\Processor\exit\BreakInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\exit\ExitLinkInstruction.cs">
+      <Link>Instructions\Processor\exit\ExitLinkInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\exit\ExitNeuronInstruction.cs">
+      <Link>Instructions\Processor\exit\ExitNeuronInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\exit\ExitSolveInstruction.cs">
+      <Link>Instructions\Processor\exit\ExitSolveInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\exit\ReturnInstruction.cs">
+      <Link>Instructions\Processor\exit\ReturnInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\exit\ReturnValueIfInstruction.cs">
+      <Link>Instructions\Processor\exit\ReturnValueIfInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\exit\ReturnValueInstruction.cs">
+      <Link>Instructions\Processor\exit\ReturnValueInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\JmpIfInstruction.cs">
+      <Link>Instructions\Processor\JmpIfInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\log\ErrorInstruction.cs">
+      <Link>Instructions\Processor\log\ErrorInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\log\WarningInstruction.cs">
+      <Link>Instructions\Processor\log\WarningInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\OutputInstruction.cs">
+      <Link>Instructions\Processor\OutputInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\PassFrozenToCallerInstruction.cs">
+      <Link>Instructions\Processor\PassFrozenToCallerInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\Split\AddSplitResultInstruction.cs">
+      <Link>Instructions\Processor\Split\AddSplitResultInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\Split\ApplyWeightInstruction.cs">
+      <Link>Instructions\Processor\Split\ApplyWeightInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\Split\ClearSplitResultsInstruction.cs">
+      <Link>Instructions\Processor\Split\ClearSplitResultsInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\Split\DecreaseWeightInstruction.cs">
+      <Link>Instructions\Processor\Split\DecreaseWeightInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\Split\DecreaseWeightOfInstruction.cs">
+      <Link>Instructions\Processor\Split\DecreaseWeightOfInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\Split\GetMaxWeightInstruction.cs">
+      <Link>Instructions\Processor\Split\GetMaxWeightInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\Split\GetSplitCountInstruction.cs">
+      <Link>Instructions\Processor\Split\GetSplitCountInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\Split\GetSplitResultsInstruction.cs">
+      <Link>Instructions\Processor\Split\GetSplitResultsInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\Split\GetWeightInstruction.cs">
+      <Link>Instructions\Processor\Split\GetWeightInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\Split\GetWeightOfInstruction.cs">
+      <Link>Instructions\Processor\Split\GetWeightOfInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\Split\IncreaseWeightInstruction.cs">
+      <Link>Instructions\Processor\Split\IncreaseWeightInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\Split\IncreaseWeightOfInstruction.cs">
+      <Link>Instructions\Processor\Split\IncreaseWeightOfInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\Split\RemoveSplitResultInstruction.cs">
+      <Link>Instructions\Processor\Split\RemoveSplitResultInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\Split\ResetWeightInstruction.cs">
+      <Link>Instructions\Processor\Split\ResetWeightInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\Split\ResetWeightOfInstruction.cs">
+      <Link>Instructions\Processor\Split\ResetWeightOfInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\Split\SplitAccumInstruction.cs">
+      <Link>Instructions\Processor\Split\SplitAccumInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\Split\SplitFixedInstruction.cs">
+      <Link>Instructions\Processor\Split\SplitFixedInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\Split\SplitInstruction.cs">
+      <Link>Instructions\Processor\Split\SplitInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\Split\SplitWeightedInstruction.cs">
+      <Link>Instructions\Processor\Split\SplitWeightedInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\Stack\ParamStackCountInstruction.cs">
+      <Link>Instructions\Processor\Stack\ParamStackCountInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\Stack\PeekInstruction.cs">
+      <Link>Instructions\Processor\Stack\PeekInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\Stack\PopInstruction.cs">
+      <Link>Instructions\Processor\Stack\PopInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\Stack\PopValueInstruction.cs">
+      <Link>Instructions\Processor\Stack\PopValueInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\Stack\PushInstruction.cs">
+      <Link>Instructions\Processor\Stack\PushInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\Stack\PushValueInstruction.cs">
+      <Link>Instructions\Processor\Stack\PushValueInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\Stack\StackCountInstruction.cs">
+      <Link>Instructions\Processor\Stack\StackCountInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Processor\SuspendInstruction.cs">
+      <Link>Instructions\Processor\SuspendInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Remove\RemoveAt\RemoveChildAtInstruction.cs">
+      <Link>Instructions\Remove\RemoveAt\RemoveChildAtInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Remove\RemoveAt\RemoveInfoAtInstruction.cs">
+      <Link>Instructions\Remove\RemoveAt\RemoveInfoAtInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Remove\RemoveAt\RemoveLinkInAtInstruction.cs">
+      <Link>Instructions\Remove\RemoveAt\RemoveLinkInAtInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Remove\RemoveAt\RemoveLinkOutAtInstruction.cs">
+      <Link>Instructions\Remove\RemoveAt\RemoveLinkOutAtInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Remove\RemoveChildInstruction.cs">
+      <Link>Instructions\Remove\RemoveChildInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Remove\RemoveInfoInstruction.cs">
+      <Link>Instructions\Remove\RemoveInfoInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Remove\RemoveLinkInstruction.cs">
+      <Link>Instructions\Remove\RemoveLinkInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Remove\RemoveLinksInInstruction.cs">
+      <Link>Instructions\Remove\RemoveLinksInInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Remove\RemoveLinksOutInstruction.cs">
+      <Link>Instructions\Remove\RemoveLinksOutInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\ResultInstruction.cs">
+      <Link>Instructions\ResultInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Set Operations\ComplementInstruction.cs">
+      <Link>Instructions\Set Operations\ComplementInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Set Operations\DistinctInstruction.cs">
+      <Link>Instructions\Set Operations\DistinctInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Set Operations\FilterInstruction.cs">
+      <Link>Instructions\Set Operations\FilterInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Set Operations\InterleafInstruction.cs">
+      <Link>Instructions\Set Operations\InterleafInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Set Operations\IntersectInstruction.cs">
+      <Link>Instructions\Set Operations\IntersectInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Set Operations\IntersectVarInstruction.cs">
+      <Link>Instructions\Set Operations\IntersectVarInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Set Operations\ReverseInstruction.cs">
+      <Link>Instructions\Set Operations\ReverseInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Set Operations\UnionInstruction.cs">
+      <Link>Instructions\Set Operations\UnionInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Set\SetChildAtInstruction.cs">
+      <Link>Instructions\Set\SetChildAtInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Set\SetClusterMeaningInstruction.cs">
+      <Link>Instructions\Set\SetClusterMeaningInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Set\SetFirstOutInstruction.cs">
+      <Link>Instructions\Set\SetFirstOutInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\SingleResultInstruction.cs">
+      <Link>Instructions\SingleResultInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\string\EndsWithInstruction.cs">
+      <Link>Instructions\string\EndsWithInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\string\GetCharAtInstruction.cs">
+      <Link>Instructions\string\GetCharAtInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\string\LengthInstruction.cs">
+      <Link>Instructions\string\LengthInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\string\SetStringInstruction.cs">
+      <Link>Instructions\string\SetStringInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\string\SplitStringInstruction.cs">
+      <Link>Instructions\string\SplitStringInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\string\SubStringInstruction.cs">
+      <Link>Instructions\string\SubStringInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Timer\GetTimerIntervalInstruction.cs">
+      <Link>Instructions\Timer\GetTimerIntervalInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Timer\IsTimerActiveInstruction.cs">
+      <Link>Instructions\Timer\IsTimerActiveInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Timer\SetTimerIntervalInstruction.cs">
+      <Link>Instructions\Timer\SetTimerIntervalInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Timer\StartTimerInstruction.cs">
+      <Link>Instructions\Timer\StartTimerInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Timer\StopTimerInstruction.cs">
+      <Link>Instructions\Timer\StopTimerInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\unary\InvertDoubleInstruction.cs">
+      <Link>Instructions\unary\InvertDoubleInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\unary\InvertDoubleListInstruction.cs">
+      <Link>Instructions\unary\InvertDoubleListInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\unary\InvertIntInstruction.cs">
+      <Link>Instructions\unary\InvertIntInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\unary\InvertIntListInstruction.cs">
+      <Link>Instructions\unary\InvertIntListInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\unary\InvertSignInstruction.cs">
+      <Link>Instructions\unary\InvertSignInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\unary\NotInstruction.cs">
+      <Link>Instructions\unary\NotInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Var operations\AddInstruction.cs">
+      <Link>Instructions\Var operations\AddInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Var operations\ClearInstruction.cs">
+      <Link>Instructions\Var operations\ClearInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Var operations\CountInstruction.cs">
+      <Link>Instructions\Var operations\CountInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Var operations\FirstInstruction.cs">
+      <Link>Instructions\Var operations\FirstInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Var operations\GetAtInstruction.cs">
+      <Link>Instructions\Var operations\GetAtInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Var operations\GetRandomInstruction.cs">
+      <Link>Instructions\Var operations\GetRandomInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Var operations\GetRangeInstruction.cs">
+      <Link>Instructions\Var operations\GetRangeInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Var operations\InsertInstruction.cs">
+      <Link>Instructions\Var operations\InsertInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Var operations\IsInitializedInstruction.cs">
+      <Link>Instructions\Var operations\IsInitializedInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Var operations\LastInstruction.cs">
+      <Link>Instructions\Var operations\LastInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Var operations\PrepareLocalInstruction.cs">
+      <Link>Instructions\Var operations\PrepareLocalInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Var operations\RemoveAtInstruction.cs">
+      <Link>Instructions\Var operations\RemoveAtInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Var operations\RemoveInstruction.cs">
+      <Link>Instructions\Var operations\RemoveInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Var operations\ReplaceInstruction.cs">
+      <Link>Instructions\Var operations\ReplaceInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Var operations\SetAtInstruction.cs">
+      <Link>Instructions\Var operations\SetAtInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Var operations\SortInstruction.cs">
+      <Link>Instructions\Var operations\SortInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Instructions\Var operations\SubstractInstruction.cs">
+      <Link>Instructions\Var operations\SubstractInstruction.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Locks\LockManager.cs">
+      <Link>Locks\LockManager.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Locks\LockRequestInfo.cs">
+      <Link>Locks\LockRequestInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Locks\LockRequestList.cs">
+      <Link>Locks\LockRequestList.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Locks\LockRequestsFactory.cs">
+      <Link>Locks\LockRequestsFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Locks\ThreadLock.cs">
+      <Link>Locks\ThreadLock.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Locks\ThreadLockPart.cs">
+      <Link>Locks\ThreadLockPart.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Locks\WaitHandleManager.cs">
+      <Link>Locks\WaitHandleManager.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Locks\WaitObject.cs">
+      <Link>Locks\WaitObject.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Modules\Module.cs">
+      <Link>Modules\Module.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Modules\Modules.cs">
+      <Link>Modules\Modules.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Modules\VarManager.cs">
+      <Link>Modules\VarManager.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\PathUtil.cs">
+      <Link>PathUtil.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Processor\ArgumentsStack.cs">
+      <Link>Processor\ArgumentsStack.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Processor\CallFrame.cs">
+      <Link>Processor\CallFrame.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Processor\HeadData.cs">
+      <Link>Processor\HeadData.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Processor\IDListFactory.cs">
+      <Link>Processor\IDListFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Processor\IProcessorFactory.cs">
+      <Link>Processor\IProcessorFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Processor\Processor.cs">
+      <Link>Processor\Processor.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Processor\ProcessorFactory.cs">
+      <Link>Processor\ProcessorFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Processor\ProcessorSplitter.cs">
+      <Link>Processor\ProcessorSplitter.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Processor\SplitData.cs">
+      <Link>Processor\SplitData.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Processor\SplitResultsDict.cs">
+      <Link>Processor\SplitResultsDict.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Processor\ThreadManager.cs">
+      <Link>Processor\ThreadManager.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Processor\VarDict.cs">
+      <Link>Processor\VarDict.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Processor\VarDictsStack.cs">
+      <Link>Processor\VarDictsStack.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Processor\VarValuesList.cs">
+      <Link>Processor\VarValuesList.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Settings.cs">
+      <Link>Settings.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Sins\IntSin.cs">
+      <Link>Sins\IntSin.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Sins\OutputBuilder.cs">
+      <Link>Sins\OutputBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Sins\Sin.cs">
+      <Link>Sins\Sin.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Sins\TextSin.cs">
+      <Link>Sins\TextSin.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Sins\WordsDictionary.cs">
+      <Link>Sins\WordsDictionary.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Storage\common\EntryNeuronsHelper.cs">
+      <Link>Storage\common\EntryNeuronsHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Storage\common\ILongtermMem.cs">
+      <Link>Storage\common\ILongtermMem.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Storage\common\IStoragePropertiesUser.cs">
+      <Link>Storage\common\IStoragePropertiesUser.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Storage\common\PropertiesHelper.cs">
+      <Link>Storage\common\PropertiesHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Storage\common\StorageHelper.cs">
+      <Link>Storage\common\StorageHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Storage\NDB\BlockStream.cs">
+      <Link>Storage\NDB\BlockStream.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Storage\NDB\CompactBinaryReader.cs">
+      <Link>Storage\NDB\CompactBinaryReader.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Storage\NDB\CompactBinaryWriter.cs">
+      <Link>Storage\NDB\CompactBinaryWriter.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Storage\NDB\INDBStreamable.cs">
+      <Link>Storage\NDB\INDBStreamable.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Storage\NDB\NDBBuffer.cs">
+      <Link>Storage\NDB\NDBBuffer.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Storage\NDB\NDBSerializer.cs">
+      <Link>Storage\NDB\NDBSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Storage\NDB\NDBStore.cs">
+      <Link>Storage\NDB\NDBStore.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Storage\NDB\NDBTable.cs">
+      <Link>Storage\NDB\NDBTable.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Storage\XmlTextEncoder.cs">
+      <Link>Storage\XmlTextEncoder.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Storage\xml\LongtermMem.cs">
+      <Link>Storage\xml\LongtermMem.cs</Link>
+    </Compile>
+    <Compile Include="..\HAB\Storage\xml\XmlStore.cs">
+      <Link>Storage\xml\XmlStore.cs</Link>
+    </Compile>
+    <Compile Include="Processor\AndroidThreadPool.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tokenizer.MonoDroid\Tokenizer.MonoDroid.csproj">
+      <Project>{3F248E7F-B0F1-4DC6-AE02-9DDD108FCE82}</Project>
+      <Name>Tokenizer.MonoDroid</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties ProjectLinkReference="2cdd4836-1ac7-47c8-b878-5af7ea721b2b" ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

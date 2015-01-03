@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>battery status</Name>
+  <Rules>
+    <Rule>
+      <Name>level</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>how much juice is left</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>what is the battery status</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>battery status</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>There is still $result % power left.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>$result % juice still to go.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>The battery is still for $result % charged.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>$result = android.Battery.GetBatteryLevel();</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>voltage</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>battery voltage</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>voltage level</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>The battery is working at $result voltage.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>The battery has a voltage of $result\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>It's running on $result voltage.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>The voltage is currently $result\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>$result = android.Battery.GetBatteryVoltage();</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>temp</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>What is the battery temperature</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>battery temperature</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>temperature of [the] battery</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>The temperature of the battery is currently $result degrees celsius.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>It is currently $result degrees celsius in the device.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>The batterie's temperature is registering at $result degrees celsius.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>It's currently $result degrees celsius inside the device.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>$result = android.Battery.GetBatteryTemp();</Expression>
+      </ToCal>
+    </Rule>
+  </Rules>
+</Topic>

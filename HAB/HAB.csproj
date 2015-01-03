@@ -1,0 +1,1175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2CDD4836-1AC7-47C8-B878-5AF7EA721B2B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JaStDev.HAB</RootNamespace>
+    <AssemblyName>JaStDev.HabCore</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug basic|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug basic\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\JaStDev.HabCore.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release basic|AnyCPU'">
+    <OutputPath>bin\Release basic\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\JaStDev.HabCore.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug PRO|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug PRO\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\JaStDev.HabCore.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release PRO|AnyCPU'">
+    <OutputPath>bin\Release PRO\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\JaStDev.HabCore.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release Basic 32|AnyCPU'">
+    <OutputPath>bin\Release Basic 32\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\JaStDev.HabCore.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="JaStDev.LogService, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\external libs\JaStDev.LogService.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Brain\Brain.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\BrainHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\CacheBuffer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\DoubleNeuron.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\Flusher.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\functions\CodeLoader.cs" />
+    <Compile Include="Brain\functions\Deleter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\functions\Duplicator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\functions\Helpers.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\functions\MultiDuplicator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\functions\NeuronFactory.cs" />
+    <Compile Include="Brain\functions\NeuronFunction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\IDManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\IntNeuron.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\Link.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\Lists\BrainList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\Lists\ChildList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\Lists\ClusterList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\Lists\LinkInfoList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\Lists\OwnedBrainList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\Lists\RefCountedList.cs" />
+    <Compile Include="Brain\MultiTrackCache.cs" />
+    <Compile Include="Brain\Neuron.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\NeuronCluster.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\NeuronIDAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\PredefinedNeurons.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\Randomizer.cs" />
+    <Compile Include="Brain\TextNeuron.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\Thread syncing\Accessor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\Thread syncing\ChildrenAccessor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\Thread syncing\ClustersAccessor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\Thread syncing\IDListAccessor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\Thread syncing\LinkInfoAccessor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\Thread syncing\LinksListAccessor.cs" />
+    <Compile Include="Brain\Thread syncing\ListAccessor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\Thread syncing\NeuronAccessor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\Thread syncing\ProcessorSetAccessor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\Thread syncing\SetAccessor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\ValueNeuron.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Events\BrainEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Events\Eventargs.cs" />
+    <Compile Include="Events\FreezeEventAgrs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Events\LinkChangedEvent.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Events\NeuronChangedEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Events\NeuronListChangedEvent.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Events\OutputEvent.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Events\SplitEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expressions\Assignment.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expressions\BoolExpression.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expressions\ByRefExpression.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expressions\ConditionalExpression.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expressions\ConditionalStatement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expressions\Expression.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expressions\ExpressionsBlock.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expressions\SelectSources\ChildrenSelectSource.cs" />
+    <Compile Include="Expressions\SelectSources\ClustersSelectSource.cs" />
+    <Compile Include="Expressions\SelectSources\LinkInSelectSource.cs" />
+    <Compile Include="Expressions\IForEachSource.cs" />
+    <Compile Include="Expressions\IGetBool.cs" />
+    <Compile Include="Expressions\IGetDouble.cs" />
+    <Compile Include="Expressions\LockExpression.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expressions\ResultExpression.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expressions\ResultStatement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expressions\SearchExpression.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expressions\SelectSources\LinkOutSelectSource.cs" />
+    <Compile Include="Expressions\SimpleResultExpression.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expressions\Statement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expressions\Variables\CurrentFrom.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expressions\Variables\CurrentInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expressions\Variables\CurrentMeaning.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expressions\Variables\CurrentSin.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expressions\Variables\CurrentTo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expressions\Variables\Global.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expressions\Variables\Local.cs" />
+    <Compile Include="Expressions\Variables\ReturnValue.cs" />
+    <Compile Include="Expressions\Variables\SystemVariable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expressions\Variables\Time.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expressions\Variables\Variable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Factories\ListAccessorsFactory.cs" />
+    <Compile Include="Factories\CallFrameFactory.cs" />
+    <Compile Include="Factories\ChildListFactory.cs" />
+    <Compile Include="Factories\ClusterListFactory.cs" />
+    <Compile Include="Factories\DictionaryFactory.cs" />
+    <Compile Include="Factories\Factories.cs" />
+    <Compile Include="Factories\HashSetFactory.cs" />
+    <Compile Include="Factories\ProcAcessorsFactory.cs" />
+    <Compile Include="Factories\ThreadLockPartFactory.cs" />
+    <Compile Include="Instructions\Add\AddChildInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Add\AddInfoInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Add\AddLinkInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Arithmetic\double\AddAssignDoubleInstruction.cs" />
+    <Compile Include="Instructions\Arithmetic\double\AddDoubleInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Arithmetic\double\AddStoreDoubleInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Arithmetic\double\DivDoubleInstruction.cs" />
+    <Compile Include="Instructions\Arithmetic\double\DivStoreDoubleInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Arithmetic\double\MinusAssignDoubleInstruction.cs" />
+    <Compile Include="Instructions\Arithmetic\double\MinusDoubleInstruction.cs" />
+    <Compile Include="Instructions\Arithmetic\double\MinusStoreDoubleInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Arithmetic\double\ModDoubleInstruction.cs" />
+    <Compile Include="Instructions\Arithmetic\double\ModStoreDoubleInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Arithmetic\double\MultiplyDoubleInstruction.cs" />
+    <Compile Include="Instructions\Arithmetic\double\MultiplyStoreDoubleIntruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Arithmetic\double\StoreDoubleInstruction.cs" />
+    <Compile Include="Instructions\Arithmetic\int\AddAssignIntInstruction.cs" />
+    <Compile Include="Instructions\Arithmetic\int\AddIntInstruction.cs" />
+    <Compile Include="Instructions\Arithmetic\int\DivIntInstruction.cs" />
+    <Compile Include="Instructions\Arithmetic\int\MinusAssignIntInstruction.cs" />
+    <Compile Include="Instructions\Arithmetic\int\MinusIntInstruction.cs" />
+    <Compile Include="Instructions\Arithmetic\int\ModIntInstruction.cs" />
+    <Compile Include="Instructions\Arithmetic\int\MultiplyIntInstruction.cs" />
+    <Compile Include="Instructions\Arithmetic\int\StoreIntInstruction.cs" />
+    <Compile Include="Instructions\Arithmetic\var\AdditionInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Arithmetic\int\AddStoreIntInstruction.cs" />
+    <Compile Include="Instructions\Arithmetic\var\AvgInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Arithmetic\var\CompleteSequence.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Arithmetic\var\DecrementInstruction.cs" />
+    <Compile Include="Instructions\Arithmetic\var\DivideInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Arithmetic\int\DivStoreIntInstruction.cs" />
+    <Compile Include="Instructions\Arithmetic\var\IncrementInstruction.cs" />
+    <Compile Include="Instructions\Convert\StoLiInstruction.cs" />
+    <Compile Include="Instructions\Convert\ToSInstruction.cs" />
+    <Compile Include="Instructions\Get\Common\GetCommonInInstruction.cs" />
+    <Compile Include="Instructions\Get\Common\GetCommonOutInstruction.cs" />
+    <Compile Include="Instructions\ICalculateDouble.cs" />
+    <Compile Include="Instructions\Arithmetic\var\MaxInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Arithmetic\var\MinInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Arithmetic\var\MinusInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Arithmetic\int\MinusStoreIntInstruction.cs" />
+    <Compile Include="Instructions\Arithmetic\int\ModStoreIntInstruction.cs" />
+    <Compile Include="Instructions\Arithmetic\var\ModulusInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Arithmetic\var\MultiplyInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Arithmetic\int\MultiplyStoreIntInstruction.cs" />
+    <Compile Include="Instructions\Arithmetic\var\StDevInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Change\ChangeChildInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Change\ChangeInfoInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Change\ChangeLinkFrom.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Change\ChangeLinkMeaning.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Change\ChangeLinkTo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Change\ChangeParentInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Clear\ClearChildrenInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Clear\ClearInfoInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Clear\ClearLinksInInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Clear\ClearLinksOutInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Contains\ContainsAllChildrenInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Contains\ContainsChildrenInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Contains\ContainsLinksInInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Contains\ContainsLinksOutInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Contains\IsClusteredByAnyInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Contains\IsClusteredByInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Contains\LinkExistsInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Convert\CcToSInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Convert\CiToSInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Convert\DToIInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Convert\DToSInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Convert\IToDInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Convert\IToSInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Convert\SToCcInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Convert\SToCiInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Convert\SToDInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Convert\SToIInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Convert\IToDTInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\At\GetChildAtInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\At\GetClusterAtInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\At\GetInAtInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\At\GetInfoAtInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\At\GetOutAtInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\children\GetChildrenFilteredInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\children\GetChildrenInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\children\GetChildrenOfTypeInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\children\GetChildrenRangeInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\Clusters\GetClustersFilteredInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\Clusters\GetClustersInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\Clusters\GetClustersWithMeaningInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\Common\GetCommonParents.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\Common\GetCommonParentsFiltered.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\Common\GetCommonParentsWithMeaning.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\Count\ChildCountInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\Count\ClusterCountInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\Count\InfoCountInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\Count\LinkInCountInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\Count\LinkOutCountInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\first\GetFirstChildInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\first\GetFirstClusterInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\first\GetFirstInfoInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\first\GetFirstInInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\first\GetFirstOutInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\GetAllIncommingInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\GetAllOutgoingInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\GetClusterMeaningInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\GetIncommingInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\GetInFilteredInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\GetInfoFilteredInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\GetInfoInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\GetLinkMeaningInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\GetoutFilteredInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\GetOutgoingInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\last\GetLastChildInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\last\GetLastClusterInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\last\GetLastInfoInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\last\GetLastInInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\last\GetLastOutInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\next\GetNextChildInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\next\GetNextClusterInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\next\GetNextInfoInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\next\GetNextInInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\next\GetNextOutInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\prev\GetPrevChildInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\prev\GetPrevClusterInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\prev\GetPrevInfoInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\prev\GetPrevInInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\prev\GetPrevOutInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\Random\GetRandomChildInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\Random\GetRandomClusterInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\Random\GetRandomInfoInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\Random\GetRandomInInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Get\Random\GetRandomOutInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\ICalculateBool.cs" />
+    <Compile Include="Instructions\ICalculateInt.cs" />
+    <Compile Include="Instructions\IExecResultStatement.cs" />
+    <Compile Include="Instructions\IExecStatement.cs" />
+    <Compile Include="Instructions\IndexOf\IndexOfChildInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\IndexOf\IndexOfClusterInstruction.cs" />
+    <Compile Include="Instructions\IndexOf\IndexOfInfoInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\IndexOf\IndexOfLinkInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Insert\InsertChildInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Insert\InsertInfoInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Insert\InsertLinkInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Instruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Move-Copy\CopyChildrenInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Move-Copy\CopyInfoInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Move-Copy\MoveChildrenInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Move-Copy\MoveInfoInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\MultiResultInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Neurons\DeleteFrozenInstruction.cs" />
+    <Compile Include="Instructions\Neurons\DeleteInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Neurons\DuplicateInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Neurons\FreezeInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Neurons\HasReferencesInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Neurons\MakeClusterInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Neurons\NewInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Neurons\TypeOfInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Neurons\UnFreezeInstruction.cs" />
+    <Compile Include="Instructions\Processor\AwakeInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\call\BlockedCallInstruction.cs" />
+    <Compile Include="Instructions\Processor\call\BlockedSolveInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\exit\BreakInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\call\CallInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\call\CallSaveInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\ContinueInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\exit\ReturnInstruction.cs" />
+    <Compile Include="Instructions\Processor\exit\ReturnValueIfInstruction.cs" />
+    <Compile Include="Instructions\Processor\JmpIfInstruction.cs" />
+    <Compile Include="Instructions\Processor\log\ErrorInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\call\ExecuteInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\exit\ExitLinkInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\exit\ExitNeuronInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\exit\ExitSolveInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\OutputInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\call\PerformInstruction.cs" />
+    <Compile Include="Instructions\Processor\call\PerformResultInstruction.cs" />
+    <Compile Include="Instructions\Processor\exit\ReturnValueInstruction.cs" />
+    <Compile Include="Instructions\Processor\call\SolveInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\PassFrozenToCallerInstruction.cs" />
+    <Compile Include="Instructions\Processor\Split\AddSplitResultInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\Split\ApplyWeightInstruction.cs" />
+    <Compile Include="Instructions\Processor\Split\ClearSplitResultsInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\Split\DecreaseWeightInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\Split\DecreaseWeightOfInstruction.cs" />
+    <Compile Include="Instructions\Processor\Split\GetMaxWeightInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\Split\GetSplitCountInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\Split\GetSplitResultsInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\Split\GetWeightInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\Split\GetWeightOfInstruction.cs" />
+    <Compile Include="Instructions\Processor\Split\IncreaseWeightInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\Split\IncreaseWeightOfInstruction.cs" />
+    <Compile Include="Instructions\Processor\Split\RemoveSplitResultInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\Split\ResetWeightInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\Split\ResetWeightOfInstruction.cs" />
+    <Compile Include="Instructions\Processor\Split\SplitAccumInstruction.cs" />
+    <Compile Include="Instructions\Processor\Split\SplitFixedInstruction.cs" />
+    <Compile Include="Instructions\Processor\Split\SplitInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\Split\SplitWeightedInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\Stack\PeekInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\Stack\PopInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\Stack\PopValueInstruction.cs" />
+    <Compile Include="Instructions\Processor\Stack\PushInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\Stack\PushValueInstruction.cs" />
+    <Compile Include="Instructions\Processor\Stack\StackCountInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\Stack\ParamStackCountInstruction.cs" />
+    <Compile Include="Instructions\Processor\SuspendInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Processor\log\WarningInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Remove\RemoveAt\RemoveChildAtInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Remove\RemoveAt\RemoveInfoAtInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Remove\RemoveAt\RemoveLinkInAtInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Remove\RemoveAt\RemoveLinkOutAtInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Remove\RemoveChildInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Remove\RemoveInfoInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Remove\RemoveLinkInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Remove\RemoveLinksInInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Remove\RemoveLinksOutInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\ResultInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Set Operations\ComplementInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Set Operations\DistinctInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Set Operations\InterleafInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Set Operations\IntersectInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Set Operations\IntersectVarInstruction.cs" />
+    <Compile Include="Instructions\Set Operations\ReverseInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Set Operations\FilterInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Set\SetChildAtInstruction.cs" />
+    <Compile Include="Instructions\string\GetCharAtInstruction.cs" />
+    <Compile Include="Instructions\string\SetStringInstruction.cs" />
+    <Compile Include="Instructions\string\SubStringInstruction.cs" />
+    <Compile Include="Instructions\Timer\GetTimerIntervalInstruction.cs" />
+    <Compile Include="Instructions\Timer\IsTimerActiveInstruction.cs" />
+    <Compile Include="Instructions\Timer\SetTimerIntervalInstruction.cs" />
+    <Compile Include="Instructions\Timer\StartTimerInstruction.cs" />
+    <Compile Include="Instructions\Timer\StopTimerInstruction.cs" />
+    <Compile Include="Instructions\Var operations\InsertInstruction.cs" />
+    <Compile Include="Instructions\Var operations\RemoveInstruction.cs" />
+    <Compile Include="Instructions\Var operations\ReplaceInstruction.cs" />
+    <Compile Include="Instructions\Var operations\SortInstruction.cs" />
+    <Compile Include="Instructions\Set Operations\UnionInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Set\SetClusterMeaningInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Set\SetFirstOutInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\SingleResultInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\string\EndsWithInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\string\LengthInstruction.cs" />
+    <Compile Include="Instructions\string\SplitStringInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\unary\InvertDoubleInstruction.cs" />
+    <Compile Include="Instructions\unary\InvertDoubleListInstruction.cs" />
+    <Compile Include="Instructions\unary\InvertIntInstruction.cs" />
+    <Compile Include="Instructions\unary\InvertIntListInstruction.cs" />
+    <Compile Include="Instructions\unary\InvertSignInstruction.cs" />
+    <Compile Include="Instructions\unary\NotInstruction.cs" />
+    <Compile Include="Instructions\Var operations\AddInstruction.cs" />
+    <Compile Include="Instructions\Var operations\ClearInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Var operations\CountInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Var operations\FirstInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Var operations\GetAtInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Var operations\GetRandomInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Var operations\GetRangeInstruction.cs" />
+    <Compile Include="Instructions\Var operations\IsInitializedInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Var operations\LastInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Instructions\Var operations\PrepareLocalInstruction.cs" />
+    <Compile Include="Instructions\Var operations\RemoveAtInstruction.cs" />
+    <Compile Include="Instructions\Var operations\SetAtInstruction.cs" />
+    <Compile Include="Instructions\Var operations\SubstractInstruction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Locks\LockManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Locks\LockRequestInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Locks\LockRequestList.cs" />
+    <Compile Include="Locks\LockRequestsFactory.cs" />
+    <Compile Include="Locks\ThreadLock.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Locks\ThreadLockPart.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Locks\WaitHandleManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Locks\WaitObject.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Modules\Module.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Modules\Modules.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Modules\VarManager.cs" />
+    <Compile Include="PathUtil.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Processor\ArgumentsStack.cs" />
+    <Compile Include="Processor\CallFrame.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Processor\HeadData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expressions\IGetInt.cs" />
+    <Compile Include="Processor\IDListFactory.cs" />
+    <Compile Include="Processor\IProcessorFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Factories\ObjectListFactory.cs" />
+    <Compile Include="Processor\Processor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Processor\ProcessorFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Processor\ProcessorSplitter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Processor\SplitData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Processor\SplitResultsDict.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Processor\ThreadManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Processor\VarDict.cs" />
+    <Compile Include="Processor\VarDictsStack.cs" />
+    <Compile Include="Processor\VarValuesList.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sins\IntSin.cs" />
+    <Compile Include="Sins\OutputBuilder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sins\Sin.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sins\TextSin.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brain\TimerNeuron.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sins\WordsDictionary.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Storage\common\EntryNeuronsHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Storage\common\ILongtermMem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Storage\common\IStoragePropertiesUser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Storage\common\PropertiesHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Storage\common\StorageHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Storage\NDB\BlockStream.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Storage\NDB\CompactBinaryReader.cs" />
+    <Compile Include="Storage\NDB\CompactBinaryWriter.cs" />
+    <Compile Include="Storage\NDB\INDBStreamable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Storage\NDB\NDBBuffer.cs" />
+    <Compile Include="Storage\NDB\NDBSerializer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Storage\NDB\NDBStore.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Storage\NDB\NDBTable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Storage\XmlTextEncoder.cs" />
+    <Compile Include="Storage\xml\LongtermMem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Storage\xml\XmlStore.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="NeuronsTree.cd" />
+    <None Include="ClassDiagramHAB.cd" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Settings info.htm" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tokenizer\Tokenizer.csproj">
+      <Project>{47E9938B-7C5D-48DD-A896-CBB4EF9CE913}</Project>
+      <Name>Tokenizer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <Target Name="AfterBuild" DependsOnTargets="AssignTargetPaths;Compile;ResolveKeySource" Inputs="$(MSBuildAllProjects);@(IntermediateAssembly)" Outputs="$(OutputPath)$(_SGenDllName)" Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <!-- Delete the file because I can't figure out how to force the SGen task. -->
+    <Delete Files="$(TargetDir)$(TargetName).XmlSerializers.dll" ContinueOnError="true" />
+    <SGen BuildAssemblyName="$(TargetFileName)" BuildAssemblyPath="$(OutputPath)" References="@(ReferencePath)" ShouldGenerateSerializer="true" UseProxyTypes="false" KeyContainer="$(KeyContainerName)" KeyFile="$(KeyOriginatorFile)" DelaySign="$(DelaySign)" ToolPath="$(SGenToolPath)">
+      <Output TaskParameter="SerializationAssembly" ItemName="SerializationAssembly" />
+    </SGen>
+  </Target>
+</Project>

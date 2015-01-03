@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+   <!--<item android:id="@+id/Menu_Panic"
+         android:title="@string/MenuPanicTitle" 
+         android:icon="@drawable/panic"/>-->
+   <!--<item android:id="@+id/Menu_Save"
+         android:title="Save"
+         android:icon="@drawable/panic"/>-->
+   <item android:id="@+id/Menu_SyncContacts"
+         android:title="Sync contacts"
+         android:icon="@drawable/ic_menu_refresh"/>
+   <item android:id="@+id/Menu_Info"
+         android:title="Info"
+         android:icon="@drawable/ic_menu_help"/>
+   <item android:id="@+id/Menu_Preferences"
+         android:title="@string/MenuPrefTitle" 
+         android:icon="@drawable/ic_menu_preferences"/>
+</menu>

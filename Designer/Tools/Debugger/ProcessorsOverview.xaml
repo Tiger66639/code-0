@@ -1,0 +1,557 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.ProcessorsOverview"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:dd="clr-namespace:DnD"
+             xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+             xmlns:ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls"
+             xmlns:profiler="clr-namespace:JaStDev.HAB.Designer.Profiler"
+             xmlns:jc="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+             jc:Help.Topic="thedebugger.html">
+    <UserControl.InputBindings>
+        <KeyBinding Key="F5" Command="self:App.ContinueDebugCmd" />
+        <KeyBinding Key="F6" Command="self:App.StepNextDebugCmd" />
+        <KeyBinding Key="F7" Command="self:App.InspectExpressionCmd" />
+        <KeyBinding Key="Del" Command="Delete" />
+    </UserControl.InputBindings>
+    <UserControl.Resources>
+
+        <!--Used by the treeview items for the split paths-->
+        <Style x:Key="SplitPathStyle" TargetType="{x:Type TreeViewItem}">
+            <Setter Property="IsExpanded" Value="{Binding Path=IsExpanded}" />
+        </Style>
+
+        <!--Represents a single neuron in a split path-->
+        <DataTemplate x:Key="SplitPathItemTemplate">
+            <StackPanel Orientation="Horizontal">
+                <CheckBox IsChecked="{Binding Path=IsBreakPoint}"
+                          ToolTip="When the path is checked and this item, all processors that use this value in their split path, at the same position as in this path, will be paused just after the split." />
+                <ContentPresenter Content="{Binding Path=DebugNeuron}" />
+            </StackPanel>
+        </DataTemplate>
+
+        <!--The default style that is applied to treeview items that represent split paths.-->
+        <HierarchicalDataTemplate x:Key="SplitPathTemplate"
+                                  ItemsSource="{Binding Path=Items}"
+                                  ItemTemplate="{StaticResource SplitPathItemTemplate}">
+            <CheckBox Content="{Binding Path=Name}"
+                      ToolTip="When checked, the items in the path serve as breakpoints."
+                      IsChecked="{Binding Path=IsSelected, Mode=TwoWay}" />
+        </HierarchicalDataTemplate>
+
+        <!--this style is used by the data grid cells that display variable contents, we disable the IsSelected trigger which sets the colors.-->
+        <Style x:Key="VarCellTemplate" TargetType="{x:Type DataGridCell}">
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridCell}">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <!--<Trigger Property="IsSelected" Value="True">
+               <Setter Property="Background" Value="Transparent" />
+               <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+               <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+            </Trigger>-->
+                <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                    <Setter Property="BorderBrush" Value="{DynamicResource {x:Static DataGrid.FocusBorderBrushKey}}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+
+        <!--Style used by the DataGrid column that displays a checkbox for the 'AttachValuesToProcessor' prop of a watch-->
+        <Style x:Key="AttachedFieldCellTemplate"
+               BasedOn="{StaticResource VarCellTemplate}"
+               TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="Red" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridCell}">
+                        <Border Background="{TemplateBinding Background}"
+                                x:Name="bd"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="True"
+                                ToolTip="{Binding Path=InvalidChangeData.Message}">
+                            <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding Path=InvalidChangeData}" Value="{x:Null}">
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter TargetName="bd" Property="ToolTip"
+                                        Value="Attach/detach the contents of the variable to the processor that assigns the content." />
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+
+
+        <self:ProcManVariablesDropAdvisor x:Key="ProcManVarDropAdvisor" />
+
+        <!--Template for variable nodes in the treeview-->
+        <DataTemplate DataType="{x:Type self:ProcItem}"
+                      x:Key="ProcItemTemplate">
+            <Grid>
+                <ItemsControl ItemsSource="{Binding Path=Values}" />
+                <TextBlock x:Name="TxtNoValues">No values</TextBlock>
+            </Grid>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding Path=HasValues}" Value="True">
+                    <Setter TargetName="TxtNoValues" Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+
+        <!--Template for processor nodes in the treeview-->
+        <DataTemplate DataType="{x:Type self:ProcItem}"
+                      x:Key="ProcItemTemplate2">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <ToggleButton IsChecked="{Binding Path=IsViewOpen}"
+                                  Height="12"
+                                  Width="12"
+                                  ToolTip="Show/Hide details for processor" />
+                    <ToggleButton IsChecked="{Binding Path=Processor.IsPaused}"
+                                  Height="12"
+                                  Width="12"
+                                  ToolTip="Pauses/restarts the processor." />
+                    <ToggleButton IsChecked="{Binding Path=Processor.IsRunning, Mode=OneWay}"
+                                  IsHitTestVisible="False"
+                                  Height="12"
+                                  Width="12"
+                                  ToolTip="Indicates that the processor is still running or not." />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Text="{Binding Path=Name}"
+                             ToolTip="The name of the processor (for display purposes only)"
+                             HorizontalAlignment="Center"
+                             BorderThickness="0"
+                             Background="Transparent" />
+                    <TextBlock Text="{Binding Path=Processor.StackSize, StringFormat=: {0}}"
+                               ToolTip="The number of items still on the stack."
+                               HorizontalAlignment="Center" />
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+
+        <!--Template for folder nodes in the treeview-->
+        <HierarchicalDataTemplate ItemsSource="{Binding Path=UIProcessors}"
+                                  x:Key="ProcManFolderTemplate">
+            <TextBlock Text="{Binding Path=UIProcessors.Count}"
+                       ToolTip="Nr of direct child processors." />
+        </HierarchicalDataTemplate>
+
+        <ContextMenu x:Key="VariableWatchesMenu">
+            <MenuItem Header="Inspect value"
+                      Command="self:App.InspectExpressionCmd"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                      InputGestureText="F7" />
+            <Separator />
+            <MenuItem Header="Remove"
+                      Command="Delete"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}"
+                      InputGestureText="Del" />
+            <MenuItem Header="Clear"
+                      Click="MnuClear_Click" />
+        </ContextMenu>
+
+        <ContextMenu x:Key="ProcItemContextMenu">
+            <MenuItem Header="IsPaused"
+                      IsCheckable="True"
+                      IsChecked="{Binding Path=Processor.IsPaused}" />
+            <MenuItem Header="Store split path"
+                      Command="self:App.StoreSplitPathCmd"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}" />
+            <Separator />
+            <MenuItem Header="Kill"
+                      Command="self:App.KillProcessorCmd"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}" />
+            <MenuItem Header="Kill All"
+                      Command="self:App.StopProcessorsCmd" />
+            <MenuItem Header="Kill all but this"
+                      Command="self:App.KillAllButProcessorCmd"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}" />
+        </ContextMenu>
+
+        <!--Template for variable buttons to display the values for the specified variable-->
+        <DataTemplate x:Key="VariableButtonTempate">
+            <RadioButton GroupName="VariablesGroup"
+                         Margin="8,4,8,4"
+                         Checked="RBtnVariable_Checked"
+                         ContextMenu="{StaticResource VariableWatchesMenu}">
+                <TextBlock HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Text="{Binding Path=NeuronInfo.DisplayTitle}" />
+            </RadioButton>
+        </DataTemplate>
+
+        <!--Default style for all threeview items.  Allows folders to bind to the IsExpanded.-->
+        <Style x:Key="ProcFolderStyle" TargetType="{x:Type TreeViewItem}">
+            <Setter Property="IsExpanded" Value="{Binding Path=IsExpanded}" />
+            <Setter Property="Background" Value="Red" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="ContextMenu" Value="{StaticResource ProcItemContextMenu}" />
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="HeaderTemplate" Value="{StaticResource ProcManFolderTemplate}" />
+            <!--we appear to be getting problems with the virtual panel here.-->
+            <!--<Setter Property="ItemsPanel">
+            <Setter.Value>
+               <ItemsPanelTemplate>
+                  <StackPanel/>
+               </ItemsPanelTemplate>
+            </Setter.Value>
+         </Setter>-->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TreeViewItem}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition MinWidth="19" Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <ToggleButton x:Name="Expander"
+                                          Style="{StaticResource ExpandCollapseToggleStyle}"
+                                          IsChecked="{Binding Path=IsExpanded,RelativeSource={RelativeSource TemplatedParent}}"
+                                          ClickMode="Press" />
+                            <!--We have 2 borders to show both as an item in a splitPath and as part of a InvalidChange error-->
+                            <Border Name="Bd"
+                                    Grid.Column="1"
+                                    CornerRadius="3"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    Padding="2"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    SnapsToDevicePixels="true">
+                                <!--we give this a fixed background so that it provides a clickable background-->
+                                <Border Name="innerBorder"
+                                        CornerRadius="3"
+                                        Background="Transparent"
+                                        Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter x:Name="PART_Header"
+                                                      ContentSource="Header"
+                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                </Border>
+
+                            </Border>
+                            <ItemsPresenter x:Name="ItemsHost"
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            Grid.ColumnSpan="2" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsExpanded" Value="false">
+                                <Setter TargetName="ItemsHost" Property="Visibility" Value="Collapsed" />
+                            </Trigger>
+                            <Trigger Property="HasItems" Value="false">
+                                <Setter TargetName="Expander" Property="Visibility" Value="Hidden" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter TargetName="Bd" Property="BorderBrush"
+                                        Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground"
+                                        Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                            </Trigger>
+                            <DataTrigger Binding="{Binding Path=Processor.IsInCurrentPath}" Value="True">
+                                <Setter TargetName="innerBorder" Property="Background" Value="#FF5CB939" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=InvalidChangeData}" Value="{x:Null}">
+                                <Setter Property="Background" Value="Transparent" />
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Path=IsFolder}" Value="false" />
+                        <Condition
+                            Binding="{Binding Source={x:Static self:ProcessorManager.Current}, Path=Displaymode}"
+                            Value="Variables" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="HeaderTemplate" Value="{StaticResource ProcItemTemplate}" />
+                </MultiDataTrigger>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Path=IsFolder}" Value="false" />
+                        <Condition
+                            Binding="{Binding Source={x:Static self:ProcessorManager.Current}, Path=Displaymode}"
+                            Value="Processors" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="HeaderTemplate" Value="{StaticResource ProcItemTemplate2}" />
+                </MultiDataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <!--The template for the values of a watch (when the procesor mode is selected)-->
+        <DataTemplate x:Key="DebuggerWatchValue">
+            <!--uses the default debugNeuron template to display the data-->
+            <ItemsControl ItemsSource="{Binding Path=Values}" />
+        </DataTemplate>
+
+        <!--Default template for breakpoints-->
+        <DataTemplate x:Key="BreakpointItem">
+            <TextBlock Text="{Binding}"
+                       Focusable="True">
+                <TextBlock.CommandBindings>
+                    <CommandBinding Command="Delete" Executed="DeleteBreakPoint_Executed"
+                                    CanExecute="DeleteBreakPoint_CanExecute" />
+                </TextBlock.CommandBindings>
+            </TextBlock>
+        </DataTemplate>
+    </UserControl.Resources>
+    <DockPanel>
+        <Expander Style="{StaticResource SimpleExpandDownStyle}"
+                  IsExpanded="{Binding Source={x:Static self:Properties.Settings.Default}, Path=ToolbarExpandedDebugger, Mode=TwoWay}"
+                  Focusable="False"
+                  DockPanel.Dock="Top">
+            <ToolBar>
+                <RadioButton Style="{StaticResource TlbToggleButtonsStyle}"
+                             Click="ToggleVarsClick"
+                             ToolTip="Show variables values of processors"
+                             IsChecked="False"
+                             GroupName="GrpDebugViewStyle">
+                    <Image Source="{StaticResource ImgVariable}"
+                           Height="16"
+                           Width="16"
+                           Style="{StaticResource TlbImageStyle}" />
+                </RadioButton>
+                <RadioButton Style="{StaticResource TlbToggleButtonsStyle}"
+                             Click="ToggleProcClick"
+                             IsChecked="True"
+                             ToolTip="Show processor values"
+                             GroupName="GrpDebugViewStyle">
+                    <Image Source="/Images/chip.png"
+                           Height="16"
+                           Width="16"
+                           Style="{StaticResource TlbImageStyle}" />
+                </RadioButton>
+                <Separator />
+                <ComboBox
+                    SelectedValue="{Binding Source={x:Static self:BrainData.Current}, Path=Debugmode, Mode=TwoWay}"
+                    SelectedValuePath="Content"
+                    ToolTip="The mode of the selected processor, or the mode assigned to new processors."
+                    MinWidth="85">
+                    <ComboBoxItem ToolTip="No debugging is done">
+                        <self:DebugMode>Off</self:DebugMode>
+                    </ComboBoxItem>
+                    <ComboBoxItem ToolTip="Data is updated and execution is paused at breakpoints.">
+                        <self:DebugMode>Normal</self:DebugMode>
+                    </ComboBoxItem>
+                    <ComboBoxItem ToolTip="All steps are slowly executed so that changes can easely be followed.">
+                        <self:DebugMode>SlowMotion</self:DebugMode>
+                    </ComboBoxItem>
+                </ComboBox>
+                <!--This slider is used to adjust the slowmotion speed, expressed in milliseconds.-->
+                <Slider Orientation="Horizontal"
+                        ToolTip="The speed at which the slow motion debug mode steps to a next expression (this is a global value for all processors)."
+                        Minimum="1"
+                        Maximum="400"
+                        SmallChange="20"
+                        LargeChange="200"
+                        Value="{Binding Source={x:Static self:ProcessorManager.Current}, Path=PlaySpeedMSec, Mode=TwoWay}"
+                        Width="80" />
+                <Separator />
+                <Button ToolTip="Pause execution"
+                        x:Name="BtnPause"
+                        Style="{StaticResource TlbButtonsStyle}"
+                        Command="self:App.PauseDebugCmd">
+                    <Image
+                        Source="{Binding ElementName=BtnPause, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Pause.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Button ToolTip="Continue execution (F5)"
+                        x:Name="BtnContinue"
+                        Style="{StaticResource TlbButtonsStyle}"
+                        Command="self:App.ContinueDebugCmd">
+                    <Image
+                        Source="{Binding ElementName=BtnContinue, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Play.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Button ToolTip="Execute next step (F6)"
+                        x:Name="BtnNext"
+                        Style="{StaticResource TlbButtonsStyle}"
+                        Command="self:App.StepNextDebugCmd">
+                    <Image
+                        Source="{Binding ElementName=BtnNext, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Step.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Button ToolTip="Stop all processors"
+                        x:Name="BtnStop"
+                        Style="{StaticResource TlbButtonsStyle}"
+                        Command="self:App.StopProcessorsCmd">
+                    <Image
+                        Source="{Binding ElementName=BtnStop, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Stop.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Separator />
+                <ToggleButton IsChecked="{Binding Source={x:Static self:BrainData.Current}, Path=BreakOnException}"
+                              ToolTip="Stop the processor when an error is logged and show the code that caused it."
+                              IsEnabled="{Binding Source={x:Static self:ProcessorManager.Current}, Path=IsInDebugMode}">
+                    <Image Source="/Images/BreakOnException.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+                <ToggleButton
+                    IsChecked="{Binding Source={x:Static profiler:MemProfiler.Current}, Path=IsActive,  Mode=TwoWay}"
+                    ToolTip="Enable/disable neuron (memory) profiling."
+                    IsEnabled="{Binding Source={x:Static self:ProcessorManager.Current}, Path=IsInDebugMode}">
+                    <Image Source="/Images/Tools/MemProfiler.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+
+            </ToolBar>
+        </Expander>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width=".25*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width=".25*" />
+            </Grid.ColumnDefinitions>
+
+            <!--Border required for the droptarget-->
+            <Border Background="White"
+                    dd:DragDropManager.DropTarget="{StaticResource ProcManVarDropAdvisor}"
+                    BorderThickness="0">
+                <Grid>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Auto"
+                                  x:Name="ScrollVarWatches"
+                                  Visibility="Collapsed">
+                        <ItemsControl
+                            ItemsSource="{Binding Source={x:Static self:ProcessorManager.Current}, Path=Watches}"
+                            ItemTemplate="{StaticResource VariableButtonTempate}">
+                            <ItemsControl.CommandBindings>
+                                <CommandBinding Command="Delete" Executed="DeleteWatch_Executed"
+                                                CanExecute="DeleteWatch_CanExecute" />
+                            </ItemsControl.CommandBindings>
+                        </ItemsControl>
+                    </ScrollViewer>
+
+                    <DataGrid AutoGenerateColumns="False"
+                              CanUserAddRows="False"
+                              BorderThickness="0"
+                              CanUserDeleteRows="True"
+                              CanUserResizeRows="True"
+                              x:Name="DataVarProcWatches"
+                              HorizontalContentAlignment="Stretch"
+                              ItemsSource="{Binding Source={x:Static self:ProcessorManager.Current}, Path=Watches}">
+                        <DataGrid.Columns>
+                            <DataGridCheckBoxColumn Binding="{Binding Path=AttachValuesToProcessor, Mode=TwoWay}"
+                                                    CellStyle="{StaticResource AttachedFieldCellTemplate}"
+                                                    Width="20">
+                                <DataGridCheckBoxColumn.Header>
+                                    <TextBlock
+                                        ToolTip="Attach newly assigned content of the variable to the processor which performed the assign.">
+                                        Attach
+                                    </TextBlock>
+                                </DataGridCheckBoxColumn.Header>
+                            </DataGridCheckBoxColumn>
+                            <DataGridTextColumn Header="Name"
+                                                Binding="{Binding Path=NeuronInfo.DisplayTitle}"
+                                                CellStyle="{StaticResource VarCellTemplate}"
+                                                Width="100" />
+                            <DataGridTemplateColumn CanUserReorder="True"
+                                                    CanUserResize="True"
+                                                    CellStyle="{StaticResource VarCellTemplate}"
+                                                    Width="*"
+                                                    Header="Value"
+                                                    CellTemplate="{StaticResource DebuggerWatchValue}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                </Grid>
+            </Border>
+
+            <GridSplitter Grid.Column="1"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Stretch"
+                          ShowsPreview="True"
+                          BorderThickness="1,0,1,0"
+                          BorderBrush="Gray"
+                          Width="6" />
+
+            <ctrls:MyTreeView Grid.Column="2"
+                              BorderThickness="0"
+                              x:Name="TrvValues"
+                              VirtualizingStackPanel.IsVirtualizing="True"
+                              VirtualizingStackPanel.VirtualizationMode="Recycling"
+                              ScrollViewer.CanContentScroll="True"
+                              ItemsSource="{Binding Source={x:Static self:ProcessorManager.Current}, Path=UIProcessors}"
+                              ItemContainerStyle="{StaticResource ProcFolderStyle}"
+                              SelectedItemChanged="TrvValues_SelectedItemChanged">
+                <ctrls:MyTreeView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ctrls:MyTreeView.ItemsPanel>
+            </ctrls:MyTreeView>
+
+            <GridSplitter Grid.Column="3"
+                          BorderThickness="1,0,1,0"
+                          BorderBrush="Gray"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Stretch"
+                          ShowsPreview="True"
+                          Width="6" />
+
+            <ctrls:MyTreeView Grid.Column="4"
+                              BorderThickness="0"
+                              VirtualizingStackPanel.IsVirtualizing="True"
+                              VirtualizingStackPanel.VirtualizationMode="Recycling"
+                              ScrollViewer.CanContentScroll="True"
+                              ItemsSource="{Binding Source={x:Static self:ProcessorManager.Current}, Path=SplitPaths}"
+                              ItemTemplate="{StaticResource SplitPathTemplate}"
+                              ItemContainerStyle="{StaticResource SplitPathStyle}"
+                              x:Name="TrvSplitPaths">
+                <ctrls:MyTreeView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ctrls:MyTreeView.ItemsPanel>
+            </ctrls:MyTreeView>
+            <GridSplitter Grid.Column="5"
+                          BorderThickness="1,0,1,0"
+                          BorderBrush="Gray"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Stretch"
+                          ShowsPreview="True"
+                          Width="6" />
+
+            <Border Background="White"
+                    Grid.Column="6"
+                    BorderThickness="0">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=BreakPoints}"
+                                  ItemTemplate="{StaticResource BreakpointItem}" />
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </DockPanel>
+
+</UserControl>

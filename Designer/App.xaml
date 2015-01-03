@@ -1,0 +1,273 @@
+﻿<Application x:Class="JaStDev.HAB.Designer.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+             xmlns:edit="clr-namespace:JaStDev.HAB.Designer.Editors"
+             xmlns:TC="clr-namespace:JaStDev.HAB.Designer.Test"
+             xmlns:cf="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             Startup="Application_Startup"
+             Exit="Application_Exit"
+             DispatcherUnhandledException="Application_DispatcherUnhandledException"
+
+             ShutdownMode="OnMainWindowClose">
+    <Application.Resources>
+
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="CommonRes.xaml" />
+                <ResourceDictionary Source="\Images\StandardNeurons.xaml" />
+                <ResourceDictionary Source="\Images\FlowImages.xaml" />
+                <ResourceDictionary Source="MenuItems.xaml" />
+                <ResourceDictionary Source="Controls.xaml" />
+                <ResourceDictionary Source="\Tools\Thesaurus\visual\ThesaurusDictionary.xaml" />
+                <ResourceDictionary Source="\WPF\Controls\TreeViewPanel\TreeViewPanel.xaml" />
+                <ResourceDictionary Source="\Tools\Debugger\DebugResources.xaml" />
+                <ResourceDictionary Source="\Editors\CodeEditor\CodeItems.xaml" />
+                <ResourceDictionary Source="\Editors\CodeEditor\CommonCodeItemsControls.xaml" />
+                <ResourceDictionary Source="\WPF\Controls\NeuronEditing\NeuronBrowser\NeuronDataBrowserDict.xaml" />
+                <ResourceDictionary Source="\WPF\Controls\NeuronEditing\NeuronEditor\NeuronDataEditorDictionary.xaml" />
+                <ResourceDictionary Source="\Editors\Flow\Views\FlowItems.xaml" />
+                <ResourceDictionary Source="\Editors\Frames\Views\FrameItems.xaml" />
+                <ResourceDictionary Source="\Editors\MindMap\MindMapCommonResources.xaml" />
+                <ResourceDictionary Source="\Editors\TextPatterns\Views\TextPatternEditorResources.xaml" />
+                <!--<ResourceDictionary Source="WindowManager.xaml"/>-->
+                <ResourceDictionary Source="\Editors\Asset editor\Views\AssetsDictionary.xaml" />
+                <ResourceDictionary Source="\Editors\Visuals\Views\VisualEditorResources.xaml" />
+                <ResourceDictionary Source="\Tools\Processing\SearchResources.xaml" />
+                <ResourceDictionary Source="\Tools\Debugger\Testcases\Views\TestCaseDictionary.xaml" />
+                <ResourceDictionary Source="\Comm channels\Images\ImageChannelResourceDict.xaml" />
+                <ResourceDictionary Source="\BrainData\Project management\custom data\CustomConduitsDictionary.xaml" />
+                <ResourceDictionary Source="\Editors\queries\views\QueriesResourceDict.xaml" />
+                <ResourceDictionary Source="\Tools\ToolsResourceDict.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+
+            <!--used to display the meaning of a link.-->
+            <DataTemplate x:Key="MeaningTemplate">
+                <TextBlock Text="{Binding Converter={StaticResource NeuronToInfoConv}}" />
+            </DataTemplate>
+
+            <!--used to display the meaning of a link.-->
+            <DataTemplate x:Key="MeaningIdTemplate">
+                <TextBlock Text="{Binding Converter={StaticResource NeuronIdToInfoConv}}" />
+            </DataTemplate>
+
+            <!--shows the interface for a textSin  (input/output of the brain)-->
+            <DataTemplate DataType="{x:Type self:TextChannel}">
+                <self:TextChannelView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type self:ImageChannel}">
+                <self:ImageChannelView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type self:GridChannel}">
+                <self:GridChannelView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type self:AudioChannel}">
+                <self:AudioChannelView />
+            </DataTemplate>
+
+            <!--shows the interface for the wordnet sin.-->
+            <DataTemplate DataType="{x:Type self:WordNetChannel}">
+                <self:WordNetChannelView />
+            </DataTemplate>
+
+            <!--shows the interface for a reflection sin-->
+            <DataTemplate DataType="{x:Type self:ReflectionChannel}">
+                <self:ReflectionChannelView />
+            </DataTemplate>
+
+            <!--shows the interface for a ChatBot sin-->
+            <DataTemplate DataType="{x:Type self:ChatBotChannel}">
+                <self:ChatBotChannelView />
+            </DataTemplate>
+
+            <!--shows the interface for a ChatBot sin-->
+            <DataTemplate DataType="{x:Type self:ChatbotProperties}">
+                <self:ChatbotPropertiesView />
+            </DataTemplate>
+
+            <!--shows the interface for editing a mind map.-->
+            <DataTemplate DataType="{x:Type self:MindMap}">
+                <self:MindMapView />
+            </DataTemplate>
+
+            <!--shows the interface for editing a set of frames.-->
+            <DataTemplate DataType="{x:Type self:FrameEditor}">
+                <self:FramesEditorView />
+            </DataTemplate>
+
+            <!--shows the interface for editing a set of visual frames.-->
+            <DataTemplate DataType="{x:Type self:VisualEditor}">
+                <edit:VisualEditorView />
+            </DataTemplate>
+
+            <!--shows the interface for editing a set of frames attached to an object.-->
+            <DataTemplate DataType="{x:Type self:ObjectFramesEditor}">
+                <self:ObjectFramesEditorView />
+            </DataTemplate>
+
+            <!--shows the interface for editing a flow.-->
+            <DataTemplate DataType="{x:Type self:FlowEditor}">
+                <self:FlowEditorView />
+            </DataTemplate>
+
+            <!--shows the interface for editing a text patterns.-->
+            <DataTemplate DataType="{x:Type self:TextPatternEditor}">
+                <self:TextPatternEditorView />
+            </DataTemplate>
+
+            <!--shows the interface for editing queries.-->
+            <DataTemplate DataType="{x:Type self:QueryEditor}">
+                <self:QueryEditorView />
+            </DataTemplate>
+
+            <!--shows the interface for editing a flow.-->
+            <DataTemplate DataType="{x:Type self:ObjectEditor}">
+                <self:AssetEditorView />
+            </DataTemplate>
+
+            <!--shows the interface for editing all the code of a neuron.-->
+            <DataTemplate DataType="{x:Type self:CodeEditor}">
+                <self:CodeEditorView DataContext="{Binding}" />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type self:CustomConduit}">
+                <self:CtrlCustomConduitProgress DataContext="{Binding}" />
+
+            </DataTemplate>
+
+            <!--shows the interface for editing all the code of a neuron.-->
+            <DataTemplate DataType="{x:Type self:ProcItem}">
+                <self:ProcessorView DataContext="{Binding}" />
+            </DataTemplate>
+
+            <!--shows the interface for editing all the code of a neuron.-->
+            <DataTemplate DataType="{x:Type TC:TestCase}">
+                <TC:TestCaseView DataContext="{Binding}" />
+            </DataTemplate>
+
+            <!--chatlog history-->
+            <DataTemplate DataType="{x:Type self:ChatLogs}">
+                <self:ChatlogsView />
+            </DataTemplate>
+
+            <!--Default template for neuorndata.-->
+            <DataTemplate DataType="{x:Type self:NeuronData}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{Binding Path=Neuron, Converter={StaticResource NeuronToImgConv}}"
+                           Stretch="Fill"
+                           Height="16"
+                           Width="16" />
+                    <TextBlock Text="{Binding Path=DisplayTitle}"
+                               VerticalAlignment="Center" />
+                </StackPanel>
+            </DataTemplate>
+
+
+            <!--A default template that can be used for all objects that need to show the display title and the overlay items
+      that are defined in the NeuronInfo prop of an object.-->
+            <DataTemplate x:Key="NeuronDataTextBlockWithOverlays">
+                <StackPanel Orientation="Horizontal">
+                    <ItemsControl Style="{StaticResource OverlayItemsControlStyle}"
+                                  ItemsSource="{Binding Path=NeuronInfo.Overlays, Mode=OneWay}"
+                                  ItemTemplate="{StaticResource FlowItemOverlayTemplate}" />
+                    <TextBlock Text="{Binding Path=NeuronInfo.DisplayTitle}"
+                               TextTrimming="CharacterEllipsis">
+                        <TextBlock.ToolTip>
+                            <ToolTip Height="200"
+                                     Width="350"
+                                     StaysOpen="True">
+                                <FlowDocumentReader Document="{Binding Path=Description, Mode=OneTime}"
+                                                    IsFindEnabled="False"
+                                                    IsPageViewEnabled="False"
+                                                    IsPrintEnabled="False"
+                                                    IsTwoPageViewEnabled="False"
+                                                    ViewingMode="Scroll" />
+                            </ToolTip>
+                        </TextBlock.ToolTip>
+                    </TextBlock>
+                </StackPanel>
+            </DataTemplate>
+
+            <!--A converter used by the images on the toolbars to display an enabled/disabled button.-->
+            <cf:InsertTextConverter x:Key="BtnImgConv" Text="_Enabled" Split=".png" />
+
+            <!--the default style for all toolbar buttons.-->
+            <Style x:Key="TlbComboxStyle" TargetType="{x:Type ComboBox}">
+                <Setter Property="Focusable" Value="False" />
+            </Style>
+
+            <!--the default style for all toolbar buttons.-->
+            <Style x:Key="TlbButtonsStyle" TargetType="{x:Type Button}">
+                <!--<Setter Property="Focusable" Value="False"/>-->
+            </Style>
+
+            <!--the default style for all toolbar buttons that use commands which require the original focused item to remain focused, like sync.-->
+            <Style x:Key="TlbNoFocusButtonsStyle" TargetType="{x:Type Button}">
+                <Setter Property="Focusable" Value="False" />
+            </Style>
+
+            <Style x:Key="TlbNoFocusSubButtonsStyle" TargetType="{x:Type Button}"
+                   BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey} }">
+                <Setter Property="Focusable" Value="False" />
+            </Style>
+
+            <!--the default style for all toolbar togglebuttons.-->
+            <Style x:Key="TlbToggleButtonsStyle" TargetType="{x:Type ToggleButton}">
+                <Setter Property="Focusable" Value="False" />
+            </Style>
+
+            <!--The default style for images on the toolbars.-->
+            <Style x:Key="TlbImageStyle" TargetType="{x:Type Image}">
+                <Setter Property="Width" Value="16" />
+                <Setter Property="Height" Value="16" />
+            </Style>
+
+
+            <!--A collection with default font size values.-->
+            <CompositeCollection x:Key="FontSizeValues">
+                <sys:Double>5</sys:Double>
+                <sys:Double>6</sys:Double>
+                <sys:Double>7</sys:Double>
+                <sys:Double>8</sys:Double>
+                <sys:Double>9</sys:Double>
+                <sys:Double>10</sys:Double>
+                <sys:Double>11</sys:Double>
+                <sys:Double>12</sys:Double>
+                <sys:Double>14</sys:Double>
+                <sys:Double>15</sys:Double>
+                <sys:Double>16</sys:Double>
+                <sys:Double>18</sys:Double>
+                <sys:Double>20</sys:Double>
+                <sys:Double>22</sys:Double>
+                <sys:Double>24</sys:Double>
+                <sys:Double>28</sys:Double>
+                <sys:Double>32</sys:Double>
+                <sys:Double>48</sys:Double>
+                <sys:Double>64</sys:Double>
+                <x:Null />
+            </CompositeCollection>
+
+
+            <!--The default template to depict a single color in a color selection control like a combo box.-->
+            <DataTemplate x:Key="ColorTemplate">
+                <Rectangle Stroke="Black"
+                           StrokeThickness="1"
+                           Height="14"
+                           Width="16">
+                    <Rectangle.Fill>
+                        <SolidColorBrush Color="{Binding}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+            </DataTemplate>
+
+
+        </ResourceDictionary>
+
+    </Application.Resources>
+</Application>

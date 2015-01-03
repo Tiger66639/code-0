@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<thesaurus>
+<POS>
+<name>Adjective</name>
+<name>Adverb</name>
+<name>Article</name>
+<name>Complementizer </name>
+<name>Conjunction</name>
+<name>Determiner</name>
+<name>Interjection</name>
+<name>Noun</name>
+<name>Preposition</name>
+<name>Pronoun</name>
+<name>Verb</name>
+</POS>
+<Relationship>
+<name>is a</name>
+<Item>
+<Object ID="11040" POS="Pronoun" Placeholder="11040" Name="subject">
+<Text Value="subject" />
+</Object>
+<IsAttribute />
+<Children>
+<Item>
+<Object ID="11002" POSGRP="Pronoun" Name="you"><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" NumberSubstitution.CultureSource="User" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph /></FlowDocument><Text Value="you" Index="0" POSGRP="true" /><Bindings><ref>you</ref><ref>Singular</ref></Bindings></Object>
+<IsAttribute />
+</Item>
+<Item>
+<Object ID="10763" POSGRP="Pronoun" Name="I"><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" NumberSubstitution.CultureSource="User" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph /></FlowDocument><Text Value="i" Index="0" POSGRP="true" /><Bindings><ref>I</ref><ref>Singular</ref></Bindings></Object>
+<IsAttribute />
+</Item>
+</Children>
+</Item>
+<Item>
+<Object ID="10767" POSGRP="Noun" Name="candy"><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" NumberSubstitution.CultureSource="User" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph /></FlowDocument><Text Value="candy" Index="0" POSGRP="true" /></Object>
+<IsAttribute />
+<Conjugations>
+<link relationship="Plural">
+<Object ID="10749" POS="Noun" Name="candies"><FlowDocument xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph TextAlignment="Left" FontFamily="Segoe UI" FontSize="12" NumberSubstitution.CultureSource="User">Plural of candy</Paragraph></FlowDocument><Text Value="candies" Index="0" POSGRP="false" /></Object>
+</link>
+</Conjugations>
+<Topic>
+<Name>candy</Name><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" NumberSubstitution.CultureSource="User" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph /></FlowDocument><Rules><Rule><Name>like</Name><Patterns /><Conditionals /><Outputs><Output><Expression>I soooo adore all kinds of candy, such a shame it's so bad for you.</Expression><QuestionCanFollow>True</QuestionCanFollow></Output></Outputs><IsOutputSequenced /></Rule></Rules><Questions><Conditional><Condition /><Outputs><Output><Expression>Do you also like chips?</Expression><QuestionCanFollow>True</QuestionCanFollow></Output></Outputs><IsOutputSequenced /><Do><Expression>$topics = ~(^noun.chips);</Expression></Do></Conditional></Questions></Topic>
+<Children>
+<Item>
+<Object ID="10010" POSGRP="Noun" Name="chocolate"><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" NumberSubstitution.CultureSource="User" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph /></FlowDocument><Text Value="chocolate" Index="0" POSGRP="true" /></Object>
+<IsAttribute />
+<Conjugations>
+<link relationship="Plural">
+<Object ID="10013" POS="Noun" Name="chocolates"><FlowDocument xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph TextAlignment="Left" FontFamily="Segoe UI" FontSize="12" NumberSubstitution.CultureSource="User">Plural of chocolate</Paragraph></FlowDocument><Text Value="chocolates" Index="0" POSGRP="false" /></Object>
+</link>
+</Conjugations>
+</Item>
+<Item>
+<Object ID="9998" POSGRP="Noun" Name="chips"><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" NumberSubstitution.CultureSource="User" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph /></FlowDocument><Text Value="chips" Index="0" POSGRP="true" /></Object>
+<IsAttribute />
+<Conjugations>
+<link relationship="Plural">
+<Object ID="9839" POS="Noun" Name="chips"><FlowDocument xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph TextAlignment="Left" FontFamily="Segoe UI" FontSize="12" NumberSubstitution.CultureSource="User">Plural of chips</Paragraph></FlowDocument><Text Value="chips" Index="1" POSGRP="false" /></Object>
+</link>
+</Conjugations>
+<Topic>
+<Name>chips</Name><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" NumberSubstitution.CultureSource="User" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph /></FlowDocument><Rules><Rule><Name>new rule 1</Name><Patterns><Pattern><Expression>Yes</Expression><DuplicationMode>partial</DuplicationMode></Pattern></Patterns><Conditionals /><Outputs><Output><Expression>Me too. I'd kill for some paprika chips.</Expression><QuestionCanFollow>True</QuestionCanFollow></Output></Outputs><IsOutputSequenced /></Rule><Rule><Name>new rule 1</Name><Patterns><Pattern><Expression>No</Expression><DuplicationMode>partial</DuplicationMode></Pattern></Patterns><Conditionals /><Outputs><Output><Expression>Ok, I see, that's to bad, they are very jummie. Of course, it's healthier without.</Expression><QuestionCanFollow>True</QuestionCanFollow></Output></Outputs><IsOutputSequenced /></Rule></Rules></Topic>
+</Item>
+<Item>
+<Object ID="9173" POSGRP="Noun" Name="bubble gum"><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" NumberSubstitution.CultureSource="User" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph /></FlowDocument><Compound Name="bubble gum" Index="0" POSGRP="true"><Text Value="bubble" /><Text Value="gum" /></Compound></Object>
+<IsAttribute />
+<Conjugations>
+<link relationship="Plural">
+<Object ID="9174" POS="Noun" Name="bubble gums"><FlowDocument xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph TextAlignment="Left" FontFamily="Segoe UI" FontSize="12" NumberSubstitution.CultureSource="User">Plural of bubble gum</Paragraph></FlowDocument><Text Value="bubble gums" Index="0" POSGRP="false" /></Object>
+</link>
+</Conjugations>
+</Item>
+</Children>
+</Item>
+<Item>
+<Object ID="9131" POSGRP="Noun" Name="animal, pet"><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" NumberSubstitution.CultureSource="User" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph /></FlowDocument><Text Value="animal" Index="0" POSGRP="true" /><Text Value="pet" Index="0" POSGRP="false" /></Object>
+<IsAttribute />
+<Conjugations>
+<link relationship="Plural">
+<Object ID="9076" POS="Noun" Name="animals"><FlowDocument xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph TextAlignment="Left" FontFamily="Segoe UI" FontSize="12" NumberSubstitution.CultureSource="User">Plural of animal</Paragraph></FlowDocument><Text Value="animals" Index="0" POSGRP="false" /></Object>
+</link>
+<link relationship="Plural">
+<Object ID="9011" Name="pets">
+<Text Value="pets" Index="0" POSGRP="false" />
+</Object>
+</link>
+</Conjugations>
+<Topic>
+<Name>animal, pet</Name><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" NumberSubstitution.CultureSource="User" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph /></FlowDocument><Rules><Rule><Name>Like</Name><Patterns /><Conditionals /><Outputs><Output><Expression>I also like pets very much.</Expression><QuestionCanFollow>True</QuestionCanFollow></Output></Outputs><IsOutputSequenced /></Rule><Rule><Name>new rule 1</Name><Patterns><Pattern><Expression>Yes</Expression><DuplicationMode>partial</DuplicationMode></Pattern></Patterns><Conditionals /><Outputs><Output><Expression>Huh?</Expression><QuestionCanFollow>True</QuestionCanFollow></Output><Output><Expression>Great, I also have pets.</Expression><QuestionCanFollow>True</QuestionCanFollow></Output></Outputs><IsOutputSequenced /></Rule><Rule><Name>new rule 1</Name><Patterns><Pattern><Expression>no</Expression><DuplicationMode>partial</DuplicationMode></Pattern></Patterns><Conditionals /><Outputs><Output><Expression>Huh?</Expression><QuestionCanFollow>True</QuestionCanFollow></Output><Output><Expression>Too bad.</Expression><QuestionCanFollow>True</QuestionCanFollow></Output></Outputs><IsOutputSequenced /></Rule></Rules><Questions><Conditional><Condition /><Outputs><Output><Expression>Do you have any pets?</Expression><QuestionCanFollow>True</QuestionCanFollow></Output></Outputs><IsOutputSequenced /></Conditional></Questions></Topic>
+<Children>
+<Item>
+<Object ID="13183" POSGRP="Noun" Name="dog"><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" NumberSubstitution.CultureSource="User" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph /></FlowDocument><Text Value="dog" Index="0" POSGRP="true" /></Object>
+<IsAttribute />
+<Conjugations>
+<link relationship="Plural">
+<Object ID="13186" POS="Noun" Name="dogs"><FlowDocument xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph TextAlignment="Left" FontFamily="Segoe UI" FontSize="12" NumberSubstitution.CultureSource="User">Plural of dog</Paragraph></FlowDocument><Text Value="dogs" Index="0" POSGRP="false" /></Object>
+</link>
+</Conjugations>
+</Item>
+<Item>
+<Object ID="13188" POSGRP="Noun" Name="cat"><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" NumberSubstitution.CultureSource="User" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph /></FlowDocument><Text Value="cat" Index="0" POSGRP="true" /></Object>
+<IsAttribute />
+<Conjugations>
+<link relationship="Plural">
+<Object ID="13191" POS="Noun" Name="cats"><FlowDocument xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph TextAlignment="Left" FontFamily="Segoe UI" FontSize="12" NumberSubstitution.CultureSource="User">Plural of cat</Paragraph></FlowDocument><Text Value="cats" Index="0" POSGRP="false" /></Object>
+</link>
+</Conjugations>
+</Item>
+</Children>
+</Item>
+</Relationship>
+</thesaurus>

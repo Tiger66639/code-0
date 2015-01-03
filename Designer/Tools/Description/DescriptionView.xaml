@@ -1,0 +1,140 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.DescriptionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+             xmlns:cf="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+             cf:Help.Topic="descriptioneditor.html"
+             x:Name="This">
+    <DockPanel>
+        <Expander Style="{StaticResource SimpleExpandDownStyle}"
+                  IsExpanded="{Binding Source={x:Static self:Properties.Settings.Default}, Path=ToolbarExpandedDescriptionView, Mode=TwoWay}"
+                  Focusable="False"
+                  DockPanel.Dock="Top">
+            <ToolBar>
+                <ComboBox x:Name="CmbFont"
+                          Style="{StaticResource TlbComboxStyle}"
+                          Focusable="False"
+                          MinWidth="140"
+                          VirtualizingStackPanel.IsVirtualizing="True"
+                          VirtualizingStackPanel.VirtualizationMode="Recycling"
+                          ItemsSource="{Binding ElementName=This, Path=AvailableFonts, IsAsync=True}"
+                          SelectionChanged="CmbFont_SelectionChanged"
+                          SelectedIndex="0">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" FontFamily="{Binding}" FontSize="15" Height="20" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <ComboBox ItemsSource="{StaticResource FontSizeValues}"
+                          Style="{StaticResource TlbComboxStyle}"
+                          x:Name="CmbFontSize"
+                          Focusable="False"
+                          MinWidth="40"
+                          TextInput="CmbFontSize_TextInput"
+                          SelectionChanged="CmbFontSize_SelectionChanged" />
+                <Separator />
+                <ToggleButton ToolTip="Toggle bold for selected text"
+                              x:Name="BtnBold"
+                              Style="{StaticResource TlbToggleButtonsStyle}"
+                              Command="EditingCommands.ToggleBold"
+                              CommandTarget="{Binding ElementName=DescriptionEditor}">
+                    <Image Source="/Images/TextEditing/bold.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+                <ToggleButton ToolTip="Toggle italic for selected text"
+                              x:Name="BtnItalic"
+                              Style="{StaticResource TlbToggleButtonsStyle}"
+                              Command="EditingCommands.ToggleItalic"
+                              CommandTarget="{Binding ElementName=DescriptionEditor}">
+                    <Image Source="/Images/TextEditing/Italic.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+                <ToggleButton ToolTip="Toggle underline for selected text"
+                              x:Name="BtnUnderline"
+                              Style="{StaticResource TlbToggleButtonsStyle}"
+                              Command="EditingCommands.ToggleUnderline"
+                              CommandTarget="{Binding ElementName=DescriptionEditor}">
+                    <Image Source="/Images/TextEditing/Underline.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+                <Separator />
+                <RadioButton GroupName="Align"
+                             ToolTip="Left align the selected text"
+                             x:Name="BtnAlignLeft"
+                             Style="{StaticResource TlbToggleButtonsStyle}"
+                             Command="EditingCommands.AlignLeft"
+                             CommandTarget="{Binding ElementName=DescriptionEditor}">
+                    <Image Source="/Images/TextEditing/text_left.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </RadioButton>
+                <RadioButton GroupName="Align"
+                             ToolTip="Center the selected text"
+                             x:Name="BtnAlignCenter"
+                             Style="{StaticResource TlbToggleButtonsStyle}"
+                             Command="EditingCommands.AlignCenter"
+                             CommandTarget="{Binding ElementName=DescriptionEditor}">
+                    <Image Source="/Images/TextEditing/text_center.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </RadioButton>
+                <RadioButton GroupName="Align"
+                             ToolTip="Justify the selected text"
+                             x:Name="BtnAlignJustify"
+                             Style="{StaticResource TlbToggleButtonsStyle}"
+                             Command="EditingCommands.AlignJustify"
+                             CommandTarget="{Binding ElementName=DescriptionEditor}">
+                    <Image Source="/Images/TextEditing/text_block.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </RadioButton>
+                <RadioButton GroupName="Align"
+                             ToolTip="Right align the selected text"
+                             x:Name="BtnAlignRight"
+                             Style="{StaticResource TlbToggleButtonsStyle}"
+                             Command="EditingCommands.AlignRight"
+                             CommandTarget="{Binding ElementName=DescriptionEditor}">
+                    <Image Source="/Images/TextEditing/text_right.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </RadioButton>
+                <Separator />
+                <ToggleButton ToolTip="Toggle bullets for selected text"
+                              x:Name="BtnBullets"
+                              Style="{StaticResource TlbToggleButtonsStyle}"
+                              Command="EditingCommands.ToggleBullets"
+                              CommandTarget="{Binding ElementName=DescriptionEditor}">
+                    <Image Source="/Images/TextEditing/List_Bullets.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+                <ToggleButton ToolTip="Toggle numbering for selected text"
+                              x:Name="BtnNumbers"
+                              Style="{StaticResource TlbToggleButtonsStyle}"
+                              Command="EditingCommands.ToggleNumbering"
+                              CommandTarget="{Binding ElementName=DescriptionEditor}">
+                    <Image Source="/Images/TextEditing/List_Numbered.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+                <Separator />
+                <ToggleButton ToolTip="switch spell checking on/off."
+                              x:Name="ToggleSpelling"
+                              Style="{StaticResource TlbToggleButtonsStyle}">
+                    <Image Source="/Images/TextEditing/CheckSpelling.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+            </ToolBar>
+        </Expander>
+        <RichTextBox x:Name="DescriptionEditor"
+                     AcceptsTab="True"
+                     BorderThickness="0"
+                     IsEnabled="False"
+                     VerticalScrollBarVisibility="Auto"
+                     HorizontalScrollBarVisibility="Auto"
+                     SpellCheck.IsEnabled="{Binding ElementName=ToggleSpelling, Path=IsChecked}"
+                     TextChanged="DescriptionEditor_TextChanged"
+                     SelectionChanged="DescriptionEditor_SelectionChanged"
+                     PreviewLostKeyboardFocus="DescriptionEditor_PreviewLostKeyboardFocus" />
+    </DockPanel>
+</UserControl>

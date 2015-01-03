@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.MindMapNoteView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.ContentTemplate>
+        <DataTemplate>
+            <!--Needs a background, otherwise can't drag-->
+            <Expander Style="{StaticResource NoteExpander}"
+                      Background="LightYellow"
+                      BorderThickness="1"
+                      IsExpanded="True"
+                      BorderBrush="Tan"
+                      Width="{Binding Path=Width}"
+                      Height="{Binding Path=Height}">
+                <Expander.Header>
+                    <TextBox Text="{Binding Path=Title}"
+                             Background="Transparent"
+                             BorderBrush="Transparent" />
+                </Expander.Header>
+                <RichTextBox Loaded="NoteEditorLoaded"
+                             LostFocus="NoteEditor_LostFocus"
+                             Background="Yellow" />
+            </Expander>
+        </DataTemplate>
+    </UserControl.ContentTemplate>
+</UserControl>

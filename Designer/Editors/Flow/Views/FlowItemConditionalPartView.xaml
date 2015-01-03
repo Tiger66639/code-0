@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.FlowItemConditionalPartView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:dd="clr-namespace:DnD"
+             xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:cf="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation">
+    <ItemsControl Style="{StaticResource OverlayItemsControlStyleVertical}"
+                  ItemsSource="{Binding Path=NeuronInfo.Overlays, Mode=OneWay}"
+                  ItemTemplate="{StaticResource FlowItemOverlayTemplate}"
+                  Visibility="{Binding RelativeSource={RelativeSource AncestorType=self:FlowEditorView}, Path=OverlayVisibility}">
+        <ItemsControl.RenderTransform>
+            <TranslateTransform X="-2" Y="-2" />
+        </ItemsControl.RenderTransform>
+    </ItemsControl>
+</UserControl>

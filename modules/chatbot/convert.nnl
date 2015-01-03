@@ -1,0 +1,551 @@
+class Convert
+{
+   using PathCommon;
+   using Common;
+   using assets;
+   
+   /*
+     converts to input from an asset to a child of the argument.
+   input: an asset
+   argument: a thesaurus item, (like adj.possesive).
+   Output: a child of the thesaurus item that maps to the argument (I, you, ...
+    */
+   AssetToThes(var input, var thesValue): var
+   {
+      if (Count(thesValue) > 0)
+      {
+         switch (input)
+         {
+            case Bot:
+               return Filter(ref(filtervar), ref((ContainsChildren(filtervar, Thes.I) && (ContainsChildren(filtervar, Thes.Plural) == false))), thesValue);
+            case GetFirstOut(OutputSin, Thes.You):
+               return Filter(ref(filtervar), ref((ContainsChildren(filtervar, Thes.You) && (ContainsChildren(filtervar, Thes.Plural) == false))), thesValue);
+            default:
+               Warning("Todo: 'ToPerson' of someone other then you or the bot.");
+         }
+         return;                                                                                         //no value found, return an empty value.
+         
+      }
+      else
+         Error("No argument values found for 'ToPerson'");
+   }
+   
+   
+   /*
+     Converts the input into an asset, taking into account for 'I', 'you', 'he/she', 'it', 'plural', 'singular', 'male', 'female'. If the input can't be mapped to 'I', you,... it is interpreted as the name of something and will try to find a focused object that has the specified name.
+   I and you are first inverted, so I is interpreted as the user, while 'you' is interpreted as the bot.
+   Input has to be objects, with at least 1 thesaurus parent to perform the mappings.
+    */ 
+   NeuronCluster ObjectToAsset
+   {
+      Global getmulti(copy) = false;
+      
+      this(var input, var context): var
+      {
+         var exec, callresult, callbackOut;
+         foreach (var callbackin in input)
+         {
+            if (GetClusterMeaning(callbackin) != Statics.Object)
+            {
+               Error("ObjectToAsset can only work on objects. Use thesaurus variables to collect items that need to be resolved. Type found: ", TypeOf(callbackin), ", cluster meaning: ", GetClusterMeaning(callbackin));
+               Continue();
+            }
+            var iPersonMappings = GetChildrenFiltered(callbackin, ref(filtervar), ref(ContainsChildren(Thes.PersonMappings, filtervar)));
+            if (iPersonMappings Contains Thes.I)
+            {
+               if (iPersonMappings !Contains Thes.Plural)
+                  Add(callbackout, GetFirstOut(OutputSin, Thes.You));
+               else
+                  add(callbackout, GetFirstOut(OutputSin, Thes.You), Bot);
+            }
+            else if(iPersonMappings Contains Thes.You)
+               Add(callbackout, Bot);
+            else if(iPersonMappings Contains Thes.Other)
+            {
+               if (iPersonMappings Contains Thes.male)
+                  add(callbackOut, waitfor InternalObjectToAsset(OutputSin, PatternMatcher.SplitResults, 'gender', (iPersonMappings Contains Thes.Plural), 'male', context));
+               else
+                  add(callbackOut, InternalObjectToAsset(OutputSin, PatternMatcher.SplitResults, 'gender', (iPersonMappings Contains Thes.Plural), 'female', context));
+            }
+            else if(iPersonMappings Contains Thes.It)
+               add(callbackOut, waitfor InternalObjectToAsset(OutputSin, PatternMatcher.SplitResults, 'genus', (iPersonMappings Contains Thes.Plural), (), context));
+            else
+               add(callbackOut, waitfor InternalObjectToAsset(OutputSin, PatternMatcher.SplitResults, 'name', (), (), context));
+         }
+         return callbackOut;
+      }
+      
+      
+         
+      InternalObjectToAsset(var outputsin, var splitResults, var attrib, bool asPlural, var value, var context): var 
+      {
+         OutputSin = outputsin;
+         PatternMatcher.SplitResults = splitResults;
+         LoadPatternResults();
+         var iContext = Union(Reverse(context), Reverse(GetChildren(GetFirstOut(Bot, Statics.context))));   //we reverse the children so that we can do an easy weighted split with increasing values (so 0 remains lowest)    
+         if (Count(iContext) > 0)
+         {
+            bool iDoNot = Count(value) == 2;
+            getmulti = asPlural;
+            SplitWeighted(ObjectToAssetFinished, 1, ref(iContext), iContext);
+            var iParsedResult = GetFirstOut(iContext, Statics.ParsedPatternOutput);
+            if (Count(iParsedResult) > 0)
+            {
+               PatternMatcher.RenderPatternItems(iParsedResult);
+               SplitWeighted(ObjectToAssetFinished, (1 / Count(PatternMatcher.RenderPatternItems.ContentToRender)), ref(iContext), PatternMatcher.RenderPatternItems.ContentToRender);
+            }
+            var found;
+            if (GetClusterMeaning(iContext) == Assets.Asset)
+            {
+               var isacluster, related, iCurLocInThes;
+               if (iDoNot)
+               {
+                  found = GetChildrenFiltered(iContext, ref(filtervar), ref((((GetFirstOut(filtervar, Statics.Attribute) == attrib) || ContainsChildren(attrib, GetFirstOut(filtervar, Statics.Attribute))) || ContainsChildren(GetFirstOut(filtervar, Statics.Attribute), attrib))));
+                  while (Count(found) == 0)
+                  {
+                     iCurLocInThes = attrib;
+                     if (GetClusterMeaning(iCurLocInThes) != Statics.Object)
+                     {
+                        iCurLocInThes = GetClustersWithMeaning(iCurLocInThes, Statics.Object);
+                        if (Count(iCurLocInThes) == 0)
+                           Break();
+                        else
+                           Split(ObjectToAssetFinished, ref(iCurLocInThes), iCurLocInThes);
+                     }
+                     related = GetInFiltered(iCurLocInThes, ref(filtermeaning), ref(filterfrom), ref((GetChildren(Thes.AllConjugations) Contains filtermeaning)));
+                     Split(ObjectToAssetFinished, ref(iCurLocInThes), iCurLocInThes, related);
+                     isacluster = GetFirstOut(iCurLocInThes, Thes.IsA);
+                     if (Count(isacluster) == 0)
+                        Break();
+                     iCurLocInThes = GetChildrenFiltered(isacluster, ref(filtervar), ref(LinkExists(filtervar, filtervar, Statics.Attribute)));
+                     if (Count(iCurLocInThes) == 0)
+                        Break();
+                     else
+                        Split(ObjectToAssetFinished, ref(iCurLocInThes), iCurLocInThes);
+                     attrib = iCurLocInThes;
+                     found = GetChildrenFiltered(iContext, ref(filtervar), ref((((GetFirstOut(filtervar, Statics.Attribute) == attrib) || ContainsChildren(attrib, GetFirstOut(filtervar, Statics.Attribute))) || ContainsChildren(GetFirstOut(filtervar, Statics.Attribute), attrib))));
+                  }   //if we can't find an asset item of the attribute, check if there is an asset item for thesaurus children of attribute, that can still be used as attributes.    
+                  if (Count(found) == 0)
+                     AddSplitResult(iContext);
+               }
+               else
+               {
+                  found = GetChildrenFiltered(iContext, ref(filtervar), ref(((((GetFirstOut(filtervar, Statics.Attribute) == attrib) || ContainsChildren(attrib, GetFirstOut(filtervar, Statics.Attribute))) || ContainsChildren(GetFirstOut(filtervar, Statics.Attribute), attrib)) && (((GetFirstOut(filtervar, Statics.Value) == value) || ContainsChildren(value, GetFirstOut(filtervar, Statics.Value))) || ContainsChildren(GetFirstOut(filtervar, Statics.Value), value)))));
+                  while (Count(found) == 0)
+                  {
+                     iCurLocInThes = attrib;
+                     if (GetClusterMeaning(iCurLocInThes) != Statics.Object)
+                     {
+                        iCurLocInThes = GetClustersWithMeaning(iCurLocInThes, Statics.Object);
+                        if (Count(iCurLocInThes) == 0)
+                           Break();
+                        else
+                           Split(ObjectToAssetFinished, ref(iCurLocInThes), iCurLocInThes);
+                     }
+                     related = GetInFiltered(iCurLocInThes, ref(filtermeaning), ref(filterfrom), ref((GetChildren(Thes.AllConjugations) Contains filtermeaning)));
+                     Split(ObjectToAssetFinished, ref(iCurLocInThes), iCurLocInThes, related);
+                     isacluster = GetFirstOut(iCurLocInThes, Thes.IsA);
+                     if (Count(isacluster) == 0)
+                        Break();
+                     iCurLocInThes = GetChildrenFiltered(isacluster, ref(filtervar), ref(LinkExists(filtervar, filtervar, Statics.Attribute)));
+                     if (Count(iCurLocInThes) == 0)
+                        Break();
+                     else
+                        Split(ObjectToAssetFinished, ref(iCurLocInThes), iCurLocInThes);
+                     attrib = iCurLocInThes;
+                     found = GetChildrenFiltered(iContext, ref(filtervar), ref(((((GetFirstOut(filtervar, Statics.Attribute) == attrib) || ContainsChildren(attrib, GetFirstOut(filtervar, Statics.Attribute))) || ContainsChildren(GetFirstOut(filtervar, Statics.Attribute), attrib)) && (((GetFirstOut(filtervar, Statics.Value) == value) || ContainsChildren(value, GetFirstOut(filtervar, Statics.Value))) || ContainsChildren(GetFirstOut(filtervar, Statics.Value), value)))));
+                  }
+                  if (Count(found) > 0)
+                     AddSplitResult(iContext);
+               }
+            }
+         }
+      }
+      
+      ObjectToAssetFinished(): var
+      {
+         if (getmulti)
+            return GetSplitResults();
+         else
+            return GetMaxWeight();
+      }
+   }
+
+   /*
+     Tries to conjugatte the verb to the form that corresponds with the argument. The argument should be 1 item, usually  '#bot.MextMem.who.val'. No attempt is made to try to convert objects to conjugation mappings, all objects are treated as 'it'.
+    */
+   NeuronCluster ConjugateVerb
+   {
+      this(var toConj, var time): var
+      {
+         var iConjugation, iRes;
+         if (Count(time) == 1)
+         {
+            switch (time)
+            {
+               case Bot: iConjugation = Thes.firstpersonpresent;
+               case GetFirstOut(OutputSin, Thes.You): iConjugation = Thes.secondpersonpresent;
+               default:
+               {
+                  switch (GetClusterMeaning(time))
+                  {
+                     case Statics.AndAnd:
+                     {
+                        if (ContainsChildren(time, Bot))
+                           iConjugation = Thes.firstpersonpresent;
+                        else if(ContainsChildren(time, GetFirstOut(OutputSin, Thes.You)))
+                           iConjugation = Thes.secondpersonpresent;
+                        else
+                           iConjugation = Thes.pluralthirdpresent;
+                     }
+                     case Statics.OrOr:
+                     {
+                        if (ContainsChildren(time, Bot))
+                           iConjugation = Thes.firstpersonpresent;
+                        else if(ContainsChildren(time, GetFirstOut(OutputSin, Thes.You)))
+                           iConjugation = Thes.secondpersonpresent;
+                        else
+                           iConjugation = Thes.pluralthirdpresent;
+                     }
+                     default: iConjugation = Thes.thirdpersonpresent;
+                  }
+               }
+            }
+            iRes = GetConjugation(toConj, iConjugation);
+         }
+         if (Count(iRes) == 0) iRes = toConj;
+         return iRes;
+      }
+     
+      Inv(var toConj, var time): var
+      {
+         var iConjugation, iRes;
+         if (Count(time) == 1)
+         {
+            switch (time)
+            {
+               case Bot:
+                  iConjugation = Thes.secondpersonpresent;
+               case GetFirstOut(OutputSin, Thes.You):
+                  iConjugation = Thes.firstpersonpresent;
+               default:
+               {
+                  switch (GetClusterMeaning(time))
+                  {
+                     case Statics.AndAnd:
+                     {
+                        if (ContainsChildren(time, Bot))
+                           iConjugation = Thes.secondpersonpresent;
+                        else if(ContainsChildren(time, GetFirstOut(OutputSin, Thes.You)))
+                           iConjugation = Thes.firstpersonpresent;
+                        else
+                           iConjugation = Thes.pluralthirdpresent;
+                     }
+                     case Statics.OrOr:
+                     {
+                        if (ContainsChildren(time, Bot))
+                           iConjugation = Thes.secondpersonpresent;
+                        else if(ContainsChildren(time, GetFirstOut(OutputSin, Thes.You)))
+                           iConjugation = Thes.firstpersonpresent;
+                        else
+                           iConjugation = Thes.pluralthirdpresent;
+                     }
+                     default:
+                        iConjugation = Thes.thirdpersonpresent;
+                  }
+               }
+            }
+            iRes = GetConjugation(toConj, iConjugation);
+         }
+         if (Count(iRes) == 0) iRes = toConj;
+         return iRes;
+      }
+     
+     
+     
+      //Conjugates the specified verb using the specified conjugation.
+      GetConjugation(var toConj, var conjugation): var
+      {
+         var iNotConjugated, iRes;
+         if (GetClusterMeaning(toConj) == Statics.PosGroup)
+            toConj = GetChildrenFiltered(toConj, ref(filtervar), ref((GetClusterMeaning(filtervar) == Statics.Object)));
+         else if(GetClusterMeaning(toConj) != Statics.Object)
+            toConj = GetClustersWithMeaning(toConj, Statics.Object);
+         foreach (toConj in toConj)
+         {
+            if (ContainsLinksIn(toConj, conjugation))
+               return toConj;
+            else
+            {
+               iRes = GetFirstOut(toConj, conjugation);
+               if (Count(iRes) > 0) Break();
+               else
+               {
+                  iNotConjugated = GetInFiltered(toConj, ref(filtermeaning), ref(filterfrom), ref((GetChildren(Thes.AllConjugations) Contains filtermeaning)));
+                  if (Count(iNotConjugated) > 0)
+                  {
+                     iRes = GetFirstOut(iNotConjugated, conjugation);
+                     if (Count(iRes) > 0) Break();
+                  }
+               }
+            }
+         }
+         return iRes;
+      }
+      
+   }
+
+   //inverts I and You 
+   InvertPerson(var toInvert): var
+   {
+      var isacluster, iFound, iRes;
+      var iMappings = GetChildren(Thes.PersonMappings);                             //so we only ahve to do this 1 time when the word is not an object yet. 
+      foreach (callbackin in toInvert)
+      {
+         if (GetClusterMeaning(callbackin) != Statics.Object)                 //if it's not an object, find an object for the neuron that contains a person-mapping. 
+         {
+            iFound = GetClustersFiltered(callbackIn, ref(filterVar), ref(ContainsChildren(filterVar, iMappings) ));
+            if(count(iFound) == 0)
+            {
+               add(iRes, callbackIn);
+               continue();
+            }
+         }
+         var iPersonMappings = GetChildrenFiltered(callbackin, ref(filtervar), ref(ContainsChildren(Thes.PersonMappings, filtervar)));
+         if (Count(iPersonMappings) > 0)
+         {
+            var iInvertedPersonMap;
+            foreach (iPersonMappings in iPersonMappings)
+               Add(iInvertedPersonMap, GetFirstOut(iPersonMappings, Thes.Inverted), GetFirstIn(iPersonMappings, Thes.Inverted));
+            iPersonMappings = iInvertedPersonMap;
+            if (Count(iPersonMappings) > 0)
+            {
+               isacluster = GetFirst(GetClustersWithMeaning(callbackin, Thes.isa));
+               iPersonMappings = GetCommonParentsWithMeaning(Statics.Object, iPersonMappings);
+               iFound = GetFirst(Filter(ref(filtervar), ref(IsClusteredByAny(filtervar, isacluster)), iPersonMappings));
+               if(count(iFound) > 0)
+                  Add(iRes, iFound);
+            }
+            else
+               Add(iRes, callbackin);
+         }
+         else
+            Add(iRes, callbackin);
+      }
+      return iRes;
+   }
+   
+   //switches I and he/she
+   InvertPerson2(var toInvert): var
+   {
+      var isacluster, iFound, iRes;
+      var iMappings = GetChildren(Thes.PersonMappings);                             //so we only ahve to do this 1 time when the word is not an object yet.
+      foreach (callbackin in toInvert)
+      {
+         if (GetClusterMeaning(callbackin) != Statics.Object)                 //if it's not an object, find an object for the neuron that contains a person-mapping.
+         {
+            iFound = GetClustersFiltered(callbackIn, ref(filterVar), ref(ContainsChildren(filterVar, iMappings) ));
+            if(count(iFound) == 0)
+            {
+               add(iRes, callbackIn);
+               continue();
+            }
+         }
+         var iPersonMappings = GetChildrenFiltered(callbackin, ref(filtervar), ref(ContainsChildren(Thes.PersonMappings, filtervar)));
+         if (Count(iPersonMappings) > 0)
+         {
+            if(iPersonMappings contains Thes.I)
+            {
+               Replace(iPersonMappings, Thes.I, Thes.Other);
+               var iGender = #user.Gender;
+               if(iPersonMappings !contains Thes.Plural)
+               {
+                  if(ContainsChildren(iGender, Thes.Male, 'male', 'man') == true || iGender == 'male' || iGender == 'man')
+                     Add(iPersonMappings, Thes.male);
+                  else if(ContainsChildren(iGender, Thes.Female, 'female', 'woman') == true || iGender == 'female' || iGender == 'woman')
+                     Add(iPersonMappings, Thes.Female);
+               }
+               if (Count(iPersonMappings) > 0)
+               {
+                  isacluster = GetFirst(GetClustersWithMeaning(callbackin, Thes.isa));
+                  iPersonMappings = GetCommonParentsWithMeaning(Statics.Object, iPersonMappings);
+                  iFound = GetFirst(Filter(ref(filtervar), ref(IsClusteredByAny(filtervar, isacluster)), iPersonMappings));
+                  if(count(iFound) > 0)
+                     Add(iRes, iFound);
+               }
+               else
+                  Add(iRes, callbackin);
+            }
+            else
+               Add(iRes, callbackIn);
+         }
+         else
+            Add(iRes, callbackin);
+      }
+      return iRes;
+   }
+   
+   //Tries to convert the input to a number. The input should be an object or something that can be mapped to an object. The first number found in the objects, is returned.
+   ToNumber(var callbackin): var
+   {
+      var callbackout;
+      var iPrevVal, found;
+      foreach (callbackin in callbackin)
+      {
+         if (GetClusterMeaning(callbackin) == Statics.PosGroup)
+         {
+            found = GetFirst(GetChildrenFiltered(callbackin, ref(filtervar), ref(((GetClusterMeaning(filtervar) == Statics.Object) && (GetChildrenOfType(filtervar, IntNeuron) > 0)))));
+            if (Count(found) == 0)
+            {
+               found = GetFirst(GetChildrenFiltered(callbackin, ref(filtervar), ref(ContainsLinksIn(filtervar, Thes.Plural))));
+               if (Count(found) > 0)
+               {
+                  callbackin = GetFirstIn(found, Thes.Plural);
+                  callbackin = GetClustersWithMeaning(callbackin, Statics.Object);
+               }
+               else
+                  callbackin = found;
+            }
+            else
+               callbackin = found;
+         }
+         else if((Union(DoubleNeuron, IntNeuron) !Contains TypeOf(callbackin)) && (GetClusterMeaning(callbackin) != Statics.Object))
+            callbackin = GetFirst(GetClustersFiltered(callbackin, ref(filtervar), ref(((GetClusterMeaning(filtervar) == Statics.Object) && (GetChildrenOfType(filtervar, IntNeuron) > 0)))));
+         if (Union(DoubleNeuron, IntNeuron) !Contains TypeOf(callbackin))
+         {
+            found = GetChildrenOfType(callbackin, IntNeuron);
+            if (Count(found) == 0)
+            {
+               found = GetChildrenOfType(callbackin, DoubleNeuron);
+               if (Count(found) == 0)
+               {
+                  Error("Failed to convert '", callbackin, "' to a number");
+                  Break();
+               }
+               else
+                  callbackin = found;
+            }
+            else
+               callbackin = found;
+         }
+         if (Count(iPrevVal) == 0)
+            iPrevVal = callbackin;
+         else if(iPrevVal > callbackin)
+         {
+            if(count(callbackout) == 0)
+               callbackout = iPrevVal;
+            else
+               callbackout += iPrevVal;
+            iPrevVal = callbackin;
+         }
+         else
+         {
+            if(count(callbackout) == 0)
+               callbackout = iPrevVal * callbackin;
+            else
+               callbackout += (iPrevVal * callbackin);
+            Clear(ref(iPrevVal));
+         }
+      }
+      if (Count(iPrevVal) > 0)
+      {
+         if(count(callbackout) == 0)
+            callbackout = iPrevVal;
+         else
+            callbackout += iPrevVal;
+      }
+      return callbackOut;
+   }
+   
+   /*  input: a cluster containing a list of numbers and possibly instructions.
+   output: the result of the value and instructions on the stack.
+   calculation: get the last element on the stack, while this is a multiply-leveled instruction ( * / % ), get the next 2 items from the stack and calculate the result (which is returned). All items are removed from the list. */ 
+   solvemultiplystack(var callbackIn): var
+   {
+      var iArg, iInstruction;
+      var callbackout = GetChildAt(callbackin, 0);
+      if (ChildCount(callbackin) >= 3)
+         iInstruction = GetChildAt(callbackin, 2);
+      RemoveChildAt(callbackin, 0);
+      while (Multiply, Modulus, Divide Contains iInstruction)
+      {
+         iArg = GetChildAt(callbackin, 0);
+         RemoveChildAt(callbackin, 0);
+         RemoveChildAt(callbackin, 0);
+         callbackout = PerformResult(iInstruction, callbackout, iArg);
+         if (ChildCount(callbackin) >= 1)
+            iInstruction = GetChildAt(callbackin, 1);
+         else
+            Clear(ref(iInstruction));
+      }
+      return callbackout;
+   }
+   /* input: a cluster containing a list of numbers and possibly instructions.
+   output: the result of the value and instructions on the stack.
+   calculation: get the last element on the stack, while this is an add-leveled iInstruction (+-), get the next 2 items from the stack and calculate the result (which is returned). All items are removed from the list. */ 
+   solveaddstack(var callbackIn): var
+   {
+      var iArg, iInstruction;
+      var callbackout = GetChildAt(callbackin, 0);
+      if (ChildCount(callbackin) >= 3)
+         iInstruction = GetChildAt(callbackin, 2);
+      RemoveChildAt(callbackin, 0);
+      while (Addition, Minus Contains iInstruction)
+      {
+         iArg = GetChildAt(callbackin, 0);
+         RemoveChildAt(callbackin, 0);
+         RemoveChildAt(callbackin, 0);
+         callbackout = PerformResult(iInstruction, callbackout, iArg);
+         if (ChildCount(callbackin) >= 1)
+            iInstruction = GetChildAt(callbackin, 1);
+         else
+            Clear(ref(iInstruction));
+      }
+      return callbackOut;
+   }
+
+   //converts the input variables to a time span.
+   ToTimespan(var callbackin): var
+   {
+      var iRes = MakeCluster(TimeSpan, callbackin);
+      switch (Count(callbackin))
+      {
+         case 3:
+            AddChild(iRes, New(IntNeuron));
+         case 2:
+            AddChild(iRes, New(IntNeuron), New(IntNeuron));
+         case 1:
+            AddChild(iRes, New(IntNeuron), New(IntNeuron), New(IntNeuron));
+         default:
+            Error("Invalid nr of arguments for ToTimeSpan conversion: ", callbackargs);
+      }
+      return iRes;
+   }
+
+   
+   //converts the input (should be a single value) to 0, 1 or more objects
+   ToObject(var toConvert): var
+   {
+      var iRes;
+      if (GetClusterMeaning(toConvert) == Statics.PosGroup)
+      {
+         var found = GetChildrenFiltered(toConvert, ref(filtervar), ref((GetClusterMeaning(filtervar) == Statics.Object)));
+         if (Count(found) == 0)
+         {
+            found = GetFirst(GetChildrenFiltered(toConvert, ref(filtervar), ref(ContainsLinksIn(filtervar, GetChildren(Thes.AllConjugations)))));
+            if (Count(found) > 0)
+            {
+               iRes = GetFirstIn(found, Thes.plural);
+               iRes = GetClustersWithMeaning(toConvert, Statics.Object);
+            }
+            else
+               iRes = found;
+         }
+         else
+            iRes = found;
+      }
+      else if(GetClusterMeaning(toConvert) != Statics.Object)
+         return GetClustersWithMeaning(toConvert, Statics.Object);
+   }
+   
+}

@@ -1,0 +1,33 @@
+﻿<Window x:Class="JaStDev.HAB.Designer.SelectInputDlg"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="ToolWindow"
+        SizeToContent="WidthAndHeight"
+        Title="Select input"
+        ShowInTaskbar="False">
+    <Grid Margin="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <TextBlock>Please make a selection:</TextBlock>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                      Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto"
+                      Margin="0,8,0,8">
+            <ItemsControl Name="ListItems">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Content="{Binding Path=Value}"
+                                Tag="{Binding Path=Index}"
+                                Margin="0,4,0,4"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Click="Button_Click" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</Window>

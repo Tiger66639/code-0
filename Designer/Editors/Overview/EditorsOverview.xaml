@@ -1,0 +1,922 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.EditorsOverview"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+             xmlns:cf="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+             xmlns:ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls"
+             xmlns:dd="clr-namespace:DnD"
+             xmlns:eff="clr-namespace:LearnWPF.Effects;assembly=LearnWPF.Effects"
+             x:Name="this"
+             cf:Help.Topic="projectoverview.html">
+    <UserControl.CommandBindings>
+        <CommandBinding Command="self:App.RenameCmd" CanExecute="Rename_CanExecute" Executed="Rename_Executed" />
+        <CommandBinding Command="Delete" CanExecute="Rename_CanExecute" Executed="Delete_Executed" />
+        <CommandBinding Command="self:App.DeleteSpecialCmd" CanExecute="Rename_CanExecute"
+                        Executed="DeleteSpecial_Executed" />
+        <CommandBinding Command="self:App.RemoveCmd" CanExecute="Rename_CanExecute" Executed="Remove_Executed" />
+        <CommandBinding Command="Find" Executed="Find_Executed" />
+        <CommandBinding Command="self:App.FindNextCmd" Executed="FindNextCmd_Executed"
+                        CanExecute="FindNextCmd_CanExecute" />
+        <CommandBinding Command="self:App.UnloadTopicsCmd" Executed="UnloadTopicsCmd_Executed" />
+        <CommandBinding Command="self:App.ReplaceTopicCmd" CanExecute="ReplaceTopic_CanExecute"
+                        Executed="ReplaceTopic_Executed" />
+    </UserControl.CommandBindings>
+    <UserControl.InputBindings>
+        <KeyBinding Command="self:App.RenameCmd" Key="F2" />
+        <KeyBinding Command="Delete" Key="Del" />
+        <KeyBinding Command="Find" Key="F" Modifiers="Ctrl" />
+        <KeyBinding Key="F3" Command="self:App.FindNextCmd" />
+    </UserControl.InputBindings>
+    <UserControl.Resources>
+
+
+        <!--<self:EditorsOverviewDropAdvisor x:Key="EditorsDropAdvisor"/>-->
+        <self:EditorItemDropAdvisor x:Key="EditorItemDropAdvisor" />
+        <self:EditorItemDropAdvisor x:Key="EditorItemDropAdvisorForIcon"
+                                    TryAddAsChild="True" />
+        <self:EditorItemDragAdvisor x:Key="EditorItemDragAdvisor" />
+        <self:EditorRootDropAdvisor x:Key="EditorRootDropAdvisor" />
+
+        <!--For normal editors-->
+        <ContextMenu x:Key="MainContextMenu">
+
+            <MenuItem Header="Open" Click="MnuOpen_Click" />
+            <MenuItem Header="Rename"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                      Command="self:App.RenameCmd" />
+            <Separator />
+            <MenuItem Header="Remove"
+                      ToolTip="Remove the editor from the project but leave all the neurons as they are."
+                      Command="self:App.RemoveCmd"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}" />
+            <MenuItem Header="Delete"
+                      ToolTip="Delete this editor and all the items that reference the editor."
+                      Command="Delete"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+            <MenuItem Header="Delete special"
+                      ToolTip="Use a dialog box to specify how root and related neurons should be removed by the editor."
+                      Command="self:App.DeleteSpecialCmd"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}" />
+            <Separator />
+            <MenuItem Header="Import">
+                <MenuItem Header="Topics" Command="self:App.ImportTopicCmd"
+                          CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                          ToolTip="Import one or more topics." />
+                <MenuItem Header="Queries" Command="self:App.ImportQueryCmd"
+                          CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                          ToolTip="Import one or more queries." />
+                <MenuItem Header="Assets" Command="self:App.ImportAssetCmd"
+                          CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                          ToolTip="Import one or more assets." />
+                <MenuItem Header="Module" Command="self:App.ImportModuleCmd"
+                          CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                          ToolTip="Import one or more code modules." />
+                <MenuItem Header="Global patterns" Command="self:App.ImportGlobalPatternsCmd"
+                          CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                          ToolTip="Import the global patterns" />
+            </MenuItem>
+            <MenuItem Header="Export"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}"
+                      ToolTip="Export this item"
+                      Command="self:GlobalCommands.ExportCmd" />
+            <MenuItem Header="Replace"
+                      ToolTip="Replace this item with a newer version."
+                      Command="self:App.ReplaceTopicCmd"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}" />
+        </ContextMenu>
+
+        <!--for topics-->
+        <ContextMenu x:Key="TopicContextMenu">
+
+            <MenuItem Header="Open" Click="MnuOpen_Click" />
+            <MenuItem Header="Rename"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                      Command="self:App.RenameCmd" />
+            <Separator />
+            <MenuItem Header="Remove"
+                      ToolTip="Remove the editor from the project but leave all the neurons as they are."
+                      Command="self:App.RemoveCmd"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}" />
+            <MenuItem Header="Delete"
+                      ToolTip="Delete this editor and all the items that reference the editor."
+                      Command="Delete"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+            <MenuItem Header="Delete special"
+                      ToolTip="Use a dialog box to specify how root and related neurons should be removed by the editor."
+                      Command="self:App.DeleteSpecialCmd"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}" />
+            <Separator />
+            <MenuItem Header="Import">
+                <MenuItem Header="Topics" Command="self:App.ImportTopicCmd"
+                          CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                          ToolTip="Import one or more topics." />
+                <MenuItem Header="Queries" Command="self:App.ImportQueryCmd"
+                          CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                          ToolTip="Import one or more queries." />
+                <MenuItem Header="Assets" Command="self:App.ImportAssetCmd"
+                          CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                          ToolTip="Import one or more assets." />
+                <MenuItem Header="Module" Command="self:App.ImportModuleCmd"
+                          CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                          ToolTip="Import one or more code modules." />
+                <MenuItem Header="Global patterns" Command="self:App.ImportGlobalPatternsCmd"
+                          CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                          ToolTip="Import the global patterns" />
+            </MenuItem>
+            <MenuItem Header="Export"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}"
+                      ToolTip="Export this item"
+                      Command="self:GlobalCommands.ExportCmd" />
+            <MenuItem Header="Replace"
+                      ToolTip="Replace this item with a newer version."
+                      Command="self:App.ReplaceTopicCmd"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}" />
+            <Separator />
+            <MenuItem Header="Is local"
+                      IsCheckable="True"
+                      IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.IsLocal}"
+                      ToolTip="When checked, all patterns will be local to the topic and can only be found when parsing specifically for the topic (requires custom code)." />
+            <MenuItem Header="Is Loaded"
+                      IsCheckable="True"
+                      IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.IsParsed}"
+                      ToolTip="Unload all the input patterns for easy management of the topics. To reload all topics at once,  use 'Tools/Rebuild Patterns'" />
+
+        </ContextMenu>
+
+
+        <!--For folders-->
+        <ContextMenu x:Key="FolderContextMenu">
+
+            <MenuItem Header="New">
+                <MenuItem Header="_Topic"
+                          Command="self:App.NewPatternsEditorCmd">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/TextPatterns/TextPattern_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Asset Editor"
+                          Command="self:App.NewAssetEditorCmd"
+                          Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=ProVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Asset/asset_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Query"
+                          Command="self:App.NewQueryEditorCmd"
+                          Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/queries/query_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="MindMap"
+                          Command="self:App.NewMindMapCmd"
+                          Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/NewMindMap_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Frame Editor"
+                          Command="self:App.NewFrameEditorCmd"
+                          Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Frame/Frame_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Flow Editor"
+                          Command="self:App.NewFlowEditorCmd"
+                          Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Flow/flow.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Visual Editor"
+                          Command="self:App.NewVisualEditorCmd"
+                          Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/VisualF/VisualFrame_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator
+                    Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}" />
+                <MenuItem Header="Neuron"
+                          Command="self:App.NewNeuronCmd"
+                          Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="{StaticResource ImgNeuron}"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Code Cluster"
+                          Command="self:App.NewCodeClusterCmd"
+                          Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/NewCode_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="Folder"
+                          Command="self:App.NewFolderCmd">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/NewFolder_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Rename"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                      Command="self:App.RenameCmd" />
+            <Separator />
+            <MenuItem Header="Remove"
+                      ToolTip="Remove the folder and all the children from the project but leave all the neurons as they are."
+                      Command="self:App.RemoveCmd"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}" />
+            <MenuItem Header="Delete"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                      ToolTip="Delete this folder, all child editors and all the items that reference the editors."
+                      Command="Delete" />
+            <MenuItem Header="Delete special"
+                      ToolTip="Use a dialog box to specify how all the child editor data should be removed from the project."
+                      Command="self:App.DeleteSpecialCmd"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}" />
+            <Separator />
+            <MenuItem Header="Import">
+                <MenuItem Header="Topics" Command="self:App.ImportTopicCmd"
+                          CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                          ToolTip="Import one or more topics." />
+                <MenuItem Header="Queries" Command="self:App.ImportQueryCmd"
+                          CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                          ToolTip="Import one or more queries." />
+                <MenuItem Header="Assets" Command="self:App.ImportAssetCmd"
+                          CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                          ToolTip="Import one or more assets." />
+                <MenuItem Header="Module" Command="self:App.ImportModuleCmd"
+                          CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                          ToolTip="Import one or more code modules." />
+                <MenuItem Header="Global patterns" Command="self:App.ImportGlobalPatternsCmd"
+                          CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                          ToolTip="Import the global patterns" />
+            </MenuItem>
+            <MenuItem Header="Export module"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}"
+                      ToolTip="Export this folder as a module."
+                      Command="self:App.ExportModuleCmd" />
+        </ContextMenu>
+
+        <!--For the root-->
+        <ContextMenu x:Key="RootContextMenu">
+            <MenuItem Header="New">
+                <MenuItem Header="_Text pattern Editor"
+                          Command="self:App.NewPatternsEditorCmd">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/TextPatterns/TextPattern_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Asset Editor"
+                          Command="self:App.NewAssetEditorCmd"
+                          Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=ProVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Asset/asset_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Query"
+                          Command="self:App.NewQueryEditorCmd"
+                          Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/queries/query_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="MindMap"
+                          Command="self:App.NewMindMapCmd"
+                          Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/NewMindMap_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Frame Editor"
+                          Command="self:App.NewFrameEditorCmd"
+                          Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Frame/Frame_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Flow Editor"
+                          Command="self:App.NewFlowEditorCmd"
+                          Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Flow/flow.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Visual Editor"
+                          Command="self:App.NewVisualEditorCmd"
+                          Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/VisualF/VisualFrame_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator
+                    Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}" />
+                <MenuItem Header="Neuron"
+                          Command="self:App.NewNeuronCmd"
+                          Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="{StaticResource ImgNeuron}"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Code Cluster"
+                          Command="self:App.NewCodeClusterCmd"
+                          Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/NewCode_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="Folder"
+                          Command="self:App.NewFolderCmd">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/NewFolder_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <Separator />
+            <MenuItem Header="Rename"
+                      Command="self:App.RenameCmd"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}" />
+            <Separator />
+            <MenuItem Header="Import">
+                <MenuItem Header="Topics" Command="self:App.ImportTopicCmd"
+                          CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                          ToolTip="Import one or more topics." />
+                <MenuItem Header="Queries" Command="self:App.ImportQueryCmd"
+                          CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                          ToolTip="Import one or more queries." />
+                <MenuItem Header="Assets" Command="self:App.ImportAssetCmd"
+                          CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                          ToolTip="Import one or more assets." />
+                <MenuItem Header="Module" Command="self:App.ImportModuleCmd"
+                          CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                          ToolTip="Import one or more code modules." />
+                <MenuItem Header="Global patterns" Command="self:App.ImportGlobalPatternsCmd"
+                          CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                          ToolTip="Import the global patterns" />
+            </MenuItem>
+            <MenuItem Header="Export">
+                <MenuItem Header="All topics" Command="self:App.ExportAllTopicsCmd"
+                          CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                          ToolTip="Export all the topics in the project." />
+                <MenuItem Header="Global patterns" Command="self:App.ExportglobalPatternsCmd"
+                          CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget}"
+                          ToolTip="Export the global patterns." />
+                <MenuItem Header="Export module"
+                          CommandParameter="all"
+                          ToolTip="Export all code as a single module."
+                          Command="self:App.ExportModuleCmd" />
+            </MenuItem>
+
+            <Separator />
+
+            <MenuItem Header="Rebuild">
+                <MenuItem Header="Project"
+                          ToolTip="Rebuild the entire project (thesaurus, templates, assets, log) into a new project"
+                          Command="self:App.RebuildProjectCmd" />
+                <MenuItem Header="Patterns..."
+                          ToolTip="Reparse all the topics in the project"
+                          Command="self:App.RebuildAllTopicsCmd" />
+            </MenuItem>
+
+            <MenuItem Header="Unload all topics"
+                      ToolTip="Unload all the input patterns in the every topic for easy management of the topics. To reload them,  use 'Rebuild/Patterns"
+                      Command="self:App.UnloadTopicsCmd" />
+
+            <Separator />
+
+            <!--inputgeture text need to be set to empty string, otherwise we get wrong value-->
+            <MenuItem Header="project properties"
+                      ToolTip="Show the properties of the project"
+                      Command="Properties"
+                      InputGestureText=" ">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Properties.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
+
+        <!--shows the the name of an editor for usage in an overview of all the available editors.-->
+        <HierarchicalDataTemplate x:Key="OverviewItemTemplate"
+                                  ItemsSource="{Binding Path=Editors}">
+            <ContentPresenter x:Name="PART_TITLE"
+                              Content="{Binding}">
+                <ContentPresenter.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=Name}"
+                                   TextTrimming="CharacterEllipsis"
+                                   dd:DragDropManager.IsVisualFor="{Binding RelativeSource={RelativeSource AncestorType=StackPanel}}">
+                            <!--we apply a negative effect on the item while  dragging to make the white text (since selected), black again for easy reading-->
+                            <dd:DragDropManager.DragEffect>
+                                <eff:NegativeEffect />
+                            </dd:DragDropManager.DragEffect>
+                        </TextBlock>
+                    </DataTemplate>
+                </ContentPresenter.ContentTemplate>
+            </ContentPresenter>
+            <HierarchicalDataTemplate.Triggers>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding ElementName=this, Path=IsEditing}" Value="True" />
+                        <Condition Value="True">
+                            <Condition.Binding>
+                                <Binding Path="IsSelected">
+                                    <Binding.RelativeSource>
+                                        <RelativeSource Mode="FindAncestor" AncestorType="{x:Type TreeViewItem}" />
+                                    </Binding.RelativeSource>
+                                </Binding>
+                            </Condition.Binding>
+                        </Condition>
+                    </MultiDataTrigger.Conditions>
+                    <Setter TargetName="PART_TITLE" Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Path=Name, UpdateSourceTrigger=Explicit}"
+                                         cf:FocusManager.IsFocused="True"
+                                         PreviewLostKeyboardFocus="TxtTitle_LostKeybFocus"
+                                         LostFocus="TxtTitle_LostFocus"
+                                         PreviewKeyDown="TxtTitle_PrvKeyDown"
+                                         BorderThickness="0"
+                                         Margin="-1" />
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </MultiDataTrigger>
+            </HierarchicalDataTemplate.Triggers>
+        </HierarchicalDataTemplate>
+
+
+        <!--shows the the name of a mind map for usage in an overview of all the mind maps available.-->
+        <ControlTemplate x:Key="RootTemplate" TargetType="{x:Type TreeViewItem}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition MinWidth="19" Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <ToggleButton x:Name="Expander"
+                              Style="{StaticResource ExpandCollapseToggleStyle}"
+                              IsChecked="{Binding Path=IsExpanded,RelativeSource={RelativeSource TemplatedParent}}"
+                              ClickMode="Press" />
+                <StackPanel Orientation="Horizontal"
+                            Grid.Column="1"
+                            dd:DragDropManager.DropTarget="{StaticResource EditorRootDropAdvisor}">
+                    <Image Source="/Images/brain.ico"
+                           Margin="0,0,4,0"
+                           Style="{StaticResource TlbImageStyle}" />
+
+                    <Border Name="Bd"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="true">
+                        <ContentPresenter x:Name="PART_Header"
+                                          ContentSource="Header"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <ContentPresenter.ContentTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=Name}"
+                                               TextTrimming="CharacterEllipsis" />
+                                </DataTemplate>
+                            </ContentPresenter.ContentTemplate>
+                        </ContentPresenter>
+                    </Border>
+                </StackPanel>
+                <ItemsPresenter x:Name="ItemsHost"
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Grid.ColumnSpan="2" />
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsExpanded" Value="false">
+                    <Setter TargetName="ItemsHost" Property="Visibility" Value="Collapsed" />
+                </Trigger>
+                <Trigger Property="HasItems" Value="false">
+                    <Setter TargetName="Expander" Property="Visibility" Value="Hidden" />
+                </Trigger>
+                <Trigger Property="IsSelected" Value="true">
+                    <Setter TargetName="Bd" Property="Background"
+                            Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                    <Setter Property="Foreground"
+                            Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+                </Trigger>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsSelected" Value="true" />
+                        <Condition Property="IsSelectionActive" Value="false" />
+                    </MultiTrigger.Conditions>
+                    <Setter TargetName="Bd" Property="Background"
+                            Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+                </MultiTrigger>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                </Trigger>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding ElementName=this, Path=IsEditing}" Value="True" />
+                        <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}"
+                                   Value="True" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter TargetName="PART_Header" Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Path=Name, UpdateSourceTrigger=Explicit}"
+                                         cf:FocusManager.IsFocused="True"
+                                         PreviewLostKeyboardFocus="TxtTitle_LostKeybFocus"
+                                         LostFocus="TxtTitle_LostFocus"
+                                         PreviewKeyDown="TxtTitle_PrvKeyDown"
+                                         BorderThickness="0"
+                                         Margin="-1" />
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </MultiDataTrigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <Style x:Key="BaseEditorStyle" TargetType="{x:Type TreeViewItem}">
+            <EventSetter Event="TreeViewItem.PreviewMouseRightButtonDown"
+                         Handler="TreeViewItem_PreviewMouseRightButtonDown" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TreeViewItem}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition MinWidth="19" Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <ToggleButton x:Name="Expander"
+                                          Style="{StaticResource ExpandCollapseToggleStyle}"
+                                          IsChecked="{Binding Path=IsExpanded,RelativeSource={RelativeSource TemplatedParent}}"
+                                          ClickMode="Press" />
+                            <!--Needs background for dragging-->
+                            <StackPanel Orientation="Horizontal"
+                                        Grid.Column="1"
+                                        Background="Transparent"
+                                        dd:DragDropManager.DragSource="{StaticResource EditorItemDragAdvisor}"
+                                        dd:DragDropManager.DropTarget="{StaticResource EditorItemDropAdvisorForIcon}">
+                                <Image Source="{Binding Path=Icon}"
+                                       Name="ImgIcon"
+                                       Style="{StaticResource TlbImageStyle}"
+                                       Margin="0,0,4,0"
+                                       dd:DragDropManager.IsVisualFor="{Binding RelativeSource={RelativeSource AncestorType=StackPanel}}" />
+                                <Border Name="Bd"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        Padding="{TemplateBinding Padding}"
+                                        SnapsToDevicePixels="true"
+                                        dd:DragDropManager.DropTarget="{StaticResource EditorItemDropAdvisor}">
+                                    <ContentPresenter x:Name="PART_Header"
+                                                      ContentSource="Header"
+                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                </Border>
+                            </StackPanel>
+                            <ItemsPresenter x:Name="ItemsHost"
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            Grid.ColumnSpan="2" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding Path=IsLocal, FallbackValue=false}" Value="True">
+                                <Setter TargetName="ImgIcon" Property="Effect">
+                                    <Setter.Value>
+                                        <eff:SepiaEffect DesaturationFactor="0" Toned="1.0" LightColor="White"
+                                                         DarkColor="Green" />
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="ImgIcon" Property="ToolTip"
+                                        Value="Patterns in local topics can only be matched when specifically matching against this topic." />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=HasDuplicateName, FallbackValue=false}" Value="True">
+                                <Setter TargetName="ImgIcon" Property="Effect">
+                                    <Setter.Value>
+                                        <eff:SepiaEffect DesaturationFactor="0" Toned="0.8" LightColor="White"
+                                                         DarkColor="Red" />
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="ImgIcon" Property="ToolTip"
+                                        Value="The name of this topic is also used by another topic, duplicates are not allowed." />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=IsParsed, FallbackValue=True}" Value="False">
+                                <Setter TargetName="ImgIcon" Property="Effect">
+                                    <Setter.Value>
+                                        <eff:GrayScaleEffect DesaturationFactor="0" />
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="ImgIcon" Property="ToolTip"
+                                        Value="This topic is not loaded: none of the input patterns are parsed. To load the topic, rebuild it." />
+                            </DataTrigger>
+                            <Trigger Property="IsExpanded" Value="false">
+                                <Setter TargetName="ItemsHost" Property="Visibility" Value="Collapsed" />
+                            </Trigger>
+                            <Trigger Property="HasItems" Value="false">
+                                <Setter TargetName="Expander" Property="Visibility" Value="Hidden" />
+                                <Setter TargetName="ImgIcon" Property="dd:DragDropManager.DropTarget" Value="{x:Null}" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter TargetName="Bd" Property="Background"
+                                        Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                                <Setter Property="Foreground"
+                                        Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="true" />
+                                    <Condition Property="IsSelectionActive" Value="false" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Bd" Property="Background"
+                                        Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+                                <Setter Property="Foreground"
+                                        Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+                            </MultiTrigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground"
+                                        Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+
+        <self:EditorStyleSelector x:Key="StyleSelector">
+            <self:EditorStyleSelector.FolderStyle>
+                <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource BaseEditorStyle}">
+                    <!--<Setter Property="dd:DragDropManager.DropTarget" Value="{StaticResource EditorItemDropAdvisor}"/>-->
+                    <Setter Property="ContextMenu" Value="{StaticResource FolderContextMenu}" />
+                    <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}" />
+                    <Setter Property="IsExpanded" Value="{Binding Path=IsExpanded, Mode=TwoWay}" />
+                </Style>
+            </self:EditorStyleSelector.FolderStyle>
+            <self:EditorStyleSelector.EditorStyle>
+                <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource BaseEditorStyle}">
+                    <Setter Property="ContextMenu" Value="{StaticResource MainContextMenu}" />
+                    <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}" />
+                    <Setter Property="IsExpanded" Value="{Binding Path=IsExpanded, Mode=TwoWay}" />
+                    <!--<Setter Property="dd:DragDropManager.DropTarget" Value="{StaticResource EditorItemDropAdvisor}"/>-->
+                    <EventSetter Event="MouseDoubleClick" Handler="Button_MouseDoubleClick" />
+                </Style>
+            </self:EditorStyleSelector.EditorStyle>
+            <self:EditorStyleSelector.TopicStyle>
+                <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource BaseEditorStyle}">
+                    <Setter Property="ContextMenu" Value="{StaticResource TopicContextMenu}" />
+                    <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}" />
+                    <Setter Property="IsExpanded" Value="{Binding Path=IsExpanded, Mode=TwoWay}" />
+                    <!--<Setter Property="dd:DragDropManager.DropTarget" Value="{StaticResource EditorItemDropAdvisor}"/>-->
+                    <EventSetter Event="MouseDoubleClick" Handler="Button_MouseDoubleClick" />
+                </Style>
+            </self:EditorStyleSelector.TopicStyle>
+        </self:EditorStyleSelector>
+
+    </UserControl.Resources>
+    <DockPanel>
+        <Expander Style="{StaticResource SimpleExpandDownStyle}"
+                  IsExpanded="{Binding Source={x:Static self:Properties.Settings.Default}, Path=ToolbarExpandedEditorsOverview, Mode=TwoWay}"
+                  Focusable="False"
+                  DockPanel.Dock="Top">
+            <ToolBar>
+                <Button ToolTip="Show the project's properties."
+                        x:Name="BtnChatbotProps"
+                        Style="{StaticResource TlbButtonsStyle}"
+                        Command="Properties">
+                    <Image Source="/Images/Properties.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Separator />
+                <Button ToolTip="Create new mind map"
+                        x:Name="BtnMainNewSelector"
+                        Style="{StaticResource TlbButtonsStyle}"
+                        Command="self:App.NewMindMapCmd"
+                        Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                    <Image
+                        Source="{Binding ElementName=BtnNewMindMap, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/NewMindMap.png, Mode=OneWay}"
+                        x:Name="ImageMainNewSelector"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <ToggleButton
+                    Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}"
+                    x:Name="ToggleShowNewSelectors"
+                    VerticalAlignment="Stretch">
+                    <Path Margin="0"
+                          Fill="Black"
+                          Data="M 0 0 L 3.5 4 L 7 0 Z"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center" />
+                </ToggleButton>
+
+
+                <Popup
+                    Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}"
+                    IsOpen="{Binding ElementName=ToggleShowNewSelectors, Path=IsChecked, Mode=TwoWay}"
+                    PlacementTarget="{Binding ElementName=BtnMainNewSelector}"
+                    AllowsTransparency="True"
+                    StaysOpen="False">
+                    <Border BorderBrush="Gray"
+                            BorderThickness="1">
+                        <Border.Background>
+                            <LinearGradientBrush
+                                StartPoint="0,0"
+                                EndPoint="0,1">
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStop Color="#FFFFFF"
+                                                  Offset="0" />
+                                    <GradientStop Color="#FFFBFF"
+                                                  Offset="0.5" />
+                                    <GradientStop Color="#F7F7F7"
+                                                  Offset="1" />
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Border.Effect>
+                            <DropShadowEffect Opacity="0.4" />
+                        </Border.Effect>
+
+                        <WrapPanel Orientation="Horizontal"
+                                   MaxWidth="80"
+                                   ButtonBase.Click="WrapPanel_Click">
+
+                            <Button ToolTip="Create new pattern definitions page"
+                                    x:Name="BtnAddPatternEditor"
+                                    Style="{StaticResource TlbNoFocusSubButtonsStyle}"
+                                    Command="self:App.NewPatternsEditorCmd">
+                                <Image
+                                    Source="{Binding ElementName=BtnAddPatternEditor, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/TextPatterns/TextPattern.png, Mode=OneWay}"
+                                    Style="{StaticResource TlbImageStyle}" />
+                            </Button>
+
+                            <Button ToolTip="Create new Asset editor"
+                                    x:Name="BtnAddAsset"
+                                    Style="{StaticResource TlbNoFocusSubButtonsStyle}"
+                                    Command="self:App.NewAssetEditorCmd">
+                                <Image
+                                    Source="{Binding ElementName=BtnAddAsset, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Asset/NewAsset.png, Mode=OneWay}"
+                                    Style="{StaticResource TlbImageStyle}" />
+                            </Button>
+
+                            <Button ToolTip="Create new query"
+                                    x:Name="BtnAddQuery"
+                                    Style="{StaticResource TlbNoFocusSubButtonsStyle}"
+                                    Command="self:App.NewQueryEditorCmd">
+                                <Image
+                                    Source="{Binding ElementName=BtnAddQuery, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/queries/query.png, Mode=OneWay}"
+                                    Style="{StaticResource TlbImageStyle}" />
+                            </Button>
+
+                            <Button ToolTip="Create new mind map"
+                                    x:Name="BtnNewMindMap"
+                                    Style="{StaticResource TlbNoFocusSubButtonsStyle}"
+                                    Command="self:App.NewMindMapCmd">
+                                <Image
+                                    Source="{Binding ElementName=BtnNewMindMap, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/NewMindMap.png, Mode=OneWay}"
+                                    Style="{StaticResource TlbImageStyle}" />
+                            </Button>
+                            <Button ToolTip="Create new Frame editor"
+                                    x:Name="BtnAddFrame"
+                                    Style="{StaticResource TlbNoFocusSubButtonsStyle}"
+                                    Command="self:App.NewFrameEditorCmd">
+                                <Image
+                                    Source="{Binding ElementName=BtnAddFrame, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Frame/Frame.png, Mode=OneWay}"
+                                    Style="{StaticResource TlbImageStyle}" />
+                            </Button>
+
+                            <Button ToolTip="Create new Flow editor"
+                                    Style="{StaticResource TlbNoFocusSubButtonsStyle}"
+                                    Command="self:App.NewFlowEditorCmd"
+                                    Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                                <Image Source="/Images/Flow/flow.png"
+                                       Style="{StaticResource TlbImageStyle}" />
+                            </Button>
+
+                            <Button ToolTip="Create new Visual editor"
+                                    x:Name="BtnAddVisual"
+                                    Style="{StaticResource TlbNoFocusSubButtonsStyle}"
+                                    Command="self:App.NewVisualEditorCmd">
+                                <Image
+                                    Source="{Binding ElementName=BtnAddVisual, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/VisualF/VisualFrame.png, Mode=OneWay}"
+                                    Style="{StaticResource TlbImageStyle}" />
+                            </Button>
+
+
+                            <Button ToolTip="Create new neuron with attached code"
+                                    Style="{StaticResource TlbNoFocusSubButtonsStyle}"
+                                    Command="self:App.NewNeuronCmd">
+                                <Image Source="{StaticResource ImgNeuron}"
+                                       Style="{StaticResource TlbImageStyle}" />
+                            </Button>
+
+                            <Button ToolTip="Create new Code cluster"
+                                    Style="{StaticResource TlbNoFocusSubButtonsStyle}"
+                                    x:Name="BtnNewCodeCluster"
+                                    Command="self:App.NewCodeClusterCmd">
+                                <Image
+                                    Source="{Binding ElementName=BtnNewCodeCluster, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/NewCode.png, Mode=OneWay}"
+                                    Style="{StaticResource TlbImageStyle}" />
+                            </Button>
+
+                        </WrapPanel>
+                    </Border>
+                </Popup>
+                <Button ToolTip="Create new pattern definitions page"
+                        x:Name="BtnAddPatternEditor2"
+                        Style="{StaticResource TlbNoFocusButtonsStyle}"
+                        Command="self:App.NewPatternsEditorCmd"
+                        Visibility="{Binding  Source={x:Static self:WindowMain.Current}, Path=BasicVibility, Mode=OneTime}">
+                    <Image
+                        Source="{Binding ElementName=BtnAddPatternEditor2, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/TextPatterns/TextPattern.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Button ToolTip="Create new folder"
+                        x:Name="BtnNewFolder"
+                        Style="{StaticResource TlbButtonsStyle}"
+                        Command="self:App.NewFolderCmd">
+                    <Image
+                        Source="{Binding ElementName=BtnNewFolder, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/NewFolder.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Separator />
+                <Button ToolTip="Delete selected item"
+                        x:Name="BtnDelete"
+                        Style="{StaticResource TlbButtonsStyle}"
+                        Command="Delete">
+                    <Image
+                        Source="{Binding ElementName=BtnDelete, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Delete.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Separator />
+                <TextBox x:Name="TxtToSearch"
+                         ToolTip="text to search for"
+                         MinWidth="90"
+                         PreviewKeyDown="TxtToSearch_KeyDown">
+                    <ctrls:WatermarkService.Watermark>
+                        <TextBlock>
+                            <Italic>Search here</Italic>
+                        </TextBlock>
+                    </ctrls:WatermarkService.Watermark>
+                </TextBox>
+                <Button Command="self:App.FindNextCmd"
+                        ToolTip="Find next neuron">
+                    <Image Height="16" Source="/Images/FindNextHS.png" />
+                </Button>
+            </ToolBar>
+        </Expander>
+        <ctrls:MyTreeView x:Name="TrvItems"
+                          BorderThickness="0"
+                          VirtualizingStackPanel.IsVirtualizing="True"
+                          TreeViewItem.Selected="TrvItems_Item_Selected"
+                          TreeViewItem.Unselected="TrvItems_Item_Unselected">
+            <ctrls:MyTreeViewItem x:Name="TrvRoot"
+                                  IsExpanded="True"
+                                  ItemContainerStyleSelector="{DynamicResource StyleSelector}"
+                                  ContextMenu="{StaticResource RootContextMenu}"
+                                  ItemTemplate="{StaticResource OverviewItemTemplate}"
+                                  Template="{StaticResource RootTemplate}"
+                                  Header="{Binding Source={x:Static self:BrainData.Current}}"
+                                  ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=Editors}" />
+            <!--dd:DragDropManager.DropTarget="{StaticResource EditorsDropAdvisor}"-->
+        </ctrls:MyTreeView>
+    </DockPanel>
+</UserControl>

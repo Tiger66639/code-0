@@ -1,0 +1,6 @@
+class Empty
+{
+   //doesn't contain code, nothing to be done
+   NeuronCluster emptycallback {}
+  
+}

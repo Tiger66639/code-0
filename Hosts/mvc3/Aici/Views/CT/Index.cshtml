@@ -1,0 +1,108 @@
+﻿@model Aici.Models.ChatInteraction
+@{
+    ViewBag.Title = "Crazy Talk";
+}
+
+@section JavaScript
+{
+   <script language="javascript">
+      //starts to say the specified text.
+      function PlayText(toSay) {
+         RLTTSComponent.TextContent = toSay;
+         RLTTSComponent.Play();
+      }
+   </script>
+}
+
+@section JavaScriptAtEnd
+{
+   <script  language="javascript">
+
+      $.ajaxSetup({
+         cache: false
+      });
+
+
+      RLTTSComponent.AttachCtrl(CrazyTalkPlayer);
+      RLTTSComponent.Speed = "50";
+      CrazyTalkPlayer.LifeMode = "1";
+      RLTTSComponent.AutoLoop = false;
+      GetVoiceString();
+      RLTTSComponent.Play();
+      //CrazyTalkPlayer.Play(0);
+      function GetVoiceString() {
+         var count;
+         count = RLTTSComponent.GetVoiceCount();
+         voicename.length = count;
+         for (kk = 0; kk < count; kk++) {
+            voicename[kk].text = RLTTSComponent.GetVoiceString(kk);
+            voicename[kk].value = RLTTSComponent.GetVoiceString(kk);
+
+         }
+         if (count > 0) {
+            voicename[0].selectedIndex = 0;
+            RLTTSComponent.SetVoiceByName(voicename[0].text);
+         }
+         //RLTTSComponent.ShowControl=0;
+      }
+
+      function ChangeVoiceName() {
+         var dat;
+         dat = voicename[voicename.selectedIndex].text;
+         RLTTSComponent.Stop();
+         RLTTSComponent.SetVoiceByName(dat);
+
+      }
+
+   </script>
+}
+
+<table style="width: 100%;">
+   <tr>
+      <td>
+         <p align="center">
+            <OBJECT CLASSID="CLSID:13149882-F480-4F6B-8C6A-0764F75B99ED" id="CrazyTalkPlayer" width="256" height="256" codebase="http://plug-in.reallusion.com/crazytalk4.cab#version=4,5,615,1">
+               <param name="ModelName" value="@Aici.Properties.Settings.Default.CrazyTalkChar">
+               <param name="AutoPlay" value="1">
+            </OBJECT>
+         </p>
+      </td>
+   </tr>
+   <tr>
+      <td>
+         <p align="center">
+            <OBJECT CLASSID ="CLSID:B7A59580-B39D-4BF9-B968-1BFA25156691" id="RLTTSComponent" width="256" height="24" codebase="http://www.reallusion.com/plug-in/rltts.cab#version=1,0,1409,1">
+               <param name="TTSEngine" value="Microsoft SAPI 5.0"/>
+               <PARAM name="AutoLoop" value="1"/>
+               <param name="TextContent" value="@Model.LastOutput"/>
+            </OBJECT>
+         </p>
+      </td>
+   </tr>
+   <tr>
+      <td>
+         <div id="SendContainer">
+            @Html.Partial("../Shared/Send", Model)
+         </div>
+      </td>
+   </tr>
+   <tr>
+      <td>
+         <p align="center">
+            <select name="voicename" onChange="ChangeVoiceName()">
+               <option selected></option>
+            </select>
+         </p>
+      </td>
+   </tr>
+   <tr>
+      <td>
+         <p align="center">
+            <br />
+            <a href="http://plug-in.reallusion.com/installCT.asp">Info about Installing the CrazyTalk Player</a>
+            <br />
+            <p align="center">This demo only works with Internet Explorer.</p>
+         </p>
+      </td>
+   </tr>
+</table>

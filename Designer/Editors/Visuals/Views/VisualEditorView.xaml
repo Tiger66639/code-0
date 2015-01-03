@@ -1,0 +1,80 @@
+﻿<self:CtrlEditorBase x:Class="JaStDev.HAB.Designer.Editors.VisualEditorView"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+                     xmlns:hab="clr-namespace:JaStDev.HAB;assembly=JaStDev.HabCore"
+                     xmlns:cf="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+                     xmlns:Ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls"
+                     mc:Ignorable="d"
+                     d:DesignHeight="300"
+                     d:DesignWidth="300"
+                     cf:Help.Topic="frameeditors.html"
+                     Background="Transparent"
+                     Focusable="True"
+                     IsHitTestVisible="True"><!--x:FieldModifier="Public"-->
+
+    <UserControl.CommandBindings>
+        <CommandBinding Command="self:App.AddFrameCmd" Executed="AddFrame_Executed" />
+    </UserControl.CommandBindings>
+    <UserControl.InputBindings>
+        <KeyBinding Key="F"
+                    Modifiers="Ctrl+Shift"
+                    Command="self:App.AddFrameCmd" />
+    </UserControl.InputBindings>
+    <DockPanel>
+        <Expander Style="{StaticResource SimpleExpandDownStyle}"
+                  Focusable="False"
+                  IsExpanded="{Binding Source={x:Static self:Properties.Settings.Default}, Path=ToolbarExpandedVisualEditor, Mode=TwoWay}"
+                  DockPanel.Dock="Top">
+            <!--
+      FocusManager.IsFocusScope="False"
+      This toolbar needs to remain a focus scope, otherwise, we can't use the toolbar to add nested filters.
+      -->
+            <ToolBar>
+                <Button ToolTip="Add a new frame (Shft+Ctrl+F)"
+                        x:Name="BtnAddFrame"
+                        Command="self:App.AddFrameCmd"
+                        CommandTarget="{Binding ElementName=LstVisuals}"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    <Image
+                        Source="{Binding ElementName=BtnAddFrame, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Frame/Frame.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Separator />
+                <Ctrls:SpinButton ToolTip="Specifies the nr of horizontal items in each visual"
+                                  Value="{Binding Path=NrHorItems, Mode=TwoWay}"
+                                  MinWidth="38" />
+                <Ctrls:SpinButton ToolTip="Specifies the nr of vertical items in each visual"
+                                  Value="{Binding Path=NrVerItems, Mode=TwoWay}"
+                                  MinWidth="38" />
+                <Separator />
+                <ComboBox x:Name="CmbLowOperator"
+                          MinWidth="30"
+                          SelectedItem="{Binding Path=LowValOperator}"
+                          ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=Operators}"
+                          ContextMenu="{StaticResource VisualsEditorOperatorContextMenu}" />
+                <Ctrls:SpinButton ToolTip="The value that gets assigned to white spaces"
+                                  Value="{Binding Path=LowValue, Mode=TwoWay}"
+                                  MinWidth="38" />
+                <ComboBox x:Name="CmbHighOperator"
+                          SelectedItem="{Binding Path=HighValOperator}"
+                          MinWidth="30"
+                          ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=Operators}"
+                          ContextMenu="{StaticResource VisualsEditorOperatorContextMenu}" />
+                <Ctrls:SpinButton ToolTip="The value that gets assigned to selected blocks"
+                                  Value="{Binding Path=HighValue, Mode=TwoWay}"
+                                  MinWidth="38" />
+            </ToolBar>
+        </Expander>
+        <ListBox ItemsSource="{Binding Path=Visuals}"
+                 SelectedItem="{Binding Path=SelectedVisual, Mode=OneWay}"
+                 SelectionChanged="ListBox_SelectionChanged"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 x:Name="LstVisuals"
+                 ItemContainerStyle="{StaticResource VisualFrameListBoxStyle}"
+                 ItemsPanel="{StaticResource VisualFrameItemsPanelTemplate}"
+                 ItemTemplate="{StaticResource VisualFrameItemTemplate}" />
+    </DockPanel>
+</self:CtrlEditorBase>

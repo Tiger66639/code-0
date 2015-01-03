@@ -1,0 +1,69 @@
+﻿<Window x:Class="JaStDev.HAB.Designer.DlgManageTestCases"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+        Title="Manage test cases"
+        Width="280"
+        Height="290"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False"
+        x:Name="This">
+    <Window.Resources>
+        <DataTemplate x:Key="TestCaseItemTemplate">
+            <TextBlock Text="{Binding Path=Name}" />
+        </DataTemplate>
+    </Window.Resources>
+    <Grid Margin="8">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="88" />
+        </Grid.ColumnDefinitions>
+        <ListBox Name="LstItems"
+                 ItemsSource="{Binding ElementName=This, Path=Items}"
+                 ItemTemplate="{StaticResource TestCaseItemTemplate}"
+                 SelectionChanged="ListBox_SelectionChanged" />
+        <DockPanel Grid.Column="2"
+                   LastChildFill="False"
+                   Margin="8,0,0,0">
+            <Button DockPanel.Dock="Top"
+                    Name="BtnName"
+                    IsEnabled="False"
+                    Height="24"
+                    Click="BtnName_Click">
+                Rename
+            </Button>
+            <Button DockPanel.Dock="Top"
+                    Name="BtnDelete"
+                    Margin="0,8,0,0"
+                    IsEnabled="False"
+                    Height="24"
+                    Click="BtnDelete_Click">
+                Delete
+            </Button>
+            <Button DockPanel.Dock="Top"
+                    Name="BtnCopy"
+                    Margin="0,8,0,0"
+                    IsEnabled="False"
+                    Height="24"
+                    Click="BtnCopy_Click">
+                Copy
+            </Button>
+
+            <Button DockPanel.Dock="Bottom"
+                    Name="BtnOk"
+                    Margin="0,8,0,0"
+                    Height="24"
+                    Click="BtnOk_Click">
+                Ok
+            </Button>
+            <Button DockPanel.Dock="Bottom"
+                    Name="BtnCancel"
+                    Margin="0,8,0,0"
+                    Height="24"
+                    IsCancel="True">
+                Cancel
+            </Button>
+        </DockPanel>
+    </Grid>
+</Window>

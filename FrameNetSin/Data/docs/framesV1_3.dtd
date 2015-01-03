@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This is the DTD for the frames.xml file, which contains information
+about the basic frame-semantic objects: frames, frame elements, lexunits,
+lexemes, etc.  Its format can be summarized as:
+
+<frames>
+  <frame>*
+    <definition>
+    <fes>
+      <fe>*
+        <definition>
+        <semTypes>
+          <semType>*
+    <lexunits>
+      <lexunit>*
+        <definition>
+        <annotation>
+ 	  <annotated>
+	  <total>
+        <lexemes>
+	  <lexeme>*
+        <semTypes>
+          <semType>*
+    <semTypes>
+      <semType>*      
+
+-->
+<!ELEMENT frames (frame*)>
+
+<!ATTLIST frames 
+          XMLCreated  CDATA     #REQUIRED>
+
+<!ELEMENT frame (definition, fes, lexunits, semTypes)>
+
+<!ATTLIST frame 
+          ID       CDATA         #REQUIRED
+          name      CDATA         #REQUIRED
+          cDate     CDATA         #IMPLIED> 
+
+<!ELEMENT definition (#PCDATA)>
+
+<!ELEMENT fes (fe*)>
+
+<!ELEMENT fe (definition, semTypes)>
+
+<!ATTLIST fe
+          ID       CDATA         #REQUIRED
+          name      CDATA         #REQUIRED
+         cDate     CDATA         #IMPLIED
+          abbrev       CDATA    #REQUIRED
+          coreType     CDATA    #IMPLIED
+          fgColor      CDATA    #IMPLIED
+          bgColor      CDATA    #IMPLIED>
+
+<!ELEMENT lexunits (lexunit*)>
+
+<!ELEMENT lexunit (definition, annotation, lexemes, semTypes)>
+
+<!ATTLIST lexunit
+         ID       CDATA         #REQUIRED
+         name      CDATA         #REQUIRED
+          cDate     CDATA         #IMPLIED
+          lemmaId      CDATA    #REQUIRED
+          pos          CDATA    #REQUIRED
+          status       CDATA    #IMPLIED>
+
+<!ELEMENT lexemes (lexeme*)>
+
+<!ELEMENT lexeme (#PCDATA)>
+
+<!ATTLIST lexeme
+          ID       CDATA         #REQUIRED
+          pos          CDATA    #REQUIRED
+          breakBefore  (true | false)    #REQUIRED
+          headword     (true | false)    #REQUIRED>
+
+<!ELEMENT semTypes (semType*)>
+
+<!ELEMENT semType EMPTY>
+
+<!ATTLIST semType
+          ID           CDATA    #REQUIRED
+          name         CDATA    #REQUIRED>
+
+<!ELEMENT annotation (annotated, total)>
+
+<!ELEMENT annotated (#PCDATA)>
+
+<!ELEMENT total (#PCDATA)>
+
+

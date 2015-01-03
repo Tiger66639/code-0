@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<layerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="4fc079c1-c5de-4c2e-b4da-820bb00a7348" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/LayerDesigner">
+  <layers>
+    <layer Id="453c8a30-0299-4b96-8192-88cbeb434811" name="Brain&#xD;&#xA;">
+      <childLayers>
+        <layer Id="fbe38808-74d9-4a52-b82f-6ca3930d0238" name="Storage">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="83f05c94-2ac4-442a-a213-7170a3fe788b" direction="Forward">
+              <layerMoniker Id="cf67a646-b006-44be-a4f8-80a77fc39ec1" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+          <childLayers>
+            <layer Id="2f4e4954-9bbf-4eba-9e03-4e64d8c256e2" name="Files" />
+            <layer Id="b8114d10-0a2a-4e01-b0fd-ac2d8f5c3dee" name="BlockStream" />
+            <layer Id="2a5b32a5-8bf3-4fdf-8d0d-49da252a5070" name="Buffer" />
+            <layer Id="533a3c3f-fabc-46af-83df-a95b0ee3076e" name="Table" />
+            <layer Id="6e74719a-fb1e-4d49-a74e-4c08c5219815" name="Free blocks" />
+            <layer Id="dd2cdb31-bf6c-4107-b4bb-3f3582a9add1" name="Index" />
+          </childLayers>
+        </layer>
+        <layer Id="b312a500-c569-4e51-8946-c3b61b63aa79" name="Cache" />
+        <layer Id="1481baff-baae-405a-95e5-29da4d8ba64d" name="Temp Buffer" />
+        <layer Id="d16a8326-2ac0-444b-8fbd-d6c8c302574f" name="ID manager" />
+        <layer Id="1db6ad17-8b73-4167-ad57-e28226ff6ea1" name="Object thread syncing">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="5eb1951d-eeaa-46a7-bc41-89eb659d820c" direction="Forward">
+              <layerMoniker Id="5e5017e9-2344-40df-ac1a-7925b3ada22c" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+        </layer>
+        <layer Id="8d48f613-cd67-460e-834f-8b4639e94044" name="event system" />
+      </childLayers>
+    </layer>
+    <layer Id="cf67a646-b006-44be-a4f8-80a77fc39ec1" name="Object factories" />
+    <layer Id="be5e9b5b-93ad-462b-a674-c58e30343b44" name="Interpreter">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="8fa375e6-0e51-43a7-829c-d3307d8738dd" direction="Forward">
+          <layerMoniker Id="5e5017e9-2344-40df-ac1a-7925b3ada22c" />
+        </dependencyFromLayerToLayer>
+        <dependencyFromLayerToLayer Id="a8d12806-7fb4-443a-89e5-45e0ff3722ab" direction="Forward">
+          <layerMoniker Id="cf67a646-b006-44be-a4f8-80a77fc39ec1" />
+        </dependencyFromLayerToLayer>
+        <dependencyFromLayerToLayer Id="e793d24e-c18d-4455-8729-fa5d6aa140fe" direction="Forward">
+          <layerMoniker Id="453c8a30-0299-4b96-8192-88cbeb434811" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+      <childLayers>
+        <layer Id="4b7f2d71-fb49-441d-9b00-5d5db1f129cd" name="Variable dictionary&#xD;&#xA;" />
+        <layer Id="9a9f094d-8716-4d73-a567-e6681aae0e85" name="Thread manager" />
+        <layer Id="43aabdd0-617a-4b2d-a5c2-233f426283d0" name="Stacks &amp; Queues&#xD;&#xA;" />
+        <layer Id="bb3062db-743e-4a7b-bc20-b2f5a85bb092" name="Processor" />
+      </childLayers>
+    </layer>
+    <layer Id="5e5017e9-2344-40df-ac1a-7925b3ada22c" name="Lockmanager" />
+  </layers>
+</layerModel>

@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>GetStartedCreateBot</Name>
+  <Rules>
+    <Rule>
+      <Name>Hello</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>hello</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>hi</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>Hi There! What's your name?</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+          <InvalidResponses IsSequenced="False">
+            <InvalidResponse RequiresResponse="False">
+              <Expression>I'd really like to know your name?</Expression>
+            </InvalidResponse>
+          </InvalidResponses>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Rule>
+    <Rule>
+      <Name>I am</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>I am $value</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>I'm $value</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>My name is $value</Expression>
+        </Pattern>
+      </Patterns>
+      <ResponsesFor>
+        <ResponseForGroup>
+          <ResponsesForItems>
+            <ResponseFor>
+              <topic>GetStartedCreateBot</topic>
+              <rule>Hello</rule>
+              <output>Hi There! What's your name?</output>
+            </ResponseFor>
+          </ResponsesForItems>
+          <Conditionals>
+            <Conditional>
+              <Condition />
+              <Outputs>
+                <Output>
+                  <Expression>What would you like to talk about $value?</Expression>
+                  <QuestionCanFollow>True</QuestionCanFollow>
+                </Output>
+              </Outputs>
+              <IsOutputSequenced />
+            </Conditional>
+          </Conditionals>
+        </ResponseForGroup>
+      </ResponsesFor>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>Hi There $value\. What's up?</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Rule>
+    <Rule>
+      <Name>new rule 1</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>boe</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>What the...</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Rule>
+  </Rules>
+</Topic>

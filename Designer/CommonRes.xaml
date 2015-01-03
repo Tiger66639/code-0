@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:cf="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+                    xmlns:self="clr-namespace:JaStDev.HAB.Designer">
+    <!--Common resources like converters.-->
+
+
+    <cf:ReverseBoolConverter x:Key="BoolInv" />
+    <BooleanToVisibilityConverter x:Key="BoolToVisConv" />
+    <self:NeuronToInfoConverter x:Key="NeuronToInfoConv" />
+    <self:NeuronIdToInfoConverter x:Key="NeuronIdToInfoConv" />
+
+
+</ResourceDictionary>

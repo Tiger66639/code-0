@@ -1,0 +1,1154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Network xmlns="http://www.janbogaerts.name">
+  <Count>13085</Count>
+  <NDBStore>
+    <DataPath>Data\</DataPath>
+    <NrOfTables>8</NrOfTables>
+    <NeuronTypes>
+      <Map>
+        <ID>86</ID>
+        <Type>JaStDev.HAB.Neuron, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>87</ID>
+        <Type>JaStDev.HAB.NeuronCluster, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>139</ID>
+        <Type>JaStDev.HAB.IntersectInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>5</ID>
+        <Type>JaStDev.HAB.AddInfoInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>14</ID>
+        <Type>JaStDev.HAB.CopyChildrenInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>24</ID>
+        <Type>JaStDev.HAB.InsertChildInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>8</ID>
+        <Type>JaStDev.HAB.IndexOfInfoInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>97</ID>
+        <Type>JaStDev.HAB.Variable, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>102</ID>
+        <Type>JaStDev.HAB.CurrentMeaning, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>114</ID>
+        <Type>JaStDev.HAB.CurrentSin, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>131</ID>
+        <Type>JaStDev.HAB.ExitLinkInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>178</ID>
+        <Type>JaStDev.HAB.DToSInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>220</ID>
+        <Type>JaStDev.HAB.ReverseInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>199</ID>
+        <Type>JaStDev.HAB.GetFirstInfoInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>283</ID>
+        <Type>JaStDev.HAB.GetAtInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>266</ID>
+        <Type>JaStDev.HAB.GetoutFilteredInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>304</ID>
+        <Type>JaStDev.HAB.ChangeInfoInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>296</ID>
+        <Type>JaStDev.HAB.AvgInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>4</ID>
+        <Type>JaStDev.HAB.AddLinkInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>104</ID>
+        <Type>JaStDev.HAB.GetFirstOutInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>149</ID>
+        <Type>JaStDev.HAB.ExitSolveInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>330</ID>
+        <Type>JaStDev.HAB.GetRandomClusterInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>268</ID>
+        <Type>JaStDev.HAB.GetInfoFilteredInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>317</ID>
+        <Type>JaStDev.HAB.GetCommonParentsWithMeaning, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>315</ID>
+        <Type>JaStDev.HAB.GetCommonParentsFiltered, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>250</ID>
+        <Type>JaStDev.HAB.MinusInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>20</ID>
+        <Type>JaStDev.HAB.PeekInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>26</ID>
+        <Type>JaStDev.HAB.InsertInfoInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>9</ID>
+        <Type>JaStDev.HAB.IndexOfLinkInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>177</ID>
+        <Type>JaStDev.HAB.DToIInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>215</ID>
+        <Type>JaStDev.HAB.GetPrevClusterInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>198</ID>
+        <Type>JaStDev.HAB.GetFirstInInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>255</ID>
+        <Type>JaStDev.HAB.GetInfoAtInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>254</ID>
+        <Type>JaStDev.HAB.GetClusterAtInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>116</ID>
+        <Type>JaStDev.HAB.SuspendInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>25</ID>
+        <Type>JaStDev.HAB.InsertLinkInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>28</ID>
+        <Type>JaStDev.HAB.ChangeLinkTo, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>115</ID>
+        <Type>JaStDev.HAB.AwakeInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>176</ID>
+        <Type>JaStDev.HAB.CcToSInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>186</ID>
+        <Type>JaStDev.HAB.ClearSplitResultsInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>276</ID>
+        <Type>JaStDev.HAB.RemoveInfoAtInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>329</ID>
+        <Type>JaStDev.HAB.GetRandomInfoInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>241</ID>
+        <Type>JaStDev.HAB.ClusterCountInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>257</ID>
+        <Type>JaStDev.HAB.GetOutAtInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>253</ID>
+        <Type>JaStDev.HAB.GetInAtInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>290</ID>
+        <Type>JaStDev.HAB.ContainsLinksInInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>12</ID>
+        <Type>JaStDev.HAB.NewInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>6</ID>
+        <Type>JaStDev.HAB.AddChildInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>100</ID>
+        <Type>JaStDev.HAB.CurrentFrom, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>175</ID>
+        <Type>JaStDev.HAB.CiToSInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>144</ID>
+        <Type>JaStDev.HAB.GetWeightInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>245</ID>
+        <Type>JaStDev.HAB.IsInitializedInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>201</ID>
+        <Type>JaStDev.HAB.GetLastChildInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>210</ID>
+        <Type>JaStDev.HAB.GetNextOutInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>209</ID>
+        <Type>JaStDev.HAB.GetNextInInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>206</ID>
+        <Type>JaStDev.HAB.GetNextChildInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>223</ID>
+        <Type>JaStDev.HAB.CallInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>279</ID>
+        <Type>JaStDev.HAB.SubstractInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>331</ID>
+        <Type>JaStDev.HAB.GetRandomOutInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>244</ID>
+        <Type>JaStDev.HAB.InfoCountInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>270</ID>
+        <Type>JaStDev.HAB.ContainsChildrenInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>295</ID>
+        <Type>JaStDev.HAB.Time, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>130</ID>
+        <Type>JaStDev.HAB.SetClusterMeaningInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>18</ID>
+        <Type>JaStDev.HAB.MoveInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>29</ID>
+        <Type>JaStDev.HAB.ChangeLinkFrom, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>150</ID>
+        <Type>JaStDev.HAB.ClearChildrenInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>217</ID>
+        <Type>JaStDev.HAB.GetLastInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>208</ID>
+        <Type>JaStDev.HAB.GetNextInfoInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>278</ID>
+        <Type>JaStDev.HAB.RemoveLinkOutAtInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>318</ID>
+        <Type>JaStDev.HAB.GetChildrenRangeInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>291</ID>
+        <Type>JaStDev.HAB.ContainsLinksOutInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>249</ID>
+        <Type>JaStDev.HAB.ModulusInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>225</ID>
+        <Type>JaStDev.HAB.SToDInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>184</ID>
+        <Type>JaStDev.HAB.AddSplitResultInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>126</ID>
+        <Type>JaStDev.HAB.GetClustersInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>127</ID>
+        <Type>JaStDev.HAB.GetFirstClusterInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>153</ID>
+        <Type>JaStDev.HAB.ClearLinksOutInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>211</ID>
+        <Type>JaStDev.HAB.GetPrevChildInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>224</ID>
+        <Type>JaStDev.HAB.ClearInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>267</ID>
+        <Type>JaStDev.HAB.GetInFilteredInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>227</ID>
+        <Type>JaStDev.HAB.GetClustersFilteredInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>140</ID>
+        <Type>JaStDev.HAB.InterleafInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>21</ID>
+        <Type>JaStDev.HAB.RemoveChildInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>128</ID>
+        <Type>JaStDev.HAB.GetChildrenOfTypeInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>145</ID>
+        <Type>JaStDev.HAB.GetMaxWeightInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>148</ID>
+        <Type>JaStDev.HAB.ExitNeuronInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>281</ID>
+        <Type>JaStDev.HAB.RemoveLinksOutInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>333</ID>
+        <Type>JaStDev.HAB.GetRandomChildInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>185</ID>
+        <Type>JaStDev.HAB.RemoveSplitResultInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>17</ID>
+        <Type>JaStDev.HAB.DuplicateInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>280</ID>
+        <Type>JaStDev.HAB.FilterInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>261</ID>
+        <Type>JaStDev.HAB.DistinctInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>205</ID>
+        <Type>JaStDev.HAB.GetLastOutInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>202</ID>
+        <Type>JaStDev.HAB.GetLastClusterInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>282</ID>
+        <Type>JaStDev.HAB.RemoveLinksInInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>263</ID>
+        <Type>JaStDev.HAB.GetOutgoingInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>256</ID>
+        <Type>JaStDev.HAB.GetChildAtInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>298</ID>
+        <Type>JaStDev.HAB.MinInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>252</ID>
+        <Type>JaStDev.HAB.AdditionInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>2</ID>
+        <Type>JaStDev.HAB.PopInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>182</ID>
+        <Type>JaStDev.HAB.SToCiInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>179</ID>
+        <Type>JaStDev.HAB.IToDInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>193</ID>
+        <Type>JaStDev.HAB.GetClustersWithMeaningInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>204</ID>
+        <Type>JaStDev.HAB.GetLastInInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>219</ID>
+        <Type>JaStDev.HAB.BreakInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>277</ID>
+        <Type>JaStDev.HAB.RemoveLinkInAtInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>243</ID>
+        <Type>JaStDev.HAB.LinkOutCountInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>297</ID>
+        <Type>JaStDev.HAB.MaxInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>181</ID>
+        <Type>JaStDev.HAB.SToCcInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>132</ID>
+        <Type>JaStDev.HAB.SplitInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>122</ID>
+        <Type>JaStDev.HAB.ExecuteInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>142</ID>
+        <Type>JaStDev.HAB.BlockedSolveInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>216</ID>
+        <Type>JaStDev.HAB.GetFirstInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>264</ID>
+        <Type>JaStDev.HAB.GetIncommingInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>306</ID>
+        <Type>JaStDev.HAB.ChangeParentInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>3</ID>
+        <Type>JaStDev.HAB.PushInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>27</ID>
+        <Type>JaStDev.HAB.MakeClusterInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>10</ID>
+        <Type>JaStDev.HAB.CountInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>152</ID>
+        <Type>JaStDev.HAB.ClearLinksInInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>187</ID>
+        <Type>JaStDev.HAB.GetSplitResultsInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>212</ID>
+        <Type>JaStDev.HAB.GetPrevInfoInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>334</ID>
+        <Type>JaStDev.HAB.GetRandomInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>287</ID>
+        <Type>JaStDev.HAB.SplitWeightedInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>147</ID>
+        <Type>JaStDev.HAB.IncreaseWeightInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>105</ID>
+        <Type>JaStDev.HAB.SetFirstOutInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>124</ID>
+        <Type>JaStDev.HAB.GetChildrenInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>213</ID>
+        <Type>JaStDev.HAB.GetPrevInInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>314</ID>
+        <Type>JaStDev.HAB.CallSaveInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>228</ID>
+        <Type>JaStDev.HAB.GetChildrenFilteredInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>271</ID>
+        <Type>JaStDev.HAB.IsClusteredByInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>125</ID>
+        <Type>JaStDev.HAB.TypeOfInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>221</ID>
+        <Type>JaStDev.HAB.StackCountInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>183</ID>
+        <Type>JaStDev.HAB.ResetWeightInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>23</ID>
+        <Type>JaStDev.HAB.RemoveInfoInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>15</ID>
+        <Type>JaStDev.HAB.CopyInfoInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>19</ID>
+        <Type>JaStDev.HAB.MoveInfoInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>30</ID>
+        <Type>JaStDev.HAB.ChangeLinkMeaning, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>101</ID>
+        <Type>JaStDev.HAB.CurrentTo, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>207</ID>
+        <Type>JaStDev.HAB.GetNextClusterInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>275</ID>
+        <Type>JaStDev.HAB.RemoveChildAtInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>320</ID>
+        <Type>JaStDev.HAB.GetSplitCountInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>332</ID>
+        <Type>JaStDev.HAB.GetRandomInInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>262</ID>
+        <Type>JaStDev.HAB.GetInfoInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>316</ID>
+        <Type>JaStDev.HAB.GetCommonParents, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>305</ID>
+        <Type>JaStDev.HAB.ChangeChildInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>146</ID>
+        <Type>JaStDev.HAB.DecreaseWeightInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>117</ID>
+        <Type>JaStDev.HAB.WarningInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>11</ID>
+        <Type>JaStDev.HAB.CompleteSequence, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>226</ID>
+        <Type>JaStDev.HAB.SToIInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>22</ID>
+        <Type>JaStDev.HAB.RemoveLinkInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>118</ID>
+        <Type>JaStDev.HAB.ErrorInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>13</ID>
+        <Type>JaStDev.HAB.OutputInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>200</ID>
+        <Type>JaStDev.HAB.GetFirstChildInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>203</ID>
+        <Type>JaStDev.HAB.GetLastInfoInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>218</ID>
+        <Type>JaStDev.HAB.ContinueInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>242</ID>
+        <Type>JaStDev.HAB.LinkInCountInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>308</ID>
+        <Type>JaStDev.HAB.Instructions.Contains.IsClusteredByAnyInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>299</ID>
+        <Type>JaStDev.HAB.StDevInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>138</ID>
+        <Type>JaStDev.HAB.UnionInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>7</ID>
+        <Type>JaStDev.HAB.IndexOfChildInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>229</ID>
+        <Type>JaStDev.HAB.FreezeInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>272</ID>
+        <Type>JaStDev.HAB.LinkExistsInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>248</ID>
+        <Type>JaStDev.HAB.MultiplyInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>251</ID>
+        <Type>JaStDev.HAB.DivideInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>180</ID>
+        <Type>JaStDev.HAB.IToSInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>141</ID>
+        <Type>JaStDev.HAB.SolveInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>16</ID>
+        <Type>JaStDev.HAB.DeleteInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>103</ID>
+        <Type>JaStDev.HAB.CurrentInfo, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>129</ID>
+        <Type>JaStDev.HAB.GetClusterMeaningInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>151</ID>
+        <Type>JaStDev.HAB.ClearInfoInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>214</ID>
+        <Type>JaStDev.HAB.GetPrevOutInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>274</ID>
+        <Type>JaStDev.HAB.ComplementInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>240</ID>
+        <Type>JaStDev.HAB.ChildCountInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>44</ID>
+        <Type>JaStDev.HAB.WordNetSin, JaStDev.WordNetSin, Version=1.2.4722.28410, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>90</ID>
+        <Type>JaStDev.HAB.TextNeuron, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>1</ID>
+        <Type>JaStDev.HAB.TextSin, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>31</ID>
+        <Type>JaStDev.HAB.IntSin, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>89</ID>
+        <Type>JaStDev.HAB.IntNeuron, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>98</ID>
+        <Type>JaStDev.HAB.Assignment, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>95</ID>
+        <Type>JaStDev.HAB.ResultStatement, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>197</ID>
+        <Type>JaStDev.HAB.Global, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>113</ID>
+        <Type>JaStDev.HAB.ExpressionsBlock, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>93</ID>
+        <Type>JaStDev.HAB.ConditionalStatement, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>92</ID>
+        <Type>JaStDev.HAB.ConditionalExpression, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>91</ID>
+        <Type>JaStDev.HAB.BoolExpression, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>94</ID>
+        <Type>JaStDev.HAB.Statement, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>43</ID>
+        <Type>JaStDev.HAB.ByRefExpression, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>88</ID>
+        <Type>JaStDev.HAB.DoubleNeuron, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>284</ID>
+        <Type>JaStDev.HAB.LockExpression, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>32</ID>
+        <Type>JaStDev.HAB.TextSin, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>33</ID>
+        <Type>JaStDev.HAB.TextSin, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>34</ID>
+        <Type>JaStDev.HAB.IntSin, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>35</ID>
+        <Type>JaStDev.HAB.TextSin, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>36</ID>
+        <Type>JaStDev.HAB.IntSin, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>37</ID>
+        <Type>JaStDev.HAB.TextSin, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>38</ID>
+        <Type>JaStDev.HAB.IntSin, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>360</ID>
+        <Type>JaStDev.HAB.HasReferencesInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>39</ID>
+        <Type>JaStDev.HAB.ReflectionSin, JaStDev.Sins, Version=1.0.4722.28408, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>40</ID>
+        <Type>JaStDev.HAB.ReflectionSin, JaStDev.Sins, Version=1.0.4722.28408, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>369</ID>
+        <Type>JaStDev.HAB.GetLinkMeaningInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>371</ID>
+        <Type>JaStDev.HAB.GetAllOutgoingInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>370</ID>
+        <Type>JaStDev.HAB.GetAllIncommingInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>41</ID>
+        <Type>JaStDev.HAB.TextSin, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>377</ID>
+        <Type>JaStDev.HAB.SplitStringInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>376</ID>
+        <Type>JaStDev.HAB.EndsWithInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>378</ID>
+        <Type>JaStDev.HAB.IToDTInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>379</ID>
+        <Type>JaStDev.HAB.ContainsChildrenInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>42</ID>
+        <Type>JaStDev.HAB.TextSin, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>45</ID>
+        <Type>JaStDev.HAB.TextSin, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>46</ID>
+        <Type>JaStDev.HAB.TextSin, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>382</ID>
+        <Type>JaStDev.HAB.TextSin, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>385</ID>
+        <Type>JaStDev.HAB.IntSin, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>393</ID>
+        <Type>JaStDev.HAB.IndexOfClusterInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>394</ID>
+        <Type>JaStDev.HAB.SetAtInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>395</ID>
+        <Type>JaStDev.HAB.Instructions.Set_Operations.IntersectVarInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>396</ID>
+        <Type>JaStDev.HAB.PerformResultInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>397</ID>
+        <Type>JaStDev.HAB.PerformInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>398</ID>
+        <Type>JaStDev.HAB.RemoveAtInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>399</ID>
+        <Type>JaStDev.HAB.AddStoreIntInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>403</ID>
+        <Type>JaStDev.HAB.Instructions.unary.InvertIntInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>401</ID>
+        <Type>JaStDev.HAB.InvertSignInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>402</ID>
+        <Type>JaStDev.HAB.Instructions.unary.InvertDoubleInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>400</ID>
+        <Type>JaStDev.HAB.NotInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>404</ID>
+        <Type>JaStDev.HAB.InvertIntListInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>405</ID>
+        <Type>JaStDev.HAB.InvertDoubleListInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>409</ID>
+        <Type>JaStDev.HAB.PopValueInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>412</ID>
+        <Type>JaStDev.HAB.ReturnInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>407</ID>
+        <Type>JaStDev.HAB.ReturnValue, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>411</ID>
+        <Type>JaStDev.HAB.Instructions.Arithmetic.IncrementInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>410</ID>
+        <Type>JaStDev.HAB.Instructions.Arithmetic.DecrementInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>408</ID>
+        <Type>JaStDev.HAB.PushValueInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>414</ID>
+        <Type>JaStDev.HAB.Instructions.Arithmetic.AddStoreDoubleInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>413</ID>
+        <Type>JaStDev.HAB.StoreIntInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>415</ID>
+        <Type>JaStDev.HAB.StoreDoubleInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>418</ID>
+        <Type>JaStDev.HAB.AddInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>417</ID>
+        <Type>JaStDev.HAB.AddAssignDoubleInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>416</ID>
+        <Type>JaStDev.HAB.AddAssignIntInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>419</ID>
+        <Type>JaStDev.HAB.MinusAssignDoubleInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>420</ID>
+        <Type>JaStDev.HAB.MinusAssignIntInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>429</ID>
+        <Type>JaStDev.HAB.Instructions.Arithmetic.AddIntInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>430</ID>
+        <Type>JaStDev.HAB.Instructions.Arithmetic.AddDoubleInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>428</ID>
+        <Type>JaStDev.HAB.MinusDoubleInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>426</ID>
+        <Type>JaStDev.HAB.MultiplyDoubleInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>424</ID>
+        <Type>JaStDev.HAB.DivDoubleInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>427</ID>
+        <Type>JaStDev.HAB.MinusIntInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>425</ID>
+        <Type>JaStDev.HAB.MultiplyIntInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>421</ID>
+        <Type>JaStDev.HAB.ModIntInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>422</ID>
+        <Type>JaStDev.HAB.ModDoubleInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>423</ID>
+        <Type>JaStDev.HAB.DivIntInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>431</ID>
+        <Type>JaStDev.HAB.Instructions.Convert.ToSInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>406</ID>
+        <Type>JaStDev.HAB.Local, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>432</ID>
+        <Type>JaStDev.HAB.Instructions.LengthInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>433</ID>
+        <Type>JaStDev.HAB.GetRangeInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>435</ID>
+        <Type>JaStDev.HAB.UnFreezeInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>434</ID>
+        <Type>JaStDev.HAB.DeleteFrozenInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>436</ID>
+        <Type>JaStDev.HAB.ApplyWeightInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>388</ID>
+        <Type>JaStDev.HAB.ReflectionSin, JaStDev.Sins, Version=1.0.4722.28408, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>439</ID>
+        <Type>JaStDev.HAB.ParamStackCountInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>440</ID>
+        <Type>JaStDev.HAB.JmpIfInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>437</ID>
+        <Type>JaStDev.HAB.PrepareLocalInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>441</ID>
+        <Type>JaStDev.HAB.ReturnValueIfInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>438</ID>
+        <Type>JaStDev.HAB.ReturnInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>464</ID>
+        <Type>JaStDev.HAB.MinusStoreDoubleInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>465</ID>
+        <Type>JaStDev.HAB.ModStoreDoubleInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>466</ID>
+        <Type>JaStDev.HAB.MultiplyStoreDoubleIntruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>451</ID>
+        <Type>JaStDev.HAB.SplitAccumInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>452</ID>
+        <Type>JaStDev.HAB.IncreaseWeightOfInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>453</ID>
+        <Type>JaStDev.HAB.DecreaseWeightOfInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>454</ID>
+        <Type>JaStDev.HAB.StoLiInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>455</ID>
+        <Type>JaStDev.HAB.SubStringInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>47</ID>
+        <Type>JaStDev.HAB.GetCharAtInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>458</ID>
+        <Type>JaStDev.HAB.RemoveInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>459</ID>
+        <Type>JaStDev.HAB.MultiplyStoreIntInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>443</ID>
+        <Type>JaStDev.HAB.GetCommonOutInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>444</ID>
+        <Type>JaStDev.HAB.GetCommonInInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>460</ID>
+        <Type>JaStDev.HAB.MinusStoreIntInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>445</ID>
+        <Type>JaStDev.HAB.BlockedCallInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>461</ID>
+        <Type>JaStDev.HAB.DivStoreIntInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>446</ID>
+        <Type>JaStDev.HAB.SortInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>462</ID>
+        <Type>JaStDev.HAB.ModStoreIntInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>463</ID>
+        <Type>JaStDev.HAB.DivStoreDoubleInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>467</ID>
+        <Type>JaStDev.HAB.SetStringInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>469</ID>
+        <Type>JaStDev.HAB.ReplaceInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+      <Map>
+        <ID>470</ID>
+        <Type>JaStDev.HAB.InsertInstruction, JaStDev.HabCore, Version=0.8.4720.35460, Culture=neutral, PublicKeyToken=null</Type>
+      </Map>
+    </NeuronTypes>
+  </NDBStore>
+  <FreeIds>
+    <ID>13083</ID>
+  </FreeIds>
+  <Modules xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <Path>Modules\</Path>
+    <TextBinding>-1</TextBinding>
+    <CallOsCallback>0</CallOsCallback>
+  </Modules>
+</Network>

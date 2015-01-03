@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is the DTD for the lexxx.xml files, which contain the XML version
+of the web report title Lexical Entry Report.  I's format can be summarized
+as:
+
+<lexical-entry>
+  <definition>
+  <lexemes>
+	<lexeme>*
+  <semtypes>
+  <governors>
+  <FERealizations>
+    <FERealization>*
+      <valence-unit>
+      <annotationSet-ids>
+        <id>
+  <FEGroupRealizations>
+    <FEGroupRealization>*
+      <fes>
+        <fe>*
+      <pattern>
+        <valence-unit>*
+        <annotationSet-ids>
+          <id>
+-->
+
+<!ELEMENT lexical-entry (definition, lexemes, semTypes, governors, FERealizations, FEGroupRealizations)> 
+<!ATTLIST lexical-entry ID  NMTOKEN #REQUIRED
+                        name  CDATA #REQUIRED
+                        frame CDATA #REQUIRED
+                        pos (N | V | A | ADV | PREP | NUM) #REQUIRED
+                        incorporatedFE CDATA #REQUIRED>
+
+<!ELEMENT definition (#PCDATA)>
+
+<!ELEMENT lexemes (lexeme*)>
+<!ELEMENT lexeme (#PCDATA)>
+<!ATTLIST lexeme
+			ID NMTOKEN #REQUIRED
+			pos CDATA #REQUIRED
+			breakBefore (true | false) #REQUIRED
+			headword (true | false) #REQUIRED>
+
+<!ELEMENT semTypes (semType*)>
+<!ELEMENT semType (EMPTY)>
+<!ATTLIST semType
+                   ID NMTOKEN #REQUIRED
+                   name CDATA #REQUIRED>
+
+<!ELEMENT governors (governor*)>
+<!ELEMENT governor (annotationSet-ids)>
+<!ATTLIST governor
+                   lemma CDATA #REQUIRED
+                   type CDATA #REQUIRED>
+
+
+<!ELEMENT FERealizations (FERealization*)>
+<!ELEMENT FERealization (valence-unit, annotationSet-ids)>
+<!ATTLIST FERealization 
+                    total CDATA  #REQUIRED>
+
+<!ELEMENT FEGroupRealizations (FEGroupRealization*)>
+<!ELEMENT FEGroupRealization (fes, pattern*)>
+<!ATTLIST FEGroupRealization 
+                    total CDATA #REQUIRED>
+
+<!ELEMENT valence-unit EMPTY>
+<!ATTLIST valence-unit 
+                      fe CDATA #REQUIRED
+                      pt CDATA #REQUIRED
+                      gf CDATA #REQUIRED>
+
+<!ELEMENT annotationSet-ids (id+)>
+
+<!ELEMENT id (#PCDATA)>
+
+<!ELEMENT fes (fe+)>
+
+<!ELEMENT fe (#PCDATA)>
+
+<!ELEMENT pattern (valence-unit+, annotationSet-ids)>
+<!ATTLIST pattern 
+                  total CDATA #REQUIRED>

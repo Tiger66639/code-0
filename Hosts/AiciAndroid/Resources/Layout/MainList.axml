@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="fill_parent"
+    android:id="@+id/MainLayout"
+    android:layout_width="fill_parent">
+   
+
+   <!--<TableLayout android:id="@+id/Buttons"
+                android:layout_width="fill_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1">
+      <TableRow>
+         
+         <ImageButton
+            android:id="@+id/BtnEmail"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:src="@drawable/sym_action_email"
+            android:layout_weight="1" />
+
+         
+         <Button
+            android:id="@+id/BtnSms"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="SMS" />
+      </TableRow>
+
+      <TableRow>
+         
+         <Button
+            android:id="@+id/BtnTwitter"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:text="Twitter"
+            android:layout_weight="1" />
+
+         
+         <Button
+            android:id="@+id/BtnEvent"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Facebook" />
+      </TableRow>
+
+      <TableRow>
+         
+         <ImageButton android:id="@+id/BtnCall"
+                      android:src="@drawable/ic_menu_call"
+                      android:layout_width="0dip"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1" />
+
+         
+         <ImageButton android:id="@+id/Mic"
+                      android:src="@drawable/ic_btn_speak_now"
+                      android:layout_width="0dip"
+                      android:layout_weight="1"
+                      android:layout_height="wrap_content"/>
+
+      </TableRow>
+
+   </TableLayout>-->
+
+
+   <ImageButton android:id="@+id/Mic"
+                     android:src="@drawable/ic_btn_speak_now"
+                     android:layout_width="fill_parent"
+                     android:layout_alignParentBottom="true"
+                     android:layout_height="wrap_content"
+                     /><!--android:layout_weight="1"-->
+
+   <Button
+       android:id="@+id/Send"
+       android:text="Send!"
+       android:layout_width="wrap_content"
+       android:layout_alignParentRight="true"
+       android:layout_above="@id/Mic"
+       android:visibility="gone"
+       android:layout_height="wrap_content"/>
+   <EditText
+           android:id="@+id/Input"
+           android:hint="Enter some text..."
+           android:layout_alignParentLeft="true"
+           android:layout_marginLeft="4px"
+           android:layout_above="@id/Mic"
+           android:layout_width="fill_parent"
+           android:layout_toLeftOf="@id/Send"
+           android:visibility="gone"
+           android:layout_height="wrap_content"></EditText>
+
+   <FrameLayout android:layout_above="@id/Input"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+      <ImageView android:id="@+id/ImgBackground"
+                 android:layout_width="fill_parent"
+                 android:scaleType="centerCrop"
+                 android:layout_height="fill_parent"/>
+
+      <RelativeLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_alignParentBottom="true">
+         <ListView android:id="@+id/android:list"
+                android:layout_alignParentBottom="true"
+                android:transcriptMode="alwaysScroll"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"/>
+      </RelativeLayout>
+      
+   </FrameLayout>
+   
+</RelativeLayout>

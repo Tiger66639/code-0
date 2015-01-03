@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.WPF.Controls.NeuronDataEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             x:Name="this"
+             Background="Transparent">
+    <UserControl.Resources>
+        <Style TargetType="Image"
+               x:Key="NeuronDataEditorImageStyle">
+            <Style.Triggers>
+                <!--When there is no source, make certain that the image is not visible.-->
+                <Trigger Property="Source" Value="{x:Null}">
+                    <Setter Property="Width" Value="0" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Button Grid.Column="0"
+                Width="8"
+                Height="8"
+                Padding="0"
+                VerticalAlignment="Top"
+                ToolTip="Reset or remove the value."
+                x:Name="BtnReset"
+                Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                Click="BtnReset_Click"
+                Visibility="Collapsed">
+            <Image Source="\Images\Edit\DeleteVerySmall_Enabled.png" />
+        </Button>
+        <Image Source="{Binding ElementName=this, Path=SelectedNeuron, Converter={StaticResource NeuronToImgConv}}"
+               Grid.Column="1"
+               x:Name="PART_SelectedNeuronImage"
+               Stretch="Uniform"
+               Height="16"
+               Width="16"
+               Style="{StaticResource NeuronDataEditorImageStyle}" />
+        <TextBox Grid.Column="2"
+                 BorderThickness="0"
+                 Background="Transparent"
+                 VerticalAlignment="Center"
+                 x:Name="TxtValue"
+                 TextChanged="TxtValue_TextChanged"
+                 Foreground="{Binding ElementName=this, Path=Foreground}" />
+        <ToggleButton BorderThickness="0"
+                      Name="PART_TOGGLE"
+                      Grid.Column="3"
+                      Checked="PART_TOGGLE_Checked"
+                      Unchecked="PART_TOGGLE_Unchecked"
+                      Style="{StaticResource SimpleExpanderDownHeaderStyle}"
+                      Focusable="False"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
+                      ToolTip="Show/hide a list of possible values" /> <!--ClickMode="Press"-->
+
+    </Grid>
+</UserControl>

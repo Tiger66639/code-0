@@ -1,0 +1,78 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.LinkOverlay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Name="This">
+    <UserControl.Resources>
+
+        <ContextMenu x:Key="MainContextMenu"
+                     Opened="ContextMenu_Opened">
+            <MenuItem Header="Add point" Click="AddPoint_Click" />
+            <!--This is here just to show it is possible, the command is enabled when it is performed on a thumb.-->
+            <MenuItem Header="Remove point" IsEnabled="False" />
+            <Separator />
+            <MenuItem Header="Remove link"
+                      Click="RemoveLink_Click"
+                      ToolTip="Removes the link from the designer, the actual link remains." />
+            <MenuItem Header="Delete link"
+                      Click="DeleteLink_Click"
+                      ToolTip="Removes the link from the designer and from the neurons." />
+            <Separator />
+            <MenuItem Header="Properties" Click="ShowProp_Click" />
+        </ContextMenu>
+
+        <ContextMenu x:Key="PointContextMenu">
+            <!--This is here just to show it is possible, the command is enabled when it is performed on a thumb.-->
+            <MenuItem Header="Add point" IsEnabled="False" />
+            <MenuItem Header="Remove point" Click="RemovePoint_Click" />
+            <Separator />
+            <MenuItem Header="Delete link" Click="DeleteLink_Click" />
+            <Separator />
+            <MenuItem Header="Properties" Click="ShowProp_Click" />
+        </ContextMenu>
+
+
+    </UserControl.Resources>
+    <Canvas x:Name="MainContainer">
+        <Polyline Points="{Binding ElementName=This, Path=Points, Mode=OneWay}"
+                  StrokeDashArray="1 2"
+                  StrokeThickness="{Binding ElementName=This, Path=ToControl.Owner.ZoomInverse}"
+                  Stroke="Black"
+                  Fill="Transparent"
+                  ContextMenu="{StaticResource MainContextMenu}" />
+        <!--This is just to provide a larger click area.-->
+        <Polyline Points="{Binding ElementName=This, Path=Points, Mode=OneWay}"
+                  StrokeThickness="5"
+                  Stroke="Transparent"
+                  Fill="Transparent"
+                  ContextMenu="{StaticResource MainContextMenu}" />
+
+        <ItemsControl ItemsSource="{Binding ElementName=This, Path=EditablePoints}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Thumb Width="8"
+                           Height="8"
+                           Style="{StaticResource MindMapDragThumb}"
+                           ContextMenu="{StaticResource PointContextMenu}"
+                           DragDelta="Thumb_DragDelta" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="{x:Type ContentPresenter}">
+                    <Setter Property="Canvas.Left" Value="{Binding Path=X}" />
+                    <Setter Property="Canvas.Top" Value="{Binding Path=Y}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
+        <Thumb Width="8"
+               Canvas.Left="{Binding ElementName=This, Path=TextX}"
+               Canvas.Top="{Binding ElementName=This, Path=TextY}"
+               Height="8"
+               Style="{StaticResource MindMapDragThumb}"
+               DragDelta="TextThumb_DragDelta" />
+    </Canvas>
+</UserControl>

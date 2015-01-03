@@ -1,0 +1,510 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.NeuronExplorerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:dd="clr-namespace:DnD"
+             xmlns:cf="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+             xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+             xmlns:prop="clr-namespace:JaStDev.HAB.Designer.Properties"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:hab="clr-namespace:JaStDev.HAB;assembly=JaStDev.HabCore"
+             xmlns:eff="clr-namespace:LearnWPF.Effects;assembly=LearnWPF.Effects"
+             cf:Help.Topic="theexplorer.html"
+             PreviewMouseWheel="TheCtrl_MouseWheel"
+             x:Name="TheCtrl">
+
+    <UserControl.CommandBindings>
+        <CommandBinding Command="self:App.RenameCmd" CanExecute="Rename_CanExecute" Executed="Rename_Executed" />
+        <CommandBinding Command="self:App.MergeNeuronsCmd" CanExecute="Rename_CanExecute"
+                        Executed="MergeNeurons_Executed" />
+        <CommandBinding Command="MoveDownByLine" CanExecute="MoveDownByLine_CanExecute"
+                        Executed="MoveDownByLine_Executed" />
+        <CommandBinding Command="MoveUpByLine" CanExecute="MoveUpByLine_CanExecute" Executed="MoveUpByLine_Executed" />
+        <CommandBinding Command="MoveDownByPage" CanExecute="MoveDownByPage_CanExecute"
+                        Executed="MoveDownByPage_Executed" />
+        <CommandBinding Command="MoveUpByPage" CanExecute="MoveUpByPage_CanExecute" Executed="MoveUpByPage_Executed" />
+
+        <CommandBinding Command="MoveToDocumentStart" Executed="MoveToDocumentStart_Executed" />
+        <CommandBinding Command="MoveToDocumentEnd" Executed="MoveToDocumentEnd_Executed" />
+
+        <CommandBinding Command="GoToPage" Executed="GotoPage_Executed" />
+        <CommandBinding Command="Find" Executed="Find_Executed" />
+        <CommandBinding Command="self:App.FindNextCmd" Executed="FindNextCmd_Executed"
+                        CanExecute="FindNextCmd_CanExecute" />
+    </UserControl.CommandBindings>
+    <UserControl.InputBindings>
+        <KeyBinding Command="self:App.RenameCmd" Key="F2" />
+        <KeyBinding Command="GoToPage" Key="G" Modifiers="Ctrl" />
+        <KeyBinding Command="Find" Key="F" Modifiers="Ctrl" />
+        <KeyBinding Key="F3" Command="self:App.FindNextCmd" />
+    </UserControl.InputBindings>
+    <UserControl.Resources>
+
+        <BooleanToVisibilityConverter x:Key="BoolToVisConv" />
+        <self:ExplorerDragSourceAdvisor x:Key="DragAdvisor" />
+        <self:ExplorerDropAdvisor x:Key="DropAdvisor" />
+
+
+        <DataTemplate DataType="{x:Type self:InvalidExplorerItem}">
+            <Border ToolTip="{Binding Path=Error}">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0.472063,0.00712611" EndPoint="1.48871,0.00712611">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <SkewTransform CenterX="0.472063" CenterY="0.00712611" AngleX="0.564752" AngleY="0" />
+                                <RotateTransform CenterX="0.472063" CenterY="0.00712611" Angle="89.6761" />
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Color="#FFFCAFA2" Offset="0" />
+                            <GradientStop Color="#FFBC5441" Offset="1" />
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <DockPanel Margin="2">
+                    <TextBlock Text="{Binding Path=ID}"
+                               DockPanel.Dock="Right" />
+                    <TextBlock>
+                        <Italic>Error</Italic>
+                    </TextBlock>
+                </DockPanel>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type self:FreeExplorerItem}">
+            <Border>
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0.472063,0.00712611" EndPoint="1.48871,0.00712611">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <SkewTransform CenterX="0.472063" CenterY="0.00712611" AngleX="0.564752" AngleY="0" />
+                                <RotateTransform CenterX="0.472063" CenterY="0.00712611" Angle="89.6761" />
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Color="#FF9AD3F6" Offset="0" />
+                            <GradientStop Color="#FFFFFFFF" Offset="1" />
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <DockPanel Margin="2">
+                    <TextBlock Text="{Binding Path=ID}"
+                               DockPanel.Dock="Right" />
+                    <TextBlock>
+                        <Italic>Free</Italic>
+                    </TextBlock>
+                </DockPanel>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type self:ReservedExplorerItem}">
+            <Border>
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0.472063,0.00712611" EndPoint="1.48871,0.00712611">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <SkewTransform CenterX="0.472063" CenterY="0.00712611" AngleX="0.564752" AngleY="0" />
+                                <RotateTransform CenterX="0.472063" CenterY="0.00712611" Angle="89.6761" />
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Color="#FF9AF6A3" Offset="0" />
+                            <GradientStop Color="#FF4AC367" Offset="1" />
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <DockPanel Margin="2">
+                    <TextBlock Text="{Binding Path=ID}"
+                               DockPanel.Dock="Right" />
+                    <TextBlock DockPanel.Dock="Left">
+                        <Italic>Reserved</Italic>
+                    </TextBlock>
+                </DockPanel>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type self:NeuronExplorerItem}">
+            <!--The background needs to be transparent so we can click on it.-->
+            <DockPanel x:Name="ItemPanel"
+                       Background="Transparent">
+                <TextBlock DockPanel.Dock="Right"
+                           x:Name="TxtID"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           ToolTip="The ID of the neuron."
+                           Text="{Binding Path=Item.ID}" />
+                <CheckBox IsChecked="{Binding Path=IsDefaultMeaning, Mode=TwoWay}"
+                          VerticalAlignment="Center"
+                          ClickMode="Press"
+                          IsThreeState="False"
+                          DockPanel.Dock="Right"
+                          ToolTip="When checked, this item will be visible in 'meaning' drop downlists of clusters and links."
+                          x:Name="ChkIsDefMeaning" />
+                <!--We bind the with of the image to the height so that it is always a square.-->
+                <Grid Width="16"
+                      Height="16"
+                      DockPanel.Dock="Left"
+                      Margin="0,0,4,0"
+                      dd:DragDropManager.IsVisualFor="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}}">
+                    <Image Source="{Binding Path=Item, Converter={StaticResource NeuronToImgConv}}"
+                           ToolTip="{Binding Path=NeuronTypeName}"
+                           Stretch="Fill" />
+                    <TextBlock Visibility="{Binding Path=HasCode, Converter={StaticResource BoolToVisConv}}"
+                               Foreground="Red"
+                               FontSize="10"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Bottom">
+                        <Bold>c</Bold>
+                    </TextBlock>
+                </Grid>
+                <!--We use a seperate contentpresenter for the title so we can make it editable-->
+                <ContentPresenter x:Name="PART_TITLE"
+                                  Content="{Binding}"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Left"
+                                  dd:DragDropManager.IsVisualFor="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}}">
+                    <!--we apply a negative effect on the item while  dragging to make the white text (since selected), black again for easy reading-->
+                    <dd:DragDropManager.DragEffect>
+                        <eff:NegativeEffect />
+                    </dd:DragDropManager.DragEffect>
+                    <ContentPresenter.ContentTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=NeuronInfo.DisplayTitle}"
+                                       x:Name="TxtDisplayName"
+                                       VerticalAlignment="Center"
+                                       TextTrimming="CharacterEllipsis"
+                                       HorizontalAlignment="Left" />
+                        </DataTemplate>
+                    </ContentPresenter.ContentTemplate>
+                </ContentPresenter>
+            </DockPanel>
+            <DataTemplate.Triggers>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding ElementName=TheCtrl, Path=IsEditing}" Value="True" />
+                        <Condition Binding="{Binding Path=IsSelected}" Value="True" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter TargetName="PART_TITLE" Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Path=NeuronInfo.DisplayTitle}"
+                                         cf:FocusManager.IsFocused="{Binding ElementName=TheCtrl, Path=IsEditing}"
+                                         PreviewLostKeyboardFocus="TxtTitle_LostKeybFocus"
+                                         VerticalAlignment="Center"
+                                         PreviewKeyDown="TxtTitle_PrvKeyDown"
+                                         BorderThickness="0"
+                                         Margin="-1" /><!--LostFocus="TxtTitle_LostFocus"-->
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </MultiDataTrigger>
+                <DataTrigger Binding="{Binding Path=IsSelected}" Value="true">
+                    <Setter TargetName="ItemPanel" Property="Background"
+                            Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+
+
+        <ContextMenu x:Key="MainContextMenu">
+            <MenuItem Header="Rename"
+                      Command="self:App.RenameCmd"
+                      ToolTip="change the title of the neuron."
+                      InputGestureText="F2" />
+            <MenuItem Header="Change to" ItemsSource="{StaticResource ChangeToMenuItems}" /><!---->
+            <MenuItem Header="Merge into..."
+                      ToolTip="Merge this neuron into an other one."
+                      Command="self:App.MergeNeuronsCmd" />
+            <MenuItem
+                IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.NeuronInfo.IsDictionaryItem}"
+                IsCheckable="True"
+                IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.NeuronInfo.InDictionary}"
+                Header="In dictionary" />
+            <Separator />
+            <MenuItem Header="Inspect value"
+                      Command="self:App.InspectExpressionCmd"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                      InputGestureText="F7"
+                      ToolTip="View the value of the currently selected result expression." />
+            <MenuItem Header="Browse neuron"
+                      Command="self:GlobalCommands.BrowseNeuronCmd"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                      ToolTip="Look at all the relationships of the neuron through a neuron debug view."
+                      InputGestureText="F8">
+                <MenuItem.Icon>
+                    <Image Source="/Images/BrowseNeuron_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Attach to processor"
+                      ToolTip="Attach the neuron to the currently selected processor so that any change in another processor is reported."
+                      Command="self:App.AttachToCurProcessorCmd"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}" />
+            <Separator />
+            <MenuItem Header="Goto"
+                      Command="GoToPage"
+                      ToolTip="select the neuron with a specific id."
+                      InputGestureText="Ctrl+G" />
+            <MenuItem Header="Search"
+                      Command="Find"
+                      InputGestureText="Ctrl+F" />
+            <MenuItem Header="Find next"
+                      Command="self:App.FindNextCmd"
+                      ToolTip="Find the next occurrance of the search text"
+                      InputGestureText="F3">
+                <MenuItem.Icon>
+                    <Image Source="/Images/FindNextHS.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Command="self:GlobalCommands.SearchInCodeCmd"
+                      ToolTip="Search the selected neuron for all usages in code clusters and display the results. (Ctrl+F3)"
+                      InputGestureText="Ctrl+F3">
+                <MenuItem.Icon>
+                    <Image Source="/Images/CodeSearch_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <Separator />
+            <MenuItem Command="Copy"
+                      ToolTip="Copy the selected neurons to the clipboard."
+                      InputGestureText="Ctrl+C">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Edit/Copy_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Command="Delete"
+                      ToolTip="Permanently delete all the selected neurons from the network."
+                      InputGestureText="Del" />
+            <Separator />
+            <MenuItem Header="View frames..." Command="self:GlobalCommands.ViewAttachedFramessCmd"
+                      ToolTip="Show the object-frames editor for the selected item."
+                      InputGestureText="Shift+F6"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Frame/Object_Frames_Enabled.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="View asset..." Command="self:GlobalCommands.ViewAttachedAssetsCmd"
+                      ToolTip="Show the asset editor for the selected item."
+                      InputGestureText="Shift+F5"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Asset/objectAsset_Enabled.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="View code..." Command="self:GlobalCommands.ViewCodeCmd"
+                      ToolTip="Open and show a code editor for the selected item."
+                      InputGestureText="Shift+F4"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/ViewCode_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
+
+        <ContextMenu x:Key="SubContextMenu">
+            <MenuItem
+                IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem.NeuronInfo.IsDictionaryItem}"
+                IsCheckable="True"
+                IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem.NeuronInfo.InDictionary}"
+                Header="In dictionary" />
+            <Separator />
+            <MenuItem Command="self:App.SyncCmd"
+                      Header="Sync with main list"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem.Item}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Sync_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Browse neuron"
+                      Command="self:GlobalCommands.BrowseNeuronCmd"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem.Item}"
+                      ToolTip="Look at all the relationships of the neuron through a neuron debug view."
+                      InputGestureText="F8">
+                <MenuItem.Icon>
+                    <Image Source="/Images/BrowseNeuron_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Inspect value"
+                      Command="self:App.InspectExpressionCmd"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem.Item}"
+                      InputGestureText="F7"
+                      ToolTip="View the value of the currently selected result expression." />
+            <MenuItem Header="Attach to processor"
+                      ToolTip="Attach the neuron to the currently selected processor so that any change in another processor is reported."
+                      Command="self:App.AttachToCurProcessorCmd"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem.Item}" />
+            <Separator />
+            <MenuItem Command="Copy"
+                      ToolTip="Copy the selected neurons to the clipboard."
+                      InputGestureText="Ctrl+C">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Edit/Copy_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Command="Delete"
+                      ToolTip="Permanently delete all the selected neurons from the network."
+                      InputGestureText="Del" />
+            <MenuItem Header="Remove"
+                      ToolTip="Remove the neuron from the cluster, but not from the network."
+                      Click="MenuItemRemove_Click" />
+            <Separator />
+            <MenuItem Header="View frames..." Command="self:GlobalCommands.ViewAttachedFramessCmd"
+                      ToolTip="Show the object-frames editor for the selected item."
+                      InputGestureText="Shift+F6"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem.Item}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Frame/Object_Frames_Enabled.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="View asset..." Command="self:GlobalCommands.ViewAttachedAssetsCmd"
+                      ToolTip="Show the asset editor for the selected item."
+                      InputGestureText="Shift+F5"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem.Item}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Asset/objectAsset_Enabled.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="View code..." Command="self:GlobalCommands.ViewCodeCmd"
+                      ToolTip="Open and show a code editor for the selected item."
+                      InputGestureText="Shift+F4"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem.Item}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/ViewCode_Enabled.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
+
+
+        <Style x:Key="ExplorerItemStyle" TargetType="{x:Type ContentControl}">
+            <Setter Property="ContextMenu" Value="{StaticResource MainContextMenu}" />
+            <Setter Property="dd:DragDropManager.DragSource" Value="{StaticResource DragAdvisor}" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <!--we give a default background so that it can get keyboard focus-->
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Focusable" Value="True" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <!--The height of the item is defined on the explorer object itself, it is the same for all.-->
+            <Setter Property="Height" Value="{Binding ElementName=TheCtrl, Path=DataContext.ItemHeight, Mode=OneTime}" />
+            <!--we need to assign the width so that the checkboxes are positioned ok.-->
+            <Setter Property="Width" Value="{Binding ElementName=LstItems, Path=ActualWidth}" />
+            <EventSetter Event="MouseDown" Handler="ExplorerItem_MouseLeftButtonDown" />
+            <Setter Property="cf:FocusManager.IsFocused" Value="{Binding Path=IsSelected, Mode=OneWay}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=IsSelected}" Value="True">
+                    <Setter Property="Foreground"
+                            Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ChildrenListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="dd:DragDropManager.DragSource" Value="{StaticResource DragAdvisor}" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="Height" Value="{Binding ElementName=TheCtrl, Path=ItemHeight}" />
+            <Setter Property="Width" Value="{Binding ElementName=LstChildren, Path=ActualWidth}" />
+        </Style>
+
+    </UserControl.Resources>
+    <DockPanel>
+        <Expander Style="{StaticResource SimpleExpandDownStyle}"
+                  IsExpanded="{Binding Source={x:Static prop:Settings.Default}, Path=ToolbarExpandedNeuronExplorer, Mode=TwoWay}"
+                  Focusable="False"
+                  DockPanel.Dock="Top">
+            <ToolBar MinWidth="80"
+                     FocusManager.IsFocusScope="False"
+                     KeyboardNavigation.TabNavigation="Continue">
+                <Button x:Name="BtnDelete"
+                        ToolTip="Permenantly delete the currently selected neuron"
+                        Style="{StaticResource TlbButtonsStyle}"
+                        Command="Delete">
+                    <Image
+                        Source="{Binding ElementName=BtnDelete, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Delete.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Separator />
+                <ToggleButton IsChecked="{Binding Path=IsChildrenLoaded}"
+                              ToolTip="Show children of selected cluster">
+                    <Image Source="/Images/view_left_right.png"
+                           Height="16"
+                           Width="16" />
+                </ToggleButton>
+                <Separator />
+                <TextBox x:Name="TxtToSearch"
+                         ToolTip="text to search for"
+                         MinWidth="90"
+                         PreviewKeyDown="TxtToSearch_KeyDown" />
+                <Button Command="self:App.FindNextCmd"
+                        ToolTip="Find next neuron (F3)">
+                    <Image Height="16" Source="/Images/FindNextHS.png" />
+                </Button>
+            </ToolBar>
+        </Expander>
+
+
+        <!--these 2 borders are required.  They fix a bug in how dockPanel works when there are invisible items (the splitter and
+      the listbox.  If we don't put something in top and bottom (fixed), the toolbar wont size properly. -->
+        <Border DockPanel.Dock="Top" />
+        <Border DockPanel.Dock="Bottom" />
+        <!--the tag is bound to the currently selected item, this way, the drop advisor knows the neuroncluster to which he needs
+          to add the new neuron-->
+        <ListBox x:Name="LstChildren"
+                 MinWidth="20"
+                 Width="40"
+                 BorderThickness="0"
+                 Tag="{Binding Path=Selection.SelectedItem}"
+                 dd:DragDropManager.DropTarget="{StaticResource DropAdvisor}"
+                 DockPanel.Dock="Right"
+                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                 Visibility="{Binding Path=IsChildrenLoaded, Converter={StaticResource BoolToVisConv}}"
+                 ItemContainerStyle="{StaticResource ChildrenListBoxItemStyle}"
+                 ItemsSource="{Binding Path=Children}"
+                 ContextMenu="{StaticResource SubContextMenu}">
+            <ListBox.CommandBindings>
+                <CommandBinding Command="Delete" CanExecute="DeleteChildren_CanExecute"
+                                Executed="DeleteChildren_Executed" />
+                <CommandBinding Command="Copy" CanExecute="CopyChildren_CanExecute" Executed="CopyChildren_Executed" />
+            </ListBox.CommandBindings>
+        </ListBox>
+        <cf:DockSplitter Width="6"
+                         BorderThickness="1,0,1,0"
+                         BorderBrush="{Binding ElementName=LstChildren, Path=BorderBrush}"
+                         DockPanel.Dock="Right"
+                         ShowsPreview="False"
+                         Visibility="{Binding Path=IsChildrenLoaded, Converter={StaticResource BoolToVisConv}}" />
+        <DockPanel>
+            <ScrollBar Orientation="Vertical"
+                       DockPanel.Dock="Right"
+                       Maximum="{Binding Path=MaxScrollValue}"
+                       Minimum="2"
+                       Value="{Binding Path=CurrentScrollPos, Mode=TwoWay}"
+                       LargeChange="{Binding Path=MaxVisible}"
+                       SmallChange="1" />
+            <self:ExplorerItemsControl x:Name="LstItems"
+                                       BorderThickness="0"
+                                       Background="{Binding ElementName=LstChildren, Path=Background}"
+                                       ItemContainerStyle="{StaticResource ExplorerItemStyle}"
+                                       ItemsSource="{Binding Path=Items}">
+                <self:ExplorerItemsControl.InputBindings>
+                    <KeyBinding Key="Down" Command="MoveDownByLine" />
+                    <KeyBinding Key="Up" Command="MoveUpByLine" />
+                    <KeyBinding Key="PageDown" Command="MoveDownByPage" />
+                    <KeyBinding Key="PageUp" Command="MoveUpByPage" />
+                    <KeyBinding Key="End" Command="MoveToDocumentEnd" />
+                    <KeyBinding Key="Home" Command="MoveToDocumentStart" />
+                </self:ExplorerItemsControl.InputBindings>
+                <self:ExplorerItemsControl.CommandBindings>
+                    <CommandBinding Command="Delete" CanExecute="DeleteMain_CanExecute" Executed="DeleteMain_Executed" />
+                    <CommandBinding Command="Copy" CanExecute="CopyMain_CanExecute" Executed="CopyMain_Executed" />
+                </self:ExplorerItemsControl.CommandBindings>
+            </self:ExplorerItemsControl>
+        </DockPanel>
+    </DockPanel>
+</UserControl>

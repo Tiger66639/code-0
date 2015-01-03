@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.FramesEditorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:self="clr-namespace:JaStDev.HAB.Designer">
+    <DockPanel>
+        <Expander Style="{StaticResource SimpleExpandDownStyle}"
+                  Focusable="False"
+                  IsExpanded="{Binding Source={x:Static self:Properties.Settings.Default}, Path=ToolbarExpandedFrameEditor, Mode=TwoWay}"
+                  DockPanel.Dock="Top">
+            <!--
+         FocusManager.IsFocusScope="False"
+         This toolbar needs to remain a focus scope, otherwise, we can't use the toolbar to add nested filters.
+         -->
+            <ToolBar>
+                <Button ToolTip="Add a new frame (Shft+Ctrl+F)"
+                        x:Name="BtnAddFrame"
+                        Command="self:App.AddFrameCmd"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    <Image
+                        Source="{Binding ElementName=BtnAddFrame, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Frame/Frame.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Separator />
+                <Button ToolTip="Add frame element (Shft+Ctrl+E)"
+                        x:Name="BtnAddElement"
+                        Command="self:App.AddFrameElementCmd"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    <Image
+                        Source="{Binding ElementName=BtnAddElement, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Frame/FrameElement.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Button ToolTip="Add frame sequence (Shft+Ctrl+S)"
+                        x:Name="BtnAddSequence"
+                        Command="self:App.AddFrameSequenceCmd"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    <Image
+                        Source="{Binding ElementName=BtnAddSequence, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Frame/FrameSequence.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Separator />
+                <Button ToolTip="Add filter group (Shft+Ctrl+G)"
+                        x:Name="BtnAddFilterGroup"
+                        Command="self:App.AddFrameElementFilterGroupCmd"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    <Image
+                        Source="{Binding ElementName=BtnAddFilterGroup, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Frame/FilterGroup.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Button ToolTip="Add element filter (Shft+Ctrl+I)"
+                        x:Name="BtnAddFilter"
+                        Command="self:App.AddFrameElementFilterCmd"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    <Image
+                        Source="{Binding ElementName=BtnAddFilter, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Frame/Filter.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Button ToolTip="Add filter segment(Shft+Ctrl+I)"
+                        x:Name="BtnAddFilterSegment"
+                        Command="self:App.AddFEFilterSegmentCmd"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    <Image
+                        Source="{Binding ElementName=BtnAddFilterSegment, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Frame/FilterSegment.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Button ToolTip="Add custom filter (Shft+Ctrl+C)"
+                        x:Name="BtnAddCustomFilter"
+                        Command="self:App.AddFECustomFilterCmd"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    <Image
+                        Source="{Binding ElementName=BtnAddCustomFilter, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Frame/CustomFilter.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Button ToolTip="Add bool filter (Shft+Ctrl+B)"
+                        x:Name="BtnAddBoolFilter"
+                        Command="self:App.AddFEBoolFilterCmd"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    <Image
+                        Source="{Binding ElementName=BtnAddBoolFilter, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Frame/BoolFilter.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+            </ToolBar>
+        </Expander>
+        <self:FrameEditorView ContextMenu="{StaticResource FramesEditorContextMenu}" />
+    </DockPanel>
+</UserControl>

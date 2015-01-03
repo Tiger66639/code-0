@@ -1,0 +1,3422 @@
+
+class PatternMatcher
+{
+   
+   using common, Variables, Assets;
+   
+   Neuron NoReplace{}               //this neuron is used in a split operation during the resolving of textpattern-input-synonyms to reserve a spot in the split for not doing a replace, but continue use the single word or find longer synonyms
+   Neuron CalculatedCompounds {}     //used to pass along calculated values to next stages, so that they don't have to be recalculated each time.
+   Neuron IndexOfText {}           //used as the meaning for a link from a thes-var-result-cluster to the index of the word that the user used, so we can print the exact same word again and not some synonym.
+   Neuron InputIndex {}            //used as the meaning for a link between a result and an int to designate the index Of the input for which it is a result (when there are multiple inputs allowed, but only 1 result, for STT input)
+   Neuron collectsub{}             //used in a split to indicate that a sub pattern should be collected.
+   Neuron trycontinue {}           //Used in a split to indicate that the path should try the continue with the same pattern and don't do a collect.
+   Neuron newtext;               //Used in a split to indicate that the path should do a partial collect but still try the continue with a new pattern that starts with static text.
+   Neuron trynewvar {}           //Used in a split to indicate that the path should do a partial collect but still try the continue with a new pattern that starts with a var.
+   Neuron trynewthesvar {}        //Used in a split to indicate that the path should do a partial collect but still try the continue with a new pattern that starts with a thes var.
+   Neuron trynewsubtopic {}      //Used in a split to indicate that the path should do a partial collect but still try the continue by checking  the the current partial result is used as a subtopic in another pattern.
+   Neuron trynewsubrule {}       //Used in a split to indicate that the path should do a partial collect but still try the continue by checking  the the current partial result is used as a subRule in another pattern.
+   Neuron InputBreak {}          //Used as a special switch in the pattern match result, to indicate a line between 2 result sets that where consecutive, but unrelated. This is used in the output so we know when we always know to combine the output or not.
+   Neuron TheOutput: 1253 {}        //Used in the parsedOutput, to indicate where to put the previous content (if there was any). When not used in the output, any previous content is inserted at the front.
+   Neuron needsresponsefor {}       //Used as the meaning for a link from the currentsin, to an output pattern, to indicate that the output pattern is waiting for a response
+   Neuron CurrentConversation {}    //Used as the meaning for a link between a textsin and a cluster. This is used to attach a cluster to a text sin that stores all the previous statements that have been done during a single conversation with a single textsin (person, since aici 1 only supports 1 person per input channel at the same time).
+   Neuron FinalResult {}            //used as the meaning for a cluster to indicate that this is the real final result cluster, so that other parts of the network can easily find the correct result cluster (like 'Rules').   
+   Neuron Rules {}                  //used as the meaning for a link from a log item to a pattern-rule to indicate that it was present in the log item.
+   Neuron RecursionCounter;         //the meaning for a link from an input cluster, to an int, so that we can track how many times srai was called, so we don't get stuck in an ethernal loop.
+   neuron RenderLock;               //used as a lock to make certain all the text in a single output block is rendered as a continuous text and no other text renderers can come in between.
+   //Used to pass along a restriction on the topics that can possibly be found during the next pattern match.
+   NeuronCluster nexttopicsbuffer {}
+   
+   Variable splitresults {}            //used to store the results of the pattern match. This is made globally available cause many parts use it. Not a global cause it usually isn't passed along paths that allow globals to pass along their values, so there is no need.   
+   
+   
+   Global ItemsToFreeze(clear) {}         //Contains all the items that still need to be frozen after the process. 
+   Global StackedResults(duplicate) {}    //keeps track of results that have not yet been fully collected, since they define sub patterns, which are currently being matched.
+   Global NextResulTtoUse(duplicate) {}   //this is the top of the STackedResults that should currently be used.
+   Global substoresolve(copy) {}         //contains all the sub rules that we should still find.
+   Global patternresult(duplicate) = New(neuroncluster) {}
+   bool gIsFirstWord(copy);          //global that keeps track if the first matched word was the first word in the input. 
+   int indexfrom(copy) = 0;
+   double currentmaxres(copy);          //Keeps track of the biggest weight that is currently a valid result This alows us to cut off calculations early.
+  
+  
+   //this points to the textsin that performs the input/output handling for the system when in single user mode (desktop). 
+   TextSin RootTextSin: 1009 
+   {
+      //You : DefaultUser;                //create the default user. 
+   }
+    
+   //This intNeuron is used to allow a designer to determine how multiple results should be handled:
+   //If the results were all triggered by the same pattern, this neuron determins what to do next: if this value is 1 then the weight of the STT engine is used, if this points to 1 top result, this is used. if this switch has another value, the user is asked for a choice.
+   //If this value is 1 and
+   [property
+      <BoolProp>
+         <Title>Rely on the weight provided by the STT engine</Title>
+         <ToolTip>When checked and the STT engine provides multiple possible inputs, the network will rely on the weight provided by the STT engine to pick a best possible result, otherwise the user will be asked which input to use. </ToolTip>
+         <Name>UseSTTWeight</Name>
+      </BoolProp>
+   ]
+   static int UseSTTWeight = 1;
+   
+   
+   //This intNeuron is used to allow a designer to determine how multiple results should be handled:
+   //only a single top pattern is allowed = 1
+   //multiple top patterns allwed = 0
+   //default = single top pattern.
+   [property
+      <BoolProp>
+         <Title>Single top pattern</Title>
+         <ToolTip>When checked, only 1 top pattern is allowed, otherwise the bot can find multiple unrelated patterns that don't have any gaps (slower)</ToolTip>
+         <Name>SingleTopPatternResult</Name>
+      </BoolProp>
+   ]
+   static int SingleTopPatternResult = 1;
+   
+   //This intneuron is used as a switch to let the user determin if the 'output' var needs to be used or not
+   [property
+      <BoolProp>
+         <Title>Use the $output var</Title>
+         <ToolTip>When checked, the location of the previous output (and wether it is included) is determined by the usage of the $output var in the output patterns. When not checked, all output will be added consecutively (with a single space a separator).</ToolTip>
+         <Name>UseOutputVar</Name>
+      </BoolProp>
+   ]
+   static int ResolveOutputVar = 0;
+   
+   //This int is mapped as a switch in the designer to indicate if synonyms need to be resolved or not. (0 = don't use, which is the default)
+   [property
+      <BoolProp>
+         <Title>Auto resolve synonyms</Title>
+         <ToolTip>Select how synonyms are handled: auto resolve (slower) or through thesaurus paths in the input patterns (faster)</ToolTip>
+         <Name>AutoResolveSyns</Name>
+      </BoolProp>
+   ]
+   static int ResolveSynonymsSwitch = 0;
+
+   //this int is mapped as a switch in the designer to indicate how duplicate matches should be handled: when 1, an error will be shown, otherwise a warning
+   //When it is a warning, one of the items will be randomly picked as result.
+   [property
+      <BoolProp>
+         <Title>Error on multiple results</Title>
+         <ToolTip>When checked, an error will be generated in case of multiple results. Otherwise, a random item will be selected out of the list as final result.</ToolTip>
+         <Name>ErrorOnDuplicates</Name>
+      </BoolProp>
+   ]
+   static int ErrorOnDuplicates = 0;
+
+   //contains al the symbols that should be skipped.
+   [property
+      <ListProp>
+         <Title>Symbols to skip</Title>
+         <ToolTip>This list contains all the textneurons that should be treated as whitespace and which will be skipped by the patternmatcher (unless indicated for collecting variable values).</ToolTip>
+         <Name>ToSkip</Name>
+      </ListProp>
+   ]
+   cluster ToSkip
+   {
+      this()
+      {
+         ' '; '\r'; '\n'; '\t'; Statics.FirstUppercase; Statics.AllUpperCase; Statics.AllLowerCase;
+      }
+   }
+   
+   //contains a list of objects that can be used as 'sentence terminators'.  Variables can automatically be ended with them .
+   [property
+      <ListProp>
+         <Title>End of sentence signs</Title>
+         <ToolTip>Contains the list of text neurons that can be used as the end of a sentence.</ToolTip>
+         <Name>SentenceSigns</Name>
+      </ListProp>
+   ]
+   cluster SentenceSigns
+   {
+      this()
+      {
+         '.'; '!'; '?';
+      }
+   }
+   
+   /*
+     This is an event cluster and it is called when the network is started.
+   Note: this is not done when the designer is running normally.  When the designer is in sandbox mode, all events are called.
+    */
+   cluster OnStarted : 301
+   {
+      this()
+      {
+         OutputSin = RootTextSin;
+         var iLog = GetFirstOut(OutputSin, CurrentConversation);
+         if (Count(iLog) > 0)
+         {
+            MoveLogTohistory(iLog);
+            RemoveLink(OutputSin, iLog, CurrentConversation);
+         }
+         RenderStartingPattern();   
+         ExecuteDoPatterns(GetFirstOut(Statics.DoOnStartup, Statics.DoPatterns)); 
+      }
+   }
+   
+   /*
+     Called when a sin gets destroyed. CurrentSin has a ref to the sin being destroyed.
+    */
+   cluster OnSinDestroyed : 381
+   {
+      this()
+      {
+         OutputSin = Statics.CurrentSin;
+         if (TypeOf(OutputSin) == Statics.TextSin)
+         {
+            var iLog = GetFirstOut(OutputSin, CurrentConversation);
+            if (Count(iLog) > 0)
+            {
+               MoveLogTohistory(iLog);
+               RemoveLink(OutputSin, iLog, CurrentConversation);
+            }
+         }
+      }
+   }
+   /*
+     Called when a sin gets created. CurrentSin has a ref to the sin being created.
+    */
+   cluster OnSinCreated : 380
+   {
+      this()
+      {
+         OutputSin = Statics.CurrentSin;
+         if (TypeOf(OutputSin) == Statics.TextSin)
+         {
+            RenderStartingPattern();  
+            ExecuteDoPatterns(GetFirstOut(Statics.DoOnStartup, Statics.DoPatterns)); 
+         }
+      }
+   }
+
+   //stores the nr of times that a 'Parse' was called from within a patternmatch (recursive pattern matching, like SRAI element of aiml). We use this to make certain that there isn't to much recursion going on.
+   //can be shared cause content is only changed in the render stage, wich is at the very end, when there is 1 thread left.
+   int RecursionCount(shared);                       
+   
+   //can be called to parse a list of neurons and return an output as defined by the topics that were laoded.
+   //this can be compared with AIML's srai element.
+   Parse(var values):var
+   {
+      var iRes;
+      if(RecursionCount > 100)                                              //simply checking this value makes certain that there is an intneuron created.
+         Error("Parse recursion count has been reached.");
+      else
+      {
+         RecursionCount++;
+         var iFrom, iTo;
+         iFrom = new(neuron);
+         iTo = MakeCluster(STatics.In, values);                           //we pass along the value to the new parse, so it can use the same counter.
+         AddLink(iTo, RecursionCount, RecursionCounter);                   //so we can keep track of the recursion.
+         AddLink(iFrom, iTo, Main);
+         BlockedSolve(iFrom);
+         iRes = Statics.ReturnValue;                                       //BLockedSolve had a return value.   
+         delete(iTo);                                                   //delete currentTo, it doesn't have to get logged.
+         RecursionCount--;
+         if(RecursionCount == 0)
+            Freeze(RecursionCount);                                        //make certain that the recursioncount value isn't a mem leak.
+      }
+      return ires;
+   }
+   
+   //parses the values with patterns local to the specified topic(s), but doesnt' render an output, only matches the input and gets the variable values.
+   //Used to handle 'ResponseFor' and 'TopicFilter' patterns.
+   //Note: only patterns that are not part of a rule will be allowed. The patterns needs to be a 'that' or 'topicFilter' or something else that's not part of the rule itself.
+   //arguments:
+   //values= list of textneurons that represent the input
+   //localTo= the starting point for the statics that can be matched.
+   //meaningOfCluster = the meaning of the cluster that contains the pattern. This is used in 'SelectPattern' to verify that a pattern is a valid 'localTo'
+   //returns a result cluster. When it's meaning is Statics.Emtpy, there was no match found. Otherwise, the meaning containst he pattern that was matched and the content ofthe cluster
+   //contains the variable values that were extracted from the input by the pattern.
+   cluster MatchFrom
+   {
+      this(var values, var localTo, var meaningOfCluster): var
+      {
+         var iFrom, iTo;
+         iFrom = new(neuron);
+         iTo = MakeCluster(STatics.In, values);                           //we pass along the value to the new parse, so it can use the same counter.
+         AddLink(iFrom, iTo, MatchFrom);
+         AddInfo(iFrom, iTo, MatchFrom, localTo, meaningOfCluster);                                  //we pass the 'localTo' & 'meaningOfCluster' as info cause that's how main.exec expects it.      
+         BlockedSolve(iFrom);
+         return iTo;
+      }
+      
+      //async version of 'MatchFrom'.  Will call 'Main.Exec' internally after
+      //setting everything up so that the result can be returned.
+      exec()
+      {
+         gPMFinished = MatchFromFinished;
+         gMatchFromType = GetLast(CurrentInfo);
+         RemoveAt(CurrentInfo, count(CurrentInfo) - 1);                                               //remove the last item from currentInfo, which is the meaning of the cluster we need to filter on, not the 'starting point' of the parse for statics.
+         Main.Exec();
+      }
+   }
+   
+   //called when the patternmatch is finished. this will simply return all the
+   //results
+   MatchFromFinished()
+   {
+      splitresults = GetMaxWeight();
+      if (VerifyWeightIsMax() == true)
+      {
+         ClearChildren(Statics.CurrentTo);
+         var iResPattern;
+         if(count(splitResults) > 0)
+         {
+            var iChildren = GetChildren(splitResults);
+            foreach(var iRes in iChildren)                                      //we add the var results of all the patterns that we found to the current result. We do this here cause otherwise the values get deleted due to being frozen.
+            {
+               AddChild(Statics.CurrentTo, GetChildren(iRes));                                 
+               iResPattern = GetFirstCluster(GetClusterMeaning(iRes), gMatchFromType);             //the cluster meaning is the pattern for which the cluster contains the variable results.
+               if(Count(iResPattern) > 0)
+                  SetClusterMeaning(Statics.CurrentTo, iResPattern);                            //we found a result pattern that we were suppposed to search for, let the caller know which pattern we found.
+            }
+            Delete(splitResults, iChildren);                                                  //this cluster is no longer needed. All of it's children as well: the data has been copied to 'CurrentTo'.
+         }
+         else
+            SetClusterMeaning(Statics.CurrentTo, Statics.Empty);                                //set the cluster's meaning to empty so that the caller knows we didn't find a result.
+      }
+      else
+      {
+         var exec = MakeCluster(indexfrom, splitresults);
+         AddLink(currentmaxres, exec, Thes.Weight);
+         AddLink(exec, Statics.CurrentTo, Main);
+         if (Count(Statics.CurrentInfo) > 0)
+            AddInfo(exec, Statics.CurrentTo, Main, Statics.CurrentInfo);
+         Clear(ref(patternresult));
+         ClearSplitResults();
+         Push(exec);
+      }
+   }
+   
+   //performs a new parse for the specified values. This is used to try and find consecutive sentences in an input
+   cluster ParseSentence
+   {
+      this(var values): var
+      {
+         var iFrom, iTo, iWeightOfRes;
+         iFrom = new(neuron);
+         iTo = MakeCluster(STatics.In, values);                           //we pass along the value to the new parse, so it can use the same counter.
+         AddLink(iFrom, iTo, ParseSentence);
+         BlockedSolve(iFrom);
+         var iRes = GetChildren(iTo);
+         if(Count(iRes) > 0)
+         {
+            iWeightOfRes = GetClusterMeaning(iTo);                     //the clustermeaning of the result cluster contains the weight that should be assigned.   
+            increaseWeight(iWeightOfRes);                               //so that the newly found sentence is also included in the weight of the processor.
+         }
+         Freeze(iTo, iWeightOfRes);                                  //Use a freeze to make certain that no other neurons get unfrozen by this call.
+         split(gPMFinished, ref(iTo), iRes);                           //in case there was more then 1 result, we do a split, so that the caller also gets a single result. We split to iTo, so it's always assigned again to return the children, cause those are the individual patterns that matched.
+         iRes = GetChildren(iTo);
+         Freeze(iTo);                                                //Use a freeze to make certain that no other neurons get unfrozen by this call.
+         return iRes;
+      }
+      
+      //async version of 'MatchFrom'.  Will call 'Main.Exec' internally after
+      //setting everything up so that the result can be returned.
+      exec()
+      {
+         gPMFinished = ParseSentenceFinished;                           //need to assign a new end-of-parse handler: we don't need to calculate an output yet, simply return the max result(s) and the weight.
+         Main.Exec();
+      }
+   }
+   
+   ParseSentenceFinished()
+   {
+      splitresults = GetMaxWeight();
+      if (VerifyWeightIsMax() == true)
+      {
+         ClearChildren(Statics.CurrentTo);
+         SetClusterMeaning(Statics.CurrentTo, GetWeightOf(GetFirst(splitresults)));                                //set the cluster's meaning to empty so that the caller knows we didn't find a result.
+         AddChild(Statics.CurrentTo, splitResults);                                                            //pass the values back to the caller.
+         PassFrozenToCaller();                                                                              //make certain that the results can be passed to the caller. If we don't do this, the results get deleted before they get to the caller.
+      }
+      else
+      {
+         var exec = MakeCluster(indexfrom, splitresults);
+         AddLink(currentmaxres, exec, Thes.Weight);
+         AddLink(exec, Statics.CurrentTo, Main);
+         if (Count(Statics.CurrentInfo) > 0)
+            AddInfo(exec, Statics.CurrentTo, Main, Statics.CurrentInfo);
+         Clear(ref(patternresult));
+         ClearSplitResults();
+         Push(exec);
+      }
+   }
+   
+   //this global contains the callback function that should be used at the end of the patternmatch.
+   //by default, this is 'PatternMatchFinished', but it can be overwritten, so that the patternmatcher
+   //doesn't render an output, but does something different (like return the variable values extracted from the input, done by 'MatchFrom')
+   global gPMFinished(shared) = PatternMatchFinished;                  
+   
+   //only assigned when solving a 'responseFor' or 'topicFilter'. Identifies which of the 2 we are trying to solve: responseFor or TopicFilter.
+   global gMatchFromType(shared);
+   
+   
+   /*
+     Used as the meanig for a link from a solvable neuron to a TextNeuron to indicate the presence of a word that was found in the dictionary (as build by a TextSin for input).
+    */
+   neuron Main : 33
+   {
+      var fInputIndex;                    //The index nr of the input value. This means that there were multiple possible input values.
+      var varcollectors;
+      var CurCollector;
+      var validsubsforstart;
+      var WordsToProcess(shared);
+      var ToResolve(shared);                         //contains the list of individual items (text or compounds) that need tobe processed
+      var PatternItem;
+      var Next;
+      exec()
+      {
+         ToResolve = GetAndCleanSpaces();
+         CheckIsFirstRun();
+         OutputSin = Statics.CurrentSin;
+         PrepareForMultipleInputs();
+         if (Count(Statics.CurrentInfo) == 0)
+         {
+            if (gPMFinished == PatternMatchFinished && indexfrom == 0 && RecursionCount == 0)     //if there is recursion, don't want to add to log, recursion is set when we do 'srai', in which case the result will be included in another result, don't want to log this. When gPMFinished == PatternMatchFinished, we are processing a that or topicFilter, so don't want to log this either.
+               LogIncomming(Statics.CurrentTo);
+            TryCollectPatternResult.AllowedTopics = GetChildren(nexttopicsbuffer);
+         }
+         else
+            TryCollectPatternResult.AllowedTopics = Statics.CurrentInfo;         //If CurrrentInfo has values, we are trying to import a data file (the Statics.CurrentInfo contains the topics that are valid results), in this case, we don't log the incomming data (to save space), but simply process it sequencially.    
+         ResolveSynonyms();                                                      //This code block will try to resolve all the 'synonyms' that can be found in the current input list. This also resolves from 1 to many words and from many to 1 word.    To resolve multiple words to 1, we need to search for 'common parents' among    
+         ExtractWordsFromInput();                                                //Extracts all the compounds + the single words for each input word. These can be used to match against the thesaurus values.    input: Index, words to process    output: words        
+         gIsFirstWord = indexFrom == 0;                                          //calculate this here, cause we will be advancing in case there were spaces, which would result in an invalid 'IsFirstOWrd' value.
+         while (indexFrom < count(WordsToProcess) && ContainsChildren(ToSkip, WordsToProcess[indexfrom]))      //skip spaces after checking if this run is for the first word or not.
+            Increment(indexfrom);
+         if (gIsFirstWord == true)                                                     //We only try to collect variables when we are at the first word, otherwise we don't bother, we only get duplicate results anyway.  Needs to be done before skipping any spaces, otherwise, if the start of the input is a space, we don't check all posisbilitie.  
+            Split(gPMFinished, ref(PatternItem), WordsToProcess[indexfrom], Statics.ParsedThesVariable, Statics.ParsedVariable);
+         else
+            Split(gPMFinished, ref(PatternItem), WordsToProcess[indexfrom], Statics.ParsedThesVariable);
+         Freeze(indexfrom);   //freeze after the loop is done, so that if the value got incremented,  it is stil frozen.    
+         index = indexfrom;
+         ProcessStart();
+         
+         DecreaseWeight(ResolveSynonyms.SynWeightAdjust);
+         Clear(ref(ResolveSynonyms.SynWeightAdjust));
+         TryCollectPatternResult();   //Checks if there is a pattern attached to the current position in the matching process. If so, we make a result cluster and return this.    This is only done when the current weight is bigger then the weight of the heaviest result. This is so we don't overtax the system by searching the log.    When there are multiple possible results, we use the conversation log to find the nearest match (using topic/patten-editor clusters).    When the end of the input has not yet been reached, a split is done so that execution can continue so a larger match can be found.    When this result can be used as a subpattern of another pattern, a split is also performed.    
+         var iAndAndpart = GetFirstOut(PatternItem, Statics.AndAnd);
+         while (count(iAndAndpart) > 0)
+         {
+            ProcessGap(iAndAndPart);
+            iAndAndpart = GetFirstOut(PatternItem, Statics.AndAnd);
+         }
+         else while(index < Count(wordstoprocess))
+            iAndAndpart = ProcessPatternItem();
+      }
+      
+      
+      //gets the data that needs to be processed and makes certain that all the spaces are mapped to that of the dictionary.
+      //this is important cause output patterns don't make use of the indexed space to make things a little faster
+      GetAndCleanSpaces(): var
+      {
+         var iRes;
+         foreach(var iChild in GetChildren(Statics.CurrentTo))
+         {
+            if(iChild == ' ')
+               Add(iRes, ' ');
+            else
+               Add(iRes, iChild);
+         }
+         return iRes;
+      }
+      
+      //checks if the input contained multiple variations or if there was only 1 specific input string.
+      //if there are multiple variations, a split is done so that each can be calculated seperatly.
+      PrepareForMultipleInputs() inline
+      {
+         if (GetClusterMeaning(Statics.CurrentTo) == Statics.OrOr)
+         {
+            SplitWeighted(gPMFinished, 1, ref(ToResolve), ToResolve);
+            ExtractWordsFromInput.InputContainer = ToResolve;
+            ToResolve = GetChildren(ToResolve);
+            fInputIndex = DToI(GetWeight());
+            ResetWeight();
+         }
+         else
+            ExtractWordsFromInput.InputContainer = Statics.CurrentTo;   //could be that the input contains multiple input statements, only 1 of which will be the correct one, so do a split on those.    
+      }
+      
+      //processes the first item as a var, thes var or regular text.
+      ProcessStart() inline
+      {
+         switch (PatternItem)
+         {
+            case Statics.ParsedVariable:
+            {
+               if (ChildCount(Statics.ParsedVariable) > 0)
+               {
+                  ResetWeight();
+                  Split(gPMFinished, ref(next), GetChildren(Statics.ParsedVariable));
+                  CollectValuesForVar();   //Collects all the input words into the neuron variable attached to the pattern-variable declared in 'PatternItem' according to the rules of the pattern-variable.    The input data collected for this pattern-variable is stored in the variable attached to the pattern-variable.     The values that are found are always collected into a cluster with meaning, the variable. We do this cause at the end, we need to put the results in a cluster anyway + this makes it easier to collect multiple values for a single pattern-variable. Each cluster that gets generated like this is always frozen from the start, so that we can have an easy exit, when the patten didn't match.    
+                  PatternItem = next;
+               }
+               else
+                  ExitSolve();
+            }
+            case Statics.ParsedThesVariable:
+            {
+               if (ChildCount(Statics.ParsedThesVariable) > 0)
+               {
+                  ResetWeight();
+                  CollectThesValuesAtStart();
+                  PatternItem = next;
+               }
+               else
+                  ExitSolve();
+            }
+            default:
+            {
+               if(count(gMatchFromType) == 0)                        //if gMatchFromType is assigned, we are doing a local parse for a 'responseFor' or 'TopicFilter' (can also work for topics that are defined as 'isLocal'. In this case, the patterns are declared locally and all the trees start at the value found in CurrentInfo.
+               {
+                  Index++;
+                  IncreaseWeight(1);
+               }
+               else
+                  PatternItem = CurrentInfo;
+            }
+         }
+      }
+      
+      //checks if the input has already been processed by the pattern matcher (and if so, we need to start at a next input item and collect the previous max result again, so we don't loose it),
+      //or not, and start at the beginning.
+      CheckIsFirstRun() inline
+      {
+         if (TypeOf(Statics.CurrentFrom) == neuroncluster)                                      //It's a re-run. we need to use the next word as a start
+         {
+            indexfrom = GetClusterMeaning(Statics.CurrentFrom);
+            indexFrom++;
+            currentmaxres = GetFirstIn(Statics.CurrentFrom, Thes.Weight);
+            var iSplitRes = GetChildren(Statics.CurrentFrom);
+            Delete(Statics.CurrentFrom);
+            Freeze(currentmaxres, indexFrom);                                                //also freeze IndexFrom here already, if we don't and exit in this function: oeps mem leak.
+            var iSplitOn;
+            if(Count(iSplitRes) > 0)                                                         //don't need to split if there are no previous results, saves some processing.
+               Split(gPMFinished, ref(iSplitOn), true, false);
+            else 
+               iSplitOn = false;
+            if (iSplitOn)
+            {
+               IncreaseWeight(currentmaxres);
+               AddSplitResult(iSplitRes);
+               ExitSolve();
+            }
+            else
+            {
+               ResetWeight();
+               RemoveAt(ref(ToResolve), (Count(ToResolve) - 1));                             //there is a date added at the end of the log item, we don't want to parse this.
+               Clear(ref(StackedResults), ref(substoresolve));                               //could still be filled from prev run.
+            }
+         }
+         else
+         {
+            Delete(Statics.CurrentFrom);
+            currentmaxres = New(DoubleNeuron);
+         }
+         var iFound = GetFirstOut(Statics.CurrentTo, RecursionCounter);                        //the recursioncount is passed along through a link, so get it.
+         if(count(iFound) > 0)                                                           //only assign if there was a value, otherwise we keep the defaul value (0)
+            RecursionCount = iFound;                              
+      }
+      
+      ProcessPatternItem(): var
+      {
+         var iChild = WordsToProcess[index];
+         if (ContainsChildren(ToSkip, iChild))
+         {
+            Index++;
+            return;                                                           //exit the function call without returning a  value -> there can't be an && after a space.
+         }
+         else
+         {
+            next = GetOutgoing(PatternItem, Statics.ParsedVariable, Statics.ParsedThesVariable, Statics.SubRules, Statics.SubTopics, iChild); 
+            if (Count(next) > 0)
+            {
+               Split(gPMFinished, ref(next), next);
+               switch (GetClusterMeaning(next))
+               {
+                  case Statics.ParsedVariable:
+                  {
+                     if (ChildCount(next) > 0)
+                     {
+                        Split(gPMFinished, ref(next), GetChildren(next));
+                        CollectValuesForVar();   //Collects all the input words into the neuron variable attached to the pattern-variable declared in 'PatternItem' according to the rules of the pattern-variable.    The input data collected for this pattern-variable is stored in the variable attached to the pattern-variable.     The values that are found are always collected into a cluster with meaning, the variable. We do this cause at the end, we need to put the results in a cluster anyway + this makes it easier to collect multiple values for a single pattern-variable. Each cluster that gets generated like this is always frozen from the start, so that we can have an easy exit, when the patten didn't match.    
+                     }
+                     else
+                        ExitPatternMatch();
+                  }
+                  case Statics.ParsedThesVariable:
+                  {
+                     if (ChildCount(next) > 0)
+                        CollectThesValues(next);  
+                     else
+                        ExitPatternMatch();
+                  }
+                  case Statics.SubTopics:
+                  {
+                     if (ChildCount(next) > 0)
+                     {
+                        Split(gPMFinished, ref(next), GetChildren(next));
+                        var iSubStep = GetAllOutgoing(next);
+                        GetValidSubPatternsFromTopic(GetLinkMeaning(next, iSubStep));
+                        ProcessValidSubsForStart();
+                     }
+                     else
+                        ExitPatternMatch();
+                  }
+                  case Statics.SubRules:
+                  {
+                     if (ChildCount(next) > 0)
+                     {
+                        Split(gPMFinished, ref(next), GetChildren(next));
+                        var iSubStep = GetAllOutgoing(next);
+                        var iSubRule = GetLinkMeaning(next, iSubStep);
+                        if (ChildCount(iSubRule) > 0)
+                        {
+                           getvalidsubpatternsfromrule(iSubRule);   //Tries to find all the sub patterns that are contained in the rule or are valid starting sub patterns of the already found patterns.    
+                           ProcessValidSubsForStart();
+                        }
+                        else
+                           ExitPatternMatch();
+                     }
+                     else
+                        ExitPatternMatch();
+                  }
+                  default:
+                  {
+                     IncreaseWeight(1);
+                     Index++;
+                  }
+               }
+               
+               PatternItem = next;
+               TryCollectPatternResult();   //Checks if there is a pattern attached to the current position in the matching process. If so, we make a result cluster and return this.    This is only done when the current weight is bigger then the weight of the heaviest result. This is so we don't overtax the system by searching the log.    When there are multiple possible results, we use the conversation log to find the nearest match (using topic/patten-editor clusters).    When the end of the input has not yet been reached, a split is done so that execution can continue so a larger match can be found.    When this result can be used as a subpattern of another pattern, a split is also performed.    
+               return GetFirstOut(PatternItem, Statics.AndAnd);
+            }
+            else
+               ExitPatternMatch();
+         }
+      }
+      
+      ProcessGap(var iAndAndPart)
+      {
+         var iNewStart, iChild;
+         Split(gPMFinished, ref(iNewStart), textneuron, Statics.ParsedThesVariable, Statics.SubTopics, Statics.SubRules);
+         switch (iNewStart)
+         {
+            case textneuron:
+            {
+               while (index < Count(wordstoprocess))
+               {
+                  iChild = WordsToProcess[index];
+                  if (ContainsChildren(ToSkip, iChild))
+                     Index++;
+                  else
+                  {
+                     next = GetOutgoing(iAndAndpart, iChild);
+                     if (Count(next) > 0)
+                     {
+                        Index++;
+                        IncreaseWeight(1);
+                        Split(gPMFinished, ref(next), next);
+                        Break();
+                     }
+                     else
+                     {
+                        Index++;
+                        DecreaseWeight((1 / Count(wordstoprocess)));
+                     }
+                  }
+               }
+               else
+                  ExitPatternMatch();
+            }
+            case Statics.ParsedThesVariable:
+            {
+               next = GetFirstOut(iAndAndpart, Statics.ParsedThesVariable);
+               if (Count(next) > 0)
+               {
+                  while (index < Count(wordstoprocess))
+                  {
+                     iChild = WordsToProcess[index];
+                     if (iChild == Statics.Empty)
+                        Index++;
+                     else
+                        TryCollectValuesForThesVar(next);
+                  }
+                  else
+                     ExitPatternMatch();
+               }
+               else
+                  ExitPatternMatch();
+            }
+            case Statics.SubTopics:
+            {
+               next = GetFirstOut(iAndAndpart, Statics.SubTopics);
+               if (Count(next) > 0)
+               {
+                  Split(gPMFinished, ref(next), GetChildren(next));
+                  var iSubStep = GetAllOutgoing(next);
+                  GetValidSubPatternsFromTopic(GetLinkMeaning(next, iSubStep));
+                  ProcessValidSubsForStartAndAnd();
+               }
+               else
+                  ExitSolve();
+            }
+            case Statics.SubRules:
+            {
+               next = GetFirstOut(iAndAndpart, Statics.SubRules);
+               if (Count(next) > 0)
+               {
+                  Split(gPMFinished, ref(next), GetChildren(next));
+                  var iSubStep = GetAllOutgoing(next);
+                  var iSubRule = GetLinkMeaning(next, iSubStep);
+                  if (ChildCount(iSubRule) > 0)
+                  {
+                     getvalidsubpatternsfromrule(iSubRule);   //Tries to find all the sub patterns that are contained in the rule or are valid starting sub patterns of the already found patterns.    
+                     ProcessValidSubsForStartAndAnd();
+                  }
+                  else
+                     ExitSolve();   //warning:  this conditional is a child of itself.    
+               }
+               else
+                  ExitSolve();
+            }
+         }
+         PatternItem = next;
+         TryCollectPatternResult();   
+      }
+      
+      ProcessValidSubsForStartAndAnd()
+      {
+         var iChild;
+         if (Count(ValidSubsForStart) > 0)
+         {
+            var iNewStart;
+            ValidSubsForStart = Distinct(ValidSubsForStart);
+            while (ContainsChildren(ToSkip, Main.WordsToProcess[index]))
+               Index++;
+            PrepareForSubPatterns();   //moves the curent results up a stack (build with a var) + keeps track of which sub that should be found.    
+            Split(gPMFinished, ref(iNewStart), textneuron, Statics.ParsedThesVariable);
+            switch (iNewStart)
+            {
+               case textneuron:
+               {
+                  while (index < Count(Main.WordsToProcess))
+                  {
+                     iChild = Main.WordsToProcess[index];
+                     if (ContainsChildren(ToSkip, iChild))
+                        Index++;
+                     else
+                     {
+                        next = iChild;
+                        var foundpatterns = GetInFiltered(next, ref(filtermeaning), ref(filterfrom), ref(((filtermeaning == Statics.ParsedPatternStart) && (ValidSubsForStart Contains filterfrom))));
+                        if (Count(foundpatterns) > 0)
+                        {
+                           Index++;
+                           IncreaseWeight(1);
+                           Break();
+                        }
+                        else
+                        {
+                           Index++;
+                           DecreaseWeight((1 / Count(Main.WordsToProcess)));
+                        }
+                     }
+                  }
+                  else
+                     ExitSolve();
+               }
+               case Statics.ParsedThesVariable:
+               {
+                  next = GetChildrenFiltered(Statics.ParsedThesVariable, ref(filtervar), ref((Count(GetInFiltered(filtervar, ref(filtermeaning), ref(filterfrom), ref(((filtermeaning == Statics.ParsedPatternStart) && (ValidSubsForStart Contains filterfrom))))) > 0)));
+                  while (index < Count(Main.WordsToProcess))
+                  {
+                     iChild = Main.WordsToProcess[index];
+                     if (iChild == Statics.Empty)
+                        Index++;
+                     else
+                        TryCollectRestrictedForThesVar(Statics.ParsedThesVariable);
+                     if (ContainsChildren(ToSkip, iChild))
+                        Index++;
+                     else
+                        TryCollectValuesForThesVar(Statics.ParsedThesVariable);
+                  }
+                  else
+                     ExitSolve();
+               }
+            }
+         }
+         else
+            ExitSolve();
+      }
+      
+      ProcessValidSubsForStart()
+      {
+         var iNewStart;
+         if (Count(ValidSubsForStart) > 0)
+         {  
+            ValidSubsForStart = Distinct(ValidSubsForStart);
+            while (ContainsChildren(ToSkip, Main.WordsToProcess[index]))
+               Index++;
+            PrepareForSubPatterns();   //moves the curent results up a stack (build with a var) + keeps track of which sub that should be found.    
+            Split(gPMFinished, ref(iNewStart), textneuron, Statics.ParsedThesVariable, Statics.ParsedVariable);
+            switch (iNewStart)
+            {
+               case textneuron:
+               {
+                  next = Main.WordsToProcess[index];
+                  var foundpatterns = GetInFiltered(next, ref(filtermeaning), ref(filterfrom), ref(((filtermeaning == Statics.ParsedPatternStart) && (ValidSubsForStart Contains filterfrom))));
+                  if (Count(foundpatterns) > 0)
+                  {
+                     Index++;
+                     IncreaseWeight(1);
+                  }
+                  else
+                     ExitPatternMatch();
+               }
+               case Statics.ParsedVariable:
+               {
+                  next = GetChildrenFiltered(Statics.ParsedVariable, ref(filtervar), ref((Count(GetInFiltered(filtervar, ref(filtermeaning), ref(filterfrom), ref(((filtermeaning == Statics.ParsedPatternStart) && (ValidSubsForStart Contains filterfrom))))) > 0)));
+                  if (Count(next) > 0)
+                  {
+                     Split(gPMFinished, ref(next), next);
+                     collectvaluesforvar();   //Collects all the input words into the neuron variable attached to the pattern-variable declared in 'PatternItem' according to the rules of the pattern-variable.    The input data collected for this pattern-variable is stored in the variable attached to the pattern-variable.     The values that are found are always collected into a cluster with meaning, the variable. We do this cause at the end, we need to put the results in a cluster anyway + this makes it easier to collect multiple values for a single pattern-variable. Each cluster that gets generated like this is always frozen from the start, so that we can have an easy exit, when the patten didn't match.    
+                  }
+                  else
+                     ExitPatternMatch();
+               }
+               case Statics.ParsedThesVariable:
+               {
+                  next = GetChildrenFiltered(Statics.ParsedThesVariable, ref(filtervar), ref((Count(GetInFiltered(filtervar, ref(filtermeaning), ref(filterfrom), ref(((filtermeaning == Statics.ParsedPatternStart) && (ValidSubsForStart Contains filterfrom))))) > 0)));
+                  if (Count(next) > 0)
+                     CollectRestrictedThesValues(Statics.ParsedThesVariable);   
+                  else
+                     ExitPatternMatch();
+               }
+            }
+            Clear(ref(ValidSubsForStart));
+         }
+         else
+            ExitPatternMatch();
+      }
+   }
+   Cluster PatternMatchFinished
+   {
+      var resultgroup, splitresultstoprocess, FullRenderContent, PatternsThatNeedsResponse,  LastInputStatement;
+      var Log;                                     //the object to log to, multiple functions use this during this stage, so it's available throughout the entire scope of this call.
+      var Topic;                                   //reachable from various places.   
+      this()
+      {
+         splitresults = GetMaxWeight();
+         if (VerifyWeightIsMax() == true)
+         {
+            var iRenderResult = MakeCluster(Statics.Out);   //we create the cluster before checking the result, cause some 'do' patterns can add items to the log for the output (like extra topics). Therefor, the cluster already needs to exist.    
+            ClearChildren(nexttopicsbuffer);
+            Freeze(iRenderResult);
+            PatternsThatNeedsResponse = GetOutgoing(OutputSin, needsresponsefor);   //get this before we assign a possible new value.    
+            RemoveLinksOut(OutputSin, needsresponsefor);
+            if (Count(Statics.CurrentInfo) == 0 || RecursionCount == 0)                                //if CurrentInfo is assigned, we are parsing for a specific topic (that/topic-filter matching) or local topics, don't want to log this.  If recursioncount > 0 -> srai
+            {
+               log = GetFirstOut(OutputSin, CurrentConversation);
+               LastInputStatement = GetLastChild(log);
+            }
+            if (Count(splitresults) > 0)
+            {
+               lock(RenderLock)                                                        //this is used to make certain that only 1 block can render at a time, so that all the text of a single process is never interrupted (there are potentially multiple calls to Output, which can't be interrupted).
+               {
+                  ResolveDuplicates.QuestionSin = GetFirstOut(OutputSin, Statics.IntSin);    //questionSin is used in various places, so store it like this, now.
+                  if (Count(splitresults) > 1)
+                  {
+                     ExecuteEvaluate();                                                //first allow for an extra evaluation.
+                     if (Count(splitresults) > 1)
+                        resolveduplicates();   //When there are multiple results from a multi-selection set input (1 input,many possibilities, like with STT input), we can try to resolve things based on the index of the text in the input list and if this doesn't work, ask the user.    inputs:    SplitResults: all the split results    QuestionSin: the IntSin to send the data to / get the result from.    
+                     if (Count(splitresults) == 1)
+                        ProcessSplitresult();
+                  }
+                  else
+                     ProcessSplitresult();
+               }
+            }
+            else
+               Error("No pattern match!");
+            if (Count(FullRenderContent) > 0)
+            {
+               if (Count(RenderPatternItems.ContentToRender) > 0)
+                  RenderPatternItems.ContentToRender = Union(FullRenderContent, " ", " ", RenderPatternItems.ContentToRender);      //use non dict spaces, so that the space doesn't get overused?
+               else
+                  RenderPatternItems.ContentToRender = FullRenderContent;
+            }
+            if (Count(RenderPatternItems.ContentToRender) == 0)
+            {
+               var iListToUse = Statics.patternfallbackvalues;
+               var iResultPattern = GetResultPattern(iListToUse, Statics.Empty);
+               if (Count(iResultPattern) > 0)
+               {
+                  RenderResultPattern(iResultPattern);
+                  if (Count(GetFirstCluster(iResultPattern, Statics.ResponseForOutputs)) > 0)               //if the current output pattern is used in a 'responseFor' set, store that the system should check for this during the next input processing.
+                     AddLink(OutputSin, iResultPattern, needsresponsefor);
+               }
+               else if(0 != 0)
+                  Clear(ref(RenderPatternItems.ContentToRender));
+               if (Count(RenderPatternItems.ContentToRender) == 0)
+               {
+                  RenderPatternItems.ContentToRender = "No output defined!";
+                  Warning("No output defined!");
+               }
+            }
+            if(RecursionCount == 0)                                                                               //if there is a recursion result, we got called from 'Parse', in which case, we need to return the result.
+            {
+               Output(OutputSin, Statics.BeginTextblock, RenderPatternItems.ContentToRender, Statics.EndTextblock);
+               AddChild(iRenderResult, RenderPatternItems.ContentToRender);                                             //the result data. don't need to add to this cluster if we are doing a srai
+            }
+            else
+               returnValue(RenderPatternItems.ContentToRender);                                                         //we use the function call to return the value, cause the 'finished' handler normally doesn't return a result, so it isn't defined. But we can still put a value on the stack.
+            CallDoAfterStatement();                                                                                  //has to be done after sending the output and storing the result, otherwise some result data might already have been deleted.    
+            if (Count(Statics.CurrentInfo) == 0 && RecursionCount == 0)                                                 //don't want to log if we are doing an srai
+               LogOutgoing(iRenderResult);   //If CurrrentInfo has values, we are trying to import a data file (the Statics.CurrentInfo contains the topics that are valid results), in this case, we don't log the outgoing data (to save space), but simply display it.    
+            var iDontFreeze = InputBreak;
+            Freeze(resultgroup, ItemsToFreeze, Complement(ref(splitresultstoprocess), ref(iDontFreeze)));
+         }
+         else
+         {
+            var exec = MakeCluster(indexfrom, splitresults);
+            AddLink(currentmaxres, exec, Thes.Weight);
+            AddLink(exec, Statics.CurrentTo, Main);
+            if (Count(Statics.CurrentInfo) > 0)
+               AddInfo(exec, Statics.CurrentTo, Main, Statics.CurrentInfo);
+            Clear(ref(patternresult));
+            ClearSplitResults();
+            Push(exec);
+         }
+      }
+      
+      ProcessSplitresult()
+      {
+         Warning("Pattern match for:");
+         SplitResultsToProcess = GetChildren(splitresults);
+         resultgroup = splitresults;   //At this stage, the 'Splitresults', is actually still the cluster that contains all the pattern results.    
+         SetClusterMeaning(resultgroup, FinalResult);   //we let the rest of the system know which cluster of all the result clusters produced by the pattern matcher, is actually the correct hresult. This will allow us to get to this cluster from one of the child results without interfearance of the invalid results.    
+         var found = GetFirstOut(resultgroup, InputIndex);
+         if (Count(found) > 0)                                    //if there was an index attached to the result, there were multile inputs, out of which 1 had to be picked, so let the system know which one was selected.
+            Output(ResolveDuplicates.QuestionSin, found);
+         Add(ItemsToFreeze, AdjustResultMeanings());
+         if(FailedResponseForPrevPattern() == true)
+         {
+            iQuestionToResolve = GetFirst(Filter(ref(filtervar), ref(ContainsLinksOut(filtervar, Statics.InvalidResponsesForPattern)), PatternsThatNeedsResponse)); //get the first of the prev patterns for which we don't have a result, but for which there is an 'InvalidResposesForPattern' section.
+            if (Count(iQuestionToResolve) > 0)
+            {
+               var InvalidResponseFallbacks = GetFirstOut(iQuestionToResolve, Statics.InvalidResponsesForPattern);   //We always take the list of invalid responses from the first question that has any. So we first Filter the 'PatternThatNeedsResponse' which has an 'invalidResponse' set and use this.    
+               if ((GetLast(SplitResultsToProcess) == splitresults) && ((Count(InvalidResponseFallbacks) > 0) && (ChildCount(InvalidResponseFallbacks) > 0)))
+               {
+                  ExecuteDoPatterns(GetFirstOut(InvalidResponseFallbacks, Statics.DoPatterns)); 
+                  var iResultPattern = GetResultPattern(InvalidResponseFallbacks, rule);
+                  if (Count(iResultPattern) > 0)
+                     RenderResultPattern(iResultPattern);   
+               }
+            }
+         }
+         var iQuestionToResolve, rule, iResponseFor, iListToUse;
+         foreach (splitresults in SplitResultsToProcess)
+         {
+            if (splitresults != InputBreak)
+            {
+               LoadAndConvertPatternResults();   //Loads all the colected data into the variables.    When the data was collected by the parser, the iClusterMeaning of each data blob is the variable path that collected it, cause it didn't yet know  the pattern for which it was matching, so also not yet the variable.    During assignments though, there is no path to use as meaning, so the varaible is used as iClusterMeaning.    
+               Warning(pattern);
+               rule = GetFirstCluster(pattern, Statics.Rule);
+               topic = GetFirstCluster(rule, Statics.Topic);
+               if (((Count(Statics.CurrentInfo) == 0) && (Count(LastInputStatement) > 0)) && (LinkExists(LastInputStatement, rule, Rules) != true))   //store which rules were eventuall the result for the input, if there is an input and we are allowed to log and the link doesn't exist already.
+                  AddLink(LastInputStatement, rule, Rules);
+               ExecuteDoPatterns(GetFirstOut(rule, Statics.Calculate));
+               Clear(ref(iListToUse));                                                                                              //needs to be re-init for every run in the loop, so declare inside loop.
+               iResponseFor = GetFirstOut(splitResults, Statics.ResponseForOutputs); 
+               if (Count(iResponseFor) > 0)
+                  iListToUse = ResolveConditionals(iResponseFor);
+               if (Count(iListToUse) == 0)
+               {
+                  var iConditionals = GetFirstOut(rule, Statics.Condition);
+                  if (Count(iConditionals) > 0)
+                  {
+                     iListToUse = ResolveConditionals(iConditionals);
+                     if (Count(iListToUse) == 0)
+                        iListToUse = GetFirstOut(rule, Statics.OutputPatterns);
+                  }
+                  else
+                     iListToUse = GetFirstOut(rule, Statics.OutputPatterns);
+               }
+               if (Count(iListToUse) > 0)
+               {
+                  ExecuteDoPatterns(GetFirstOut(iListToUse, Statics.DoPatterns)); 
+                  var iResultPattern = GetResultPattern(iListToUse, rule);
+                  if (Count(iResultPattern) > 0)
+                  {
+                     RenderResultPattern(iResultPattern);   
+                     if (Count(GetFirstCluster(iResultPattern, Statics.ResponseForOutputs)) > 0)
+                        AddLink(OutputSin, iResultPattern, needsresponsefor);
+                  }
+                  else if(0 != 0)
+                     Clear(ref(RenderPatternItems.ContentToRender));
+                  AppendQuestion(iResultPattern);   
+               }
+               else if(0 != 0)
+                  Clear(ref(RenderPatternItems.ContentToRender));
+            }
+            else
+            {
+               if (Count(FullRenderContent) > 0)
+                  FullRenderContent = Union(FullRenderContent, " ", " ", RenderPatternItems.ContentToRender);                       //use non dict spaces, so that the space doesn't get overused?
+               else
+                  FullRenderContent = RenderPatternItems.ContentToRender;
+               Clear(ref(RenderPatternItems.ContentToRender));
+            }
+         }
+      }
+      
+      //checks if the current input is an answer for a question that the bot previously asked.
+      //if there is no question to be answered or it is answered with a pattern that was expected, return true, otherwise false.
+      FailedResponseForPrevPattern(): bool
+      {
+         if(count(PatternsThatNeedsResponse) > 0)
+         {
+            foreach (splitresults in SplitResultsToProcess)
+            {
+               var iResponsesFor = GetFirstOut(splitResults, Statics.ResponseForOutputs);
+               if(count(iResponsesFor) > 0)
+               {
+                  iResponsesFor = GetFirstOut(iResponsesFor, Statics.ResponseForOutputs);
+                  if(count(iResponsesFor) > 0 && ContainsChildren(iResponsesFor, PatternsThatNeedsResponse))
+                     return false;
+               }
+            }
+            return true;
+         }
+         return false;
+      }
+   }
+   
+   RenderStartingPattern()
+   {
+      if (ChildCount(Statics.ConversationStarts) > 0)
+      {
+         var iResultPattern = GetRandomChild(Statics.ConversationStarts);
+         RenderPatternItems(GetFirstOut(iResultPattern, Statics.ParsedPatternOutput));
+         LogOutgoing(MakeCluster(Statics.Out, RenderPatternItems.ContentToRender));
+         Output(OutputSin, Statics.BeginTextblock, RenderPatternItems.ContentToRender, Statics.EndTextblock);
+      }
+      if (ContainsLinksOut(OutputSin, Thes.You) == false)      //If there is no 'you' defined yet, we do this now: as early as possible, at actual sin activity (not startup), so we don't need to worry about that any more. Of course, we create a temp you.    This is important for online versions.            
+      {
+         var iAsset = MakeCluster(Assets.Asset);
+         AddLink(OutputSin, iAsset, Thes.You);
+      }
+   }
+   
+   expressionsblock RenderPatternItems
+   {
+      var ContentToRender;
+      var iPatternItem;
+      var iNextToSkip;      //this var stores a neuron that possible has to be skipped if it is the next item, all other items should be displayed as normal. this is used to skip spaces for instance, in case a variable wasn't found.
+      bool PrevContentIsUsed(clear);                                          //keeps track of wether the previous content was consumed by $output or not. need to be a field so that the binding can set this value. during duplication, this field never needs to be copied or anything. always can be empty.
+      //renders the pattern items defined in ParsedResult. Returns true if 'Output' was used in the pattern items (and the previous content was consumed), and false when not.
+      Statements(var parsedResult): bool
+      {
+         PrevContentIsUsed = false;                                        //init correctly cause it's a field of this function, which means it doesn't get reset at each call.
+         foreach (iPatternItem in GetChildren(parsedresult))
+         {
+            switch (TypeOf(iPatternItem))
+            {
+               case textneuron:
+                  Collect();
+               case IntNeuron:
+                  Collect();
+               case DoubleNeuron:
+                  Collect();
+               case neuron:
+               {
+                  Add(ContentToRender, iPatternItem);
+                  Clear(ref(iNextToSkip));
+               }
+               default:
+               {
+                  switch (GetClusterMeaning(iPatternItem))
+                  {
+                     case Statics.Code:
+                     {
+                        Call(iPatternItem);                                            //the code cluster will return a result which we will be collecting through the static 'ResultValue'
+                        CollectCalculated(Statics.ReturnValue);
+                     }
+                     case Statics.ParsedThesVariable:
+                        CollectCalculated(Thes.GetThesPathResult(iPatternItem));
+                     case Statics.ParsedAssetVariable:
+                        CollectCalculated(Assets.GetassetPathResult(iPatternItem));
+                     case Statics.ParsedVariable:
+                        CollectCalculated(Variables.GetVarResult(iPatternItem));
+                     case Statics.CompoundWord:
+                        Collect();
+                     case Statics.Object:
+                        Collect();
+                     case Statics.PosGroup:
+                        Collect();
+                     default:
+                        Error("Unknown type in  pattern path.");
+                  }
+               }
+            }
+         }
+         bool iRes = PrevContentIsUsed;                             //so we can clear the field before leaving the function. otherwise it would simply consume resources.
+         clear(ref(iNextToSkip), ref(iPatternItem), ref(PrevContentIsUsed));                 //make certain that there are no mem leaks.
+         return iRes;
+      }
+      
+      CollectCalculated(var value)
+      {
+         if (Count(value) > 0)
+            Add(ref(ContentToRender), value);
+         else
+            iNextToSkip = ' ';
+      }
+      
+      Collect() inline
+      {
+         if (iNextToSkip != iPatternItem)
+            Add(ref(ContentToRender), iPatternItem);
+         Clear(ref(iNextToSkip));
+      }
+   }
+   
+   AdvanceAndCollectThes()
+   {
+      int iCounter = 1;
+      int iLength;
+      double iPosWeight = 0;
+      var iChild;
+      index++;
+      var iIndexOfText = GetOutgoing(Main.CurCollector, IndexOfText);
+      var getposfor = GetFirstChild(Main.CurCollector);
+      if (iIndexOfText > -1)
+         getposfor = GetChildAt(getposfor, iIndexOfText);
+      if (GetClusterMeaning(getposfor) == Statics.CompoundWord)
+         iLength = ChildCount(getposfor);
+      else
+         iLength = 1;
+      while (iCounter < iLength)
+      {
+         iChild = Main.WordsToProcess[index];
+         if (ContainsChildren(ToSkip, iChild) == false)
+            iCounter++;
+         index++;
+      }
+      Add(ref(Main.VarCollectors), Main.CurCollector);
+      Freeze(Main.CurCollector, iIndexOfText);
+      var iPosToSearch = GetFirstChild(Main.Next);
+      if (TypeOf(iPosToSearch) == neuron)
+         iPosWeight = GetFirstOut(iPosToSearch, Thes.Weight);
+      if(count(iPosWeight) != 0)                                              //make certain that there is a value.
+         IncreaseWeight((0.5 + (0.001 * ChildCount(Main.Next)) + iPosWeight) * iLength);
+      else
+         IncreaseWeight((0.5 + (0.001 * ChildCount(Main.Next))) * iLength);
+   }
+   
+   //the rule param is for calculating the repetition. If there is no rule found, this can be left empty.
+   GetResultPattern(var listToUse, var rule):var
+   {      
+      var iResultPattern;
+      var iPossibleIutputs = GetChildren(listtouse);
+      if (Count(iPossibleIutputs) > 0)
+         HandleRepetition(rule);
+      if (Count(iPossibleIutputs) > 0)
+      {
+         var iAlreadyUsed = GetFirstOut(listtouse, Statics.UsedResponses);
+         if (Count(iAlreadyUsed) == 0)
+         {
+            iAlreadyUsed = MakeCluster(Statics.UsedResponses);
+            AddLink(listtouse, iAlreadyUsed, Statics.UsedResponses);
+         }
+         switch (GetFirstOut(listtouse, Statics.OutputListTraversalMode))
+         {
+            case Statics.Sequence:
+            {
+               var iNrOfItems = ChildCount(iAlreadyUsed);
+               if (iNrOfItems < Count(iPossibleIutputs))
+                  iResultPattern = iPossibleIutputs[iNrOfItems];
+               else
+               {
+                  ClearChildren(iAlreadyUsed);
+                  iResultPattern = GetFirst(iPossibleIutputs);
+               }
+               AddChild(iAlreadyUsed, iResultPattern);
+            }
+            default:
+            {
+               var iNotYetUsed = Substract(ref(iPossibleIutputs), GetChildren(iAlreadyUsed));
+               if (Count(iNotYetUsed) == 0)
+               {
+                  ClearChildren(iAlreadyUsed);
+                  iNotYetUsed = iPossibleIutputs;
+               }
+               iResultPattern = GetRandom(iNotYetUsed);
+               AddChild(iAlreadyUsed, iResultPattern);
+            }
+         }
+      }
+      return iResultPattern;
+   }
+   /*
+     Collects all the input words into the neuron variable attached to the pattern-variable declared in 'PatternItem' according to the rules of the pattern-variable.
+   The input data collected for this pattern-variable is stored in the variable attached to the pattern-variable. 
+   The values that are found are always collected into a cluster with meaning, the variable. We do this cause at the end, we need to put the results in a cluster anyway + this makes it easier to collect multiple values for a single pattern-variable. Each cluster that gets generated like this is always frozen from the start, so that we can have an easy exit, when the patten didn't match.
+    */
+   ExpressionsBlock CollectValuesForVar
+   {
+      var OtherPossibleNexts;
+      statements()
+      {
+         int iLastindex(duplicate);
+         var iSpacesToCollect, iChild, found;
+         bool iCollectSpaces = LinkExists(Main.Next, Main.Next, Statics.CollectSpaces);
+         var iVarCollector = Main.Next;
+         if (ChildCount(Main.Next) > 0)
+         {
+            int wordrange = GetFirstChild(Main.Next);
+            iLastindex = index +  wordrange;
+            Clear(ref(Main.CurCollector));
+            while (index < Count(Main.WordsToProcess) && index < iLastindex)
+            {
+               iChild = Main.WordsToProcess[index];
+               if (ContainsChildren(ToSkip, iChild))
+               {
+                  Index++;
+                  iLastindex++;
+                  if ((iCollectSpaces == true) && (Count(Main.CurCollector) > 0))
+                     Add(ref(iSpacesToCollect), iChild);   //collect the space if we have already passed a word    
+               }
+               else
+               {
+                  Main.CurCollector = Union(Main.CurCollector, iSpacesToCollect, iChild);
+                  Index++;
+                  Clear(ref(iSpacesToCollect));
+               }
+            } else while (index < iLastIndex)                        //not enough items could be collected to fill the entire variable.
+               ExitPatternMatch();
+            if (ChildCount(Main.Next) > 1)
+            {
+               wordrange = (GetChildAt(Main.Next, 1) - 1 - GetFirstChild(Main.Next));   //we remove 1 + the first range from the upper value cause we already collected 1 + we do a <= (so we can have a common loop) + we need the range.    
+               iLastindex = index + wordrange;
+               if (iLastindex >= Count(Main.WordsToProcess))                           //could be that the range outstrips the length of the input, in this case, use the length of the input.
+                  iLastindex = Count(Main.WordsToProcess) - 1;
+               Main.PatternItem = Main.Next;
+               GetPossibleNextsForVar();
+               while (index <= iLastindex && index < Count(Main.WordsToProcess))
+               {
+                  iChild = Main.WordsToProcess[index];
+                  if (ContainsChildren(ToSkip, iChild))
+                  {
+                     Index++;
+                     iLastindex++;
+                     if ((iCollectSpaces == true) && (Count(Main.CurCollector) > 0))
+                        Add(ref(iSpacesToCollect), iChild);   //collect the space if we have already passed a word    
+                  }
+                  else if(ContainsLinksOut(Main.PatternItem, iChild) || ContainsChildren(SentenceSigns, iChild))        //if the next is used as static in a patter  or is a sentence sign, the var collection stops.
+                     Break();
+                  else if(Count(OtherPossibleNexts) > 0)
+                  {
+                     found = Filter(ref(filtervar), ref(ContainsLinksOut(filtervar, iChild)), OtherPossibleNexts);
+                     if (Count(found) > 0)
+                        Break();
+                     else if(Count(Main.ValidSubsForStart) > 0)
+                     {
+                        found = GetInFiltered(iChild, ref(filtermeaning), ref(filterfrom), ref(((filtermeaning == Statics.ParsedPatternStart) && (Main.ValidSubsForStart Contains filterfrom))));
+:CheckFound              if (Count(found) > 0)
+                           Break();
+                        else if(Count(TryMatchWithThesVar.ThesVarsToCheck) > 0)
+                        {
+                           Main.Next = Main.PatternItem;   //reset Main.Next to again to Main.PatternItem (which contains the parsedVar), cause after the var is collected, we continue parsing from 'Main.Next', which should contain the parsed var.    
+:CallCheckTesVar             if (TryMatchWithThesVar() == true)
+                              Break();
+                           else
+ :CollectForVar              {
+                              Add(ref(Main.CurCollector), iSpacesToCollect, iChild);
+                              Index++;
+                              Clear(ref(iSpacesToCollect));
+                           }
+                        }
+                        else CollectForVar;
+                     }
+                     else if(Count(TryMatchWithThesVar.ThesVarsToCheck) > 0)
+                     {
+                        Main.Next = Main.PatternItem;   //reset Main.Next to again to Main.PatternItem (which contains the parsedVar), cause after the var is collected, we continue parsing from 'Main.Next', which should contain the parsed var.    
+                        CallCheckTesVar;
+                     }
+                     else CollectForVar;
+                  }
+                  else if(Count(Main.ValidSubsForStart) > 0)
+                  {
+                     found = GetInFiltered(iChild, ref(filtermeaning), ref(filterfrom), ref(((filtermeaning == Statics.ParsedPatternStart) && (Main.ValidSubsForStart Contains filterfrom))));
+                     CheckFound;
+                  }
+                  else if(Count(TryMatchWithThesVar.ThesVarsToCheck) > 0)
+                  {
+                     Main.Next = Main.PatternItem;   //reset Main.Next to again to Main.PatternItem (which contains the parsedVar), cause after the var is collected, we continue parsing from 'Main.Next', which should contain the parsed var.    
+                     CallCheckTesVar;
+                  }
+                  else CollectForVar;
+               }
+            }
+         }
+         else
+         {
+            Main.CurCollector = Main.WordsToProcess[index];
+            Index++;
+            iLastindex = Count(Main.WordsToProcess) - 1;
+            Main.PatternItem = Main.Next;
+            GetPossibleNextsForVar();
+            Main.Next = Main.PatternItem;
+            while (index <= iLastindex && index < Count(Main.WordsToProcess))
+            {
+               iChild = Main.WordsToProcess[index];
+               if (ContainsChildren(ToSkip, iChild))
+               {
+                  Index++;
+                  iLastindex++;
+                  if ((iCollectSpaces == true) && (Count(Main.CurCollector) > 0))
+                     Add(ref(iSpacesToCollect), iChild);   //collect the space if we have already passed a word    
+               }
+               else if(ContainsLinksOut(Main.PatternItem, iChild) || ContainsChildren(SentenceSigns, iChild))                 //if the next is used as static in a patter  or is a sentence sign, the var collection stops.
+                  Break();
+               else if(Count(OtherPossibleNexts) > 0)
+               {
+                  found = Filter(ref(filtervar), ref(ContainsLinksOut(filtervar, iChild)), OtherPossibleNexts);
+                  if (Count(found) > 0)
+                     Break();
+                  else if(Count(Main.ValidSubsForStart) > 0)
+                  {
+                     found = GetInFiltered(iChild, ref(filtermeaning), ref(filterfrom), ref(((filtermeaning == Statics.ParsedPatternStart) && (Main.ValidSubsForStart Contains filterfrom))));
+                     if (Count(found) > 0)
+                        Break();
+                     else if(Count(TryMatchWithThesVar.ThesVarsToCheck) > 0)
+                     {
+                        Main.Next = Main.PatternItem;   //reset Main.Next to again to Main.PatternItem (which contains the parsedVar), cause after the var is collected, we continue parsing from 'Main.Next', which should contain the parsed var.    
+                        CallCheckTesVar;
+                     }
+                     else CollectForVar;
+                  }
+                  else if(Count(TryMatchWithThesVar.ThesVarsToCheck) > 0)
+                  {
+                     Main.Next = Main.PatternItem;   //reset Main.Next to again to Main.PatternItem (which contains the parsedVar), cause after the var is collected, we continue parsing from 'Main.Next', which should contain the parsed var.    
+                     CallCheckTesVar;
+                  }
+                  else CollectForVar;
+               }
+               else if(Count(Main.ValidSubsForStart) > 0)
+               {
+                  found = GetInFiltered(iChild, ref(filtermeaning), ref(filterfrom), ref(((filtermeaning == Statics.ParsedPatternStart) && (Main.ValidSubsForStart Contains filterfrom))));
+                  CheckFound;
+               }
+               else if(Count(TryMatchWithThesVar.ThesVarsToCheck) > 0)
+               {
+                  Main.Next = Main.PatternItem;   //reset Main.Next to again to Main.PatternItem (which contains the parsedVar), cause after the var is collected, we continue parsing from 'Main.Next', which should contain the parsed var.    
+                  CallCheckTesVar;
+               }
+               else CollectForVar;
+            }
+         }
+         double iWeight = GetFirstOut(iVarCollector, Statics.Width);                   //we use the 'width' to store the weight of the var that should be used.
+         if(count(iWeight) > 0)
+            IncreaseWeight(iWeight * Count(Main.CurCollector));
+         else
+            IncreaseWeight(0.0000001 * Count(Main.CurCollector));   //we increase the weight a ver little bit, so that we can make a distinction between $var and $var:1 $var:1. To make a distinction between $var:1 and $var:1-2, we decrease the weight a little when it comes to a range.    
+         Main.CurCollector = MakeCluster(iVarCollector, Main.CurCollector);
+         add(ref(Main.VarCollectors), Main.CurCollector);
+         Freeze(Main.CurCollector);
+         Delete(iLastindex);
+         Clear(ref(TryMatchWithThesVar.ThesVarsToCheck), ref(TryMatchWithThesVar.StartOfThesVars), ref(OtherPossibleNexts), ref(Main.ValidSubsForStart));
+      }
+   }
+   
+   CollectThesValuesAtStart()
+   {
+      DecreaseWeight((index / Count(Main.WordsToProcess)));
+      CollectThesValues(Statics.ParsedThesVariable);   //The new thesaurus path parsing algorithm. uses a tree structure to find out if any word matches.    
+   }
+   
+   TryCollectValuesForThesVar(var getFrom)
+   {
+      var iWords = GetChildren(Main.ToResolve[Index]);
+      var exec = New(neuron);
+      var callresult = New(neuroncluster);
+      AddLink(exec, callresult, CollectThesValues);
+      AddInfo(exec, callresult, CollectThesValues, iWords, getFrom);
+      BlockedSolve(exec);
+      if (ChildCount(callresult) > 0)
+      {
+         exec = GetChildren(callresult);
+         Delete(callresult);
+         Split(gPMFinished, ref(Main.CurCollector), exec);
+         Main.Next = GetClusterMeaning(Main.CurCollector);
+         AdvanceAndCollectThes();
+         Break();
+      }
+      else
+      {
+         Index++;
+         DecreaseWeight((1 / Count(Main.WordsToProcess)));
+         Delete(callresult);
+      }
+   }
+   /*
+     Checks if there is a pattern attached to the current position in the matching process. If so, we make a result cluster and return this.
+   This is only done when the current weight is bigger then the weight of the heaviest result. This is so we don't overtax the system by searching the log.
+   When there are multiple possible results, we use the conversation log to find the nearest match (using topic/patten-editor clusters).
+   When the end of the input has not yet been reached, a split is done so that execution can continue so a larger match can be found.
+   When this result can be used as a subpattern of another pattern, a split is also performed.
+    */
+   ExpressionsBlock TryCollectPatternResult
+   {
+      var AllowedTopics;      //stores the topics that are allowed as results. This is used when importing data through a template (from UI), or when the pattern definition wants to restrict matches to a restricted set of results.
+      statements()
+      {
+         if (currentmaxres > (GetWeight() + (Count(Main.WordsToProcess) - index) + 1))
+            ExitPatternMatch();
+         else
+         {
+            pattern = GetValidPatterns(GetOutgoing(Main.PatternItem, Statics.Rule));
+            var tryingsubs = false;                            //Keeps track if this is the first try in finding a result, or if we have already collected a result as a subTopic (in the middle or starting a new pattern). When we already found a result, the next possibilities are limited.
+            var iDoRecursion, iDoAdd;
+            while (Count(pattern) > 0)
+            {
+               SkipSpaces();
+               CalculateSplits(ref(iDoAdd));
+               switch (iDoAdd)
+               {
+                  case true:
+                  {
+                     SelectPattern();
+                     if (count(gMatchFromType) == 0 &&                                                                                                      //if we are not matching through the 'MatchFrom' call, -> when calling from 'MatchFrom', there usually is no output, we simply want to check if we can find a match + get the variable values from the pattern.
+                         ContainsLinksOut(GetFirstCluster(pattern, Statics.Rule), Statics.OutputPatterns, Statics.ResponseForOutputs, Statics.Condition) == false)       //and if the rule has no outputs whatsoever, don't return as result
+                        ExitPatternMatch();
+                     if (Count(substoresolve) == 0)
+                        CollectResults();
+                     else
+                        ExitPatternMatch();                          //If we collect the resutl and terminate the process, but there are still previous patterns waiting to be finished (NextResulTtoUse is assigned), then we are not really ready yet    
+                     TryFindNextSentence();                          //if we are ending on a sentence sign, try go get the next sentence so we can add the result to this one.   Do after collecting the results for the current pattern cause the next results are for the patterns that follow the current.
+                     if (IsInitialized(ref(main.fInputIndex)))
+                     {
+                        AddLink(patternresult, main.fInputIndex, InputIndex);
+                        Freeze(patternresult, main.fInputIndex);
+                     }
+                     lock(currentmaxres)
+                     {
+                        if (currentmaxres < GetWeight())
+                           StoreDouble(currentmaxres, GetWeight());
+                     }
+                     AddSplitResult(patternresult);
+                     ExitSolve();
+                  }
+                  case trycontinue:
+                     Break();
+                  default:
+                  {
+                     switch (iDoAdd)
+                     {
+                        case collectsub:
+                        {
+                           var subtoresolve = GetFirst(substoresolve);
+                           Split(gPMFinished, ref(pattern), pattern);
+                           var iSubRule = GetFirstCluster(pattern, Statics.Rule);
+                           Main.PatternItem = GetOutgoing(subtoresolve, iSubRule);
+                           if (Count(Main.PatternItem) > 0)
+                           {
+                              CollectResults();
+                              Clear(ref(Main.VarCollectors));
+                              Split(gPMFinished, ref(Main.PatternItem), Main.PatternItem);
+                              pattern = GetValidPatterns(GetOutgoing(Main.PatternItem, Statics.Rule));
+                              tryingsubs = true;
+                              IncreaseWeight(0.01);
+                           }
+                           else
+                           {
+                              var iSubTopic = GetFirstCluster(iSubRule, Statics.Topic);
+                              Main.PatternItem = GetOutgoing(subtoresolve, iSubTopic);
+                              ProcessNewSub(0.01);
+                              tryingsubs = true;
+                           }
+                           NextResulTtoUse = GetFirst(StackedResults);
+                           if ((Union(Statics.SubTopics, Statics.SubRules) !Contains subtoresolve) || (index >= Count(Main.WordsToProcess)))
+                           {
+                              RemoveAt(ref(substoresolve), 0);
+                              RemoveAt(ref(StackedResults), 0);
+                           }
+                           else if((tryingsubs && (iDoRecursion != true)) && (index < Count(Main.WordsToProcess)))
+                           {
+                              Split(gPMFinished, ref(iDoRecursion), true, false);
+                              if (iDoRecursion == false)
+                              {
+                                 RemoveAt(ref(substoresolve), 0);
+                                 RemoveAt(ref(StackedResults), 0);
+                              }
+                              else
+                                 NextResulTtoUse = Duplicate(NextResulTtoUse);
+                           }
+                           else
+                              NextResulTtoUse = Duplicate(NextResulTtoUse);   //Sub topics/rules can start with other topics/rules. Also themselves. To handle this type of recursion, we do a split and allow the 'SubTopics/SubRules' neuron on the 'SubsToResolve' in one path. This provides the recursion.    Do this after it's certain that the collectSub can continue, otherwise there is no point (should be a little faster, cause 1 less operation if a fail + no splits.    
+                           gIsFirstWord = GetClusterMeaning(NextResulTtoUse);
+                           DecreaseWeight(0.001);
+                        }
+                        case newtext:
+                        {
+                           gIsFirstWord = false;
+                           SelectPattern();
+                           CollectResults();
+                           AddChild(patternresult, InputBreak);   //we use an ordinary, empty new neuron to indicate a (hard return/new pattern). This is to avoid deadlocks. Using the same neuron in all the lists is to risky for deadlocks on duplicate/addChildren.    
+                           Freeze(pattern, Main.VarCollectors, patternresult);
+                           Main.PatternItem = Main.WordsToProcess[index];
+                           Index++;
+                           IncreaseWeight(0.99);   //Normally, 1 is added for text, but we supstract 0.01 cause it's a new start.    
+                           pattern = GetValidPatterns(GetOutgoing(Main.PatternItem, Statics.Rule));
+                           Clear(ref(Main.VarCollectors));
+                        }
+                        case trynewvar:
+                        {
+                           gIsFirstWord = false;
+                           if (ChildCount(Statics.ParsedVariable) > 0)
+                           {
+                              SelectPattern();
+                              CollectResults();
+                              AddChild(patternresult, InputBreak);   //we use an ordinary, empty new neuron to indicate a (hard return/new pattern). This is to avoid deadlocks. Using the same neuron in all the lists is to risky for deadlocks on duplicate/addChildren.    
+                              Freeze(pattern, Main.VarCollectors, patternresult);
+                              Clear(ref(Main.VarCollectors));
+                              Split(gPMFinished, ref(Main.Next), GetChildren(Statics.ParsedVariable));
+                              CollectValuesForVar();   //Collects all the input words into the neuron variable attached to the pattern-variable declared in 'Main.PatternItem' according to the rules of the pattern-variable.    The input data collected for this pattern-variable is stored in the variable attached to the pattern-variable.     The values that are found are always collected into a cluster with meaning, the variable. We do this cause at the end, we need to put the results in a cluster anyway + this makes it easier to collect multiple values for a single pattern-variable. Each cluster that gets generated like this is always frozen from the start, so that we can have an easy exit, when the patten didn't match.    
+                              Main.PatternItem = Main.Next;
+                              DecreaseWeight(0.01);
+                              pattern = GetValidPatterns(GetOutgoing(Main.PatternItem, Statics.Rule));
+                           }
+                           else
+                              ExitPatternMatch();
+                        }
+                        case trynewthesvar:
+                        {
+                           gIsFirstWord = false;
+                           if (ChildCount(Statics.ParsedThesVariable) > 0)
+                           {
+                              SelectPattern();
+                              CollectResults();
+                              AddChild(patternresult, InputBreak);   //we use an ordinary, empty new neuron to indicate a (hard return/new pattern). This is to avoid deadlocks. Using the same neuron in all the lists is to risky for deadlocks on duplicate/addChildren.    
+                              Freeze(pattern, Main.VarCollectors, patternresult);
+                              Clear(ref(Main.VarCollectors));
+                              Main.Next = GetChildren(Statics.ParsedThesVariable);
+                              CollectThesValues(Statics.ParsedThesVariable);   //The new thesaurus path parsing algorithm. uses a tree structure to find out if any word matches.    
+                              Main.PatternItem = Main.Next;
+                              DecreaseWeight(0.01);
+                              pattern = GetValidPatterns(GetOutgoing(Main.PatternItem, Statics.Rule));
+                           }
+                           else
+                              ExitPatternMatch();
+                        }
+                        case trynewsubtopic:
+                        {
+                           var iSplitOn = Filter(ref(filtervar), ref( Count(GetFirstCluster(filterVar, Statics.Rule)) > 0 && Count(GetOutgoing(Statics.SubTopics, GetClustersWithMeaning(GetClustersWithMeaning(filtervar, Statics.Rule), Statics.Topic))) > 0), pattern);    //get all the patterns that belong to a rule and which are used as subTopics
+                           if (Count(iSplitOn) > 0)
+                           {
+                              Split(gPMFinished, ref(pattern), iSplitOn);
+                              var iSubRule = GetFirstCluster(pattern, Statics.Rule);
+                              var iSubTopic = GetFirstCluster(iSubRule, Statics.Topic);
+                              Main.PatternItem = GetOutgoing(Statics.SubTopics, iSubTopic);
+                              ProcessNewSub(-0.001);
+                              tryingsubs = true;
+                           }
+                           else
+                              ExitPatternMatch();
+                        }
+                        case trynewsubrule:
+                        {
+                           var iSplitOn = Filter(ref(filtervar), ref(Count(GetFirstCluster(filterVar, Statics.Rule)) > 0 && Count(GetOutgoing(Statics.SubRules, GetClustersWithMeaning(filtervar, Statics.Rule))) > 0), pattern);  //get all the patterns that belong to a rule and which are used as subRules
+                           if (Count(iSplitOn) > 0)
+                           {
+                              Split(gPMFinished, ref(pattern), iSplitOn);
+                              var iSubRule = GetFirstCluster(pattern, Statics.Rule);
+                              Main.PatternItem = GetOutgoing(Statics.SubRules, iSubRule);
+                              ProcessNewSub(-0.001);
+                              tryingsubs = true;
+                           }
+                           else
+                              ExitPatternMatch();
+                        }
+                     }
+                     if (currentmaxres > (GetWeight() + (Count(Main.WordsToProcess) - index) + 1))
+                        ExitPatternMatch();
+                  }
+               }
+            }
+         }
+      }
+      
+      //performs all the splits. SplitOn should contain another variable.
+      CalculateSplits(var splitOn)
+      {
+         var iSubs;
+         if (index < Count(Main.WordsToProcess))
+         {
+            if (Count(substoresolve) == 0)
+            {
+               if (SingleTopPatternResult == 0)
+                  Split(gPMFinished, splitOn, true, trycontinue, newtext, trynewvar, trynewthesvar, trynewsubtopic, trynewsubrule);
+               else
+                  Split(gPMFinished, splitOn, true, trycontinue, trynewsubtopic, trynewsubrule);
+            }
+            else if((SingleTopPatternResult == 0) || gIsFirstWord)
+               Split(gPMFinished, splitOn, collectsub, trycontinue, trynewsubrule, trynewsubtopic);
+            else
+               Split(gPMFinished, splitOn, collectsub, trycontinue);
+         }
+         else if(Count(substoresolve) == 0)
+         {
+            if ((SingleTopPatternResult == 0) || gIsFirstWord)
+               Split(gPMFinished, splitOn, true, trynewsubrule, trynewsubtopic);
+            else
+               Execute(ref(splitOn)) = true;
+         }
+         else
+         {
+            if ((SingleTopPatternResult == 0) || gIsFirstWord)
+               Split(gPMFinished, splitOn, collectsub, trynewsubrule, trynewsubtopic);
+            else
+               Execute(ref(splitOn)) = collectsub;
+         }
+      }
+
+      SkipSpaces()
+      {
+         if (index < Count(Main.WordsToProcess))
+         {
+            var iChild = Main.WordsToProcess[index];
+            while ((index < Count(Main.WordsToProcess)) && (ContainsChildren(ToSkip, iChild)))
+            {
+               Index++;
+               if (index < Count(Main.WordsToProcess))
+                  iChild = Main.WordsToProcess[index];
+               else
+                  Break();
+            }
+         }
+      }
+         
+      ProcessNewSub(double weight)
+      {
+         if (Count(Main.PatternItem) > 0)
+         {
+            CollectResults();
+            Clear(ref(Main.VarCollectors));
+            Split(gPMFinished, ref(Main.PatternItem), Main.PatternItem);
+            pattern = GetValidPatterns(GetOutgoing(Main.PatternItem, Statics.Rule));
+            IncreaseWeight(weight);
+         }
+         else
+            ExitPatternMatch();
+      }
+         
+      //further refines the selected pattern until only 1 is left (by doing a split if required) or exits when invalid state.
+      //check 'aiml style that' and topic filters.
+      SelectPattern()
+      {
+         if (Count(AllowedTopics) == 0)                                                //if there are no 'predefined' topics, match with log
+            MatchPatternsWithLog();                                                    //do a final filter: try to find patterns that mathced the log if there is more then 1 result.
+         else
+         {
+            if(count(gMatchFromType) != 0)
+            {
+               if(count(GetFirstCluster(pattern, gMatchFromType)) == 0)                    //if the pattern isn't a child of a cluster with the specified meaning, it's not a valid result.
+                  Clear(ref(pattern));
+            }
+            else
+               pattern = Filter(ref(filtervar), ref(ContainsChildren(AllowedTopics, GetFirstCluster(filtervar, Statics.Rule))), pattern);
+         }
+         if (Count(pattern) > 1)
+            Split(gPMFinished, ref(pattern), pattern);
+         else if(Count(pattern) == 0)
+            ExitPatternMatch();
+      }
+      
+      
+      //filters out all the patterns that are not valid at this moment by checking
+      //the possible |< and >|  tokens attached to the patterns.
+      GetValidPatterns(var from): var
+      {
+         var iRes, iLoopVar;
+         var iPatternsWithNoTopicFilters;                                                          //stores all the patterns that belong to topics that have no topic-filters (or don't belong to topics, like responseFor or topicfilters themselves)
+         var iTopicFiltersToCheck;                                                                //contains all the pattens that belong to topics with topic filters (and thus have to be checked further).
+         foreach (iLoopVar in from)
+         {
+            if (LinkExists(iLoopVar, iLoopVar, Statics.OrSmaller))
+            {
+               if (gIsFirstWord != true || (LinkExists(iLoopVar, iLoopVar, Statics.BiggerOr) && index < Count(Main.WordsToProcess) ) )
+                  Continue();
+            }
+            else if(LinkExists(iLoopVar, iLoopVar, Statics.BiggerOr) && index < Count(Main.WordsToProcess))
+               Continue();
+            //when we get here, the |< >| are ok. Still check 'that' if we are doing regular patternmatch.
+            if(PatternMatchFinished, ParseSentenceFinished contains gPMFinished)
+            {
+               if(FilterThat(iLoopVar) == false)                  //if the 'that' filter doesn't match, don't include in the result.
+                  Continue();
+               if(HasTopicFilter(iLoopvar) == true)
+                  Add(iTopicFiltersToCheck, iLoopVar);
+               else
+                  Add(iPatternsWithNoTopicFilters, iLoopVar);
+            }
+            else Add(iRes, iLoopVar);
+         }
+         if(PatternMatchFinished, ParseSentenceFinished contains gPMFinished)                                          
+         {
+            var iToTest = #user.Topic;
+            if(count(iToTest) > 0)
+            {
+               foreach(iLoopVar in iTopicFiltersToCheck)
+               {
+                  if(FilterTopic(iLoopVar, iToTest) == true)
+                     Add(iRes, iLoopVar);              
+               }
+            }
+            if(count(iRes) == 0)
+               Add(iRes, iPatternsWithNoTopicFilters);
+         }
+         return iRes;
+         
+      }
+      
+      //Checks if the rule has any 'responseFor' filters defined. If so, They are evaluated now. When a responseFor filter
+      //is found, 'true' is returned and the result of the responseFilter is added to the current result. If no filter that matches
+      //is found, false is returned, unless there is still a default outputs section.
+      //if no filters are defined, true is returned.
+      FilterThat(var pattern): bool
+      {
+         var iRule = GetFirstCluster(pattern, Statics.Rule);                                            //get the rule, which is easier to work for filtering on 'ResponseFor or 'topic'
+         var iResponsesFor = GetFirstOut(iRule, Statics.ResponseForOutputs);
+         if(count(iResponsesFor) > 0 && ChildCount(iResponsesFor) > 0)                    //if responsesFor has no children, it's an empty cluster, so there are actually no 'responsesFor' defined, there were, but not anymore, so treat as non existing.
+         {
+            if (Count(NextResulTtoUse) == 0)
+            {
+               NextResulTtoUse = new(NeuronCluster);                                   //we need a result to attach the 'responseFor' list too.
+               Freeze(NextResultToUse);                                               //in case something goes wrong and there is no result to collect, make certain that there is no memleak.
+            }
+            if(LinkOutCount(iResponsesFor) > 0)                      //it's an AIML style pattern definition.
+            {
+               var iToMatch = $PrevOut(1);
+               if(count(iToMatch) > 0)
+               {
+                  var iClusterMeaning;
+                  var iRes = MatchFrom(iToMatch, iResponsesFor, Statics.ResponseForOutputs);   //iREsponseFor is the local root of the decision tree for the 'that' matching., $output(1) gets the previous output value.
+                  if(count(iRes) > 0)                                                    //we found a match, so integrate the result with our own and let the caller now that we found something,
+                  {
+                     iClusterMeaning = GetClusterMeaning(iRes);                              //the meaning of the res is the pattern that was found or 'Statics.empty' if nothing was found.
+                     if(iClusterMeaning != Statics.Empty)                                    //if the meaning of the cluster is 'empty', it means no result was found.
+                     {
+                        Add(Main.VarCollectors, GetChildren(iRes));                            //copy over the results.
+                        var iResGroup = GetFirstIn(iClusterMeaning,  Statics.ResponseForOutputs);  //the cluster meaning of the reuslt == the 'ResponseFor' group that contained the pattern result. This is attached to the condition that we need to indicate as the 'condition' that contains the list of outputs that needs to be used.
+                        AddLink(NextResulTtoUse, iResGroup, Statics.ResponseForOutputs);      //link to result so we know which list to use.   
+                        Freeze(NextResultToUse);                                               //in case something goes wrong and there is no result to collect, make certain that there is no memleak.
+                     }
+                     Delete(iRes);                                                      //delete the previous result
+                  }
+                  if(iClusterMeaning != STatics.Empty)
+                     return true;
+               }
+               return ContainsLinksOut(iRule, Statics.Condition, Statics.OutputPatterns);      //if the rule has a conditional section or just some outputs, it still passes the 'that' filter. 
+            }
+            else                                                                       //the responseFor is declared as a ref to an output pattern, so match that.
+            {  
+               bool iFound = false;
+               foreach (var iConditionals in GetChildrenFiltered(iResponsesFor, ref(filtervar), ref(ContainsChildren(GetFirstOut(filtervar, Statics.ResponseForOutputs), GetOutgoing(OutputSin, needsresponsefor)))))
+               {
+                  if(ChildCount(iConditionals) > 1 || (ChildCount(iConditionals) == 1 && ChildCount(GetChildAt(iConditionals, 0)) > 0 ))      //check if the responseFor section has any outputs, if it doesn't, don't try to add as a result, it can't be used anyway.
+                  {
+                     AddLink(NextResulTtoUse, iConditionals, Statics.ResponseForOutputs);          //link to result so we know which list to use.   
+                     iFound = true;
+                     Freeze(NextResultToUse);                                               //in case something goes wrong and there is no result to collect, make certain that there is no memleak.
+                  }
+               }
+               return ContainsLinksOut(iRule, Statics.Condition, Statics.OutputPatterns);      //if the rule has a conditional section or just some outputs, it still passes the 'that' filter. 
+            }
+         }
+         else
+            return true;                                                                  //if there ais no response-section, it can be a result
+      }
+      
+      //checks if the pattern belongs to a topic that has topic filers.
+      HasTopicFilter(var pattern): bool
+      {
+         var iRule = GetFirstCluster(pattern, Statics.Rule);                                            //get the rule, which is easier to work for filtering on 'ResponseFor or 'topic'
+         var iTopic = GetFirstCluster(iRule, Statics.Topic);
+         if(Count(iTopic) > 0)
+         {
+            var iFilters = GetFirstOut(iTopic, Statics.TopicFilter);
+            return count(iFilters) > 0;
+         }
+         else return false;                                          //if the rule doesn't belong to a topic, it shouldn't be a result.
+      }
+      
+      //checks if the rule belongs to a topic that specifies topic filters. If so
+      //the topic filters are matched against #user.topic
+      FilterTopic(var pattern, var toCheck): bool
+      {
+         var iRule = GetFirstCluster(pattern, Statics.Rule);                                            //get the rule, which is easier to work for filtering on 'ResponseFor or 'topic'
+         var iTopic = GetFirstCluster(iRule, Statics.Topic);
+         if(Count(iTopic) > 0)
+         {
+            var iFilters = GetFirstOut(iTopic, Statics.TopicFilter);
+            if(count(iFilters) > 0)
+            {
+               var iRes = MatchFrom(toCheck, iFilters, statics.TopicFilter);             //The filters cluster is the local root of the decision tree for the 'topic' matching.
+               if(count(iRes) > 0)                                //we found a match, so integrate the result with our own and let the caller now that we found something,
+               {
+                  if(GetClusterMeaning(iRes) != Statics.Empty)          //the clustermenaing contains the pattern that was matched, or statics.empty if no match was found.
+                  {
+                     Add(Main.VarCollectors, GetChildren(iRes));        //copy over the results.
+                     Delete(iRes);                                   //delete the previous result
+                     IncreaseWeight(0,001);                          //to make certain that there is a difference between 2 similar patterns but 1 with a topic, the other without.
+                     return true;
+                  }
+                  else
+                  {
+                     Delete(iRes);                                   //delete the previous result
+                     return false;
+                  }
+               }
+               else return false;                                 //no match found, so can't be a valid result.            
+            }
+            else return true;                                        //if there are no filters, the pattern can be a valid result.   
+         }
+         else return false;                                          //if the rule doesn't belong to a topic, it shouldn't be a result.
+      }
+      
+      //checks if the current sign is a sentence end. If so, the remaining bit of the input is parsed again
+      //with a sub-parse. This is done so thatt each sentence can enjoy a full parse, with skipping of front elements that it can't match.
+      //called when the patternmatcher has found a pattern to collect and is about to terminate the process.
+      TryFindNextSentence()
+      {
+         if(index < count(Main.WordsToProcess))                                       //only try this if there are still items to process, otherwise there are no more sentences.   
+         {
+            var iChild = Main.WordsToProcess[index];
+            if(ContainsChildren(SentenceSigns, iChild) == true)                        //we found the sentence sign.
+            {
+               index++;
+               SkipSpaces();
+               var iNextPart = GetRange(index, Count(Main.WordsToProcess) - index, Main.WordsToProcess);    //get the part of the input that hasn't been procesed yet so we can process it seperatly.
+               if(count(iNextPart) > 0)
+               {
+                  var iRes = ParseSentence(iNextPart);                              //try and parse any consecutive results.
+                  if(count(iRes) > 0)
+                  {
+                     AddChild(patternresult, InputBreak, iRes);                          //add an inputbeak in front of the result so that the generator knows that this is a new seperate sentence.
+                     Freeze(patternresult, iRes);
+                  }
+               }
+            }
+         }
+      }
+   }
+   /*
+     Loads all the colected data into the variables.
+   When the data was collected by the parser, the iClusterMeaning of each data blob is the variable path that collected it, cause it didn't yet know  the pattern for which it was matching, so also not yet the variable.
+   During assignments though, there is no path to use as meaning, so the varaible is used as iClusterMeaning.
+    */
+   ExpressionsBlock LoadAndConvertPatternResults
+   {
+      var varstoclear;                             //Keeps track of the variables that were loaded for the current pattern result, so that we can clear these values for the Main.Next one.
+      statements()
+      {
+         if (Count(varstoclear) > 0)                     //make certain that there aren't any values still in memory from the previous pattern.
+            Clear(varstoclear, ref(varstoclear));
+         pattern = GetClusterMeaning(splitresults);
+         var iCompoundType, iParsedVar, iChildrenOfCurCol, iFoundCompound, iVarCollector;
+         foreach (Main.CurCollector in GetChildren(splitresults))
+         {
+            iVarCollector = GetClusterMeaning(Main.CurCollector);
+            if (ChildCount(Main.CurCollector) > 1)
+            {
+               iParsedVar = GetFirstIn(iVarCollector, Statics.variable);
+               if (LinkExists(iParsedVar, iParsedVar, Statics.CollectSpaces))
+                  iCompoundType = Statics.Argument;
+               else
+                  iCompoundType = Statics.CompoundWord;
+               iChildrenOfCurCol = GetChildren(Main.CurCollector);
+               iFoundCompound = GetCommonParentsFiltered(ref(filtervar), ref(((GetClusterMeaning(filtervar) == iCompoundType) && (GetChildren(filtervar) == iChildrenOfCurCol))), iChildrenOfCurCol);
+               if (Count(iFoundCompound) == 0)
+               {
+                  var wordtypes = TypeOf(iChildrenOfCurCol);
+                  if ((wordtypes Contains DoubleNeuron) || (wordtypes Contains IntNeuron))
+                  {
+                     int iCounter;
+                     while (iCounter < Count(wordtypes))
+                     {
+                        if (wordtypes[iCounter] == IntNeuron)
+                           SetAt(ref(iChildrenOfCurCol), iCounter, IToS(iChildrenOfCurCol[iCounter]));
+                        else if(wordtypes[iCounter] == DoubleNeuron)
+                           SetAt(ref(iChildrenOfCurCol), iCounter, DToS(iChildrenOfCurCol[iCounter]));
+                        iCounter++;
+                     }
+                  }   //if there are int's are doubles in the list, convert it first to text, cause we don't store ints or doubles in compound words.    
+                  iFoundCompound = MakeCluster(iCompoundType, iChildrenOfCurCol);
+                  ClearChildren(Main.CurCollector);
+                  AddChild(Main.CurCollector, iFoundCompound);
+                  Freeze(Main.CurCollector, iFoundCompound);
+               }
+               else if(Count(iFoundCompound) > 1)
+               {
+                  iFoundCompound = GetFirst(iFoundCompound);
+                  Error("Multiple compound/argument found for the same set of words:", iChildrenOfCurCol);
+                  ClearChildren(Main.CurCollector);
+                  AddChild(Main.CurCollector, iFoundCompound);
+                  Freeze(Main.CurCollector);
+               }
+               else
+               {
+                  ClearChildren(Main.CurCollector);
+                  AddChild(Main.CurCollector, iFoundCompound);
+                  Freeze(Main.CurCollector);
+               }
+            }
+            Execute(ref(iVarCollector)) = Union(Execute(iVarCollector), Main.CurCollector);
+            varstoclear = Union(varstoclear, iVarCollector);
+         }
+         varstoclear = Distinct(varstoclear);
+      }
+   }
+   
+   //calculates the result for a pattern condition.
+   //Input: Condition=a neuron that defines a pattern condition (a code cluster that returns a bool)
+   //Output:  bool true or false to indicate the result of the pattern condition.
+   ResolvePatternCondition(var condition): bool
+   {
+      if (Count(condition) > 0)
+      {
+         var iToExec = GetFirstOut(condition, Statics.boolexpression);
+         if(count(iToExec) > 0)
+            Call(iToExec);                                           //the call also returns the value.
+         else
+            return false;
+      }
+      else
+         return true;
+   }
+   
+   
+   /*
+     Checks if the topic that contains the currently activated rule, has any 'questions' attached, if so, we run through the Statics.Sequence of conditionals until 1 output section is found who's condition evaluates to true, or the fallback if non are found.
+   This is only done when the current resultPattern doesn't have a 'question' link to itself already, cause then it disallows a follow up question, cause it is a question itself.
+   There has to be a current result pattern cause otherwise it went to one of the fallbacks, which is most likely a question itself.
+    */
+   AppendQuestion(var resultPattern)
+   {
+      if (((Count(resultpattern) > 0) && (ContainsLinksOut(resultpattern, Statics.Questions) == false)) && (Count(PatternMatchFinished.Topic) > 0))
+      {
+         var iConditionals = GetFirstOut(PatternMatchFinished.Topic, Statics.Questions);
+         var iListToUse;
+         if (Count(iConditionals) > 0)
+         {
+            iListToUse = ResolveConditionals(iConditionals);
+            if (Count(iListToUse) > 0)
+            {
+               ExecuteDoPatterns(GetFirstOut(iListToUse, Statics.DoPatterns));   //Important: this can only be done if we don't use the InvalidResponseFallbacks list.    
+               Topics.RenderContent(iListToUse);
+               Clear(ref(iListToUse));
+            }
+         }
+      }
+   }
+   
+   ExpressionsBlock GetValidSubPatternsFromTopic
+   {
+      var fSubsubTopics;
+      var fProcessedTopics;
+      var fProcessedRules;
+      statements(var subTopic)
+      {
+         var subsubrules;
+         Clear(ref(Main.ValidSubsForStart));   //just to be save.    
+         foreach (var iSubRule in GetChildren(subtopic))
+            Add(ref(Main.ValidSubsForStart), GetChildren(iSubRule));
+         subSubRules = GetSubRulesAndTopics();
+         fProcessedTopics = subtopic;
+ :obj9984 if (Count(fSubsubTopics, subsubrules) > 0)
+         {
+            var iAddSubs;
+            var iSplitOn;
+            Split(gPMFinished, ref(iSplitOn), false, Statics.SubTopics, Statics.SubRules);
+            switch (iSplitOn)
+            {
+               case Statics.SubTopics:
+               {
+                  Clear(ref(Main.ValidSubsForStart));
+                  PrepareForSubPatterns();   //moves the curent results up a stack (build with a var) + keeps track of which sub that should be found.    
+                  Main.Next = Statics.SubTopics;
+                  foreach (iAddSubs in fSubsubTopics)
+                  {
+                     subtopic = GetLinkMeaning(Statics.SubTopics, iAddSubs);
+                     if (fProcessedTopics !Contains subtopic)
+                     {
+                        add(ref(fProcessedTopics), subtopic);
+                        foreach (var iSubRule in GetChildren(subtopic))
+                        {
+                           if (fProcessedRules !Contains iSubRule)
+                           {
+                              Add(ref(fProcessedRules), iSubRule);
+                              Main.ValidSubsForStart = Union(Main.ValidSubsForStart, GetChildren(iSubRule));
+                           }
+                        }
+                     }
+                  }
+               }
+               case Statics.SubRules:
+               {
+                  Clear(ref(Main.ValidSubsForStart));
+                  PrepareForSubPatterns();   //moves the curent results up a stack (build with a var) + keeps track of which sub that should be found.    
+                  Main.Next = Statics.SubRules;
+                  foreach (iAddSubs in subsubrules)
+                  {
+                     var iSubRule = GetLinkMeaning(Statics.SubRules, iAddSubs);
+                     if (fProcessedRules !Contains iSubRule)
+                     {
+                        Add(ref(fProcessedRules), iSubRule);
+                        Main.ValidSubsForStart = Union(Main.ValidSubsForStart, GetChildren(iSubRule));
+                     }
+                  }
+               }
+            }
+            subsubRules = GetSubRulesAndTopics();
+            obj9984;
+         }
+         Clear(ref(fProcessedRules), ref(fSubsubTopics), ref(fProcessedTopics));
+      }
+   }
+   
+   GetSubRulesAndTopics():var
+   {
+      var iRes;
+      var iNewSub;
+      Clear(ref(GetValidSubPatternsFromTopic.fSubsubTopics));
+      foreach (var iSubPattern in Main.ValidSubsForStart)
+      {
+         iNewSub = GetoutFiltered(Statics.SubTopics, ref(filtermeaning), ref(filterfrom), ref((LinkExists(iSubPattern, filterfrom, Statics.ParsedPatternStart) && (GetValidSubPatternsFromTopic.fProcessedTopics !Contains filtermeaning))));
+         if (Count(iNewSub) > 0)
+         {
+            Add(ref(GetValidSubPatternsFromTopic.fSubsubTopics), iNewSub);
+            if (Count(GetoutFiltered(iSubPattern, ref(filtermeaning), ref(filterfrom), ref(((filtermeaning == Statics.ParsedPatternStart) && (iNewSub !Contains filterfrom))))) == 0)
+               Main.ValidSubsForStart = Substract(ref(Main.ValidSubsForStart), iSubPattern);
+         }
+         iNewSub = GetoutFiltered(Statics.SubRules, ref(filtermeaning), ref(filterfrom), ref((LinkExists(iSubPattern, filterfrom, Statics.ParsedPatternStart) && (GetValidSubPatternsFromTopic.fProcessedRules !Contains filtermeaning))));
+         if (Count(iNewSub) > 0)
+         {
+            Add(ref(iRes), iNewSub);
+            if (Count(GetoutFiltered(iSubPattern, ref(filtermeaning), ref(filterfrom), ref(((filtermeaning == Statics.ParsedPatternStart) && (iNewSub !Contains filterfrom))))) == 0)
+               Main.ValidSubsForStart = Substract(ref(Main.ValidSubsForStart), iSubPattern);
+         }
+      }
+      GetValidSubPatternsFromTopic.fSubsubTopics = Distinct(GetValidSubPatternsFromTopic.fSubsubTopics);
+      return Distinct(iRes);
+   }
+   
+   //used by multiple functions.
+   getvalidsubpatternsfromrule(var subRule)
+   {
+      var subsubrules;
+      Clear(ref(GetValidSubPatternsFromTopic.fProcessedRules), ref(GetValidSubPatternsFromTopic.fSubsubTopics));
+      Main.ValidSubsForStart = GetChildren(subRule);
+      subsubRules = GetSubRulesAndTopics();
+      obj9984;
+      
+      Clear(ref(GetValidSubPatternsFromTopic.fProcessedRules), ref(GetValidSubPatternsFromTopic.fSubsubTopics), ref(GetValidSubPatternsFromTopic.fProcessedTopics));
+   }
+   
+   /*
+     Tries to find all the sub patterns that are contained in the rule or are valid starting sub patterns of the already found patterns.
+    */
+   ExpressionsBlock GetPossibleNextsForVar
+   {
+      var fSubRule, fAllStarts;
+      statements()
+      {
+         var iNextPatterns;
+         var iClusterWithThesVars = GetFirstOut(Main.PatternItem, Statics.ParsedThesVariable);
+         if (Count(iClusterWithThesVars) > 0)
+            Add(ref(TryMatchWithThesVar.ThesVarsToCheck), GetChildren(iClusterWithThesVars));
+         pattern = Distinct(GetOutgoing(Main.PatternItem, Statics.Rule));
+         var iSubTopic, iLoopVar;
+         while (Count(pattern) > 0)
+         {
+            var iNewPosssibleNexts;
+            foreach (pattern in pattern)
+            {
+               fSubRule = GetFirstCluster(pattern, Statics.Rule);
+               if(count(fSubRule) > 0)                                              //'that' and 'topicfilters' are patterns that don't belong (directly) to a rule. If there is no rule, don't bother checking of the rule or topic was used as a start.
+               {
+                  iSubTopic = GetFirstCluster(fSubRule, Statics.Topic);
+                  add(ref(iNewPosssibleNexts), GetOutgoing(Statics.SubTopics, iSubTopic), GetOutgoing(Statics.SubRules, fSubRule));
+                  if (Count(substoresolve) > 0)
+                     Add(ref(iNewPosssibleNexts), GetOutgoing(GetFirst(substoresolve), iSubTopic));
+                  add(ref(CollectValuesForVar.OtherPossibleNexts), iNewPosssibleNexts);
+                  foreach (iLoopVar in iNewPosssibleNexts)
+                     Add(ref(iNextPatterns), GetOutgoing(iLoopVar, Statics.Rule));
+                  iNextPatterns = Distinct(iNextPatterns);
+               }
+            }
+            pattern = iNextPatterns;
+            Clear(ref(iNextPatterns));
+         }
+         foreach (iLoopVar in CollectValuesForVar.OtherPossibleNexts)
+         {
+            iClusterWithThesVars = GetFirstOut(iLoopVar, Statics.ParsedThesVariable);
+            if (Count(iClusterWithThesVars) > 0)
+               Add(ref(TryMatchWithThesVar.ThesVarsToCheck), GetChildren(iClusterWithThesVars));
+            CalculateValidSubs(GetFirstOut(iLoopVar, Statics.SubTopics), GetFirstOut(iLoopVar, Statics.SubRules));
+         }
+         CalculateValidSubs(GetFirstOut(Main.PatternItem, Statics.SubTopics), GetFirstOut(Main.PatternItem, Statics.SubRules));
+         Main.ValidSubsForStart = Distinct(fAllStarts);
+         foreach (iLoopVar in Main.ValidSubsForStart)
+            TryMatchWithThesVar.ThesVarsToCheck = Union(TryMatchWithThesVar.ThesVarsToCheck, GetoutFiltered(iLoopVar, ref(filtermeaning), ref(filterfrom), ref(((filtermeaning == Statics.ParsedPatternStart) && (GetClusterMeaning(filterfrom) == Statics.ParsedThesVariable)))));
+         TryMatchWithThesVar.ThesVarsToCheck = Distinct(TryMatchWithThesVar.ThesVarsToCheck);
+         if (Count(TryMatchWithThesVar.ThesVarsToCheck) > 0)
+         {
+            Clear(ref(TryMatchWithThesVar.StartOfThesVars));
+            foreach (var iSolvedThesPaths in TryMatchWithThesVar.ThesVarsToCheck)
+               TryMatchWithThesVar.StartOfThesVars = Union(TryMatchWithThesVar.StartOfThesVars, GetClustersFiltered(iSolvedThesPaths, ref(filtervar), ref(((filtervar == Statics.ParsedThesVariable) || (GetClusterMeaning(filtervar) == Statics.ParsedThesVariable)))));
+            TryMatchWithThesVar.StartOfThesVars = Distinct(TryMatchWithThesVar.StartOfThesVars);
+         }
+         clear(ref(fSubRule), ref(fAllStarts));
+      }
+      
+      CalculatevalidSubs(var subtopicneuron, var subRuleNeuron)
+      {
+         var iSubStep;
+         if (Count(subtopicneuron) > 0)
+         {
+            foreach (subtopicneuron in GetChildren(subtopicneuron))
+            {
+               iSubStep = GetAllOutgoing(subtopicneuron);
+               var iSubTopic = GetLinkMeaning(subtopicneuron, iSubStep);
+               foreach (fSubRule in GetChildren(iSubTopic))
+                  Add(ref(Main.ValidSubsForStart), GetChildren(fSubRule));
+            }
+         }
+         if (Count(subRuleNeuron) > 0)
+         {
+            foreach (subRuleNeuron in GetChildren(subRuleNeuron))
+            {
+               iSubStep = GetAllOutgoing(subRuleNeuron);
+               fSubRule = GetLinkMeaning(subtopicneuron, iSubStep);
+               getvalidsubpatternsfromrule(fSubRule);   //Tries to find all the sub patterns that are contained in the rule or are valid starting sub patterns of the already found patterns.    
+               Add(ref(fAllStarts), Main.ValidSubsForStart);
+            }
+         }
+      }
+   }
+   /*
+     moves the curent results up a stack (build with a var) + keeps track of which sub that should be found.
+    */
+   PrepareForSubPatterns()
+   {
+      substoresolve = Union(Main.Next, substoresolve);
+      if (Count(NextResulTtoUse) == 0)
+      {
+         var temppatternresult = MakeCluster(gIsFirstWord, Main.VarCollectors);
+         StackedResults = temppatternresult, StackedResults;
+         Freeze(temppatternresult, Main.VarCollectors);
+      }
+      else
+      {
+         AddChild(NextResulTtoUse, Main.VarCollectors);
+         StackedResults = NextResulTtoUse, StackedResults;
+         Freeze(NextResulTtoUse, Main.VarCollectors);
+         Clear(ref(NextResulTtoUse));
+      }
+      Clear(ref(Main.VarCollectors));
+      gIsFirstWord = false;
+   }
+   
+   CollectResults()
+   {
+      if (Count(NextResulTtoUse) == 0)
+         pattern = MakeCluster(pattern, Main.VarCollectors);
+      else
+      {
+         AddChild(NextResulTtoUse, Main.VarCollectors);
+         SetClusterMeaning(NextResulTtoUse, pattern);
+         pattern = NextResulTtoUse;
+         Clear(ref(NextResulTtoUse));
+      }
+      AddChild(patternresult, pattern);
+      Freeze(pattern, Main.VarCollectors, patternresult);
+   }
+   /*
+     When the patternmatcher has finished collecting all the variable parts, the meanings of the result clusters are all still variable paths 
+     cause the pattern was not yet known at the time of collecting the values, so the exact variable could not yet be calculated. 
+     Now that the pattern for each result item is known, it's much easier for the rest of the system to change the meanings of the each 
+     result item from variable path, to the actual variable that provides access to the values. 
+     This allows things like 'GetResultFromRule' or 'Do var operation' to work correctly.
+     While doing this, we need to copy over any potential 'CollectSpaces', which is assigned to the var-path, but we will loose this info, so copy it over.
+    */
+   AdjustResultMeanings(): var
+   {
+      var iToFreeze, iAllVars;
+      bool iAddToFreeze;
+      foreach (splitresults in PatternMatchFinished.SplitResultsToProcess)
+      {
+         if (splitresults != InputBreak)
+         {
+            pattern = GetClusterMeaning(splitresults);
+            iAllVars = GetoutFiltered(pattern, ref(filtermeaning), ref(filterfrom), ref((TypeOf(filterfrom) == Statics.variable)));
+            foreach (Main.CurCollector in GetChildren(splitresults))
+            {
+               var iClusterMeaning = GetClusterMeaning(Main.CurCollector);
+               if (TypeOf(iClusterMeaning) != Statics.variable)         //the parser uses the varaible path as iClusterMeaning, do statements use the varaible as meaning.    
+               {
+                  var iVarCollector = GetoutFiltered(iClusterMeaning, ref(filtermeaning), ref(filterfrom), ref(((filtermeaning == Statics.variable) && (iAllVars Contains filterfrom))));
+                  SetClusterMeaning(Main.CurCollector, iVarCollector);
+                  iAddToFreeze = true;
+               }   
+               if(ContainsLinksOut(iClusterMeaning, Statics.CollectSpaces))
+               {
+                  AddLink(Main.CurCollector, Main.CurCollector, Statics.CollectSpaces);
+                  iAddToFreeze = true;
+               }  
+               if(iAddToFreeze == true)
+                  Add(ref(iToFreeze), Main.CurCollector);
+            }
+         }
+      }
+      return iToFreeze;
+   }
+   /*
+     When there are multiple results from a multi-selection set input (1 input,many possibilities, like with STT input), we can try to resolve things based on the index of the text in the input list and if this doesn't work, ask the user.
+   inputs:
+   SplitResults: all the split results
+   QuestionSin: the IntSin to send the data to / get the result from.
+    */
+   ExpressionsBlock ResolveDuplicates
+   {
+      var fIndexes;
+      var fSplitResToUse;
+      var fSmallesIindex = 100000;
+      var questionsin;
+      var fSplitResult;
+      statements()
+      {
+         if (Count(questionsin) > 0)
+         {
+            GetIndexes();
+            if ((Count(fSplitResToUse) == 1) && (fResultRuleSetCount == 1))    //if all the results are for the same pattern and there is 1 top index (top result of the STT), then we can simply use this result. If there were multiple result rules found, but each possible input only matched 1 rule (so some inputs matched a different rule), ask the user which one to Filter. If there were multiple rules for a single input value, it's something we can't handle yet.    
+            {
+               if (UseSTTWeight == 1)
+               {
+                  splitresults = fSplitResToUse;
+                  Output(questionsin, fSmallesIindex);   //need to let the ui know which input was selected.    
+               }
+               else if(Count(Distinct(fIndexes)) == Count(splitresults))
+                  AskUser();
+               else
+                  DoDuplicatePatternsFound(); 
+            }
+            else if((fResultRuleSetCount > 1) && (Count(Distinct(fIndexes)) == Count(splitresults)))
+               AskUser();
+            else
+               DoDuplicatePatternsFound(); 
+         }
+         else
+            DoDuplicatePatternsFound(); 
+      }
+      
+      //gets all the indexes from the splitresults. The indexes will be sent to the int-sin, so the user can Filter 1 index.   
+      GetIndexes()
+      {
+         var found;
+         foreach (fSplitResult in splitresults)
+         {
+            found = GetFirstOut(fSplitResult, InputIndex);
+            compareclustermeanings();   
+            if (Count(found) > 0)
+            {
+               if (found < fSmallesIindex)
+               {
+                  fSmallesIindex = found;
+                  fSplitResToUse = fSplitResult;
+               }
+               else if(found == fSmallesIindex)
+                  add(ref(fSplitResToUse), fSplitResult);
+               add(ref(fIndexes), found);
+            }
+            else
+            {
+               DoDuplicatePatternsFound();
+               Break();
+            }
+         }
+      }
+      
+      AskUser() inline
+      {
+         Output(questionsin, Statics.BeginTextblock, fIndexes, Statics.EndTextblock);
+         fIndexes = GetFirstOut(questionsin, Statics.IntSin);
+         if (Count(fIndexes) > 0)
+         {
+            Freeze(fIndexes);
+            splitresults = Filter(ref(filtervar), ref((GetFirstOut(filtervar, InputIndex) == fIndexes)), splitresults);
+            if (Count(splitresults) > 1)
+               DoDuplicatePatternsFound(); 
+            else if(Count(splitresults) == 0)
+            {
+               Error("No user selection for resolving a duplicate");
+               ExitSolve();
+            }
+         }
+         else
+            DoDuplicatePatternsFound(); 
+      }
+    
+      DoDuplicatePatternsFound() inline
+      {
+         var errorText;
+         foreach (var iRes in splitresults)
+         {
+            if (Count(errortext) > 0)
+               Add(ref(errortext), " AND ");
+            foreach (iRes in GetChildren(iRes))
+               Add(ref(errortext), GetClusterMeaning(iRes));
+         }
+         if(ErrorOnDuplicates == 1)
+         {
+            Error("Found duplicate pattern matches: ", errortext);
+            Clear(ref(splitresults));
+         }
+         else
+         {
+            Warning("Found duplicate pattern matches: ", errortext);
+            splitResults = GetRandom(splitResults);                                             //get a random result.
+         }
+       }
+    
+       var fRuleResultSet;  //a var cause previous value is used.    
+       var fResultRuleSetCount; //also used in resolveDuplicates itself.
+       
+       //if there is a previous loopvar, we check if the current loopvar's chidren have the same cluster meanings as the prev loopvar (the current loopvar represents the same pattern results as the previous one. 
+       //if there is no previous loopvar, store it for the Main.Next pass.
+       //this is used to check if all the split results represent the same patterns or not.
+      compareclustermeanings()
+      {
+         var newresultset, iChild;
+         foreach (iChild in GetChildren(fSplitResult))
+            newresultset = Union(newresultset, GetClusterMeaning(iChild));
+         if (Count(fRuleResultSet) > 0)
+         {
+            if (fRuleResultSet != newresultset)
+               fResultRuleSetCount++;
+         }
+         else
+         {
+            fRuleResultSet = newresultset;
+            fResultRuleSetCount = New(IntNeuron, 1);
+         }
+      }
+   
+   }
+   /*
+     Extracts all the compounds + the single words for each input word. These can be used to match against the thesaurus values.
+   input: Index, words to process
+   output: words
+
+    */
+   ExpressionsBlock ExtractWordsFromInput
+   {
+      var InputContainer;     //stores a ref to the cluster that contained the text input . This allows us to check if the 'compound words' have already been calculated or not.
+      statements()
+      {
+         Main.ToResolve = GetFirstOut(Inputcontainer, CalculatedCompounds);
+         if (Count(Main.ToResolve) > 0)
+         {
+            Main.ToResolve = GetChildren(Main.ToResolve);
+            index = New(IntNeuron);
+         }
+         else
+         {
+            var iCompoundItem, iCompound, iWords, iFoundCompound, iToCompare, iWordToMatch, iRenderedWords;
+            int iTempIndex;
+            Clear(ref(Main.ToResolve));
+            index = New(IntNeuron);
+            while (index < Count(Main.WordsToProcess))
+            {
+               iWordToMatch = Main.WordsToProcess[index];
+               if (ContainsChildren(ToSkip, iWordToMatch) == false)
+               {
+                  iWords = iWordToMatch;
+                  iTempIndex = index + 1;
+                  iToCompare = iWordToMatch;
+                  while (iTempIndex < Count(Main.WordsToProcess))
+                  {
+                     iCompoundItem = GetAt(iTempIndex, Main.WordsToProcess);
+                     iTempIndex++;
+                     if (ContainsChildren(ToSkip, iCompoundItem) == false)
+                     {
+                        Add(ref(iToCompare), iCompoundItem);
+                        iFoundCompound = GetCommonParentsWithMeaning(Statics.CompoundWord, iToCompare);
+                        iCompound = Filter(ref(filtervar), ref((GetChildren(filtervar) == iToCompare)), iFoundCompound);
+                        if (Count(iCompound) > 0)
+                        {
+                           Add(ref(iWords), iCompound);
+                           iFoundCompound = Complement(ref(iFoundCompound), ref(iCompound));
+                        }
+                        Break();
+                     }
+                  }
+                  while ((Count(iFoundCompound) > 0) && (iTempIndex < Count(Main.WordsToProcess)))
+                  {
+                     iCompoundItem = GetAt(iTempIndex, Main.WordsToProcess);
+                     AddStoreInt(iTempIndex, iTempIndex, 1);
+                     if (ContainsChildren(ToSkip, iCompoundItem) == false)
+                     {
+                        Add(ref(iToCompare), iCompoundItem);
+                        iCompound = Filter(ref(filtervar), ref((GetChildren(filtervar) == iToCompare)), iFoundCompound);
+                        if (Count(iCompound) > 0)
+                        {
+                           Add(ref(iWords), iCompound);
+                           iFoundCompound = Complement(ref(iFoundCompound), ref(iCompound));
+                        }
+                        else
+                           iFoundCompound = Filter(ref(filtervar), ref((GetChildren(filtervar) Contains iToCompare)), iFoundCompound);
+                     }
+                  }
+                  CheckPluralsOfWords(iWords);   //walks through the list of iWords, all that end with an s (and are longer than 2 letters) will be get a 'plural' tag.    
+                  iWords = MakeCluster(Statics.Empty, iWords);
+                  Add(ref(iRenderedWords), iWords);
+               }
+               else
+                  iWords = Statics.Empty;
+               Add(ref(Main.ToResolve), iWords);
+               Index++;
+            }
+            iWords = MakeCluster(CalculatedCompounds, Main.ToResolve);
+            AddLink(inputcontainer, iWords, CalculatedCompounds);
+            Freeze(iWords, iRenderedWords);
+            Delete(iTempIndex);
+         }
+         clear(ref(InputContainer));        //clear this, it's no longer used.
+      }
+   }
+   
+   /*
+     walks through the list of words, all that end with an s (and are longer than 2 letters) will be get a 'plural' tag.
+    */
+   CheckPluralsOfWords(var toCheck)
+   {
+      var iNewWord;
+      var iWordCluster;
+      foreach (var iWordToMatch in toCheck)
+      {
+         switch (TypeOf(iWordToMatch))
+         {
+            case textneuron:
+            {
+               if ((((Length(iWordToMatch) > 2) && EndsWith(iWordToMatch, 's')) && (ContainsLinksIn(iWordToMatch, Thes.Plural) == false)) && (Count(GetClustersWithMeaning(iWordToMatch, Statics.Object)) == 0))
+               {
+                  iWordCluster = SToCc(iWordToMatch);
+                  RemoveChildAt(iWordCluster, Decrement(ChildCount(iWordCluster)));
+                  iNewWord = CcToS(iWordCluster);
+                  Freeze(iWordCluster);
+                  AddLink(iNewWord, iWordToMatch, Thes.Plural);
+               }
+            }
+            case neuroncluster:
+            {
+               var lastword = GetLastChild(iWordToMatch);
+               if ((((Length(lastword) > 2) && EndsWith(lastword, 's')) && (ContainsLinksIn(lastword, Thes.Plural) == false)) && (Count(GetClustersWithMeaning(lastword, Statics.Object)) == 0))
+               {
+                  iWordCluster = SToCc(lastword);
+                  RemoveChildAt(iWordCluster, Decrement(ChildCount(iWordCluster)));
+                  iNewWord = CcToS(iWordCluster);
+                  Freeze(iWordCluster);
+                  iWordCluster = Duplicate(iWordToMatch);
+                  RemoveChildAt(iWordCluster, Decrement(ChildCount(iWordCluster)));
+                  AddChild(iWordCluster, iNewWord);
+                  AddLink(iWordCluster, iWordToMatch, Thes.Plural);
+               }
+            }
+         }
+      }
+   }
+   /*
+     The new thesaurus path parsing algorithm. uses a tree structure to find out if any word matches.
+    */
+   ExpressionsBlock CollectThesValues
+   {
+      var fIndexPos;
+      var fIsUnique;
+      var fIsFirst;
+      var fPaths;
+      var fObjects;
+      var fTheObject;
+      var fCurLocInThes;
+      Global fGetPosFor(copy) {}
+      Global fTreePos(copy) {}
+      
+      statements(var getFrom)
+      {
+         var iWords = GetChildren(Main.ToResolve[Index]);
+         var exec = New(neuron);
+         var callresult = New(neuroncluster);
+         AddLink(exec, callresult, CollectThesValues);
+         AddInfo(exec, callresult, CollectThesValues, iWords, getFrom);
+         BlockedSolve(exec);
+         if (ChildCount(callresult) > 0)
+         {
+            exec = GetChildren(callresult);
+            Delete(callresult);
+            Split(gPMFinished, ref(Main.CurCollector), exec);
+            Main.Next = GetClusterMeaning(Main.CurCollector);
+            AdvanceAndCollectThes();
+            Clear(ref(exec), ref(callresult));  //, ref(getposfor)
+         }
+         else
+         {
+            Delete(callresult);
+            ExitPatternMatch();
+         }
+      }
+      exec()
+      {
+         splitresult = Statics.CurrentTo;
+         Delete(Statics.CurrentFrom);
+         fTreePos = GetLast(Statics.CurrentInfo);
+         fCurLocInThes = Substract(ref(Statics.CurrentInfo), fTreePos);
+         var iRelationship = GetAllOutgoing(fTreePos);
+         var iNext;
+         Split(EndOfParseWithThesTree, ref(iNext), iRelationship);
+         var thesmeaning = GetLinkMeaning(fTreePos, iNext);
+         if (thesmeaning == Statics.Empty)
+            thesmeaning = Thes.IsA;
+         fTreePos = iNext;
+         Split(EndOfParseWithThesTree, ref(fCurLocInThes), fCurLocInThes);
+         fGetPosFor = fCurLocInThes;
+         switch (TypeOf(fCurLocInThes))
+         {
+            case IntNeuron: AddNumberAsResult(GetOutgoing(fTreePos, IntNeuron, Statics.Number, Statics.Empty));
+            case DoubleNeuron: AddNumberAsResult(GetOutgoing(fTreePos, DoubleNeuron, Statics.Number, Statics.Empty));
+            default:
+            {
+               var iFullPath;
+               var found = GetFirstIn(fCurLocInThes, Thes.Plural);
+               if (Count(found) > 0)
+               {
+                  Split(stage2collectthesvalues, ref(fCurLocInThes), found, fCurLocInThes);
+                  if (fCurLocInThes == found)
+                     iFullPath = Thes.Plural;
+               }
+               else
+                  Split(stage2collectthesvalues, ref(fCurLocInThes), fCurLocInThes);
+               fCurLocInThes = GetClustersWithMeaning(fCurLocInThes, Statics.Object);
+               if (Count(fCurLocInThes) == 0)
+                  ExitSolve();
+               else
+               {
+                  Split(stage2collectthesvalues, ref(fCurLocInThes), fCurLocInThes);
+                  fTheObject = fCurLocInThes;
+               }
+               var related =  Distinct(GetInFiltered(fCurLocInThes, ref(filtermeaning), ref(filterfrom), ref((GetChildren(Thes.AllConjugations) Contains filtermeaning)))); //important: need to get the distinct list. A verb can have muliple conjugations in the same form. If we don't do this, we get the same item multiple times.
+               if (Count(related) > 0)
+               {
+                  iFullPath = Union(related, iFullPath);
+                  iFullPath = Union(iFullPath, GetLinkMeaning(related, fCurLocInThes));
+                  fCurLocInThes = related;
+               }
+               else
+                  iFullPath = Union(fCurLocInThes, iFullPath);
+               getposduringthesparse.Callback = stage2collectthesvalues;
+               getposduringthesparse(fCurLocInThes);
+               var isacluster = GetClustersWithMeaning(fCurLocInThes, thesmeaning);
+               while (Count(isacluster) > 0)
+               {
+                  Split(stage2collectthesvalues, ref(isacluster), isacluster);
+                  fCurLocInThes = GetFirstIn(isacluster, thesmeaning);
+                  if (iFullPath !Contains fCurLocInThes)
+                  {
+                     getposduringthesparse(fCurLocInThes);
+                     iFullPath = Union(fCurLocInThes, iFullPath);
+                     isacluster = GetClustersWithMeaning(fCurLocInThes, thesmeaning);
+                  }
+                  else
+                  {
+                     Clear(ref(fCurLocInThes));
+                     Break();
+                  }
+               }
+               AddSplitResult(MakeCluster(fTheObject, getposduringthesparse.FoundPos, iFullPath));
+            }
+         }
+      }
+      
+      CalculatePathIsUnique()
+      {
+         if (Count(fPaths) > 0)
+         {
+            var range = Filter(ref(filtervar), ref(ContainsChildren(filtervar, fCurLocInThes)), fPaths);
+            var iNameOf = GetFirstOut(fCurLocInThes, Statics.NameOfMember);                                    //check if the curloc is a placeholder. In this case, we need to check the name of the placeholder, not the object itself.
+            if(Count(iNameOf) > 0)
+            {
+               var fvar2;
+               Add(ref(range), Filter(ref(filtervar), ref(  Count(GetChildrenFiltered(filtervar, ref(fvar2), ref(LinkExists(fVar2, iNameOf, Statics.NameOfMember)))) > 0 ), fPaths));
+            }
+            if (Count(range) > 0)
+            {
+               fIsUnique = false;
+               fIsFirst = true;
+               foreach (var iLoopVar in range)
+               {
+                  if (GetClusterMeaning(iLoopVar) < fIndexPos)
+                  {
+                     fIsFirst = false;
+                     Break();
+                  }
+               }
+               return;
+            }
+         }
+         fIsUnique = true;                       //when we get here, couldn't find the values.
+         fIsFirst = true;
+      }
+      
+      stage2collectthesvalues()
+      {
+         fPaths = GetSplitResults();
+         ClearSplitResults();
+         if (Count(fPaths) > 0)
+         {
+            var iFullPath;
+            var iCounter = New(IntNeuron);                //don't make this into an int, but leave it as a var. This will make certain that each time we do 'iCounter = iCounter + 1), we create a new object, which is used as the meaning for the cluster.
+            foreach (iFullPath in fPaths)                     //do this is in a loop before the split, so that we are certain all clusters have an index before the actual calculation happens.    
+            {
+               add(ref(fObjects), GetClusterMeaning(iFullPath));
+               SetClusterMeaning(iFullPath, iCounter);
+               iCounter = (iCounter + 1);                    //needs to produce a unique neuron for each run, so that each cluster gets a unique value.    
+            }   
+            Clear(ref(iCounter));                           //clear so that it doesn't get duplicated every time we do a split.    
+            fTheObject = fObjects;
+            fObjects = Distinct(fObjects);
+            Split(EndOfParseWithThesTree, ref(iFullPath), fPaths);
+            fIndexPos = GetClusterMeaning(iFullPath);
+            fTheObject = GetAt(fIndexPos, fTheObject);
+            fPaths = Complement(ref(fPaths), ref(iFullPath));
+            Freeze(iFullPath, fIndexPos);
+            getposduringthesparse.FoundPos = GetFirstChild(iFullPath);                             //get the pos
+            var iNext = GetOutgoing(CollectThesValues.fTreePos, getposduringthesparse.FoundPos, Statics.Empty);
+            if (Count(iNext) > 0)
+            {
+               var iConj = GetLastChild(iFullPath);                                                 //there could also be a possible conjugation. Get this as well cause it needs to be handled specially   
+               var iStoredConj;                                                                 //if we found a conjugation, can't try it until we advanced to a next step. So this var temporarely stores the conjugation until a new match is found and the conjugation can be used again.
+               if(GetClusterMeaning(iConj) != Statics.Code)                                        //if the last is not 'code', it is not a conjugation
+                  Clear(ref(iConj));
+               iFullPath = GetChildrenRange(iFullPath, 1, (ChildCount(iFullPath) - 1));   
+               Split(EndOfParseWithThesTree, ref(CollectThesValues.fTreePos), iNext);
+               fCurLocInThes = getposduringthesparse.FoundPos;   //need to do this for the CalculatePathIsUnique which  uses the 'fCurLocInThes' to see if it is used in another path.    
+               AddVarCollectorAsResult(GetFirstOut(CollectThesValues.fTreePos, Statics.ParsedThesVariable));
+               var iFoundStart, iFoundConj; 
+               foreach (fCurLocInThes in iFullPath)
+               {
+                  iNext = GetoutFiltered(CollectThesValues.fTreePos, ref(filtermeaning), ref(filterfrom), ref((((Union(fCurLocInThes, Statics.List) Contains filtermeaning) || ContainsChildren(fCurLocInThes, filtermeaning)) || (GetFirstOut(fCurLocInThes, Statics.NameOfMember) == filtermeaning))));
+                  
+                  if(count(iConj) > 0)                                                                    //don't get the conj 2 times when at the end.
+                  {
+                     if(fCurLocInThes != iConj)
+                     {
+                        var iNextConj = GetFirstOut(CollectThesValues.fTreePos, iConj);
+                        if(count(iNextConj) > 0)
+                        {
+                           iFoundConj = true;
+                           Add(ref(iNext), iNextConj);
+                        }
+                     }
+                     else
+                        iFoundConj = true;
+                  }
+                  if (Count(iNext) > 0)
+                  {
+                     Split(EndOfParseWithThesTree, ref(iNext), iNext);                                                                 //could be that we found multiple possibilities: list, conjugation and/or exact item.   
+                     var iLinkMeaning = GetLinkMeaning(CollectThesValues.fTreePos, iNext);
+                     if(iFoundConj == true)
+                        CollectThesValues.fTreePos = iNext;
+                     else
+                        Split(EndOfParseWithThesTree, ref(CollectThesValues.fTreePos), iNext, CollectThesValues.fTreePos);                  //when a possible path has been found, need to continue every possible path individually + the possibility that the there is another path further down the line that could start here.    
+                     if ((CollectThesValues.fTreePos == iNext) && (iStoredConj != iLinkMeaning) )                                  //if iStoredConj == linkMeaning, we found the conjugation through the end of the list, but it has already been collected at this location, when we first tried the conjugation through 'iConj'. So don't collect.
+                     {
+                        AddVarCollectorAsResult(GetFirstOut(CollectThesValues.fTreePos, Statics.ParsedThesVariable));
+                        if(Count(iStoredConj) > 0)                                                                           //could be that there was a conjguation found before an exact match in the path. We can try to the conjugation again once we have advanced in the search tree. If we didn't wait, we would get the same result multiple times.
+                           iConj = iStoredConj;
+                        else if(iFoundConj == true)
+                        {
+                           if(iFoundStart == true)                                                                                  //if this was part of a path, and not the first item, exit. but if we haven't found any item yet in the path, try again until we found something.
+                              ExitSolve();
+                           iStoredConj = iConj;
+                           Clear(ref(iConj));
+                        }
+                        iFoundStart = true;
+                     }   
+                  }
+                  else if(iFoundStart == true)
+                     ExitSolve();
+               }
+            }
+         }
+      }
+   
+      AddVarCollectorAsResult(var iVarCollector)
+      {
+         if (Count(iVarCollector) > 0)
+         {
+            CalculatePathIsUnique();
+            if (fIsFirst)  //we only log results for the first path item, otherwise we get duplicate results for the same thesaurus path. If there are multiple possible results for the same path, we only return a Statics.PosGroup.    
+            {
+               if (fIsUnique)
+                  Main.CurCollector = fTheObject;
+               else
+                  lock(splitresult) //we lock the result while trying to build the Statics.PosGroup. This is to make certain that no other processor can call the this code at the same time. We could also use the textneuron or all the fObjects to perform a lock on, but that would create more possibilities for deadlocks. The splitresult isn't used until all processors are done. Normally, no other part of the system tries to make posgroups?    
+                  {
+                     var found = GetClustersFiltered(fGetPosFor, ref(filtervar), ref(((GetClusterMeaning(filtervar) == Statics.PosGroup) && (GetFirstOut(filtervar, Thes.Pos) == getposduringthesparse.FoundPos))));
+                     if (Count(found) > 0)
+                        Main.CurCollector = found;
+                     else
+                     {
+                        Main.CurCollector = MakeCluster(Statics.PosGroup, fObjects, fGetPosFor);
+                        AddLink(Main.CurCollector, getposduringthesparse.FoundPos, Thes.Pos);
+                     }
+                  }   
+               var iIndexOfText;
+               if (Statics.Object, Statics.PosGroup contains GetClusterMeaning(Main.CurCollector))
+                  iIndexOfText = IndexOfChild(Main.CurCollector, fGetPosFor);
+               else
+                  iIndexOfText = New(IntNeuron, -1);   //create a new object, otherwise we will freeze the -1 object and destroy some code.    
+               Main.CurCollector = MakeCluster(iVarCollector, Main.CurCollector);
+               AddLink(Main.CurCollector, iIndexOfText, IndexOfText);
+               AddSplitResult(Main.CurCollector);
+            }   
+         }
+      }
+   
+      AddNumberAsResult(var toAdd)
+      {
+         if (Count(toAdd) > 0)
+         {
+            Split(EndOfParseWithThesTree, ref(fTreePos), toAdd);
+            var iVarCollector = GetFirstOut(fTreePos, Statics.ParsedThesVariable);
+            if (Count(iVarCollector) > 0)
+            {
+               Main.CurCollector = MakeCluster(iVarCollector, fCurLocInThes);
+               var iIndexOfText = New(IntNeuron, -1);   //create a new object, otherwise we will freeze the -1 object and destroy some code.    
+               AddLink(Main.CurCollector, iIndexOfText, IndexOfText);
+               AddSplitResult(Main.CurCollector);
+            }
+         }
+      }
+      
+      EndOfParseWithThesTree()
+      {
+         AddChild(splitresult, GetSplitResults());
+      }
+   }
+   
+   //gets the pos value of 'iCurLocInThes' Could be that there is already a previous foundPos value, when this happens,
+   //a split is done so that any loop is stopped for the already existing pos (the previous path has come to an end, it should be evaluated. 
+   //the path for the new pos can continue to build the path again, cause the rest of the path are all under the new pos. )
+   Cluster GetPosDuringThesParse
+   {
+      var FoundPos;
+      var Callback;
+      this(var iCurLocInThes)
+      {
+         var posoffound = GetOutgoing(iCurLocInThes, Thes.Pos);
+         if (Count(posoffound) == 0)
+         {
+            var posgrp = GetClustersWithMeaning(iCurLocInThes, Statics.PosGroup);
+            if (Count(posgrp) > 0)
+            {
+               Split(Callback, ref(posgrp), posgrp);
+               posoffound = GetFirstOut(posgrp, Thes.Pos);
+            }
+         }
+         if(count(posoffound) > 0)                 //only try to store the new value if something was found, if we don't do this, and we already had a pos value, we get into trouble.
+         {
+            if (Count(foundpos) == 0)     //if we found a new pos, the previous path has come to an end, it should be evaluated. the path for the new pos can continue to build the path again, cause the rest of the path are all under the new pos.    
+               foundpos = posoffound; 
+            else if(foundpos != posoffound)
+            {
+               Split(Callback, ref(posoffound), foundpos, posoffound);
+               if (posoffound == foundpos)
+                  Break();                            //this can only 
+               else
+                  foundpos = posoffound;   
+            }
+         }
+      }
+   }
+   
+   /*
+     collectss thes values but limits the possible results to the ones defined in 'Main.Next'. 'Collect thes values from' contains the cluster with all the possible thes paths (and a link out to the parsed thes path).
+    */
+   CollectRestrictedThesValues(var getFrom)
+   {
+      var iWords = GetChildren(Main.ToResolve[Index]);
+      var exec = New(neuron);
+      var callresult = New(neuroncluster);
+      AddLink(exec, callresult, CollectThesValues);
+      AddInfo(exec, callresult, CollectThesValues, iWords, getFrom);
+      BlockedSolve(exec);
+      if (ChildCount(callresult) > 0)
+      {
+         exec = GetChildren(callresult);
+         Delete(callresult);
+         Split(gPMFinished, ref(Main.CurCollector), exec);
+         if (Main.Next Contains GetClusterMeaning(Main.CurCollector))
+         {
+            Main.Next = GetClusterMeaning(Main.CurCollector);
+            AdvanceAndCollectThes();
+         }
+         else
+         {
+            var iIndexOfText = GetOutgoing(Main.CurCollector, IndexOfText);
+            Freeze(Main.CurCollector, iIndexOfText);
+            ExitPatternMatch();
+         }
+      }
+      else
+      {
+         Delete(callresult);
+         ExitPatternMatch();
+      }
+   }
+
+   //terminates the pattern-matching process and makes certain that everything is cleaned up as good as possible   
+   ExitPatternMatch()
+   {
+      if (Count(patternresult) > 0)
+      {
+         var iToFreeze = GetChildren(patternresult);
+         Delete(patternresult, index);
+         Clear(ref(patternresult), ref(index));   //need to clear the vars in case this processor is used for processing the Main.Next round (last of split).    
+         var iDontFreeze = InputBreak;
+         Freeze(Complement(ref(iToFreeze), ref(iDontFreeze)));
+      }
+      ExitSolve();
+   }
+   
+   VerifyWeightIsMax(): bool
+   {
+      var iUniverse;
+      if (GetClusterMeaning(Statics.CurrentTo) == Statics.OrOr)
+      {
+         var iNew;
+         foreach (var iLoopVar in Statics.CurrentTo)
+         {
+            if (ChildCount(iLoopVar) > indexfrom)
+            {
+               iNew = GetChildrenRange(iLoopVar, indexfrom, (ChildCount(iLoopVar) - indexfrom));
+               if (Count(iNew) > Count(iUniverse))
+                  iUniverse = iNew;
+            }
+         }
+      }
+      else
+         iUniverse = GetChildrenRange(Statics.CurrentTo, indexfrom, (ChildCount(Statics.CurrentTo) - indexfrom - 1));
+      var toremove = ' ', '\r', '\n', '\t';
+      iUniverse = Complement(ref(iUniverse), ref(toremove));
+      return((Count(iUniverse) == 1) || (currentmaxres > Count(iUniverse) - 1));                   //we do Count(iUniverse) == 1, cause if there is 1 item left, it's the last one, can't start again.
+   }
+   
+   //called during parsing of a var, to see if the Main.Next item is a match with an allowed thesaurus var.
+   ExpressionsBlock TryMatchWithThesVar
+   {
+      var startofthesvars;
+      var thesvarstocheck;
+      statements(): bool
+      {
+         var iWords = GetChildren(Main.ToResolve[Index]);
+         var exec = New(neuron);
+         var callresult = MakeCluster(Statics.Empty, startofthesvars);
+         AddLink(exec, callresult, TryMatchWithThesVar);
+         AddInfo(exec, callresult, TryMatchWithThesVar, iWords);
+         BlockedSolve(exec);
+         var iRes = ContainsChildren(callresult, thesvarstocheck);
+         Delete(callresult);
+         return iRes;
+      }
+      exec()
+      {
+         splitresult = Statics.CurrentTo;
+         Delete(Statics.CurrentFrom);
+         var iTreePos(copy) = GetChildren(Statics.CurrentTo);
+         ClearChildren(Statics.CurrentTo);
+         var iCurLocInThes = Statics.CurrentInfo;
+         Split(EndOfTryMatchWithThesVar, ref(iTreePos), iTreePos);
+         var iRelationship = GetAllOutgoing(iTreePos);
+         var iNext;
+         Split(EndOfTryMatchWithThesVar, ref(iNext), iRelationship);
+         var thesmeaning = GetLinkMeaning(iTreePos, iNext);
+         if (thesmeaning == Statics.Empty)
+            thesmeaning = Thes.IsA;
+         iTreePos = iNext;
+         Split(EndOfTryMatchWithThesVar, ref(iCurLocInThes), iCurLocInThes);
+         var getposfor = iCurLocInThes;
+         switch (TypeOf(iCurLocInThes))
+         {
+            case IntNeuron:
+            {
+               iNext = GetOutgoing(iTreePos, IntNeuron, Statics.Number, Statics.Empty);
+               if (Count(iNext) > 0)
+                  foreach (iTreePos in iNext)
+                     AddSplitResult(GetFirstOut(iTreePos, Statics.ParsedThesVariable));
+            }
+            case DoubleNeuron:
+            {
+               iNext = GetOutgoing(iTreePos, DoubleNeuron, Statics.Number, Statics.Empty);
+               if (Count(iNext) > 0)
+                  foreach (iTreePos in iNext)
+                     AddSplitResult(GetFirstOut(iTreePos, Statics.ParsedThesVariable));
+            }
+            default:
+            {
+               var iFullPath;
+               var found = GetFirstIn(iCurLocInThes, Thes.Plural);
+               if (Count(found) > 0)
+               {
+                  Split(EndOfTryMatchWithThesVar, ref(iCurLocInThes), found, iCurLocInThes);
+                  if (iCurLocInThes == found)
+                     iFullPath = Thes.Plural;
+               }
+               iCurLocInThes = GetClustersWithMeaning(iCurLocInThes, Statics.Object);
+               if (Count(iCurLocInThes) == 0)
+                  ExitSolve();
+               else
+                  Split(EndOfTryMatchWithThesVar, ref(iCurLocInThes), iCurLocInThes);
+               var related = GetInFiltered(iCurLocInThes, ref(filtermeaning), ref(filterfrom), ref((GetChildren(Thes.AllConjugations) Contains filtermeaning)));
+               if (Count(related) > 0)
+               {
+                  iFullPath = Union(related, iFullPath, GetLinkMeaning(related, iCurLocInThes));
+                  iCurLocInThes = related;
+               }
+               else
+                  iFullPath = Union(iCurLocInThes, iFullPath);
+               GetPosDuringThesParse.Callback = EndOfTryMatchWithThesVar;
+               GetPosDuringThesParse(iCurLocInThes);
+               var isacluster = GetClustersWithMeaning(iCurLocInThes, thesmeaning);
+               while (Count(isacluster) > 0)
+               {
+                  Split(EndOfTryMatchWithThesVar, ref(isacluster), isacluster);
+                  iCurLocInThes = GetFirstIn(isacluster, thesmeaning);
+                  if (iFullPath !Contains iCurLocInThes)
+                  {
+                     GetPosDuringThesParse(iCurLocInThes);
+                     iFullPath = Union(iCurLocInThes, iFullPath);
+                     isacluster = GetClustersWithMeaning(iCurLocInThes, thesmeaning);
+                  }
+                  else
+                  {
+                     Clear(ref(iCurLocInThes));
+                     Break();
+                  }
+               }
+               iNext = GetOutgoing(iTreePos, GetPosDuringThesParse.foundpos, Statics.Empty);
+               if (Count(iNext) > 0)
+               {
+                  Split(EndOfTryMatchWithThesVar, ref(iTreePos), iNext);
+                  var iFoundStart, iVarCollector;
+                  iVarCollector = GetFirstOut(iTreePos, Statics.ParsedThesVariable);
+                  if (Count(iVarCollector) > 0)
+                     AddSplitResult(iVarCollector);
+                  foreach (iCurLocInThes in iFullPath)
+                  {
+                     iNext = GetoutFiltered(iTreePos, ref(filtermeaning), ref(filterfrom), ref((((Union(iCurLocInThes, Statics.List) Contains filtermeaning) || ContainsChildren(iCurLocInThes, filtermeaning)) || (GetFirstOut(iCurLocInThes, Statics.NameOfMember) == filtermeaning))));
+                     if (Count(iNext) > 0)
+                     {
+                        Split(EndOfTryMatchWithThesVar, ref(iTreePos), iNext, iTreePos);
+                        if (iTreePos == iNext)
+                        {
+                           iFoundStart = true;
+                           iVarCollector = GetFirstOut(iTreePos, Statics.ParsedThesVariable);
+                           if (Count(iVarCollector) > 0)
+                              AddSplitResult(iVarCollector);
+                        }
+                     }
+                     else if(iFoundStart == true)
+                        ExitSolve();
+                  }
+               }
+            }
+         }
+      }
+   
+      EndOfTryMatchWithThesVar()                            //called when all items have been found.
+      {
+         AddChild(splitresult, GetSplitResults());
+      }
+   }
+
+   ExpressionsBlock TryCollectRestrictedForThesVar
+   {
+      statements(var getFrom)
+      {
+         var iWords = GetChildren(Main.ToResolve[Index]);
+         var exec = New(neuron);
+         var callresult = New(neuroncluster);
+         AddLink(exec, callresult, CollectThesValues);
+         AddInfo(exec, callresult, CollectThesValues, iWords, getFrom);
+         BlockedSolve(exec);
+         if (ChildCount(callresult) > 0)
+         {
+            exec = GetChildren(callresult);
+            Delete(callresult);
+            var iSplitOn = Filter(ref(filtervar), ref((Main.Next Contains GetClusterMeaning(filtervar))), exec);
+            if (Count(iSplitOn) > 0)
+            {
+               FreezeResults(Complement(ref(exec), ref(iSplitOn)));
+               Split(gPMFinished, ref(Main.CurCollector), iSplitOn);
+               Main.Next = GetClusterMeaning(Main.CurCollector);
+               AdvanceAndCollectThes();
+            }
+            else
+            {
+               FreezeResults(exec);
+               Index++;
+               DecreaseWeight((1 / Count(Main.WordsToProcess)));
+            }
+         }
+         else
+         {
+            Index++;
+            DecreaseWeight((1 / Count(Main.WordsToProcess)));
+            Delete(callresult);
+         }
+      }
+      
+      //makes certain that all the generated data is frozen so that it is auto cleaned when no longer used.
+      FreezeResults(var toFreeze)
+      {
+         var iIndexOfText;
+         foreach (Main.CurCollector in toFreeze)
+         {
+            iIndexOfText = GetOutgoing(Main.CurCollector, IndexOfText);
+            Freeze(Main.CurCollector, iIndexOfText);
+         }
+      }
+   }
+   /*
+     This code block will try to resolve all the 'synonyms' that can be found in the current input list. This also resolves from 1 to many words and from many to 1 word.
+   To resolve multiple words to 1, we need to search for 'common parents' among
+    */
+   ExpressionsBlock ResolveSynonyms
+   {
+      int fCurrentLength;
+      int fSynonumCount(duplicate);                     //during splits, this value needs to duplicate itself. Ints are always initialized to a default int value.
+      var fGetSynListVar;
+      var fOriginalSynList;
+      var fSpaceVar = GetChildren(ToSkip);                             //this is used in a 'complement' instruction, which requires a ref to a var, so need to declare one here.      
+      var fRange;
+      var CommonParents;
+      int SynWeightAdjust = 0;
+      ResetCurrentLength()
+      {
+         fCurrentLength = New(IntNeuron);
+         fCurrentLength = 2;
+      }
+   
+      getrangeandcommon()
+      {
+         if ((index + fCurrentLength) <= Count(Main.ToResolve))
+         {
+            fRange = GetChildrenRange(Statics.CurrentTo, index, fCurrentLength);
+            fRange = Complement(ref(fRange), ref(fSpaceVar));
+            CommonParents = GetCommonParentsWithMeaning(Statics.CompoundWord, fRange);
+         }
+         else
+            Clear(ref(CommonParents));
+      }
+      
+      /*
+        Retrieves the list of synonyms for a specified word, both textneurons and compound words are  supported.
+      Input:
+      fGetSynListVar: the textneuron to serarch all the synonyms for.
+      Output:
+         TextSynonyms: a list of textneurons, not including the input value.
+         Compound syns: a list of compound words clusters, not including the input value.
+         fGetSynListVar (a split on each item is done before returning the value.
+       */
+      getsynonymlist()
+      {
+         var compoundsyns;
+         var textsynonyms;
+         var iObjects = GetClustersWithMeaning(fGetSynListVar, Statics.Object);
+         if (Count(iObjects) > 0)
+         {
+            foreach (var objectitem in iObjects)
+            {
+               textsynonyms = Union(textsynonyms, GetChildrenOfType(objectitem, textneuron));
+               compoundsyns = Union(compoundsyns, GetChildrenFiltered(objectitem, ref(filtervar), ref((GetClusterMeaning(filtervar) == Statics.CompoundWord))));
+            }
+            fOriginalSynList = fGetSynListVar;
+            Split(gPMFinished, ref(fGetSynListVar), Distinct(textsynonyms), Distinct(compoundsyns));
+            //Clear(ref(textsynonyms));         -> no longer needed. var has been made a local
+            //Clear(ref(compoundsyns));        -> no longer needed. var has been made a local
+         }
+         else
+            fOriginalSynList = fGetSynListVar;
+      }
+      
+      ProcessCompleteCommonParents()
+      {
+         var iFullParents = Filter(ref(filtervar), ref((GetChildrenOfType(filtervar, textneuron) == fRange)), CommonParents);
+         if (Count(iFullParents) > 0)
+         {
+            Split(gPMFinished, ref(iFullParents), iFullParents, noreplace);
+            if (iFullParents != noreplace)
+            {
+               fGetSynListVar = iFullParents;
+               getsynonymlist();   //Retrieves the list of synonyms for a specified word, both textneurons and compound words are  supported.    Input:    fGetSynListVar: the textneuron to serarch all the synonyms for.    Output:    TextSynonyms: a list of textneurons, not including the input value.    Compound syns: a list of compound words clusters, not including the input value.    
+               if (iFullParents == fGetSynListVar)
+                  ExitSolve();
+               else if(fOriginalSynList != fGetSynListVar)
+                  AddStoreInt(fSynonumCount, fSynonumCount, fCurrentLength);
+               if (TypeOf(fGetSynListVar) == neuroncluster)
+                  fGetSynListVar = GetChildrenOfType(fGetSynListVar, textneuron);
+               Add(Main.WordsToProcess, fGetSynListVar);
+               AddStoreInt(index, index, fCurrentLength);
+               //foundcompound1 = true; -> not really certain if this was stil valid, so removed it.
+            }
+         }
+      }
+      
+      statements()
+      {
+         if (ResolveSynonymsSwitch > 0)
+         {
+            index = New(IntNeuron);
+            ResetCurrentLength();
+            while (index < Count(Main.ToResolve))
+            {
+               fGetSynListVar = Main.ToResolve[Index];
+               if (ContainsChildren(ToSkip, fGetSynListVar) == false)
+               {
+                  getrangeandcommon();
+                  if (Count(CommonParents) > 0)
+                     ProcessCompleteCommonParents();
+                  getsynonymlist();   //Retrieves the list of synonyms for a specified word, both textneurons and compound words are  supported.    Input:    fGetSynListVar: the textneuron to serarch all the synonyms for.    Output:    TextSynonyms: a list of textneurons, not including the input value.    Compound syns: a list of compound words clusters, not including the input value.    
+                  if (TypeOf(fGetSynListVar) == neuroncluster)
+                     fGetSynListVar = GetChildrenOfType(fGetSynListVar, textneuron);
+                  Add(Main.WordsToProcess, fGetSynListVar);
+                  index++;
+                  if (fOriginalSynList != fGetSynListVar)
+                     fSynonumCount++;
+                  ResetCurrentLength();
+               }
+               else
+               {
+                  index++;
+                  Add(Main.WordsToProcess, fGetSynListVar);
+               }
+            }
+            SynWeightAdjust = IToD(fSynonumCount) / Count(Main.WordsToProcess);   //we do the calculation before the split, so we only need to do it 1 time.    
+         }
+         else
+            Main.WordsToProcess = Main.ToResolve;
+      }
+   }
+   
+  
+   //checks if the argument has a value, if so, it gets the compiled version and executes it. if there is no compiled version, an error is shown.
+   ExecuteDoPatterns(var thingstodo)
+   {
+      if(count(thingsTodo) > 0)
+      {
+         var iExec = GetFirstOut(thingsToDo, Statics.ParsedDoPattern);
+         if (count(iExec) > 0)
+            Call(iExec);
+         else
+            Error("Code section is not compiled: ", thingsTodo);
+      }
+   }
+   
+   
+   //executes the list of do-after statements.
+   CallDoAfterStatement()
+   {
+      var iToExec = GetFirstOut(Statics.DoAfterstatement, Statics.DoPatterns);
+      if (Count(iToExec) > 0)
+         ExecuteDoPatterns(iToExec);
+   }
+
+   
+   ExpressionsBlock ExecuteEvaluate
+   {
+      var possibleresults;
+      var evaluateResult;
+      var fToResolve;
+      statements()
+      {
+         var exec = New(neuroncluster);
+         var iArgs = MakeCluster(OutputSin, splitresults);
+         AddLink(exec, iArgs, ExecuteEvaluate);
+         BlockedSolve(exec);
+         Add(ref(ItemsToFreeze), GetChildren(iArgs));
+         if (ChildCount(exec) > 0)
+            splitresults = GetChildren(exec);
+         Delete(exec, iArgs);
+      }
+      exec()
+      {
+         OutputSin = GetClusterMeaning(Statics.CurrentTo);
+         splitresult = Statics.CurrentFrom;
+         fToResolve = GetChildren(Statics.CurrentTo);
+         var iAllVars, iToProcess, iToFreeze, iVarCollector, iClusterMeaning;
+         foreach (splitresults in fToResolve)
+         {
+            iToProcess = GetChildren(splitresults);
+            foreach (splitresults in iToProcess)
+            {
+               if (splitresults != InputBreak)
+               {
+                  possibleresults = Union(possibleresults, GetFirstCluster(GetClusterMeaning(splitresults), Statics.Rule));
+                  pattern = GetClusterMeaning(splitresults);
+                  iAllVars = GetoutFiltered(pattern, ref(filtermeaning), ref(filterfrom), ref((TypeOf(filterfrom) == Statics.variable)));
+                  foreach (var iCol in GetChildren(splitresults))
+                  {
+                     iClusterMeaning = GetClusterMeaning(iCol);
+                     if (TypeOf(iClusterMeaning) != Statics.variable)  //the parser uses the varaible path as iClusterMeaning, do statements use the varaible as meaning.    
+                     {
+                        iVarCollector = GetoutFiltered(iClusterMeaning, ref(filtermeaning), ref(filterfrom), ref(((filtermeaning == Statics.variable) && (iAllVars Contains filterfrom))));
+                        SetClusterMeaning(iCol, iVarCollector);
+                        Add(ref(iToFreeze), iCol);
+                     }   
+                  }
+               }
+            }
+         }
+         AddChild(Statics.CurrentTo, iToFreeze);
+         Split(EndOfEvaluate, ref(evaluateresult), fToResolve);
+         iToProcess = GetChildren(evaluateresult);
+         foreach (splitresults in iToProcess)
+         {
+            if (splitresults != InputBreak)
+               CallSave(ExecuteEvaluateInternal, ref(possibleresults), ref(splitresults), ref(OutputSin));
+         }
+         AddSplitResult(evaluateresult);
+      }
+      
+      ExecuteEvaluateInternal()
+      {
+         pattern = GetClusterMeaning(splitresults);
+         var rule = GetFirstCluster(pattern, Statics.Rule);
+         var iThingsToDo = GetFirstOut(rule, statics.evaluate);
+         if ((Count(iThingsToDo) > 0) && (ChildCount(iThingsToDo) > 0))
+         {
+            PathCommon.LoadPatternResults();
+            ExecuteDoPatterns(iThingsToDo);
+         }
+      }
+      
+      EndOfEvaluate()
+      {
+         ClearChildren(splitresult);
+         AddChild(splitresult, GetMaxWeight());
+      }
+   }
+   
+   
+   
+   //adds the specified cluster to the log and labels it as incomming (also adds a timestamp).
+   LogIncomming(var toLog)
+   {
+      var iLog = GetFirstOut(Statics.CurrentSin, CurrentConversation);
+      if (Count(iLog) == 0)
+      {
+         iLog = New(neuroncluster);
+         AddLink(Statics.CurrentSin, iLog, CurrentConversation);
+         SetClusterMeaning(iLog, ConversationLog.Conversationlog);
+      }
+      SetClusterMeaning(toLog, Statics.In);
+      AddChild(toLog, time);
+      AddChild(iLog, toLog);
+   }
+   /*
+     If there are multiple patterns found, we check which pattern belong to the topic that was last activated, or, if there was none, the fallback partial.
+    */
+   ExpressionsBlock MatchPatternsWithLog
+   {
+      statements()
+      {
+         if (Count(pattern) > 1)
+         {
+            var fallbackpattern = Filter(ref(filtervar), ref((GetFirstOut(filtervar, Statics.Inputpatternpartialmode) == Statics.Partialinputpatternfallback)), pattern);   //check the log doesn't need to happen agains fallbacks, these get selected if there is no pattern matched against the log.
+            pattern = Substract(ref(pattern), fallbackpattern);
+            var iRes = waitfor InternalMatchPatternsWithLog(pattern, OutputSin);
+            if(Count(iRes) > 0)
+               pattern = iRes;
+            else if(Count(fallbackpattern) > 0)                                                       //if there was a fallback defined, use this, otherwise simply keep the patterns that we found (we'll select one at random)
+               pattern = fallbackpattern;
+         }
+      }
+      InternalMatchPatternsWithLog(var patterns, var output): var
+      {
+         OutputSin = output;
+         var iLog;
+         Split(EndOfMatchWithLog, ref(iLog), GetFirstOut(OutputSin, CurrentConversation));   //split over the iLog items first, cause they are ordered: last ones most likely, which is why we reverse the list order: first ones get processed first.    
+         var itemsToCheck;
+         if (ChildCount(iLog) > 15)
+            itemstocheck = Reverse(GetChildrenRange(iLog, (ChildCount(iLog) - 15 - 1), 15));
+         else
+            itemstocheck = Reverse(GetChildren(iLog));
+         var logItem, iTopic, rule;
+         foreach (logitem in itemstocheck)
+         {
+            var topicsoflogitem = GetOutgoing(logitem, Variables.AttachedTopics);
+            foreach (rule in GetOutgoing(logitem, Rules))
+               topicsoflogitem = Union(topicsoflogitem, GetFirstCluster(rule, Statics.Topic));
+            foreach (pattern in patterns)
+            {
+               rule = GetFirstCluster(pattern, Statics.Rule);
+               if (Count(rule) > 0)
+               {
+                  iTopic = GetFirstCluster(rule, Statics.Topic);
+                  if (topicsoflogitem Contains iTopic)
+                  {
+                     AddSplitResult(pattern);
+                     Break();
+                  }
+               }
+            }
+            DecreaseWeight(1);
+            ApplyWeight();
+         }
+         ResetWeight();   //we reset the weight at the end of 'Match PatternsWithLog' cause otherwise all result-neurons will get the final weight value, which we don't want, we gave them individual weights.    
+      }
+      
+      EndOfMatchWithLog(): var
+      {
+         return GetMaxWeight();
+      }
+   }
+   
+   LogOutgoing(var toLog)
+   {
+      if (IsInitialized(ref(PatternMatchFinished.log)) == false)
+         PatternMatchFinished.log = GetFirstOut(OutputSin, CurrentConversation);
+      AddChild(toLog, Time);
+      AddChild(PatternMatchFinished.Log, toLog);
+   }
+   
+   //moves the log to the history list.
+   MoveLogTohistory(var log)
+   {
+      var firsttimestamp = GetLastChild(GetFirstChild(log));
+      foreach (var logitem in GetChildren(log))
+      {
+         AddLink(log, logitem, ConversationLog.Conversationloghistory);
+         var timestamp = GetLastChild(logitem);
+         var content = GetChildren(logitem);
+         AddInfo(log, logitem, ConversationLog.Conversationloghistory, Substract(ref(content), timestamp));
+         ClearChildren(logitem);
+         Freeze(timestamp);
+         var rulestoarchive = GetOutgoing(logitem, Rules);
+         if (Count(rulestoarchive) > 0)
+         {
+            RemoveLinksOut(logitem, Rules);
+            AddLink(logitem, logitem, Rules);
+            AddInfo(logitem, logitem, Rules, rulestoarchive);
+         }
+         var topicstoarchive = GetOutgoing(logitem, Variables.AttachedTopics);
+         if (Count(topicstoarchive) > 0)
+         {
+            RemoveLinksOut(logitem, Variables.AttachedTopics);
+            AddLink(logitem, logitem, Variables.AttachedTopics);
+            AddInfo(logitem, logitem, Variables.AttachedTopics, topicstoarchive);
+         }
+      }
+      AddLink(log, firsttimestamp, ref(Time));   //important: do this after the loop, cause the last timestamp gets frozen, so if we do it before the loop, the timestamp would be gone.    
+      AddChild(ConversationLog.Conversationloghistory, log);
+   }
+   /*
+     Checks if the currently activated rule is the same as the previous statement + counts how many statements it can go back like this. The value is stored in the 'RepeatCount' var.
+   When a repetition is encountered, the repeat output is activated.
+   Important: this neds to be calculated before any of the condititions are evaluated, so that they can use this value.
+    */
+   ExpressionsBlock HandleRepetition
+   {
+      int repeatcount: 1336;    //This variable stores the nr of times that the currently activated rule has already been activated in the past, without any whole in between, starting from the prevous input. Has to be var, not local, cause is used as pattern-variable as well
+      statements(var rule)
+      {
+         var PrevRule;
+         if (Count(Statics.CurrentInfo) == 0)
+         {
+            foreach (var logitem in Reverse(GetChildren(PatternMatchFinished.Log)))
+            {
+               PrevRule = GetFirstOut(logitem, Rules);
+               if (Count(PrevRule) > 0)
+               {
+                  if (PrevRule == rule)
+                     repeatcount++;
+                  else
+                     Break();
+               }
+            }
+            repeatcount--;   //need to remove 1 from the repeat count, cause the current input is already logged, so the curren pattern is also included in this count.    
+            if (repeatcount > 0)
+            {
+               var iListToUse;
+               var iVarCollector = ref(repeatcount);
+               var iVarCluster = GetFirst(GetChildrenFiltered(splitresults, ref(filtervar), ref((GetClusterMeaning(filtervar) == iVarCollector))));
+               if (Count(iVarCluster) > 0)
+               {
+                  ClearChildren(iVarCluster);
+                  AddChild(iVarCluster, repeatcount);
+               }
+               else
+               {
+                  iVarCluster = MakeCluster(iVarCollector, repeatcount);
+                  AddChild(splitresults, iVarCluster);
+               }   //we need to add the repeatcount to the splitresults set, so that the conditionals and others can also get to the values.    
+               Freeze(repeatcount, splitresults, iVarCluster);
+               var iConditionals = Statics.RepeatPatterns;
+               if (ChildCount(iConditionals) > 0)
+                  iListToUse = ResolveConditionals(iConditionals);
+               if (Count(iListToUse) > 0)
+               {
+                  ExecuteDoPatterns(GetFirstOut(iListToUse, Statics.DoPatterns)); 
+                  var iResultPattern = GetRandomChild(iListToUse);
+                  if (Count(iResultPattern) > 0)
+                     RenderResultPattern(iResultPattern);
+               }
+            }
+         }
+      }
+   }
+   
+   //executes the conditionals until 1 is found that returns 'true'. the conditional is returned.
+   ResolveConditionals(var conditionals): var
+   {
+      var iRes;
+      foreach (var conditional in GetChildren(conditionals))
+      {
+         if (ResolvePatternCondition(GetFirstOut(conditional, Statics.Condition)))
+         {
+            iRes = conditional;
+            Break();
+         }
+      }
+      return iRes;
+   }
+   
+   //renders an output pattern.
+   expressionsblock RenderResultPattern
+   {
+      var PrevContent;
+      statements(var resultPattern)
+      {
+         ExecuteDoPatterns(GetFirstOut(resultPattern, Statics.DoPatterns));                              //each output pattern can also have a do section, which needs to be called just before rendering the content.
+         var iParsedResult = GetFirstOut(resultpattern, Statics.ParsedPatternOutput);
+         PrevContent = RenderPatternItems.ContentToRender;
+         Clear(ref(RenderPatternItems.ContentToRender));
+         var iPrevContentIsUsed = RenderPatternItems(iParsedResult);
+         if (((iPrevContentIsUsed == false) && (Count(PrevContent) > 0)) && (ResolveOutputVar == 0))
+            RenderPatternItems.ContentToRender = Union(PrevContent, " ", RenderPatternItems.ContentToRender);    //use non dict spaces, so that the space doesn't get overused?
+      }
+   }
+}

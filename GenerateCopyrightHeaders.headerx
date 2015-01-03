@@ -1,0 +1,17 @@
+//-----------------------------------------------------------------------
+// <copyright file="[AUTO:FILE]">
+//     Copyright (c) 2008-2012 [AUTHOR]. All rights reserved.
+// </copyright> 
+// <author[AUTHOR]</author>
+// <email>[EMAIL]</email>
+// <date>[AUTO:MODIFICATION_DATE]</date>
+//-----------------------------------------------------------------------
+
+48 65 6C 6C 6F 20 57 6F 72 6C 64 21
+AUTO:FILE=<Automatically assigned>
+AUTHOR=Jan Bogaerts
+EMAIL=Jan.Bogaerts@telenet.be
+AUTO:MODIFICATION_DATE=You can provide a format date here
+46 69 6C 65 73 20 73 61 76 65 64 21
+C:\Users\Esus\Documents\dev\VS\Projects\AI\modules
+C:\Users\Esus\Documents\dev\VS\Projects\AI\modules\chatbot\assets.nnl

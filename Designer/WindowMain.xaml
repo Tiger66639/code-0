@@ -1,0 +1,1343 @@
+﻿<Window x:Class="JaStDev.HAB.Designer.WindowMain"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+        xmlns:prop="clr-namespace:JaStDev.HAB.Designer.Properties"
+        xmlns:profiler="clr-namespace:JaStDev.HAB.Designer.Profiler"
+        xmlns:in="clr-namespace:System.Windows.Input;assembly=PresentationCore"
+        xmlns:search="clr-namespace:JaStDev.HAB.Designer.Search"
+        xmlns:ad="http://avalondock.codeplex.com"
+        xmlns:undo="http://schemas.jastdev.UndoSystem/winfx/2008/xaml/presentation"
+        xmlns:Ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls"
+        xmlns:cf="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+        Height="{Binding Source={x:Static prop:Settings.Default}, Path=ApplicationHeight, Mode=TwoWay}"
+        Width="{Binding Source={x:Static prop:Settings.Default}, Path=ApplicationWidth, Mode=TwoWay}"
+        Top="{Binding Source={x:Static prop:Settings.Default}, Path=ApplicationTop, Mode=TwoWay}"
+        Left="{Binding Source={x:Static prop:Settings.Default}, Path=ApplicationLeft, Mode=TwoWay}"
+        WindowState="{Binding Source={x:Static prop:Settings.Default}, Path=ApplicationWindowState, Mode=TwoWay}"
+        Name="This"
+        Closing="Window_Closing"
+        TextOptions.TextFormattingMode="Display"
+        Loaded="Window_loaded">
+
+    <Window.Resources>
+
+        <ad:BoolToVisibilityConverter x:Key="adBoolToVisConv" />
+
+        <CollectionViewSource
+            Source="{Binding Source={x:Static self:BrainData.Current}, Path=CommChannels, Mode=OneWay}"
+            Filter="CommChannelsFilter"
+            x:Key="CommChannelsSource" />
+        <!--<ObjectDataProvider x:Key="UndoStore"
+                          ObjectInstance="{x:Static self:WindowMain.UndoStore}"/>-->
+
+        <Ctrls:TiltWheelProvider x:Key="TilWheelHandler" />
+
+
+        <Style x:Key="CommChannelMenuItem" TargetType="{x:Type MenuItem}">
+            <Setter Property="IsChecked" Value="{Binding Path=IsVisible}" />
+            <Setter Property="IsCheckable" Value="True" />
+        </Style>
+
+        <Style x:Key="ToolItemMenuItemStyle" TargetType="{x:Type MenuItem}">
+            <Setter Property="IsChecked" Value="{Binding Path=IsVisible, Mode=TwoWay}" />
+            <Setter Property="IsCheckable" Value="True" />
+            <Setter Property="Header" Value="{Binding Path=Title}" />
+            <Setter Property="Visibility" Value="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}" />
+        </Style>
+
+        <DataTemplate x:Key="CommChannelMenuItemTemplate">
+            <TextBlock Text="{Binding Path=NeuronInfo.DisplayTitle}" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="TestCaseMenuItemTemplate">
+            <TextBlock Text="{Binding Path=Name}" />
+        </DataTemplate>
+
+
+        <!--<Style TargetType="{x:Type dc:ToolFrame}">
+         <Setter Property="CanClose" Value="False"/>
+         <Setter Property="CanDrag" Value="False"/>
+         <Setter Property="CanPin" Value="False"/>
+         <Setter Property="HasMenu" Value="False"/> 
+         <Setter Property="BorderThickness" Value="0"/>
+      </Style>-->
+
+
+    </Window.Resources>
+    <Window.CommandBindings>
+        <!--<CommandBinding Command="Undo" CanExecute="Undo_CanExecute" Executed="Undo_Executed"/>
+      <CommandBinding Command="Redo" CanExecute="Redo_CanExecute" Executed="Redo_Executed"/>-->
+
+        <CommandBinding Command="New" Executed="New_Executed" CanExecute="Open_CanExecute" />
+        <CommandBinding Command="Open" Executed="Open_Executed" CanExecute="Open_CanExecute" />
+        <CommandBinding Command="Save" Executed="Save_Executed" />
+        <CommandBinding Command="SaveAs" Executed="SaveAs_Executed" />
+        <CommandBinding Command="Close" CanExecute="Close_CanExecute" Executed="Close_Executed" />
+        <CommandBinding Command="Undo" CanExecute="Undo_CanExecute" Executed="Undo_Executed" />
+        <CommandBinding Command="Redo" CanExecute="Redo_CanExecute" Executed="Redo_Executed" />
+
+        <CommandBinding Command="Help" CanExecute="Help_CanExecute" Executed="Help_Executed" />
+        <CommandBinding Command="self:App.OpenInternetPageCmd" Executed="OpenInternetPage_Executed" />
+
+
+        <CommandBinding Command="self:App.ChangeToCmd" CanExecute="ChangeTo_CanExecute" Executed="ChangeTo_Executed" />
+        <CommandBinding Command="self:App.ShareLinkCmd" CanExecute="ShareLink_CanExecute" Executed="ShareLink_Executed" />
+
+
+        <CommandBinding Command="Delete" CanExecute="DeleteNeuron_CanExecute" Executed="DeleteNeuron_Executed" />
+
+        <CommandBinding Command="self:App.SandboxDebugCmd" CanExecute="Sandbox_CanExecute" Executed="Sandbox_Executed" />
+        <CommandBinding Command="Play" CanExecute="RunNeuron_CanExecute" Executed="RunNeuron_Executed" />
+        <CommandBinding Command="self:App.ContinueDebugCmd" CanExecute="ContinueDebug_CanExecute"
+                        Executed="ContinueDebug_Executed" />
+        <CommandBinding Command="self:App.PauseDebugCmd" CanExecute="PauseDebug_CanExecute"
+                        Executed="PauseDebug_Executed" />
+        <CommandBinding Command="self:App.StopProcessorsCmd" CanExecute="StopProcessors_CanExecute"
+                        Executed="StopProcessors_Executed" />
+        <CommandBinding Command="self:App.KillProcessorCmd" CanExecute="StoreSplitPath_CanExecute"
+                        Executed="KillProcessor_Executed" />
+        <CommandBinding Command="self:App.KillAllButProcessorCmd" CanExecute="StoreSplitPath_CanExecute"
+                        Executed="KillAllButProcessorCmd_Executed" />
+        <CommandBinding Command="self:App.StepNextDebugCmd" CanExecute="StepNextDebug_CanExecute"
+                        Executed="StepNextDebug_Executed" />
+        <CommandBinding Command="self:App.InspectExpressionCmd" CanExecute="InspectExpression_CanExecute"
+                        Executed="InspectExpression_Executed" />
+
+        <CommandBinding Command="self:App.AttachToCurProcessorCmd" CanExecute="AttachToCurProcessor_CanExecute"
+                        Executed="AttachToCurProcessor_Executed" />
+        <CommandBinding Command="self:App.ClearBreakPointsCmd" CanExecute="ClearBreakPoints_CanExecute"
+                        Executed="ClearBreakPoints_Executed" />
+        <CommandBinding Command="self:App.StoreSplitPathCmd" CanExecute="StoreSplitPath_CanExecute"
+                        Executed="StoreSplitPath_Executed" />
+
+        <CommandBinding Command="self:App.ImportFrameNetDataCmd" Executed="ImportFrameNetData_Executed" />
+        <CommandBinding Command="self:App.ImportVerbNetDataCmd" Executed="ImportVerbNetData_Executed" />
+        <CommandBinding Command="self:App.ImportModuleCmd" Executed="ImportModuleCmd_Executed" />
+        <CommandBinding Command="self:App.ExportModuleCmd" Executed="ExportModuleCmd_Executed"
+                        CanExecute="ExportModuleCmd_CanExecute" />
+
+        <CommandBinding Command="self:App.ImportTopicCmd" Executed="ImportTopicCmd_Executed"
+                        x:Name="CmdBindImportTopic" />
+        <CommandBinding Command="self:App.ExportTopicCmd" CanExecute="ExportTopic_CanExecute"
+                        Executed="ExportTopicCmd_Executed"
+                        x:Name="CmdBindExportTopic" />
+        <CommandBinding Command="self:App.ExportAllTopicsCmd" Executed="ExportAllTopicsCmd_Executed"
+                        x:Name="CmdBindExportAllTopics" />
+        <CommandBinding Command="self:App.ImportGlobalPatternsCmd" Executed="ImportGlobalPatternsCmd_Executed"
+                        x:Name="CmdBindImportGlobalPatterns" />
+        <CommandBinding Command="self:App.ExportglobalPatternsCmd" Executed="ExportglobalPatternsCmd_Executed"
+                        x:Name="CmdBindExportGlobalPatterns" />
+        <CommandBinding Command="self:App.ImportAssetCmd" Executed="ImportAssetCmd_Executed" />
+        <CommandBinding Command="self:App.ExportAssetCmd" CanExecute="ExportAssetCmd_CanExecute"
+                        Executed="ExportAssetCmd_Executed" />
+        <CommandBinding Command="self:App.ImportGenericDataCmd" Executed="ImportGenericDataCmd_Executed" />
+        <CommandBinding Command="self:App.CustomConduitCmd" Executed="ImportCustomCmd_Executed" />
+        <CommandBinding Command="self:App.ImportQueryCmd" Executed="ImportQueryCmd_Executed" />
+        <CommandBinding Command="self:App.ExportQueryCmd" CanExecute="ExportQueryCmd_CanExecute"
+                        Executed="ExportQueryCmd_Executed" />
+        <CommandBinding Command="self:App.ImportChatLogHistCmd" Executed="ImportChatLogHistCmd_Executed" />
+        <CommandBinding Command="self:App.ExportChatLogHistCmd" Executed="ExportChatLogHistCmd_Executed" />
+
+        <CommandBinding Command="self:App.InstallCmd" Executed="InstallOnlineCmd_Executed" />
+        <CommandBinding Command="self:App.DonwloadCmd" CanExecute="DownloadOnline_CanExecute"
+                        Executed="DownloadOnline_Executed" />
+        <CommandBinding Command="self:App.UploadCmd" CanExecute="DownloadOnline_CanExecute"
+                        Executed="UploadOnline_Executed" />
+        <CommandBinding Command="self:App.SynchronizeCmd" CanExecute="DownloadOnline_CanExecute"
+                        Executed="SyncOnline_Executed" />
+
+        <CommandBinding Command="self:App.InstallAndroidCmd" Executed="InstallAndroidCmd_Executed" />
+        <CommandBinding Command="self:App.UploadAndroidCmd" Executed="UploadAndroidCmd_Executed" />
+
+        <CommandBinding Command="self:App.NewMindMapCmd" Executed="NewMindMap_Executed" />
+        <CommandBinding Command="self:App.NewFrameEditorCmd" Executed="NewFrameEditor_Executed" />
+        <CommandBinding Command="self:App.NewVisualEditorCmd" Executed="NewVisualEditor_Executed" />
+        <CommandBinding Command="self:App.NewFlowEditorCmd" Executed="NewFlow_Executed" />
+        <CommandBinding Command="self:App.NewPatternsEditorCmd" Executed="NewPatternEditor_Executed" />
+        <CommandBinding Command="self:App.NewFolderCmd" Executed="NewFolder_Executed" />
+        <CommandBinding Command="self:App.NewCodeClusterCmd" Executed="NewCodeCluster_Executed" />
+        <CommandBinding Command="self:App.NewNeuronCmd" Executed="NewNeuron_Executed" />
+        <CommandBinding Command="self:App.NewAssetEditorCmd" Executed="NewAssetEditor_Executed" />
+        <CommandBinding Command="self:App.NewTestCaseCmd" Executed="NewTestCase_Executed" />
+        <CommandBinding Command="self:App.NewQueryEditorCmd" Executed="NewQuery_Executed" />
+
+        <CommandBinding Command="Properties" Executed="ShowProperties_Executed"
+                        x:Name="cmdBindProperties" />
+        <CommandBinding Command="self:App.RebuildProjectCmd" Executed="RebuildProjectCmd_Executed"
+                        x:Name="CmdBindRebuildProject" />
+        <CommandBinding Command="self:App.RebuildAllTopicsCmd" Executed="RebuildAllTopicsCmd_Executed"
+                        x:Name="CmdBindRebuilAllTopics" />
+
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Key="F4"
+                    Modifiers="Control"
+                    Command="Close" />
+
+        <KeyBinding Key="F5" Command="self:App.ContinueDebugCmd" />
+        <KeyBinding Key="F6" Command="self:App.StepNextDebugCmd" />
+        <KeyBinding Key="F7" Command="self:App.InspectExpressionCmd" />
+
+        <KeyBinding Modifiers="Ctrl" Key="Z" Command="Undo" />
+        <KeyBinding Modifiers="Ctrl" Key="Y" Command="Redo" />
+        <KeyBinding Command="SelectAll" Key="A" Modifiers="Ctrl" />
+    </Window.InputBindings>
+    <DockPanel cf:Help.Topic="designeroverview.html"
+               Ctrls:TiltWheelProvider.TiltWheelHandler="{StaticResource TilWheelHandler}"><!---->
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_New..."
+                          Command="New"
+                          Visibility="{Binding Source={x:Static self:ProjectManager.Default}, Path=IsViewerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/New_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="MnuOpen"
+                          Command="Open"
+                          Header="_Open...">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Open_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Recent Projects"
+                          x:Name="MnuRecentProjects"
+                          ItemsSource="{Binding Source={x:Static self:ProjectManager.Default}, Path=LastOpened}"
+                          Click="MnuRecentProject_Click" />
+                <Separator />
+                <MenuItem Header="Au_to save"
+                          IsCheckable="True"
+                          IsChecked="{Binding Source={x:Static self:ProjectManager.Default}, Path=AutoSave}"
+                          ToolTip="When checked, the project will auto save the data to keep memory usage at a minimum, otherwise everything will be kept in memory untill after the project has been manually saved."
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/SaveTimer_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Save" Command="Save">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/SaveAll_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Save _As" Command="SaveAs" />
+                <Separator />
+                <MenuItem Header="Android">
+                    <MenuItem Header="Upload"
+                              Command="self:App.UploadAndroidCmd"
+                              ToolTip="Uploads the current project to your android (replaces the previous version)." />
+                    <MenuItem Header="Manage..."
+                              ToolTip="Manage the projects stored on your android."
+                              Click="MnuItemManageAndroid_Click" />
+                    <Separator />
+                    <MenuItem Header="Install..."
+                              ToolTip="Install the chatbot app on your android."
+                              Command="self:App.InstallAndroidCmd" />
+                </MenuItem>
+                <MenuItem Header="Online">
+                    <MenuItem Header="Synchronize..."
+                              Command="self:App.SynchronizeCmd"
+                              ToolTip="Select which parts of the online and offline versions should be synchronized." />
+                    <Separator />
+                    <MenuItem Header="Download"
+                              Command="self:App.DonwloadCmd"
+                              ToolTip="Downloads the online version and opens it in a new application." />
+                    <MenuItem Header="Upload"
+                              Command="self:App.UploadCmd"
+                              ToolTip="Uploads the project to the website and replaces the previous online version. This is faster then a complete re-installation." />
+                    <Separator />
+                    <MenuItem Header="Install..."
+                              ToolTip="Install the chatbot to a website or reconfigure it."
+                              Command="self:App.InstallCmd" />
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="Custom conduit..." Command="self:App.CustomConduitCmd"
+                          x:Name="MnuCustomConduit"
+                          ToolTip="Select a dll that will perform a customized process (import and/or export) of any data." />
+                <MenuItem Header="Import"
+                          Visibility="{Binding Source={x:Static self:ProjectManager.Default}, Path=IsViewerVisibility, Mode=OneTime}">
+                    <MenuItem Header="Topics" Command="self:App.ImportTopicCmd"
+                              ToolTip="Import one or more topics." />
+                    <MenuItem Header="Queries" Command="self:App.ImportQueryCmd"
+                              x:Name="MnuImportQuery"
+                              ToolTip="Import one or more queries." />
+                    <MenuItem Header="Assets" Command="self:App.ImportAssetCmd"
+                              Visibility="{Binding ElementName=This, Path=ProVisibility, Mode=OneTime}"
+                              ToolTip="Import asset data." />
+                    <MenuItem Header="Project properties" Command="self:App.ImportGlobalPatternsCmd"
+                              ToolTip="Import all the properties local to the project (including global patterns)." />
+                    <MenuItem Header="Generic data" Command="self:App.ImportGenericDataCmd"
+                              Visibility="{Binding ElementName=This, Path=ProVisibility, Mode=OneTime}"
+                              ToolTip="Import data through a topic definition." />
+                    <MenuItem Header="Module" Command="self:App.ImportModuleCmd"
+                              x:Name="MnuImportModule"
+                              ToolTip="Import a code module (NNL code)." />
+                    <MenuItem Header="Chatlog history" Command="self:App.ImportChatLogHistCmd"
+                              x:Name="MnuImportChatLogHist"
+                              ToolTip="Import chatlogs from file." />
+                </MenuItem>
+                <MenuItem Header="Export"
+                          Visibility="{Binding Source={x:Static self:ProjectManager.Default}, Path=IsViewerVisibility, Mode=OneTime}">
+                    <MenuItem Header="Topic" Command="self:App.ExportTopicCmd"
+                              ToolTip="Export the topic that is currently the active document." />
+                    <MenuItem Header="All topics" Command="self:App.ExportAllTopicsCmd"
+                              ToolTip="Export all the topics in the project." />
+                    <MenuItem Header="Query" Command="self:App.ExportQueryCmd"
+                              ToolTip="Export the query editor that is currently the active document." />
+                    <MenuItem Header="Asset" Command="self:App.ExportAssetCmd"
+                              ToolTip="Export the asset editor that is currently the active document." />
+                    <MenuItem Header="Project properties" Command="self:App.ExportglobalPatternsCmd"
+                              ToolTip="Export the project's properties (including global patterns)." />
+                    <MenuItem Header="Module" Command="self:App.ExportModuleCmd"
+                              x:Name="MnuExportModule"
+                              ToolTip="Export the code editor that is currently the active document as a module (NNL code)." />
+                    <MenuItem Header="Chatlog history" Command="self:App.ExportChatLogHistCmd"
+                              ToolTip="Export the chatlogs history to file." />
+                </MenuItem>
+                <MenuItem Header="Manage modules" Click="MnuMangeModules_Click"
+                          x:Name="MnuItemManageModules" />
+                <Separator />
+                <MenuItem Header="Exit"
+                          Click="MnuExit_Click" />
+            </MenuItem>
+            <MenuItem Header="_Edit"
+                      Visibility="{Binding Source={x:Static self:ProjectManager.Default}, Path=IsViewerVisibility, Mode=OneTime}">
+                <MenuItem Header="_Undo"
+                          InputGestureText="Ctrl+Z"
+                          Command="ApplicationCommands.Undo">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Undo_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Redo"
+                          Command="ApplicationCommands.Redo"
+                          InputGestureText="Ctrl+Y">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Redo_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="Cu_t"
+                          Command="Cut">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Edit/Cut_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Copy"
+                          Command="Copy">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Edit/Copy_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Paste"
+                          Command="Paste">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Edit/Paste_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Paste _Special"
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Edit/PasteSpecial_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Delete"
+                          Command="Delete">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Delete_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+
+                <MenuItem Header="Select All" Command="SelectAll" />
+
+            </MenuItem>
+            <MenuItem Header="_View"
+                      Visibility="{Binding Source={x:Static self:ProjectManager.Default}, Path=IsViewerVisibility, Mode=OneTime}">
+                <MenuItem Header="Code..."
+                          Command="self:GlobalCommands.ViewCodeCmd"
+                          ToolTip="Open and show a code editor for the selected item."
+                          InputGestureText="Shift+F4"
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/ViewCode_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem><!---->
+
+                <MenuItem Header="Attached assets..."
+                          Command="self:GlobalCommands.ViewAttachedAssetsCmd"
+                          ToolTip="Show the asset editor for the selected item."
+                          InputGestureText="Shift+F5"
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Asset/objectAsset_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="Attached frames..."
+                          Command="self:GlobalCommands.ViewAttachedFramessCmd"
+                          ToolTip="Show the object-frames editor for the selected item."
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Frame/Object_Frames_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <Separator Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}" />
+                <MenuItem Header="_Find"
+                          Command="Find">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Edit/Find_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="search in code"
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}"
+                          Command="self:GlobalCommands.SearchInCodeCmd">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/CodeSearch_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="Sync with explorer"
+                          Command="self:App.SyncCmd"
+                          InputGestureText="F4"
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Sync_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Browse neuron"
+                          Command="self:GlobalCommands.BrowseNeuronCmd"
+                          InputGestureText="F8">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/BrowseNeuron_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="Communication channels"
+                          x:Name="MnuItemCommChannels"
+                          ItemsSource="{Binding Source={StaticResource CommChannelsSource}}"
+                          ItemTemplate="{StaticResource CommChannelMenuItemTemplate}"
+                          ItemContainerStyle="{StaticResource CommChannelMenuItem}" />
+                <MenuItem Header="Tool windows"
+                          ItemContainerStyle="{StaticResource ToolItemMenuItemStyle}">
+                    <MenuItem.ItemsSource>
+                        <CompositeCollection>
+                            <CollectionContainer Collection="{StaticResource Tools}" />
+                            <MenuItem Header="Chatlog history"
+                                      IsCheckable="True"
+                                      IsChecked="{Binding Source={x:Static self:ChatLogs.Current}, Path=IsVisible, Mode=TwoWay}" />
+                        </CompositeCollection>
+                    </MenuItem.ItemsSource>
+                </MenuItem>
+                <MenuItem Header="Resources">
+                    <MenuItem Header="WordNet"
+                              Click="MnuViewWordNet_Click"
+                              IsEnabled="{Binding Source={x:Static self:WordNetChannel.IsDBPresent}, Mode=OneTime}" />
+                    <MenuItem Header="FrameNet"
+                              Command="self:App.ImportFrameNetDataCmd"
+                              Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}" />
+                    <MenuItem Header="VerbNet"
+                              Command="self:App.ImportVerbNetDataCmd"
+                              Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}" />
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="project properties"
+                          ToolTip="Show the properties of the project"
+                          Command="Properties"
+                          InputGestureText=" ">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Properties.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+
+            </MenuItem>
+            <MenuItem Header="_Insert"
+                      Visibility="{Binding Source={x:Static self:ProjectManager.Default}, Path=IsViewerVisibility, Mode=OneTime}">
+                <MenuItem Header="_Mind map"
+                          Command="self:App.NewMindMapCmd"
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/NewMindMap_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Frame editor"
+                          Command="self:App.NewFrameEditorCmd"
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Frame/Frame_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="F_low editor"
+                          Command="self:App.NewFlowEditorCmd"
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Flow/flow.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Asset editor"
+                          Command="self:App.NewAssetEditorCmd"
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Asset/NewAsset_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Visual Editor"
+                          Command="self:App.NewVisualEditorCmd"
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/VisualF/VisualFrame_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="_Topic"
+                          Command="self:App.NewPatternsEditorCmd">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/TextPatterns/TextPattern_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="_Query"
+                          Command="self:App.NewQueryEditorCmd"
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/queries/query_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+
+                <MenuItem Header="_Neuron"
+                          Command="self:App.NewNeuronCmd"
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="{StaticResource ImgNeuron}"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Code cluster"
+                          Command="self:App.NewCodeClusterCmd"
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/NewCode_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Folde_r"
+                          Command="self:App.NewFolderCmd">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/NewFolder_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator Visibility="{Binding ElementName=This, Path=ProVisibility, Mode=OneTime}" />
+                <MenuItem Header="_Text channel" Click="MnuNewCommChannel_Click"
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}" />
+                <MenuItem Header="_Image channel" Click="MnuNewImageChannel_Click"
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}" />
+                <MenuItem Header="_Audio channel" Click="MnuNewAudioChannel_Click"
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}" />
+                <MenuItem Header="_Reflection channel" Click="MnuNewReflectionChannel_Click"
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}" />
+                <MenuItem Header="_Grid channel" Click="MnuNewGridChannel_Click"
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}" />
+
+                <MenuItem Header="Chat_Bot channel" Click="MnuNewChatBotChannel_Click"
+                          Visibility="{Binding ElementName=This, Path=ProVisibility, Mode=OneTime}" />
+
+
+            </MenuItem>
+            <MenuItem Header="_Debug"
+                      Visibility="{Binding Source={x:Static self:ProjectManager.Default}, Path=IsViewerVisibility, Mode=OneTime}">
+                <MenuItem Header="_Sandbox"
+                          Command="self:App.SandboxDebugCmd"
+                          ToolTip="Start the project in a standbox for testing.">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Run_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Run"
+                          Command="Play"
+                          ToolTip="Run (execute) the currently selected query/neuron"
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/DoubleRightArrow_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}" />
+                <MenuItem Header="P_ause"
+                          Command="self:App.PauseDebugCmd"
+                          ToolTip="Continue execution"
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Pause_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Continue"
+                          Command="self:App.ContinueDebugCmd"
+                          InputGestureText="F5"
+                          ToolTip="Continue execution"
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Play_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_next step"
+                          Command="self:App.StepNextDebugCmd"
+                          InputGestureText="F6"
+                          ToolTip="Continue to next step"
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Step_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="St_op"
+                          Command="self:App.StopProcessorsCmd"
+                          ToolTip="Stop all processors">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Stop_Enabled.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <Separator />
+                <MenuItem Header="_Inspect"
+                          Command="self:App.InspectExpressionCmd"
+                          InputGestureText="F7"
+                          ToolTip="View the value of the currently selected result expression."
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}" />
+                <MenuItem Header="A_ttach to processor"
+                          Command="self:App.AttachToCurProcessorCmd"
+                          ToolTip="Attach the selected neuron to the current processor so that any change in another processor is reported."
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}" />
+                <Separator Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}" />
+                <MenuItem Header="Neuron _profiling"
+                          IsCheckable="True"
+                          IsChecked="{Binding Source={x:Static profiler:MemProfiler.Current}, Path=IsActive,  Mode=TwoWay}"
+                          ToolTip="Enable/disable neuron (memory) profiling."
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Tools/MemProfiler.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="Test cases">
+                    <MenuItem Header="New"
+                              Command="self:App.NewTestCaseCmd"
+                              ToolTip="Create a new test case.">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/Tools/TestCase.png"
+                                   Style="{StaticResource TlbImageStyle}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Manage..."
+                              Click="MnuManageTestCase_Click"
+                              ToolTip="Manage all the test cases for this project" />
+                    <MenuItem Header="Edit"
+                              ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=TestCases}"
+                              ItemTemplate="{StaticResource TestCaseMenuItemTemplate}"
+                              Click="MnuEditTestCase_Click" />
+                    <Separator />
+
+                    <MenuItem Header="Run"
+                              ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=TestCases}"
+                              ItemTemplate="{StaticResource TestCaseMenuItemTemplate}"
+                              Click="MnuRunTestCase_Click" />
+                </MenuItem>
+
+
+                <Separator Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}" />
+                <MenuItem Header="_Break on exception"
+                          IsCheckable="True"
+                          IsChecked="{Binding Source={x:Static self:BrainData.Current}, Path=BreakOnException}"
+                          ToolTip="Stop the processor when an error is logged and show the code that caused it."
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/BreakOnException.png"
+                               Style="{StaticResource TlbImageStyle}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Warnings and exceptions..."
+                          ToolTip="Select which warnings and exceptions are active or not."
+                          Click="Mnu_WarningsExceptions_Click"
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}" />
+                <MenuItem Header="C_lear breakpoints"
+                          Command="self:App.ClearBreakPointsCmd"
+                          ToolTip="Remove all the breakpoints"
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}" />
+            </MenuItem>
+            <MenuItem Header="_Tools"
+                      Visibility="{Binding Source={x:Static self:ProjectManager.Default}, Path=IsViewerVisibility, Mode=OneTime}">
+                <MenuItem Header="_Repair database..."
+                          Click="MnuRemoveBrokenRef_Click"
+                          ToolTip="Clean and repair all invalid or dead references." />
+                <MenuItem Header="Rebuild">
+                    <MenuItem Header="Project"
+                              ToolTip="Rebuild the entire project (thesaurus, templates, assets, log) into a new project"
+                              Command="self:App.RebuildProjectCmd" />
+                    <MenuItem Header="Patterns..."
+                              Command="self:App.RebuildAllTopicsCmd"
+                              ToolTip="Reparse all the patterns in the project" />
+                </MenuItem>
+                <Separator Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}" />
+                <MenuItem Header="_Clean orphans..."
+                          Click="MnuCleanOrphans_Click"
+                          ToolTip="Search for and possibly remove all neurons that have no references."
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}" />
+                <MenuItem Header="_Clean orphan flow data..."
+                          ToolTip="Search for and possibly remove all flow items that have flow references."
+                          Click="MnuCleanOrphanFlowItems_Click"
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}" />
+                <MenuItem Header="_Delete empty clusters..."
+                          Click="MnuDelEmptyClusters_Click"
+                          ToolTip="Search for and possibly remove all clusters that have flow references."
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}" />
+                <MenuItem Header="Merge neurons..."
+                          Click="MnuChangeRef_Click"
+                          ToolTip="Change all references to a neuron, to another neuron."
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}" />
+                <MenuItem Header="_POS editor"
+                          Click="MnuEditPOS_Click"
+                          ToolTip="Edit all part of speech values for objects and posgroups."
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}" />
+                <Separator />
+                <MenuItem Header="O_verlays editor" Click="MnuOverlays_Click"
+                          Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}" />
+                <MenuItem Header="_Options..." Click="MnuOptions_Click" />
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="_Search" Click="MnuSearchHelp_Click" />
+                <MenuItem Header="_Contents" Click="MnuContentsHelp_Click" />
+                <MenuItem Header="_Index" Click="MnuIndexHelp_Click" />
+                <Separator
+                    Visibility="{Binding Source={x:Static self:ProjectManager.Default}, Path=IsViewerVisibility, Mode=OneTime}" />
+                <MenuItem Header="O_nline info"
+                          Visibility="{Binding Source={x:Static self:ProjectManager.Default}, Path=IsViewerVisibility, Mode=OneTime}">
+                    <MenuItem Header="Homepage"
+                              Command="self:App.OpenInternetPageCmd"
+                              CommandParameter="http://bragisoft.com" />
+                    <MenuItem Header="Tutorials"
+                              Command="self:App.OpenInternetPageCmd"
+                              CommandParameter="http://bragisoft.com/tutorials/" />
+                    <MenuItem Header="Forum"
+                              Command="self:App.OpenInternetPageCmd"
+                              CommandParameter="http://bragisoft.com/forum/" />
+                    <MenuItem Header="bl_og"
+                              Command="self:App.OpenInternetPageCmd"
+                              CommandParameter="http://janbogaerts.name" />
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="_About" Click="MnuHelpAbout_Click" />
+            </MenuItem>
+        </Menu>
+        <ToolBar DockPanel.Dock="Top"
+                 FocusManager.IsFocusScope="True">
+            <Button ToolTip="New project"
+                    x:Name="BtnNewProject"
+                    Command="New"
+                    Style="{StaticResource TlbNoFocusButtonsStyle}"
+                    Visibility="{Binding Source={x:Static self:ProjectManager.Default}, Path=IsViewerVisibility, Mode=OneTime}">
+                <Image
+                    Source="{Binding ElementName=BtnNewProject, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/New.png, Mode=OneWay}"
+                    Style="{StaticResource TlbImageStyle}" />
+            </Button>
+            <Button ToolTip="Open project"
+                    x:Name="BtnOpenProject"
+                    Command="Open"
+                    Style="{StaticResource TlbNoFocusButtonsStyle}">
+                <Image
+                    Source="{Binding ElementName=BtnOpenProject, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Open.png, Mode=OneWay}"
+                    Style="{StaticResource TlbImageStyle}" />
+            </Button>
+            <Button ToolTip="Save project"
+                    x:Name="BtnSaveProject"
+                    Command="Save"
+                    Style="{StaticResource TlbNoFocusButtonsStyle}">
+                <Image
+                    Source="{Binding ElementName=BtnSaveProject, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/SaveAll.png, Mode=OneWay}"
+                    Style="{StaticResource TlbImageStyle}" />
+            </Button>
+
+            <ToggleButton Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}"
+                          IsChecked="{Binding Source={x:Static self:ProjectManager.Default}, Path=AutoSave, Mode=TwoWay}"
+                          ToolTip="When checked, the project will auto save the data to keep memory usage at a minimum, otherwise everything will be kept in memory untill after the project has been manually saved."
+                          x:Name="ToggleAutoSave"
+                          VerticalAlignment="Stretch">
+                <Image Source="/Images/SaveTimer_Enabled.png"
+                       Style="{StaticResource TlbImageStyle}" />
+            </ToggleButton>
+            <Separator
+                Visibility="{Binding Source={x:Static self:ProjectManager.Default}, Path=IsViewerVisibility, Mode=OneTime}" />
+
+
+            <Button ToolTip="Create new pattern definitions page"
+                    x:Name="BtnMainNewSelector"
+                    Style="{StaticResource TlbNoFocusButtonsStyle}"
+                    Command="self:App.NewPatternsEditorCmd">
+                <Image
+                    Source="{Binding ElementName=BtnMainNewSelector, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/TextPatterns/TextPattern.png, Mode=OneWay}"
+                    Style="{StaticResource TlbImageStyle}"
+                    x:Name="ImageMainNewSelector" />
+            </Button>
+
+
+            <ToggleButton Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}"
+                          x:Name="ToggleShowNewSelectors"
+                          VerticalAlignment="Stretch">
+                <Path Margin="0"
+                      Fill="Black"
+                      Data="M 0 0 L 3.5 4 L 7 0 Z"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center" />
+            </ToggleButton>
+            <Popup Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}"
+                   IsOpen="{Binding ElementName=ToggleShowNewSelectors, Path=IsChecked, Mode=TwoWay}"
+                   PlacementTarget="{Binding ElementName=BtnMainNewSelector}"
+                   AllowsTransparency="True"
+                   StaysOpen="False">
+                <Border BorderBrush="Gray"
+                        BorderThickness="1">
+                    <Border.Background>
+                        <LinearGradientBrush
+                            StartPoint="0,0"
+                            EndPoint="0,1">
+                            <LinearGradientBrush.GradientStops>
+                                <GradientStop Color="#FFFFFF"
+                                              Offset="0" />
+                                <GradientStop Color="#FFFBFF"
+                                              Offset="0.5" />
+                                <GradientStop Color="#F7F7F7"
+                                              Offset="1" />
+                            </LinearGradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border.Effect>
+                        <DropShadowEffect Opacity="0.4" />
+                    </Border.Effect>
+
+                    <WrapPanel Orientation="Horizontal"
+                               MaxWidth="80"
+                               ButtonBase.Click="WrapPanel_Click">
+
+                        <Button ToolTip="Create new pattern definitions page"
+                                x:Name="BtnAddPatternEditor"
+                                Style="{StaticResource TlbNoFocusSubButtonsStyle}"
+                                Command="self:App.NewPatternsEditorCmd">
+                            <Image
+                                Source="{Binding ElementName=BtnAddPatternEditor, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/TextPatterns/TextPattern.png, Mode=OneWay}"
+                                Style="{StaticResource TlbImageStyle}" />
+                        </Button>
+                        <Button ToolTip="Create new Asset editor"
+                                x:Name="BtnAddAsset"
+                                Style="{StaticResource TlbNoFocusSubButtonsStyle}"
+                                Command="self:App.NewAssetEditorCmd">
+                            <Image
+                                Source="{Binding ElementName=BtnAddAsset, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Asset/NewAsset.png, Mode=OneWay}"
+                                Style="{StaticResource TlbImageStyle}" />
+                        </Button>
+
+                        <Button ToolTip="Create new query"
+                                x:Name="BtnAddQuery"
+                                Style="{StaticResource TlbNoFocusSubButtonsStyle}"
+                                Command="self:App.NewQueryEditorCmd">
+                            <Image
+                                Source="{Binding ElementName=BtnAddQuery, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/queries/query.png, Mode=OneWay}"
+                                Style="{StaticResource TlbImageStyle}" />
+                        </Button>
+
+                        <Button ToolTip="Create new mind map"
+                                x:Name="BtnNewMindMap"
+                                Style="{StaticResource TlbNoFocusSubButtonsStyle}"
+                                Command="self:App.NewMindMapCmd">
+                            <Image
+                                Source="{Binding ElementName=BtnNewMindMap, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/NewMindMap.png, Mode=OneWay}"
+                                Style="{StaticResource TlbImageStyle}" />
+                        </Button>
+                        <Button ToolTip="Create new Frame editor"
+                                x:Name="BtnAddFrame"
+                                Style="{StaticResource TlbNoFocusSubButtonsStyle}"
+                                Command="self:App.NewFrameEditorCmd">
+                            <Image
+                                Source="{Binding ElementName=BtnAddFrame, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Frame/Frame.png, Mode=OneWay}"
+                                Style="{StaticResource TlbImageStyle}" />
+                        </Button>
+                        <Button ToolTip="Create new Flow editor"
+                                x:Name="BtnAddFlow"
+                                Style="{StaticResource TlbNoFocusSubButtonsStyle}"
+                                Command="self:App.NewFlowEditorCmd">
+                            <Image
+                                Source="{Binding ElementName=BtnAddFlow, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Flow/flow.png, Mode=OneWay}"
+                                Style="{StaticResource TlbImageStyle}" />
+                        </Button>
+
+                        <Button ToolTip="Create new Visual editor"
+                                x:Name="BtnAddVisual"
+                                Style="{StaticResource TlbNoFocusSubButtonsStyle}"
+                                Command="self:App.NewVisualEditorCmd">
+                            <Image
+                                Source="{Binding ElementName=BtnAddVisual, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/VisualF/VisualFrame.png, Mode=OneWay}"
+                                Style="{StaticResource TlbImageStyle}" />
+                        </Button>
+
+
+                        <Button ToolTip="Create new neuron with attached code."
+                                Style="{StaticResource TlbNoFocusSubButtonsStyle}"
+                                Command="self:App.NewNeuronCmd">
+                            <Image Source="{StaticResource ImgNeuron}"
+                                   Style="{StaticResource TlbImageStyle}" />
+                        </Button>
+                        <Button ToolTip="Create a new code cluster (a NeuronCluster containing code)."
+                                Style="{StaticResource TlbNoFocusSubButtonsStyle}"
+                                x:Name="BtnNewCodeCluster"
+                                Command="self:App.NewCodeClusterCmd">
+                            <Image
+                                Source="{Binding ElementName=BtnNewCodeCluster, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/NewCode.png, Mode=OneWay}"
+                                Style="{StaticResource TlbImageStyle}" />
+                        </Button>
+                    </WrapPanel>
+                </Border>
+            </Popup>
+
+            <Button ToolTip="Create new Asset editor"
+                    x:Name="BtnAddAsset2"
+                    Style="{StaticResource TlbNoFocusSubButtonsStyle}"
+                    Command="self:App.NewAssetEditorCmd"
+                    Visibility="{Binding  ElementName=This, Path=OnlyProVisibility, Mode=OneTime}">
+                <Image
+                    Source="{Binding ElementName=BtnAddAsset2, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Asset/NewAsset.png, Mode=OneWay}"
+                    Style="{StaticResource TlbImageStyle}" />
+            </Button>
+
+
+            <Separator />
+            <Button ToolTip="Cut the currently selected item"
+                    x:Name="BtnCut"
+                    Command="Cut"
+                    Style="{StaticResource TlbNoFocusButtonsStyle}"
+                    Visibility="{Binding Source={x:Static self:ProjectManager.Default}, Path=IsViewerVisibility, Mode=OneTime}">
+                <Image
+                    Source="{Binding ElementName=BtnCut, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Edit/Cut.png, Mode=OneWay}"
+                    Style="{StaticResource TlbImageStyle}" />
+            </Button>
+            <Button ToolTip="Copy the currently selected item"
+                    x:Name="BtnCopy"
+                    Command="Copy"
+                    Style="{StaticResource TlbNoFocusButtonsStyle}">
+                <Image
+                    Source="{Binding ElementName=BtnCopy, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Edit/Copy.png, Mode=OneWay}"
+                    Style="{StaticResource TlbImageStyle}" />
+            </Button>
+            <Button ToolTip="Paste the clipboard content"
+                    x:Name="BtnPaste"
+                    Command="Paste"
+                    Style="{StaticResource TlbNoFocusButtonsStyle}"
+                    Visibility="{Binding Source={x:Static self:ProjectManager.Default}, Path=IsViewerVisibility, Mode=OneTime}">
+                <Image
+                    Source="{Binding ElementName=BtnPaste, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Edit/Paste.png, Mode=OneWay}"
+                    Style="{StaticResource TlbImageStyle}" />
+            </Button>
+            <Button ToolTip="Perform a paste from the clipboard with extra options"
+                    x:Name="BtnPasteSpecial"
+                    Style="{StaticResource TlbNoFocusButtonsStyle}"
+                    Visibility="Collapsed">
+                <Image
+                    Source="{Binding ElementName=BtnPasteSpecial, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Edit/PasteSpecial.png, Mode=OneWay}"
+                    Style="{StaticResource TlbImageStyle}" />
+            </Button>
+            <Separator
+                Visibility="{Binding Source={x:Static self:ProjectManager.Default}, Path=IsViewerVisibility, Mode=OneTime}" />
+
+            <Button x:Name="BtnDelete" ToolTip="Permenantly delete the currently selected item"
+                    Style="{StaticResource TlbNoFocusButtonsStyle}"
+                    Command="Delete"
+                    Visibility="{Binding Source={x:Static self:ProjectManager.Default}, Path=IsViewerVisibility, Mode=OneTime}">
+                <Image
+                    Source="{Binding ElementName=BtnDelete, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Delete.png, Mode=OneWay}"
+                    Style="{StaticResource TlbImageStyle}" />
+            </Button>
+            <Separator
+                Visibility="{Binding Source={x:Static self:ProjectManager.Default}, Path=IsViewerVisibility, Mode=OneTime}" />
+            <Button x:Name="BtnUndo"
+                    ToolTip="Undo the last action"
+                    Style="{StaticResource TlbNoFocusButtonsStyle}"
+                    Command="ApplicationCommands.Undo"
+                    Visibility="{Binding Source={x:Static self:ProjectManager.Default}, Path=IsViewerVisibility, Mode=OneTime}">
+                <Image
+                    Source="{Binding ElementName=BtnUndo, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Undo.png, Mode=OneWay}"
+                    Style="{StaticResource TlbImageStyle}" />
+            </Button>
+            <Button x:Name="BtnRedo" ToolTip="Redo the last undo statement"
+                    Style="{StaticResource TlbNoFocusButtonsStyle}"
+                    Command="ApplicationCommands.Redo"
+                    Visibility="{Binding Source={x:Static self:ProjectManager.Default}, Path=IsViewerVisibility, Mode=OneTime}">
+                <Image
+                    Source="{Binding ElementName=BtnRedo, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Redo.png, Mode=OneWay}"
+                    Style="{StaticResource TlbImageStyle}" />
+            </Button>
+            <Separator
+                Visibility="{Binding Source={x:Static self:ProjectManager.Default}, Path=IsViewerVisibility, Mode=OneTime}" />
+
+
+            <Button x:Name="BtnViewCode"
+                    Command="self:GlobalCommands.ViewCodeCmd"
+                    ToolTip="Open and show a code editor for the selected item. (Shft+F4)"
+                    Style="{StaticResource TlbNoFocusButtonsStyle}"
+                    Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                <Image
+                    Source="{Binding ElementName=BtnViewCode, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/ViewCode.png, Mode=OneWay}"
+                    Style="{StaticResource TlbImageStyle}" />
+            </Button>
+
+            <Button x:Name="BtnViewAttachedAssets"
+                    Command="self:GlobalCommands.ViewAttachedAssetsCmd"
+                    ToolTip="Show the asset editor for the selected item. (Shft+F5)"
+                    Style="{StaticResource TlbNoFocusButtonsStyle}"
+                    Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                <Image
+                    Source="{Binding ElementName=BtnViewAttachedAssets, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Asset/objectAsset.png, Mode=OneWay}"
+                    Style="{StaticResource TlbImageStyle}" />
+            </Button>
+
+            <Button x:Name="BtnViewAttachedFrames"
+                    Command="self:GlobalCommands.ViewAttachedFramessCmd"
+                    ToolTip="Show the object-frames editor for the selected item. (Shft+F6)"
+                    Style="{StaticResource TlbNoFocusButtonsStyle}"
+                    Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                <Image
+                    Source="{Binding ElementName=BtnViewAttachedFrames, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Frame/Object_Frames.png, Mode=OneWay}"
+                    Style="{StaticResource TlbImageStyle}" />
+            </Button>
+            <Separator Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}" />
+
+            <Button ToolTip="Find (Ctrl+F3)"
+                    Command="Find"
+                    x:Name="BtnFind"
+                    Style="{StaticResource TlbNoFocusButtonsStyle}"
+                    Visibility="{Binding Source={x:Static self:ProjectManager.Default}, Path=IsViewerVisibility, Mode=OneTime}">
+                <Image
+                    Source="{Binding ElementName=BtnFind, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Edit/Find.png, Mode=OneWay}"
+                    Style="{StaticResource TlbImageStyle}" />
+            </Button>
+
+            <Button ToolTip="Sync with explorer (F4)"
+                    Command="self:App.SyncCmd"
+                    x:Name="BtnSync"
+                    Style="{StaticResource TlbNoFocusButtonsStyle}"
+                    Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                <Image
+                    Source="{Binding ElementName=BtnSync, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Sync.png, Mode=OneWay}"
+                    Style="{StaticResource TlbImageStyle}" />
+            </Button>
+            <Button ToolTip="Browse neuron (F8)"
+                    Command="self:GlobalCommands.BrowseNeuronCmd"
+                    x:Name="BtnBrowseNeuron"
+                    Style="{StaticResource TlbNoFocusButtonsStyle}"
+                    Visibility="{Binding Source={x:Static self:ProjectManager.Default}, Path=IsViewerVisibility, Mode=OneTime}">
+                <Image
+                    Source="{Binding ElementName=BtnBrowseNeuron, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/BrowseNeuron.png, Mode=OneWay}"
+                    Style="{StaticResource TlbImageStyle}" />
+            </Button>
+            <Separator />
+            <Button x:Name="BtnSandbox" ToolTip="Start the project in a standbox for testing."
+                    Style="{StaticResource TlbNoFocusButtonsStyle}"
+                    Command="self:App.SandboxDebugCmd"
+                    Visibility="{Binding Source={x:Static self:ProjectManager.Default}, Path=IsViewerVisibility, Mode=OneTime}">
+                <Image
+                    Source="{Binding ElementName=BtnSandbox, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Run.png, Mode=OneWay}"
+                    Style="{StaticResource TlbImageStyle}" />
+            </Button>
+
+            <ComboBox SelectedValue="{Binding Source={x:Static self:BrainData.Current}, Path=Debugmode, Mode=TwoWay}"
+                      Style="{StaticResource TlbComboxStyle}"
+                      SelectedValuePath="Content"
+                      MinWidth="85"
+                      Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                <ComboBoxItem ToolTip="No debugging is done">
+                    <self:DebugMode>Off</self:DebugMode>
+                </ComboBoxItem>
+                <ComboBoxItem ToolTip="Data is updated and execution is paused at breakpoints.">
+                    <self:DebugMode>Normal</self:DebugMode>
+                </ComboBoxItem>
+                <ComboBoxItem ToolTip="All steps are slowly executed so that changes can easely be followed.">
+                    <self:DebugMode>SlowMotion</self:DebugMode>
+                </ComboBoxItem>
+            </ComboBox>
+
+            <Button x:Name="BtnPlay" ToolTip="Run (execute) the currently selected query/neuron"
+                    Style="{StaticResource TlbNoFocusButtonsStyle}"
+                    Command="Play"
+                    Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                <Image
+                    Source="{Binding ElementName=BtnPlay, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/DoubleRightArrow.png, Mode=OneWay}"
+                    Style="{StaticResource TlbImageStyle}" />
+            </Button>
+
+            <Button ToolTip="Pause execution"
+                    x:Name="BtnPause"
+                    Style="{StaticResource TlbNoFocusButtonsStyle}"
+                    Command="self:App.PauseDebugCmd"
+                    Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                <Image
+                    Source="{Binding ElementName=BtnPause, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Pause.png, Mode=OneWay}"
+                    Style="{StaticResource TlbImageStyle}" />
+            </Button>
+            <Button ToolTip="Continue execution (F5)"
+                    x:Name="BtnContinue"
+                    Style="{StaticResource TlbNoFocusButtonsStyle}"
+                    Command="self:App.ContinueDebugCmd"
+                    Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                <Image
+                    Source="{Binding ElementName=BtnContinue, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Play.png, Mode=OneWay}"
+                    Style="{StaticResource TlbImageStyle}" />
+            </Button>
+            <Button ToolTip="Execute next step (F6)"
+                    x:Name="BtnNext"
+                    Style="{StaticResource TlbNoFocusButtonsStyle}"
+                    Command="self:App.StepNextDebugCmd"
+                    Visibility="{Binding ElementName=This, Path=DesignerVisibility, Mode=OneTime}">
+                <Image
+                    Source="{Binding ElementName=BtnNext, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Step.png, Mode=OneWay}"
+                    Style="{StaticResource TlbImageStyle}" />
+            </Button>
+            <Button ToolTip="Stop all processors"
+                    x:Name="BtnStop"
+                    Style="{StaticResource TlbNoFocusButtonsStyle}"
+                    Command="self:App.StopProcessorsCmd">
+                <Image
+                    Source="{Binding ElementName=BtnStop, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Stop.png, Mode=OneWay}"
+                    Style="{StaticResource TlbImageStyle}" />
+            </Button>
+            <Button Click="Button_Click"
+                    x:Name="BtnClean"
+                    Visibility="Collapsed">
+                clean
+            </Button>
+            <Button Click="Dump_Click"
+                    x:Name="BtnDump"
+                    Visibility="Collapsed"
+                    ToolTip="Dump a stackTrace and send as an email, in case of a deadlock situation (processing seems to be halted), so that the bug can be traced.">
+                Dump
+            </Button>
+
+            <Button Click="Export_Click">Export</Button> <!--Visibility="Collapsed"-->
+
+        </ToolBar>
+        <StatusBar DockPanel.Dock="Bottom"
+                   BorderThickness="0,1,0,0"
+                   BorderBrush="DarkGray">
+            <StatusBarItem Content="{Binding Source={x:Static self:ProjectManager.Default}, Path=Location}" />
+            <StatusBarItem Content="*"
+                           Visibility="{Binding Source={x:Static self:ProjectManager.Default}, Path=ProjectChanged, Converter={StaticResource BoolToVisConv}, Mode=OneWay}" />
+            <StatusBarItem
+                Visibility="{Binding Source={x:Static search:ProcessTracker.Default}, Path=IsSearching, Converter={StaticResource BoolToVisConv}, Mode=OneWay}"
+                x:Name="StatusSearching">
+                <StackPanel Orientation="Horizontal">
+                    <ProgressBar Minimum="0"
+                                 Maximum="{Binding Source={x:Static search:ProcessTracker.Default}, Path=TotalCount}"
+                                 Value="{Binding Source={x:Static search:ProcessTracker.Default}, Path=CurrentPos, Mode=OneWay}"
+                                 Width="150"
+                                 Margin="2"
+                                 ToolTip="The current status of all search operations combined." />
+                    <Button Click="BtnCancelSearch_Click"
+                            Style="{StaticResource SimpleButton}"
+                            ToolTip="Cancel all search operations">
+                        <TextBlock Style="{StaticResource UnderlineOnMouseOverTextBlock}">Cancel </TextBlock>
+                    </Button>
+                    <ToggleButton x:Name="ToggleAllSearches"
+                                  Visibility="{Binding Source={x:Static search:ProcessTracker.Default}, Path=HasMultipleSearches, Converter={StaticResource BoolToVisConv}, Mode=OneWay}"
+                                  BorderThickness="0">
+                        <Path Name="Arrow"
+                              Margin="1,1,0,0"
+                              Fill="Black"
+                              Data="M 0 0 L 3.5 4 L 7 0 Z"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center" />
+                    </ToggleButton>
+                    <Popup IsOpen="{Binding ElementName=ToggleAllSearches, Path=IsChecked, Mode=TwoWay}"
+                           Visibility="{Binding Source={x:Static search:ProcessTracker.Default}, Path=HasMultipleSearches, Converter={StaticResource BoolToVisConv}, Mode=OneWay}"
+                           StaysOpen="False"
+                           PlacementTarget="{Binding ElementName=StatusSearching}"
+                           AllowsTransparency="False"
+                           Placement="Top">
+                        <ItemsControl
+                            ItemsSource="{Binding Source={x:Static search:ProcessTracker.Default}, Path=Searches}"
+                            Background="White">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <ProgressBar Minimum="0"
+                                                     Maximum="{Binding Path=TotalCount}"
+                                                     Margin="2"
+                                                     Value="{Binding Path=CurrentPos, Mode=OneWay}"
+                                                     ToolTip="The current status of this search operation."
+                                                     Width="150" />
+                                        <Button Click="BtnCancelSearch_Click"
+                                                Style="{StaticResource SimpleButton}"
+                                                ToolTip="Cancel this search operation">
+                                            <TextBlock Style="{StaticResource UnderlineOnMouseOverTextBlock}">Cancel</TextBlock>
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Popup>
+                </StackPanel>
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right"
+                           DockPanel.Dock="Right"
+                           ToolTip="When filled, the network is acquiring data from external resources.">
+                <ToggleButton
+                    IsChecked="{Binding Source={x:Static self:BrainData.Current}, Path=IsLearning, Mode=OneWay}"
+                    Style="{StaticResource ToggleIndicator}"
+                    BorderBrush="DarkGreen"
+                    Background="Transparent"
+                    Foreground="Green" />
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right"
+                           DockPanel.Dock="Right"
+                           ToolTip="When filled, there are still processors active.">
+                <ToggleButton
+                    IsChecked="{Binding Source={x:Static self:ProcessorManager.Current}, Path=HasProcessors, Mode=OneWay}"
+                    Style="{StaticResource ToggleIndicator}"
+                    BorderBrush="DarkBlue"
+                    Background="Transparent"
+                    Foreground="Blue" />
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right"
+                           DockPanel.Dock="Right"
+                           ToolTip="When filled, there was a data error in the project. The database needs to be repaired.">
+                <ToggleButton
+                    IsChecked="{Binding Source={x:Static self:ProjectManager.Default}, Path=DataError, Mode=OneWay}"
+                    Style="{StaticResource ToggleIndicator}"
+                    BorderBrush="DarkRed"
+                    Background="Transparent"
+                    Foreground="Red" />
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right"
+                           DockPanel.Dock="Right"
+                           Foreground="Red"
+                           Visibility="{Binding Source={x:Static self:ProjectManager.Default}, Path=IsSandBox, Converter={StaticResource BoolToVisConv}}">
+                <TextBlock>
+                    <Bold>
+                        <Italic>Sandbox</Italic>
+                    </Bold>
+                </TextBlock>
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right"
+                           DockPanel.Dock="Right"
+                           Margin="0,0,36,0"
+                           ToolTip="Current position (line/column) within the selected editor item">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Text="{Binding Source={x:Static self:TextPosTracker.Default}, Path=Line, StringFormat=Ln {0} }"
+                        Margin="0,0,8,0" />
+                    <TextBlock
+                        Text="{Binding Source={x:Static self:TextPosTracker.Default}, Path=Col, StringFormat=Col {0}}" />
+                </StackPanel>
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right"
+                           DockPanel.Dock="Right">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock MouseLeftButtonDown="TotalProcCound_MouseDoubleClick"
+                               Text="{Binding Source={x:Static self:ProcessorManager.Current}, Path=TotalProcessorCount}"
+                               ToolTip="The total nr of processors that have run since the start of the application (double click to reset)" />
+                    <TextBlock Text="/" />
+                    <TextBlock
+                        Text="{Binding Source={x:Static self:ProcessorManager.Current}, Path=ActiveProcessorCount}"
+                        ToolTip="The total nr of still active processors" />
+                </StackPanel>
+            </StatusBarItem>
+        </StatusBar>
+
+        <ad:DockingManager x:Name="MainDock"
+                           GotFocus="DockingControl_GotFocus"
+                           PreviewLostKeyboardFocus="DockingControlContent_PrvLostKeyboardFocus"
+                           DocumentsSource="{Binding Source={x:Static self:BrainData.Current}, Path=OpenDocuments}"
+                           ActiveContent="{Binding Source={x:Static self:BrainData.Current}, Path=ActiveDocument, Mode=TwoWay}"
+                           DocumentClosed="DocumentContainer_Closed">
+            <!--AnchorablesSource="{Binding Source={x:Static self:ToolsList.Default}}"
+                         -->
+            <ad:DockingManager.LayoutItemTemplateSelector>
+                <self:PanesTemplateSelector />
+            </ad:DockingManager.LayoutItemTemplateSelector>
+
+            <ad:DockingManager.LayoutItemContainerStyleSelector>
+                <self:PanesStyleSelector>
+                    <self:PanesStyleSelector.ToolStyle>
+                        <Style TargetType="{x:Type ad:LayoutAnchorableItem}">
+                            <Setter Property="Title" Value="{Binding Model.Title}" />
+                            <Setter Property="IconSource" Value="{Binding Model.IconSource}" />
+                            <Setter Property="Visibility"
+                                    Value="{Binding Model.IsVisible, Mode=TwoWay, Converter={StaticResource adBoolToVisConv}, ConverterParameter={x:Static Visibility.Hidden}}" />
+                            <Setter Property="ContentId" Value="{Binding Model.ID}" />
+                            <Setter Property="IsSelected" Value="{Binding Model.IsSelected, Mode=TwoWay}" />
+                            <Setter Property="IsActive" Value="{Binding Model.IsActive, Mode=TwoWay}" />
+                        </Style>
+                    </self:PanesStyleSelector.ToolStyle>
+                    <self:PanesStyleSelector.DocumentStyle>
+                        <Style TargetType="{x:Type ad:LayoutItem}">
+                            <Setter Property="Title" Value="{Binding Model.DocumentTitle}" />
+                            <Setter Property="ToolTip" Value="{Binding Model.DocumentInfo}" />
+                            <Setter Property="IconSource" Value="{Binding Model.DocumentIcon}" />
+                            <Setter Property="ContentId" Value="{Binding Model.DocumentTitle}" />
+                        </Style>
+                    </self:PanesStyleSelector.DocumentStyle>
+                </self:PanesStyleSelector>
+            </ad:DockingManager.LayoutItemContainerStyleSelector>
+
+            <ad:LayoutRoot>
+
+                <!--<self:DescrioptionViewAnchorable.TitleRef>
+                        <Binding ElementName="This" Path="CurrentDescription.DescriptionTitle" Mode="OneWay">
+                           <Binding.FallbackValue>Description</Binding.FallbackValue>
+                           <Binding.StringFormat>Description: {0}</Binding.StringFormat>
+                        </Binding>      
+                     </self:DescrioptionViewAnchorable.TitleRef>-->
+
+                <ad:LayoutPanel Orientation="Vertical">
+                    <ad:LayoutPanel Orientation="Horizontal">
+                        <ad:LayoutAnchorablePane DockWidth="240" />
+                        <ad:LayoutDocumentPane x:Name="TfData" />
+                        <ad:LayoutAnchorablePane DockWidth="240" />
+                    </ad:LayoutPanel>
+                    <ad:LayoutAnchorablePane DockHeight="150" />
+                </ad:LayoutPanel>
+            </ad:LayoutRoot>
+        </ad:DockingManager>
+    </DockPanel>
+</Window>

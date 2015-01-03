@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.WPF.Controls.FlowItemConditionalFrontView"
+             xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:dd="clr-namespace:DnD"
+             dd:DragDropManager.DragSource="{StaticResource FlowListItemDragAdvisor}"
+             dd:DragDropManager.DropTarget="{StaticResource FlowListItemDropAdvisor}"
+             ContextMenu="{StaticResource FlowItemContextMenu}"
+             MinHeight="16"
+             Focusable="True">
+    <Grid>
+        <StackPanel Orientation="Horizontal">
+            <Image Stretch="UniformToFill"
+                   Source="{Binding Path=FrontImage}"
+                   VerticalAlignment="Stretch"
+                   HorizontalAlignment="Stretch" />
+            <StackPanel Orientation="Horizontal">
+
+                <!--Used to indicate that the looped flow requires floating flows between each part to seperate them.-->
+                <CheckBox Style="{StaticResource ImageCheckBox}"
+                          IsChecked="{Binding Path=RequiresFloatingSeparator}"
+                          Visibility="{Binding Path=IsLooped, Converter={StaticResource BoolToVisConv}}"
+                          Width="5"
+                          ToolTip="When checked, 2 consequtive parts of the loop need to have a floating flow between them.">
+                    <CheckBox.Background>
+                        <DrawingBrush Drawing="{StaticResource VerticalZigZagLineRed}"
+                                      TileMode="Tile"
+                                      Viewbox="0,0,1,1"
+                                      ViewboxUnits="RelativeToBoundingBox"
+                                      AlignmentX="Center"
+                                      AlignmentY="Top"
+                                      Stretch="None"
+                                      Viewport="0,0, 4,4"
+                                      ViewportUnits="Absolute" />
+                    </CheckBox.Background>
+                </CheckBox>
+
+                <!--This border is used to connect all the listboxitems together, to indicate that a selection is required.-->
+                <CheckBox Style="{StaticResource ImageCheckBox}"
+                          IsChecked="{Binding Path=IsSelectionRequired}"
+                          Width="4"
+                          ToolTip="When checked, at least 1 part of the conditional needs to be present.">
+                    <CheckBox.Background>
+                        <DrawingBrush Drawing="{StaticResource VerticalLine}"
+                                      TileMode="None"
+                                      Stretch="Fill" />
+                    </CheckBox.Background>
+                </CheckBox>
+
+                <!--Used to indicate that the the flow-conditional stops collection parts if a floating flow is encountered.-->
+                <CheckBox Style="{StaticResource ImageCheckBox}"
+                          IsChecked="{Binding Path=FloatingFlowSplits}"
+                          Visibility="{Binding Path=IsLooped, Converter={StaticResource BoolToVisConv}}"
+                          Width="5"
+                          ToolTip="When checked, the flow-conditional stops collection parts if a floating flow is encountered.">
+                    <CheckBox.Background>
+                        <DrawingBrush Drawing="{StaticResource VerticalZigZagLineGreen}"
+                                      TileMode="Tile"
+                                      Viewbox="0,0,1,1"
+                                      ViewboxUnits="RelativeToBoundingBox"
+                                      AlignmentX="Center"
+                                      AlignmentY="Top"
+                                      Stretch="None"
+                                      Viewport="0,0, 4,4"
+                                      ViewportUnits="Absolute" />
+                    </CheckBox.Background>
+                </CheckBox>
+            </StackPanel>
+
+
+        </StackPanel>
+
+        <ItemsControl Style="{StaticResource OverlayItemsControlStyleVertical}"
+                      ItemsSource="{Binding Path=NeuronInfo.Overlays, Mode=OneWay}"
+                      ItemTemplate="{StaticResource FlowItemOverlayTemplate}"
+                      Visibility="{Binding RelativeSource={RelativeSource AncestorType=self:FlowEditorView}, Path=OverlayVisibility}" />
+    </Grid>
+
+</UserControl>

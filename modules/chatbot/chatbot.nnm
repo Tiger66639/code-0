@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Module>
+   <Name>chatbot</Name>
+   <MajorVer>0</MajorVer>
+   <MinorVer>1</MinorVer>
+
+   <File>statics.nnl</File>
+   <File>chatbot.nnl</File>
+   <File>thesaurus.nnl</File>
+   <File>assets.nnl</File>
+   <File>ConversationLog.nnl</File>
+   <File>empty.nnl</File>
+   <File>callbacks.nnl</File>
+   <File>system.nnl</File>
+   <File>common.nnl</File>
+   <File>PathCommon.nnl</File>
+   <File>LoadAssetData.nnl</File>
+   <File>variables.nnl</File>
+   <File>topics.nnl</File>
+   <File>learn.nnl</File>
+   <File>Convert.nnl</File>
+   <File>Search.nnl</File>
+   <File>GlobalTimer.nnl</File>
+</Module>

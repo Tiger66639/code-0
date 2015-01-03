@@ -1,0 +1,5 @@
+class Common
+{
+   //used for splits that don't need a callback.
+   Cluster EmptyCallback{}
+}

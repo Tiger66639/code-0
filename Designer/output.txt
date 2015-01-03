@@ -1,0 +1,14 @@
+You: i am jan
+You: what is my name
+PC: your name is jan.
+You: i have hair
+You: it is brown
+PC: what do brown mean?
+You: that is a color
+You: what color is my hair
+PC: the 3542 ofyour hair is brown.
+You: your name is aici
+You: what is your name
+PC: my name is aici.
+You: what is my name
+PC: your name is jan.

@@ -1,0 +1,127 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.CtrlCodeEditorPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:dd="clr-namespace:DnD"
+             xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+             xmlns:ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls"
+             Focusable="True"
+             Background="Transparent"
+             FocusManager.FocusedElement="{Binding ElementName=CPPanel}">
+    <UserControl.CommandBindings>
+        <CommandBinding Command="self:GlobalCommands.ViewCodeCmd" CanExecute="ViewCodeCmd_CanExecute"
+                        Executed="ViewCodeCmd_Executed" />
+        <CommandBinding Command="self:App.SyncCmd" CanExecute="ViewCodeCmd_CanExecute" Executed="SyncCmd_Executed" />
+        <CommandBinding Command="self:App.RenameCmd" CanExecute="ViewCodeCmd_CanExecute" Executed="RenameCmd_Executed" />
+        <CommandBinding Command="self:App.ChangeToCmd" CanExecute="ViewCodeCmd_CanExecute" Executed="ChangeTo_Executed" />
+        <CommandBinding Command="MoveUp" CanExecute="MoveUp_CanExecute" Executed="MoveUp_Executed" />
+        <CommandBinding Command="MoveDown" CanExecute="MoveDown_CanExecute" Executed="MoveDown_Executed" />
+        <CommandBinding Command="MoveToEnd" CanExecute="MoveDown_CanExecute" Executed="MoveToEnd_Executed" />
+        <CommandBinding Command="MoveToHome" CanExecute="MoveUp_CanExecute" Executed="MoveToHome_Executed" />
+        <CommandBinding Command="NavigationCommands.Zoom" CanExecute="Zoom_CanExecute" Executed="Zoom_Executed" />
+    </UserControl.CommandBindings>
+    <UserControl.InputBindings>
+        <KeyBinding Key="F4"
+                    Command="self:App.SyncCmd" />
+        <KeyBinding Key="F2"
+                    Command="self:App.RenameCmd" />
+    </UserControl.InputBindings>
+    <Grid>
+        <Border BorderBrush="#828790"
+                Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
+                BorderThickness="1"
+                Padding="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <ScrollBar Grid.Column="0"
+                           Grid.Row="1"
+                           x:Name="ScrollHor"
+                           Value="{Binding Path=HorScrollPos, Mode=TwoWay}"
+                           Minimum="{Binding ElementName=CPPanel, Path=HorizontalMin, Mode=OneWay}"
+                           Maximum="{Binding ElementName=CPPanel, Path=HorizontalMax, Mode=OneWay}"
+                           ViewportSize="{Binding ElementName=CPPanel, Path=ActualWidth}"
+                           SmallChange="10"
+                           LargeChange="{Binding ElementName=CPPanel, Path=ActualWidth}"
+                           Orientation="Horizontal"
+                           HorizontalAlignment="Stretch" />
+                <ScrollBar Grid.Column="1"
+                           Grid.Row="0"
+                           x:Name="ScrollVer"
+                           Value="{Binding Path=VerScrollPos, Mode=TwoWay}"
+                           Minimum="0"
+                           ViewportSize="{Binding ElementName=CPPanel, Path=ActualHeight}"
+                           SmallChange="10"
+                           LargeChange="{Binding ElementName=CPPanel, Path=ActualHeight}"
+                           Maximum="{Binding ElementName=CPPanel, Path=VerticalMax, Mode=OneWay}"
+                           Orientation="Vertical"
+                           VerticalAlignment="Stretch" />
+                <Grid Grid.Column="1"
+                      Grid.Row="1">
+                    <ToggleButton IsChecked="False"
+                                  ClickMode="Hover"
+                                  x:Name="ToggleZoom"
+                                  Focusable="False"
+                                  Width="{Binding ElementName=ScrollVer, Path=ActualWidth}"
+                                  Height="{Binding ElementName=ScrollHor, Path=ActualHeight}"
+                                  Background="{Binding ElementName=ScrollVer, Path=Background}"
+                                  Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}">
+                        <Image Source="/Images/BrowseNeuron_Enabled.png" />
+                    </ToggleButton>
+                    <!--we put the popup over the scrollbars with 1 pixel, so that it doesn't close to soon-->
+                    <Popup Placement="Left"
+                           VerticalOffset="-102"
+                           HorizontalOffset="2"
+                           IsOpen="{Binding ElementName=ToggleZoom, Path=IsChecked, Mode=TwoWay}"
+                           AllowsTransparency="True"
+                           PlacementTarget="{Binding ElementName=ToggleZoom}">
+                        <!--We put an extra grid round the slide cause otherwise the mouseLeave is to sensitive-->
+                        <Grid Background="Transparent"
+                              MouseLeave="Slider_MouseLeave">
+                            <Slider Ticks="10, 20, 30, 40, 50, 60,70, 80,90, 100, 110, 120, 130, 140, 150"
+                                    Margin="4"
+                                    Orientation="Vertical"
+                                    Value="{Binding Path=ZoomProcent}"
+                                    Delay="100"
+                                    Interval="5"
+                                    TickPlacement="TopLeft"
+                                    Minimum="10"
+                                    Maximum="150"
+                                    Height="100"
+                                    AutoToolTipPlacement="BottomRight" />
+                        </Grid>
+                    </Popup>
+                </Grid>
+                <AdornerDecorator ClipToBounds="True"
+                                  VerticalAlignment="Stretch"
+                                  HorizontalAlignment="Stretch">
+                    <ctrls:CodePagePanel ItemsSource="{Binding}"
+                                         HorizontalAlignment="Stretch"
+                                         VerticalAlignment="Stretch"
+                                         Focusable="True"
+                                         Background="Transparent"
+                                         ItemContainerStyle="{StaticResource CPPContainerStyle}"
+                                         ElementStyle="{StaticResource CodeEditorItemStyle}"
+                                         dd:DragDropManager.DropTarget="{StaticResource CodeListPanelDropAdvisor}"
+                                         ContextMenu="{StaticResource DefaultCodeItemContextMenu}"
+                                         x:Name="CPPanel"
+                                         ClipToBounds="True"
+                                         HorizontalOffset="{Binding Path=HorScrollPos, Mode=TwoWay}"
+                                         VerticalOffset="{Binding Path=VerScrollPos, Mode=TwoWay}"
+                                         ctrls:TiltWheelProvider.TiltWheel="CPPanel_TiltWheel"
+                                         RenderTransformOrigin="0.5, 0.0">
+                        <ctrls:CodePagePanel.LayoutTransform>
+                            <ScaleTransform ScaleX="{Binding Path=Zoom}"
+                                            ScaleY="{Binding Path=Zoom}" />
+                        </ctrls:CodePagePanel.LayoutTransform>
+                    </ctrls:CodePagePanel>
+                </AdornerDecorator>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

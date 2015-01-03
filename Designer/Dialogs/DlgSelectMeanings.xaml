@@ -1,0 +1,51 @@
+﻿<Window x:Class="JaStDev.HAB.Designer.Dialogs.DlgSelectMeanings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Select meanings"
+        x:Name="TheWindow"
+        Height="500"
+        WindowStyle="SingleBorderWindow"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False"
+        Width="350">
+    <DockPanel Margin="8">
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    DockPanel.Dock="Bottom">
+            <Button IsDefault="True"
+                    MinWidth="80"
+                    Click="Ok_Click">
+                Ok
+                <Button.ToolTip>
+                    Apply the changes and close the window.
+                </Button.ToolTip>
+            </Button>
+            <Button IsCancel="True"
+                    MinWidth="80"
+                    Margin="8,0,0,0">
+                Cancel
+                <Button.ToolTip>
+                    Undo the changes and close the window.
+                </Button.ToolTip>
+            </Button>
+        </StackPanel>
+
+        <Border BorderBrush="DarkGray"
+                BorderThickness="1"
+                Margin="0,0,0,8">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding ElementName=TheWindow,Path=Meanings}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox Content="{Binding Path=Item, Converter={StaticResource NeuronToInfoConv}}"
+                                      IsChecked="{Binding Path=IsSelected}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+
+
+    </DockPanel>
+</Window>

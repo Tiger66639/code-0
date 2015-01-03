@@ -1,0 +1,309 @@
+﻿<self:CtrlEditorBase x:Class="JaStDev.HAB.Designer.TextPatternEditorView"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+                     xmlns:hab="clr-namespace:JaStDev.HAB;assembly=JaStDev.HabCore"
+                     xmlns:cf="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+                     xmlns:Ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls"
+                     x:Name="This"
+                     cf:Help.Topic="editingpatterns.html"
+                     Loaded="This_Loaded"
+                     DataContextChanged="This_DataContextChanged">
+    <self:CtrlEditorBase.CommandBindings>
+        <CommandBinding Command="Find" Executed="Find_Executed" />
+        <CommandBinding Command="self:App.FindNextCmd" Executed="FindNextCmd_Executed"
+                        CanExecute="FindNextCmd_CanExecute" />
+        <CommandBinding Command="self:App.TogglePatternQuestionsCmd" Executed="ToggleQuestions_Executed" />
+        <CommandBinding Command="self:App.TogglePatternStatementsCmd" Executed="ToggleStatements_Executed" />
+        <CommandBinding Command="self:App.ToggleTopicFiltersCmd" Executed="ToggleTopicFilters_Executed" />
+        <CommandBinding Command="self:App.ToggleAllDoPatternCmd" Executed="ToggleAllDo_Executed" />
+        <CommandBinding Command="self:App.InsertItemCmd" Executed="InsertItem_Executed"
+                        CanExecute="InsertItemCmd_CanExecute" />
+        <CommandBinding Command="self:App.InsertItemAfterCmd" Executed="InsertItemAfterCmd_Executed"
+                        CanExecute="InsertItemCmd_CanExecute" />
+        <!--we overwrite cut/copy/paste (from ctrlBase), wo we can use the preview version, which is required cause otherwise, the copy false back to the
+      textbox.
+      -->
+        <CommandBinding Command="Copy" PreviewExecuted="Copy_Executed" PreviewCanExecute="Copy_CanExecute" />
+        <CommandBinding Command="Cut" PreviewExecuted="Cut_Executed" PreviewCanExecute="Cut_CanExecute" />
+        <CommandBinding Command="Paste" PreviewExecuted="Paste_Executed" PreviewCanExecute="Paste_CanExecute" />
+        <CommandBinding Command="SelectAll" Executed="SelectAll_Executed" />
+    </self:CtrlEditorBase.CommandBindings>
+    <self:CtrlEditorBase.InputBindings>
+        <KeyBinding Command="Find" Key="F" Modifiers="Ctrl" />
+        <KeyBinding Key="F3" Command="self:App.FindNextCmd" />
+        <KeyBinding Key="D" Modifiers="Ctrl" Command="self:App.TogglePatternStatementsCmd" />
+        <KeyBinding Key="D" Modifiers="shift+Ctrl" Command="self:App.ToggleAllDoPatternCmd" />
+        <KeyBinding Key="OemQuestion" Modifiers="Ctrl" Command="self:App.TogglePatternQuestionsCmd" />
+        <KeyBinding Key="OemTilde" Modifiers="Ctrl" Command="self:App.ToggleTopicFiltersCmd" />
+        <KeyBinding Key="I" Modifiers="Ctrl" Command="self:App.InsertItemCmd" />
+        <KeyBinding Key="Enter" Modifiers="Ctrl" Command="self:App.InsertItemAfterCmd" />
+    </self:CtrlEditorBase.InputBindings>
+    <DockPanel>
+
+        <Expander Style="{StaticResource SimpleExpandDownStyle}"
+                  Focusable="False"
+                  IsExpanded="{Binding Source={x:Static self:Properties.Settings.Default}, Path=ToolbarExpandedTopicEditor, Mode=TwoWay}"
+                  DockPanel.Dock="Top">
+            <ToolBar>
+                <ToggleButton ToolTip="switch spell checking on/off."
+                              x:Name="ToggleSpelling"
+                              IsChecked="{Binding Source={x:Static self:Properties.Settings.Default}, Path=EditorsUseSpellcheck, Mode=TwoWay}"
+                              Style="{StaticResource TlbToggleButtonsStyle}">
+                    <Image Source="/Images/TextEditing/CheckSpelling.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+
+                <Separator />
+                <ToggleButton IsChecked="{Binding Path=IsAddMode}"
+                              x:Name="BtnAddMode"
+                              ToolTip="Show/hide the extra line at the bottom of each list for quickly adding new items.">
+                    <Image Source="/Images/TextPatterns/textbox.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+
+                <Button Command="self:App.ToggleAllDoPatternCmd"
+                        x:Name="BtnToggleAllDoPatterns"
+                        ToolTip="Show/hide the code segments.">
+                    <Image Source="/Images/TextPatterns/ToggleDoPatterns.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <ToggleButton
+                    IsChecked="{Binding Source={x:Static self:Properties.Settings.Default}, Path=ResponseForDefaultStyleAsPattern, Mode=TwoWay}"
+                    ToolTip="Switch the default insert style for Response-for items: as a pattern that gets checked against the previous output (= aiml style) or as a reference to another output pattern (faster).">
+                    <Image Source="/Images/TextPatterns/ResponseForAsPattern.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+                <Separator />
+                <ToggleButton IsChecked="{Binding Path=IsListView}">
+                    <Image Source="/Images/TextPatterns/ListView.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+                <ToggleButton
+                    IsChecked="{Binding Path=IsMasterDetailView}">
+                    <Image Source="/Images/TextPatterns/MasterDetailView.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+            </ToolBar>
+        </Expander>
+
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type self:TextPatternEditorView} }, Path=DataContext.MasterDetailWidth, Mode=TwoWay}" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <ListBox ItemsSource="{Binding Path=Items, Mode=OneWay}"
+                     Grid.RowSpan="2"
+                     SelectedIndex="{Binding Path=SelectedRuleIndex, Mode=TwoWay}"
+                     DisplayMemberPath="NeuronInfo.DisplayTitle"
+                     VirtualizingStackPanel.VirtualizationMode="Recycling"
+                     VirtualizingStackPanel.IsVirtualizing="True"
+                     Name="LstMainlist"
+                     MinWidth="20"
+                     Visibility="{Binding Path=IsMasterDetailView, Converter={StaticResource BoolToVisConv}}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+
+            <GridSplitter Width="6"
+                          Grid.RowSpan="2"
+                          Grid.Column="1"
+                          Visibility="{Binding Path=IsMasterDetailView, Converter={StaticResource BoolToVisConv}}"
+                          VerticalAlignment="Stretch"
+                          HorizontalAlignment="Center" />
+
+            <Ctrls:TextPatternList Grid.Column="2"
+                                   BorderThickness="0,1,0,0"
+                                   BorderBrush="{Binding ElementName=LstMainlist, Path=BorderBrush, Mode=OneTime}"
+                                   ItemsSource="{Binding Path=EditableItems, Converter={StaticResource PatternsSourceConv}, Mode=OneWay}"
+                                   ItemTemplateSelector="{StaticResource PatternsTemplateSel}"
+                                   AlternationCount="2"
+                                   ScrollViewer.CanContentScroll="{Binding Path=ListRequiresVertualization, Mode=OneWay}"
+                                   ScrollViewer.IsDeferredScrollingEnabled="{Binding Path=ListRequiresVertualization, Mode=OneWay}"
+                                   VirtualizingStackPanel.VirtualizationMode="Recycling"
+                                   VirtualizingStackPanel.IsVirtualizing="{Binding Path=ListRequiresVertualization, Mode=OneWay}"
+                                   HorizontalAlignment="Stretch"
+                                   HorizontalContentAlignment="Stretch"
+                                   KeyboardNavigation.TabNavigation="Cycle"
+                                   x:Name="LstMain"
+                                   Background="White"
+                                   MouseLeftButtonDown="This_MouseLeftButtonDown">
+                <Ctrls:TextPatternList.CommandBindings>
+                    <CommandBinding Command="self:App.RenameCmd" CanExecute="Rename_CanExecute"
+                                    Executed="Rename_Executed" />
+                </Ctrls:TextPatternList.CommandBindings>
+                <Ctrls:TextPatternList.InputBindings>
+                    <KeyBinding Key="F2" Command="self:App.RenameCmd" />
+                </Ctrls:TextPatternList.InputBindings>
+                <Ctrls:TextPatternList.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </Ctrls:TextPatternList.ItemsPanel>
+                <ItemsControl.Template>
+                    <ControlTemplate>
+                        <Border BorderThickness="{TemplateBinding Border.BorderThickness}"
+                                Padding="{TemplateBinding Control.Padding}"
+                                BorderBrush="{TemplateBinding Border.BorderBrush}"
+                                Background="{TemplateBinding Panel.Background}"
+                                SnapsToDevicePixels="True">
+
+
+                            <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                          VerticalScrollBarVisibility="Auto"
+                                          HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Stretch"
+                                          ScrollChanged="ScrollMain_ScrollChanged"
+                                          x:Name="ScrollMain"
+                                          Padding="{TemplateBinding Control.Padding}"
+                                          Focusable="False"
+                                          Background="White"
+                                          Loaded="SVMain_Loaded">
+                                <ItemsPresenter SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                            </ScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </ItemsControl.Template>
+
+                <Ctrls:TextPatternList.ItemContainerStyle>
+                    <Style TargetType="ContentControl">
+                        <Setter Property="Background" Value="{StaticResource PatternBackgroundBrush}" />
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ContentControl">
+                                    <Border Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="1">
+                                        <ContentPresenter />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background"
+                                                    Value="{StaticResource PatternMouseOverBrush}" />
+                                        </Trigger>
+                                        <Trigger Property="Selector.IsSelected" Value="True">
+                                            <Setter Property="BorderBrush"
+                                                    Value="{StaticResource PatternSelectedBrush}" />
+                                        </Trigger>
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="IsMouseOver" Value="True" />
+                                                <Condition Property="Selector.IsSelected" Value="True" />
+                                            </MultiTrigger.Conditions>
+                                            <Setter Property="Background"
+                                                    Value="{StaticResource PatternMouseOverBrush}" />
+                                            <Setter Property="BorderBrush"
+                                                    Value="{StaticResource PatternSelectedBrush}" />
+                                        </MultiTrigger>
+                                        <Trigger Property="Ctrls:TextPatternList.AlternationIndex" Value="1">
+                                            <Setter Property="Background"
+                                                    Value="{StaticResource PatternAlternationCountBrush}" />
+                                        </Trigger>
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="IsMouseOver" Value="True" />
+                                                <Condition Property="Ctrls:TextPatternList.AlternationIndex" Value="1" />
+                                            </MultiTrigger.Conditions>
+                                            <Setter Property="Background"
+                                                    Value="{StaticResource PatternAlternationCountMouseOverBrush}" />
+                                        </MultiTrigger>
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="Selector.IsSelected" Value="True" />
+                                                <Condition Property="Ctrls:TextPatternList.AlternationIndex" Value="1" />
+                                            </MultiTrigger.Conditions>
+                                            <Setter Property="BorderBrush"
+                                                    Value="{StaticResource PatternSelectedAlternationCountBrush}" />
+                                        </MultiTrigger>
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="IsMouseOver" Value="True" />
+                                                <Condition Property="Selector.IsSelected" Value="True" />
+                                                <Condition Property="Ctrls:TextPatternList.AlternationIndex" Value="1" />
+                                            </MultiTrigger.Conditions>
+                                            <Setter Property="Background"
+                                                    Value="{StaticResource PatternAlternationCountMouseOverBrush}" />
+                                            <Setter Property="BorderBrush"
+                                                    Value="{StaticResource PatternSelectedAlternationCountBrush}" />
+                                        </MultiTrigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Selector.IsSelected" Value="{Binding Path=IsSelected}" />
+                        <Setter Property="IsTabStop" Value="false" />
+                        <!--<Setter Property="Focusable" Value="false"/>-->
+                        <Setter Property="Background" Value="Transparent" />
+                        <EventSetter Event="MouseLeftButtonDown" Handler="ContentControl_MouseLeftButtonDown" />
+                    </Style>
+                </Ctrls:TextPatternList.ItemContainerStyle>
+            </Ctrls:TextPatternList>
+
+            <Border BorderThickness="0,1,0,0"
+                    BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"
+                    Grid.Column="2"
+                    Grid.Row="1">
+                <StackPanel Orientation="Horizontal">
+
+
+                    <RadioButton Style="{StaticResource BottomToggleTab}"
+                                 IsChecked="{Binding Path=IsItemsSelected, Mode=OneWay}"
+                                 Checked="RadItemsSelect_Checked"
+                                 ToolTip="Show all the patterns and responses for this topic (Ctrl+!).">
+                        <TextBlock Margin="4,0,4,0">
+                            <Run Foreground="Blue"
+                                 FontFamily="Impact"
+                                 FontSize="14"
+                                 FontWeight="Bold">
+                                !
+                            </Run>
+                            <Run>Replies</Run>
+                        </TextBlock>
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource BottomToggleTab}"
+                                 IsChecked="{Binding Path=IsQuestionsSelected, Mode=OneWay}"
+                                 ToolTip="Show all the available questions for this topic (Ctrl+?)."
+                                 Checked="RadQuestionsSelect_Checked">
+                        <TextBlock Margin="4,0,4,0">
+                            <Run Foreground="Green"
+                                 FontFamily="Impact"
+                                 FontSize="14"
+                                 FontWeight="Bold">
+                                ?
+                            </Run>
+                            <Run>Questions</Run>
+                        </TextBlock>
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource BottomToggleTab}"
+                                 IsChecked="{Binding Path=IsTopicsFiltersSelected, Mode=OneWay}"
+                                 ToolTip="Show the topic filters that will be checked against #user.topic (Ctrl+~)."
+                                 Checked="RadFiltersSelect_Checked">
+                        <TextBlock Margin="4,0,4,0">
+                            <Run Foreground="DarkViolet"
+                                 FontFamily="Impact"
+                                 FontSize="14"
+                                 FontWeight="Bold">
+                                ~
+                            </Run>
+                            <Run>Filters</Run>
+                        </TextBlock>
+                    </RadioButton>
+                </StackPanel>
+            </Border>
+
+        </Grid>
+
+    </DockPanel>
+</self:CtrlEditorBase>

@@ -1,0 +1,530 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="JaStDev.HAB.Neuron" Collapsed="true">
+    <Position X="12.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EkBqIgMAIAKggEAOIEAsCiACASJIIEBAAAMAgEQCIRA=</HashCode>
+      <FileName>Brain\Neuron.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="JaStDev.HAB.KnoledgeNeuron" Collapsed="true">
+    <Position X="12.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Brain\KnoledgeNeuron.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.NeuronCluster" Collapsed="true">
+    <Position X="10" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgABCAAAAAAAAAEACACAAAAAAAAAAAAgAAAIgA=</HashCode>
+      <FileName>Brain\NeuronCluster.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.ValueNeuron" Collapsed="true">
+    <Position X="7.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Brain\ValueNeuron.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.Expression" Collapsed="true">
+    <Position X="14.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\Expression.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.Instruction" Collapsed="true">
+    <Position X="16.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQEAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Instruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.DoubleNeuron" Collapsed="true">
+    <Position X="5.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAIAAEAAAAACACAAAAAAAAAAAggAAAIAA=</HashCode>
+      <FileName>Brain\DoubleNeuron.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.IntNeuron" Collapsed="true">
+    <Position X="7.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAIAAEAAAAACACAAAAAAAAAAAggAAAIAA=</HashCode>
+      <FileName>Brain\IntNeuron.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.TextNeuron" Collapsed="true">
+    <Position X="9.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAEAAAAAAEAAAAACACAAAAAAAAAAAAiAAAIAA=</HashCode>
+      <FileName>Brain\TextNeuron.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.Assignment" Collapsed="true">
+    <Position X="10.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQEAAAAACAAACAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>Expressions\Assignment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.ConditionalStatement" Collapsed="true">
+    <Position X="14.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>YAAAAAAAAABMAAQQABAAACAAAABAAAQAAACAAAAAAAA=</HashCode>
+      <FileName>Expressions\ConditionalStatement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.ExpressionsBlock" Collapsed="true">
+    <Position X="12.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAQEAAAAACAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\ExpressionsBlock.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.ResultExpression" Collapsed="true">
+    <Position X="19" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\ResultExpression.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.Statement" Collapsed="true">
+    <Position X="16.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAQEAAAAACAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\Statement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.AddChildInstruction" Collapsed="true">
+    <Position X="33.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Add\AddChildInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.AddInfoInstruction" Collapsed="true">
+    <Position X="35.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Add\AddInfoInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.AddLinkInstruction" Collapsed="true">
+    <Position X="37.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Add\AddLinkInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.ChangeLinkFrom" Collapsed="true">
+    <Position X="40" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Change\ChangeLinkFrom.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.ChangeLinkMeaning" Collapsed="true">
+    <Position X="42.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Change\ChangeLinkMeaning.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.ChangeLinkTo" Collapsed="true">
+    <Position X="44.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Change\ChangeLinkTo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.ErrorInstruction" Collapsed="true">
+    <Position X="46.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Errors-warnings\ErrorInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.WarningInstruction" Collapsed="true">
+    <Position X="49" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Errors-warnings\WarningInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.SetFirstOutInstruction" Collapsed="true">
+    <Position X="51.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Set\SetFirstOutInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.InsertChildInstruction" Collapsed="true">
+    <Position X="53.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAgAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Insert\InsertChildInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.InsertInfoInstruction" Collapsed="true">
+    <Position X="55.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAEAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Insert\InsertInfoInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.InsertLinkInstruction" Collapsed="true">
+    <Position X="58" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAEAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Insert\InsertLinkInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.CopyChildrenInstruction" Collapsed="true">
+    <Position X="60.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQQAAAAACAAAAAAAAAIAAgAAAAAAAA=</HashCode>
+      <FileName>Instructions\Move-Copy\CopyChildrenInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.CopyInfoInstruction" Collapsed="true">
+    <Position X="62.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAACQAAAAAACAAAAAAAAAIAAgAAAAAAAA=</HashCode>
+      <FileName>Instructions\Move-Copy\CopyInfoInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.DeleteInstruction" Collapsed="true">
+    <Position X="64.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Neurons\DeleteInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.OutputInstruction" Collapsed="true">
+    <Position X="67" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Processor\OutputInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.AwakeInstruction" Collapsed="true">
+    <Position X="69.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Processor\AwakeInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.SuspendInstruction" Collapsed="true">
+    <Position X="71.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAgAAAAAAIAAAAAAgAAAA=</HashCode>
+      <FileName>Instructions\Processor\SuspendInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.RemoveChildInstruction" Collapsed="true">
+    <Position X="73.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Remove\RemoveChildInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.RemoveInfoInstruction" Collapsed="true">
+    <Position X="76" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Remove\RemoveInfoInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.RemoveLinkInstruction" Collapsed="true">
+    <Position X="78.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Remove\RemoveLinkInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.ResultInstruction" Collapsed="true">
+    <Position X="80.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\ResultInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.PopInstruction" Collapsed="true">
+    <Position X="82.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Stack\PopInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.PushInstruction" Collapsed="true">
+    <Position X="85" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Stack\PushInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.BoolExpression" Collapsed="true">
+    <Position X="15.75" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAIAAAAAQGAAAAAiAAACAAAAAAAEABAAAAIAA=</HashCode>
+      <FileName>Expressions\BoolExpression.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.ResultStatement" Collapsed="true">
+    <Position X="16" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIIAAAAAAEAAAAACAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\ResultStatement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.SearchExpression" Collapsed="true">
+    <Position X="18.25" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAACAAAAAACAAAEAAAAQAAEAAAEAAAAA=</HashCode>
+      <FileName>Expressions\SearchExpression.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.Variable" Collapsed="true">
+    <Position X="20.5" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAFAAAAAIAAAAAAAAAAAACAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Expressions\Variable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.ConditionalExpression" Collapsed="true">
+    <Position X="12.25" Y="10" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAACAAAAEAAAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\ConditionalExpression.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.MultiResultInstruction" Collapsed="true">
+    <Position X="63" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\MultiResultInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.SingleResultInstruction" Collapsed="true">
+    <Position X="77" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAIAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\SingleResultInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.CompleteSequence" Collapsed="true">
+    <Position X="66.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAQAAACAAAAAAAAAIAAAAAAIAAAA=</HashCode>
+      <FileName>Instructions\CompleteSequence.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.GetChildrenInstruction" Collapsed="true">
+    <Position X="68.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Get\GetChildrenInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.ExecuteInstruction" Collapsed="true">
+    <Position X="71" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Processor\ExecuteInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.TypeOfInstruction" Collapsed="true">
+    <Position X="53" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Neurons\TypeOfInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.CountInstruction" Collapsed="true">
+    <Position X="72.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\CountInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.GetFirstOutInstruction" Collapsed="true">
+    <Position X="79.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Get\GetFirstOutInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.IndexOfChildInstruction" Collapsed="true">
+    <Position X="81.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\IndexOf\IndexOfChildInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.IndexOfInfoInstruction" Collapsed="true">
+    <Position X="84" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEBAAAAAAAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\IndexOf\IndexOfInfoInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.IndexOfLinkInstruction" Collapsed="true">
+    <Position X="86.25" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAgAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\IndexOf\IndexOfLinkInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.DuplicateInstruction" Collapsed="true">
+    <Position X="88.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Neurons\DuplicateInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.MakeClusterInstruction" Collapsed="true">
+    <Position X="90.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Neurons\MakeClusterInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.NewInstruction" Collapsed="true">
+    <Position X="93" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Neurons\NewInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.PeekInstruction" Collapsed="true">
+    <Position X="95.25" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Stack\PeekInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.GetClusterMeaningInstruction" Collapsed="true">
+    <Position X="75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Get\GetClusterMeaningInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.GetClustersInstruction" Collapsed="true">
+    <Position X="64.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Get\GetClustersInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.SetClusterMeaningInstruction" Collapsed="true">
+    <Position X="31" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Set\SetClusterMeaningInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.GetFirstClusterInstruction" Collapsed="true">
+    <Position X="77.25" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Get\GetFirstClusterInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.GetChildrenOfTypeInstruction" Collapsed="true">
+    <Position X="62" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Get\GetChildrenOfTypeInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.InterleafInstruction" Collapsed="true">
+    <Position X="59.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Set Operations\InterleafInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.UnionInstruction" Collapsed="true">
+    <Position X="57.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Set Operations\UnionInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.IntersectInstruction" Collapsed="true">
+    <Position X="55.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Set Operations\IntersectInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.SimpleResultExpression" Collapsed="true">
+    <Position X="19.25" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\SimpleResultExpression.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.GetWeightInstruction" Collapsed="true">
+    <Position X="97.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Weight\GetWeightInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.GetMaxWeightInstruction" Collapsed="true">
+    <Position X="73.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Weight\GetMaxWeightInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.SplitInstruction" Collapsed="true">
+    <Position X="24.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Processor\SplitInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.DecreaseWeightInstruction" Collapsed="true">
+    <Position X="26.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Weight\DecreaseWeightInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.IncreaseWeightInstruction" Collapsed="true">
+    <Position X="28.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Weight\IncreaseWeightInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.BlockedSolveInstruction" Collapsed="true">
+    <Position X="22" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Processor\BlockedSolveInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.ExitInstruction" Collapsed="true">
+    <Position X="19.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Processor\ExitInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JaStDev.HAB.SolveInstruction" Collapsed="true">
+    <Position X="87.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Instructions\Processor\SolveInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

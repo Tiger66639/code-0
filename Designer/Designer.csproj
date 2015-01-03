@@ -1,0 +1,2405 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AAF10B91-98FA-46C0-BB4A-E4018001D3EE}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JaStDev.HAB.Designer</RootNamespace>
+    <AssemblyName>HAB.Designer</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <!--<ApplicationIcon Condition="'$(Configuration)' == 'Release PRO'">Images\Icon\GreenCBD.ico</ApplicationIcon>
+    <ApplicationIcon Condition=" '$(Configuration)' == 'Debug PRO'">Images\Icon\GreenCBD.ico</ApplicationIcon>-->
+    <!--<ApplicationIcon Condition="'$(Configuration)' == 'Release basic'">Images\Icon\blueCBD.ico</ApplicationIcon>-->
+    <!--<ApplicationIcon Condition=" '$(Configuration)' == 'Debug basic'">Images\Icon\blueCBD.ico</ApplicationIcon>-->
+    <!--<ApplicationIcon Condition="'$(Configuration)' == 'Release'">Images\Icon\redCBD.ico</ApplicationIcon>
+    <ApplicationIcon Condition=" '$(Configuration)' == 'Debug'">Images\Icon\redCBD.ico</ApplicationIcon>-->
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <SupportedCultures>qps-ploc</SupportedCultures>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Win32Resource>Images\Icon\Win32ResRed.res</Win32Resource>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <DebugSymbols>true</DebugSymbols>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Win32Resource>Images\Icon\Win32ResRed.res</Win32Resource>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug basic|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug basic\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;BASIC</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\HAB.Designer.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <Win32Resource>Images\Icon\Win32ResBlue.res</Win32Resource>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release basic|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Release basic\</OutputPath>
+    <DefineConstants>TRACE;BASIC</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\HAB.Designer.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <Win32Resource>Images\Icon\Win32ResBlue.res</Win32Resource>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug PRO|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug PRO\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;PRO</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\HAB.Designer.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <Win32Resource>Images\Icon\Win32ResGreen.res</Win32Resource>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release PRO|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Release PRO\</OutputPath>
+    <DefineConstants>TRACE;PRO</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\HAB.Designer.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <Win32Resource>Images\Icon\Win32ResGreen.res</Win32Resource>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release Basic 32|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Release Basic 32\</OutputPath>
+    <DefineConstants>TRACE;BASIC</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\HAB.Designer.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <Win32Resource>Images\Icon\Win32ResBlue.res</Win32Resource>
+  </PropertyGroup>
+  <PropertyGroup Label="MultilingualAppToolkit">
+    <MultilingualAppToolkitVersion>3.0</MultilingualAppToolkitVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AvalonDock, Version=1.2.2643.0, Culture=neutral, PublicKeyToken=85a1e0ada7ec13e4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\external libs\AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="AvalonDock.Themes.Aero, Version=2.0.1746.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\external libs\AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="AvalonDock.Themes.Expression, Version=2.0.1746.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\external libs\AvalonDock.Themes.Expression.dll</HintPath>
+    </Reference>
+    <Reference Include="AvalonDock.Themes.Metro, Version=2.0.1746.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\external libs\AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="AvalonDock.Themes.VS2010, Version=2.0.1746.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\external libs\AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="GrayscaleEffect">
+      <HintPath>..\external libs\GrayscaleEffect.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\external libs\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="JaStDev.ControlFramework">
+      <HintPath>..\external libs\JaStDev.ControlFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="JaStDev.DataCore">
+      <HintPath>..\external libs\JaStDev.DataCore.dll</HintPath>
+    </Reference>
+    <Reference Include="JaStDev.LogService, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\external libs\JaStDev.LogService.dll</HintPath>
+    </Reference>
+    <Reference Include="JaStDev.UndoSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9029e4f4ea9e2d09, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\external libs\JaStDev.UndoSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="JaStDev.WPFLog, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\external libs\JaStDev.WPFLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Kent.Boogaart.Windows.Controls, Version=1.0.2694.39652, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\external libs\Kent.Boogaart.Windows.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="LearnWPF.Effects, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\external libs\LearnWPF.Effects.dll</HintPath>
+    </Reference>
+    <Reference Include="os.MonoDroid">
+      <HintPath>C:\Program Files (x86)\neural network designer\os.MonoDroid.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework.Aero">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Speech">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WPFToolkit, Version=3.5.31016.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\neural network designer\WPFToolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="BrainData\Project management\android\DlgSelectDevice.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BrainData\Project management\custom data\CtrlCustomConduitProgress.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BrainData\Project management\custom data\CtrlCustomConduitSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BrainData\Project management\custom data\CustomConduitsDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BrainData\Project management\custom data\DlgCustomConduit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Comm channels\ChatBot\SelectInputDlg.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BrainData\Project management\android\DlgManageAndroid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Comm channels\Grid\GridChannelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\DlgOnlineConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\DlgOnlineSync.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\DlgRebuildPatterns.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\DlgSelectTopics.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\DlgWarningsAndExceptions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Editors\CodeEditor\Controls\CodeItems\CtrlLocal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Editors\queries\views\QueriesResourceDict.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Editors\queries\views\QueryEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tools\ChatLogs\ChatlogsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tools\Thesaurus\visual\ThesaurusDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tools\ToolsResourceDict.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WPF\Controls\NeuronEditing\NeuronBrowser\NeuronBrowserPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WPF\Controls\NeuronEditing\NeuronBrowser\NeuronDataBrowser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WPF\Controls\NeuronEditing\NeuronBrowser\NeuronDataBrowserDict.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tools\Chatbot props\ChatbotPropertiesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Comm channels\Audio\AudioChannelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Comm channels\ChatBot\CharacterWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Comm channels\ChatBot\ChatBotChannelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Comm channels\Images\ImageChannelResourceDict.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Comm channels\Resources\ResManToolBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CommonRes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\DlgAssignImportance.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DlgBuildThesaurus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\TextPatterns\search\DlgFindText.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tools\Debugger\Testcases\Views\DlgManageTestCases.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DlgMergeNeurons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DlgCleanOrphans.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DlgImportVerbNet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\Asset editor\Views\AssetsDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\Frames\Views\FERestrictionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\Frames\Views\FrameItems.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\Frames\Views\FramesEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\Frames\Views\ObjectFramesEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\TextPatterns\Views\TextPatternEditorResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Editors\TextPatterns\Views\TextPatternEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Editors\Visuals\Views\VisualEditorResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Editors\Visuals\Views\VisualEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\DlgModuleExport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DlgNewObject.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DlgOverlays.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DlgSelectDeletionMethodl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DlgPasteSpecial.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DlgSelectMeaning.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DlgSelectMeanings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\CodeEditor\CommonCodeItemsControls.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\CodeEditor\Controls\CodeItems\CtrlCodeItemBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\CodeEditor\Controls\CodeItems\CtrlCodeItemLockExp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\CodeEditor\Controls\CodeItems\CtrlCondExpression.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\CodeEditor\Controls\CodeItems\CtrlCondStatement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\CodeEditor\Controls\CodeItems\CtrlDropTarget.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\CodeEditor\Controls\CodePagePanel\CtrlExpander.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\Flow\Views\FlowItemConditionalBackView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\Flow\Views\FlowItemConditionalFrontView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\ModuleManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\Asset editor\Views\AssetEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tools\Debugger\Expressions\CtrlDebugStatic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tools\Debugger\Expressions\CtrlDebugAssignment.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tools\Debugger\Expressions\CtrlDebugBoolExpression.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tools\Debugger\Expressions\CtrlDebugByRef.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tools\Debugger\Expressions\CtrlDebugConditionalStatement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tools\Debugger\Expressions\CtrlDebugResultStatement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tools\Debugger\Expressions\CtrlDebugVariable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DlgInspectExpression.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\CodeEditor\CtrlGlobal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DlgAssemblyFromGac.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DlgPOSEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\CodeEditor\CodeEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\CodeEditor\CodeItems.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\CodeEditor\CtrlSearchExpression.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\CodeEditor\CtrlBoolExpression.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\CodeEditor\CtrlStatement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\CodeEditor\CtrlResultStatement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\CodeEditor\CtrlStatic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\CodeEditor\CtrlVariable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\CodeEditor\CtrlCodeEditorPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\CodeEditor\CtrlAssignment.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Comm channels\Reflection\ReflectionChannelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Comm channels\Resources\CtrlResourceManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\CodeEditor\CtrlByRef.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\Flow\Views\FlowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\MindMap\Controls\MindMapNoteView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\Flow\Views\FlowEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\Flow\Views\FlowItemStaticView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\Flow\Views\FlowItemConditionalPartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\Flow\Views\FlowItems.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Images\FlowImages.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tools\Debugger\DebugItemControls.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tools\Debugger\DebugResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tools\Debugger\ProcessorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Comm channels\Images\ImageChannelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tools\Debugger\Profiler\MemprofilerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tools\Debugger\Testcases\Views\TestCaseDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tools\Debugger\Testcases\Views\TestCaseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tools\Description\DescriptionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DlgSelectNeurons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DlgCreateCluster.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DlgStringQuestion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DlgFixBrokenRefs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DlgAbout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DlgImportFrameNet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\Frames\Views\FrameEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MenuItems.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\Overview\EditorsOverview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\MindMap\DlgSelectLinks.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Images\StandardNeurons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\MindMap\MindMapCommonResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\MindMap\Controls\LinkOverlay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\MindMap\Controls\ItemResizer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DialogSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DlgLink.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Editors\MindMap\Controls\MindMapView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tools\Explorer\NeuronExplorerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tools\Debugger\ProcessorsOverview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tools\Processing\SearchResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tools\Thesaurus\visual\ThesaurusView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Comm channels\Text\TextChannelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tools\Timing\TimersView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tools\Toolbox\ToolBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WindowMain.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\WindowOptions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Comm channels\Wordnet\WordNetChannelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WPF\Controls\NeuronEditing\NeuronBrowser\DropDownNSSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WPF\Controls\NeuronEditing\NeuronEditor\NeuronDataEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WPF\Controls\NeuronEditing\NeuronEditor\NeuronDataEditorDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WPF\Controls\SpinButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WPF\Controls\TreeViewPanel\TreeViewPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BrainData\Collections\IInternalChange.cs" />
+    <Compile Include="BrainData\Collections\MappedSmallIDCollection.cs" />
+    <Compile Include="BrainData\CompilerRenderDict.cs" />
+    <Compile Include="BrainData\Events\Monitors\editors\NeuronEditorCreateMonitor.cs" />
+    <Compile Include="BrainData\IEditorsOwner.cs" />
+    <Compile Include="BrainData\Project management\android\AndroidManager.cs" />
+    <Compile Include="BrainData\Project management\android\DlgSelectDevice.xaml.cs">
+      <DependentUpon>DlgSelectDevice.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BrainData\Project management\AssetExporter.cs" />
+    <Compile Include="BrainData\Project management\AssetImporter.cs" />
+    <Compile Include="BrainData\Project management\ChatLogExporter.cs" />
+    <Compile Include="BrainData\Project management\ChatLogImporter.cs" />
+    <Compile Include="BrainData\Project management\custom data\CtrlCustomConduitProgress.xaml.cs">
+      <DependentUpon>CtrlCustomConduitProgress.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BrainData\Project management\custom data\CtrlCustomConduitSelector.xaml.cs">
+      <DependentUpon>CtrlCustomConduitSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BrainData\Project management\custom data\CustomConduit.cs" />
+    <Compile Include="BrainData\Project management\custom data\CustomConduitsDictionary.xaml.cs">
+      <DependentUpon>CustomConduitsDictionary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BrainData\Project management\custom data\CustomConduitSelector.cs" />
+    <Compile Include="BrainData\Project management\custom data\DlgCustomConduit.xaml.cs">
+      <DependentUpon>DlgCustomConduit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BrainData\Project management\GenericsImporter.cs" />
+    <Compile Include="BrainData\Project management\Module\ModuleDeleter.cs" />
+    <Compile Include="BrainData\Project management\Module\ModuleUpdater.cs" />
+    <Compile Include="BrainData\Project management\Project\ProjectSynchronizer.cs" />
+    <Compile Include="BrainData\Project management\QueryExporter.cs" />
+    <Compile Include="BrainData\Project management\QueryImporter.cs" />
+    <Compile Include="BrainData\Project management\web\FtpDownloader.cs" />
+    <Compile Include="BrainData\Project management\web\FtpOperation.cs" />
+    <Compile Include="BrainData\Project management\web\FtpUploader.cs" />
+    <Compile Include="BrainData\Project management\Globals\globalsExporter.cs" />
+    <Compile Include="BrainData\Project management\Globals\globalsImporter.cs" />
+    <Compile Include="BrainData\Project management\Project\ProjectStreamingOperation.cs" />
+    <Compile Include="BrainData\Project management\Topics\TopicReplacer.cs" />
+    <Compile Include="BrainData\Project management\web\OnlineInstaller.cs" />
+    <Compile Include="BrainData\Project management\web\OnlineDataSynchronizer.cs" />
+    <Compile Include="BrainData\Project management\web\OnlinePreparer.cs" />
+    <Compile Include="BrainData\Project management\web\OnlineUpdater.cs" />
+    <Compile Include="BrainData\Streaming\AIMLStreamer.cs" />
+    <Compile Include="BrainData\Streaming\NNLSourceStreamer.cs" />
+    <Compile Include="BrainData\Streaming\QueryXmlStreamer.cs" />
+    <Compile Include="Comm channels\ChatBot\InputSelector.cs" />
+    <Compile Include="Comm channels\ChatBot\SelectInputDlg.xaml.cs">
+      <DependentUpon>SelectInputDlg.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Comm channels\Grid\GridCell.cs" />
+    <Compile Include="Comm channels\Grid\GridChannel.cs" />
+    <Compile Include="Comm channels\Grid\GridChannelView.xaml.cs">
+      <DependentUpon>GridChannelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Comm channels\Wordnet\DragDrop\WordNetItemDragData.cs" />
+    <Compile Include="BrainData\Project management\android\DlgManageAndroid.xaml.cs">
+      <DependentUpon>DlgManageAndroid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DlgOnlineConfig.xaml.cs">
+      <DependentUpon>DlgOnlineConfig.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DlgOnlineSync.xaml.cs">
+      <DependentUpon>DlgOnlineSync.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DlgRebuildPatterns.xaml.cs">
+      <DependentUpon>DlgRebuildPatterns.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DlgSelectTopics.xaml.cs">
+      <DependentUpon>DlgSelectTopics.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DlgWarningsAndExceptions.xaml.cs">
+      <DependentUpon>DlgWarningsAndExceptions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Asset editor\Browsing\AssetClusterEnumerator.cs" />
+    <Compile Include="Editors\Asset editor\Browsing\AssetDataEnumerator.cs" />
+    <Compile Include="Editors\Asset editor\Browsing\AssetItemEnumerator.cs" />
+    <Compile Include="Editors\Asset editor\Browsing\AssetItemNeuronChildEnumerator.cs" />
+    <Compile Include="Editors\Asset editor\Browsing\AssetItemNeuronEnumerator.cs" />
+    <Compile Include="Editors\Asset editor\DragDrop\AssetColDragAdvisor.cs" />
+    <Compile Include="Editors\Asset editor\DragDrop\AssetColDropAdvisor.cs" />
+    <Compile Include="Editors\Asset editor\items\AssetColumn.cs" />
+    <Compile Include="Editors\Asset editor\items\AssetData.cs" />
+    <Compile Include="Editors\Asset editor\Views\AssetPanel.cs" />
+    <Compile Include="Editors\Asset editor\Views\AssetPanelItem.cs" />
+    <Compile Include="Editors\Asset editor\Views\AssetPanelRow.cs" />
+    <Compile Include="Editors\Asset editor\Views\FirstAssetColWidthConverter.cs" />
+    <Compile Include="Editors\base\Browsing\BrowsableAssetsEnumerator.cs" />
+    <Compile Include="Editors\base\Browsing\BrowsableTopicsEnumerator.cs" />
+    <Compile Include="Editors\queries\items\QueryDataSource.cs" />
+    <Compile Include="Editors\queries\items\RenderDataSource.cs" />
+    <Compile Include="Editors\queries\views\AdditionalFilesSourceConverter.cs" />
+    <Compile Include="Editors\queries\views\QueryColDropAdvisor.cs" />
+    <Compile Include="Editors\base\EditorColumn.cs" />
+    <Compile Include="Editors\CodeEditor\CodeItems\CodeItemLocal.cs" />
+    <Compile Include="Editors\CodeEditor\Controls\CodeItems\ArgumentsItemsControl.cs" />
+    <Compile Include="Editors\CodeEditor\Controls\CodeItems\CtrlLocal.xaml.cs">
+      <DependentUpon>CtrlLocal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Overview\DragDrop\EditorRootDropAdvisor.cs" />
+    <Compile Include="Editors\queries\items\QueryColumn.cs" />
+    <Compile Include="Editors\queries\views\QueryColDragAdvisor.cs" />
+    <Compile Include="Editors\queries\views\QueryDataCellControl.cs" />
+    <Compile Include="Editors\queries\items\QueryEditor.cs" />
+    <Compile Include="Editors\queries\views\QueryEditorView.xaml.cs">
+      <DependentUpon>QueryEditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\queries\items\QueryResultLine.cs" />
+    <Compile Include="Editors\queries\views\QueryGridControl.cs" />
+    <Compile Include="Editors\queries\views\QueryRowView.cs" />
+    <Compile Include="Editors\TextPatterns\Browsing\ConditionEnumerator.cs" />
+    <Compile Include="Editors\TextPatterns\Browsing\ConditionsEnumerator.cs" />
+    <Compile Include="Editors\TextPatterns\Browsing\DoEnumerator.cs" />
+    <Compile Include="Editors\TextPatterns\Browsing\InputsEnumerator.cs" />
+    <Compile Include="Editors\TextPatterns\Browsing\OutputEnumerator.cs" />
+    <Compile Include="Editors\TextPatterns\Browsing\OutputsEnumerator.cs" />
+    <Compile Include="Editors\TextPatterns\Browsing\QuestionsEnumerator.cs" />
+    <Compile Include="Editors\TextPatterns\Browsing\ResponseForInvalidsEnumerator.cs" />
+    <Compile Include="Editors\TextPatterns\Browsing\ResponsesForGroupEnumerator.cs" />
+    <Compile Include="Editors\TextPatterns\Browsing\ResponsesForGroupsEnumerator.cs" />
+    <Compile Include="Editors\TextPatterns\Browsing\RuleEnumerator.cs" />
+    <Compile Include="Editors\TextPatterns\Browsing\RulesEnumerator.cs" />
+    <Compile Include="Editors\TextPatterns\Browsing\TopicEnumerator.cs" />
+    <Compile Include="Editors\TextPatterns\Collections\AttachedTopicsCollection.cs" />
+    <Compile Include="Editors\TextPatterns\Collections\TopicFilterCollection.cs" />
+    <Compile Include="Editors\TextPatterns\interfaces\IConditionalOutputsCollectionOwner.cs" />
+    <Compile Include="Editors\TextPatterns\interfaces\IResponsesForCollectionOwner.cs" />
+    <Compile Include="Editors\TextPatterns\Collections\PatternEditorCollection.cs" />
+    <Compile Include="Editors\TextPatterns\Collections\ResponseValuesCollection.cs" />
+    <Compile Include="Editors\TextPatterns\items\RangedPatternEditorItem.cs" />
+    <Compile Include="Editors\TextPatterns\items\ResponsesGroup.cs" />
+    <Compile Include="Editors\TextPatterns\items\TopicFilterPattern.cs" />
+    <Compile Include="Editors\TextPatterns\search\TextFindHelpers.cs" />
+    <Compile Include="Editors\TextPatterns\Undo data\RegWithTopicsDictionaryUndoItem.cs" />
+    <Compile Include="Editors\TextPatterns\Undo data\UnRegWithTopicsDictionaryUndoItem.cs" />
+    <Compile Include="Editors\TextPatterns\Views\ITextPatternPasteHandler.cs" />
+    <Compile Include="Editors\TextPatterns\Views\PatternEditorTemplateSelector.cs" />
+    <Compile Include="Editors\TextPatterns\Views\PatternsItemsSourceConverter.cs" />
+    <Compile Include="Editors\TextPatterns\Undo data\BuildConditionPatternUndoItem.cs" />
+    <Compile Include="Editors\TextPatterns\Undo data\BuildDoPatternUndoItem.cs" />
+    <Compile Include="Editors\TextPatterns\Undo data\BuildOutputPatternUndoItem.cs" />
+    <Compile Include="Editors\TextPatterns\Undo data\BuildTextPatternUndoItem.cs" />
+    <Compile Include="Editors\TextPatterns\Undo data\ClearConditionPatterUndoItem.cs" />
+    <Compile Include="Editors\TextPatterns\Undo data\ClearDoPatterUndoItem.cs" />
+    <Compile Include="Editors\TextPatterns\Undo data\ClearOutputPatterUndoItem.cs" />
+    <Compile Include="Editors\TextPatterns\Undo data\ClearTextPatternBuildUndoItem.cs" />
+    <Compile Include="Editors\TextPatterns\Views\PatternTextBox.cs" />
+    <Compile Include="Editors\TextPatterns\Views\RuleNameTextBox.cs" />
+    <Compile Include="Modules\ModuleExtensionWrapper.cs" />
+    <Compile Include="Modules\ModuleWrapper.cs" />
+    <Compile Include="PanesStyleSelector.cs" />
+    <Compile Include="PanesTemplateSelector.cs" />
+    <Compile Include="RegexMatchTimeoutException.cs" />
+    <Compile Include="Tools\Chatbot props\PersonsMap.cs" />
+    <Compile Include="Tools\Chatbot props\Property data\BaseBotPropDecl.cs" />
+    <Compile Include="Tools\Chatbot props\Property data\BoolBotPropDecl.cs" />
+    <Compile Include="Tools\Chatbot props\Property data\ListBotPropDecl.cs" />
+    <Compile Include="Tools\Chatbot props\Property data\ListBotPropValue.cs" />
+    <Compile Include="Tools\Chatbot props\Property data\ListBotPropValues.cs" />
+    <Compile Include="Tools\Chatbot props\Property data\ValueBotPropDecl.cs" />
+    <Compile Include="Tools\ChatLogs\ChatLog.cs" />
+    <Compile Include="Tools\ChatLogs\ChatLogs.cs" />
+    <Compile Include="Tools\ChatLogs\ChatlogsCollection.cs" />
+    <Compile Include="Tools\ChatLogs\ChatlogsView.xaml.cs">
+      <DependentUpon>ChatlogsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Debugger\Processor\FunctionValue.cs" />
+    <Compile Include="Tools\DisplayPath\DPITextTag.cs" />
+    <Compile Include="Tools\DisplayPath\DPITopicQuestionsSelect.cs" />
+    <Compile Include="Tools\DisplayPath\ISelectDisplayPathForThes.cs" />
+    <Compile Include="Tools\DisplayPath\roots\DPIThesaurusRoot.cs" />
+    <Compile Include="Tools\Processing\ProcessTrackerItem.cs" />
+    <Compile Include="Tools\TextPosition\CaretMonitor.cs" />
+    <Compile Include="Tools\Thesaurus\browsing\ThesaurusEnumerator.cs" />
+    <Compile Include="Tools\Thesaurus\browsing\ThesItemEnumerator.cs" />
+    <Compile Include="Tools\Thesaurus\browsing\ThesPOSItemEnumerator.cs" />
+    <Compile Include="Tools\Thesaurus\DragDrop\RelatedObjectDropAdvisor.cs" />
+    <Compile Include="Tools\Thesaurus\visual\DataToSearchConverter.cs" />
+    <Compile Include="Tools\ToolsList.cs" />
+    <Compile Include="Tools\ToolsResourceDict.xaml.cs">
+      <DependentUpon>ToolsResourceDict.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\ToolViewItem.cs" />
+    <Compile Include="WPF\Controls\CodeTextBox.cs" />
+    <Compile Include="WPF\Controls\NeuronEditing\BrowserDataSource.cs" />
+    <Compile Include="WPF\Controls\NeuronEditing\NeuronBrowser\NDBTabItemTemplateSelector.cs" />
+    <Compile Include="BrainData\NeuronInfoTreeItem.cs" />
+    <Compile Include="BrainData\Project management\Thesaurus\ThesaurusFileExporter.cs" />
+    <Compile Include="BrainData\Project management\Thesaurus\ThesaurusFileImporter.cs" />
+    <Compile Include="BrainData\Streaming\AssetXmlStreamer.cs" />
+    <Compile Include="BrainData\Streaming\BaseXmlStreamer.cs" />
+    <Compile Include="BrainData\Streaming\LogHistoryStreamer.cs" />
+    <Compile Include="BrainData\Streaming\ProjectXmlStreamer.cs" />
+    <Compile Include="BrainData\Streaming\ThesauruscsvStreamer.cs" />
+    <Compile Include="BrainData\Streaming\ThesaurusXmlStreamer.cs" />
+    <Compile Include="Editors\base\Browsing\BrowsableOutputPatternEditorsEnumerator.cs" />
+    <Compile Include="Editors\TextPatterns\Collections\ConditionalOutputsCollection.cs" />
+    <Compile Include="Editors\TextPatterns\Collections\DoPatternCollection.cs" />
+    <Compile Include="Editors\TextPatterns\Browsing\BrowsableOutputsEnumerator.cs" />
+    <Compile Include="Editors\TextPatterns\items\ConditionPattern.cs" />
+    <Compile Include="Editors\TextPatterns\items\PatternRuleOutput.cs" />
+    <Compile Include="Editors\TextPatterns\items\DoPattern.cs" />
+    <Compile Include="Tools\Chatbot props\AssetPronounsMap.cs" />
+    <Compile Include="Tools\Chatbot props\ChatbotData.cs" />
+    <Compile Include="BrainData\Events\Monitors\Visuals\VisualEventMonitor.cs" />
+    <Compile Include="Tools\Chatbot props\ChatbotPropertiesView.xaml.cs">
+      <DependentUpon>ChatbotPropertiesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Chatbot props\ChatbotProperties.cs" />
+    <Compile Include="BrainData\Project management\Topics\TopicExporter.cs" />
+    <Compile Include="BrainData\Project management\Topics\TopicImporter.cs" />
+    <Compile Include="BrainData\Project management\Topics\TopicsExporter.cs" />
+    <Compile Include="Comm channels\ChatBot\CharacterWindow.xaml.cs">
+      <DependentUpon>CharacterWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Comm channels\ChatBot\ChatBotChannel.cs" />
+    <Compile Include="Comm channels\ChatBot\ChatBotChannelView.xaml.cs">
+      <DependentUpon>ChatBotChannelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Comm channels\ChatBot\ChatBotDialogCtrl.cs" />
+    <Compile Include="Comm channels\Images\GridImage.cs" />
+    <Compile Include="Comm channels\Images\ImageChannelResourceDict.xaml.cs">
+      <DependentUpon>ImageChannelResourceDict.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Comm channels\Resources\ResManToolBar.xaml.cs">
+      <DependentUpon>ResManToolBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Helpers\DeleteThesItem.cs" />
+    <Compile Include="Editors\TextPatterns\search\DlgFindText.xaml.cs">
+      <DependentUpon>DlgFindText.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\TextPatterns\search\FindInTextData.cs" />
+    <Compile Include="Editors\TextPatterns\Collections\InvalidPatternResponseCollection.cs" />
+    <Compile Include="Editors\TextPatterns\Collections\PatternDefCollection.cs" />
+    <Compile Include="Editors\TextPatterns\Collections\ResponsesForCollection.cs" />
+    <Compile Include="Editors\TextPatterns\Collections\SelectedPatternItemsCollection.cs" />
+    <Compile Include="Editors\TextPatterns\Collections\InputPatternCollection.cs" />
+    <Compile Include="Editors\TextPatterns\Collections\PatternOutputsCollection.cs" />
+    <Compile Include="Editors\TextPatterns\items\InvalidPatternResponse.cs" />
+    <Compile Include="Editors\TextPatterns\interfaces\ITextPatternEditorView.cs" />
+    <Compile Include="Editors\TextPatterns\items\ObjectTextPatternEditor.cs" />
+    <Compile Include="Editors\TextPatterns\items\ParsableTextPatternBase.cs" />
+    <Compile Include="Editors\TextPatterns\items\PatternRule.cs" />
+    <Compile Include="Editors\TextPatterns\items\PatternEditorItem.cs" />
+    <Compile Include="Editors\TextPatterns\items\OutputPattern.cs" />
+    <Compile Include="Editors\TextPatterns\items\ResponseForOutput.cs" />
+    <Compile Include="Editors\TextPatterns\items\InputPattern.cs" />
+    <Compile Include="Editors\TextPatterns\items\TextPatternBase.cs" />
+    <Compile Include="Editors\TextPatterns\items\TextPatternEditor.cs" />
+    <Compile Include="BrainData\Streaming\TextPatternXmlStreamer.cs" />
+    <Compile Include="Editors\TextPatterns\Undo data\PatternBaseUndoItem.cs" />
+    <Compile Include="Editors\TextPatterns\Undo data\TextPatternBaseUndoItem.cs" />
+    <Compile Include="Editors\TextPatterns\Views\TextPatternEditorResources.xaml.cs">
+      <DependentUpon>TextPatternEditorResources.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\TextPatterns\Views\TextPatternEditorView.xaml.cs">
+      <DependentUpon>TextPatternEditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\TextPatterns\Views\TextPatternList.cs" />
+    <Compile Include="Editors\Visuals\items\VisualUndoItem.cs" />
+    <Compile Include="Editors\Visuals\Views\VisualEditorResources.xaml.cs">
+      <DependentUpon>VisualEditorResources.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Visuals\Views\VisualEditorView.xaml.cs">
+      <DependentUpon>VisualEditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Chatbot props\FunctionMap.cs" />
+    <Compile Include="Tools\Chatbot props\ParseMapDropAdvisor.cs" />
+    <Compile Include="Tools\Chatbot props\ParserMap.cs" />
+    <Compile Include="Tools\Debugger\DebugResources.xaml.cs">
+      <DependentUpon>DebugResources.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Debugger\Testcases\Items\ITesteable.cs" />
+    <Compile Include="Tools\Processing\search\BaseDisplayPathSet.cs" />
+    <Compile Include="Tools\Processing\search\DisplayPathSetFolder.cs" />
+    <Compile Include="Tools\DisplayPath\roots\DPIChatbotPropsRoot.cs" />
+    <Compile Include="Tools\DisplayPath\roots\DPITextPatternEditorRoot.cs" />
+    <Compile Include="Tools\DisplayPath\DPITextRange.cs" />
+    <Compile Include="Tools\DisplayPath\IDisplayPathBuilder.cs" />
+    <Compile Include="Tools\Thesaurus\browsing\ThesItemPEEnumerator.cs" />
+    <Compile Include="Tools\Thesaurus\browsing\ThesPOSItemPEEnumerator.cs" />
+    <Compile Include="Tools\Thesaurus\browsing\ThesPatternEditorsEnumerator.cs" />
+    <Compile Include="WindowMain.xaml.cs">
+      <DependentUpon>WindowMain.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BrainData\Collections\CascadedClusterCollection.cs" />
+    <Compile Include="BrainData\Collections\IDocOpener.cs" />
+    <Compile Include="BrainData\Collections\LargeIDCollection.cs" />
+    <Compile Include="WPF\Controls\NeuronEditing\NeuronBrowser\DropDownNSSelectorDropAdvisor.cs" />
+    <Compile Include="WPF\Controls\NeuronEditing\NeuronBrowser\NDBrowserDetatcher.cs" />
+    <Compile Include="WPF\Controls\NeuronEditing\NeuronBrowser\NDBrowserItemSelector.cs" />
+    <Compile Include="WPF\Controls\NeuronEditing\NeuronBrowser\NeuronBrowserPopup.xaml.cs">
+      <DependentUpon>NeuronBrowserPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPF\Controls\NeuronEditing\NeuronBrowser\NeuronDataBrowser.xaml.cs">
+      <DependentUpon>NeuronDataBrowser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BrainData\DesignerData\DesignerStore.cs" />
+    <Compile Include="BrainData\DesignerData\DesignerTable.cs" />
+    <Compile Include="BrainData\Events\Monitors\BrainData\BreakPointCollectionEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\BrainData\ClusterCollectionEventmonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\BrainData\LargeIDCollectionEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\CommChannelCollectionEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\DebugNeuronEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\editors\AssetEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\editors\EditorItemEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\EventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\ExplorerItemCollectionEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\Frames\FERestrictionEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\Frames\FERestrictionGroupEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\editors\FlowCollectionEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\editors\FlowEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\Frames\FERestrictionSegmentEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\Frames\FrameElementEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\Frames\FrameEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\Frames\FrameSequenceEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\Frames\FSItemEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\Thesaurus\SubRelationShipsCollectionEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\editors\MindMapClusterEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\editors\MindMapItemCollectionEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\BrainData\NeuronCollectionEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\BrainData\NeuronDataEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\editors\NeuronEditorEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\NeuronExplorerEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\BrainData\SmallIDCollectionEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\BrainData\NeuronInfoEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\Thesaurus\ThesaurusEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\Thesaurus\ThesaurusItemCollectionEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\Thesaurus\ThesaurusLinkedItemsEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\Thesaurus\ThesaurusRelItemCollectionEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\Thesaurus\ThesObjectLinkedItemsEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\TimerCollectionEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\ToolBoxItemCollectionEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\WatchCollectionEventMonitor.cs" />
+    <Compile Include="BrainData\Events\Monitors\WordNetChannelEventMonitor.cs" />
+    <Compile Include="BrainData\Collections\OpenDocsCollection.cs" />
+    <Compile Include="BrainData\Events\Monitors\EventManager.cs" />
+    <Compile Include="BrainData\Project management\DescriptionsImporter.cs" />
+    <Compile Include="BrainData\Project management\Module\ModuleExporter.cs" />
+    <Compile Include="BrainData\Project management\Module\ModuleImporter.cs" />
+    <Compile Include="BrainData\Project management\Module\ModuleMerger.cs" />
+    <Compile Include="BrainData\Project management\NeuronDeleter.cs" />
+    <Compile Include="BrainData\Project management\Project\ProjectConverter.cs" />
+    <Compile Include="BrainData\Project management\Project\ProjectCopier.cs" />
+    <Compile Include="BrainData\Project management\Project\ProjectLoader.cs" />
+    <Compile Include="BrainData\Project management\Project\ProjectMover.cs" />
+    <Compile Include="BrainData\Project management\Project\ProjectOperation.cs" />
+    <Compile Include="BrainData\Project management\Project\ProjectSaver.cs" />
+    <Compile Include="Comm channels\Reflection\FunctionDataDragAdvisor.cs" />
+    <Compile Include="Comm channels\Wordnet\DragDrop\WordNetItemDragAdvisor.cs" />
+    <Compile Include="Comm channels\Wordnet\DragDrop\WordNetItemGroupDragAdvisor.cs" />
+    <Compile Include="Comm channels\Wordnet\WordNetImporter.cs" />
+    <Compile Include="Comm channels\Wordnet\Items\WordNetItemBase.cs" />
+    <Compile Include="Comm channels\Wordnet\Items\WordNetItemSpecialGroup.cs" />
+    <Compile Include="Comm channels\Wordnet\Items\WordNetItemGroup.cs" />
+    <Compile Include="Commands\GlobalCommands.cs" />
+    <Compile Include="Dialogs\DlgAssignImportance.xaml.cs">
+      <DependentUpon>DlgAssignImportance.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DlgBuildThesaurus.xaml.cs">
+      <DependentUpon>DlgBuildThesaurus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Debugger\Testcases\Views\DlgManageTestCases.xaml.cs">
+      <DependentUpon>DlgManageTestCases.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DlgMergeNeurons.xaml.cs">
+      <DependentUpon>DlgMergeNeurons.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DlgCleanOrphans.xaml.cs">
+      <DependentUpon>DlgCleanOrphans.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DlgImportVerbNet.xaml.cs">
+      <DependentUpon>DlgImportVerbNet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Asset editor\DragDrop\AssetDragAdvisor.cs" />
+    <Compile Include="Editors\Asset editor\DragDrop\AssetDropAdvisor.cs" />
+    <Compile Include="Editors\Asset editor\DragDrop\AssetRecordDropAdvisor.cs" />
+    <Compile Include="Editors\Asset editor\items\AssetGroup.cs" />
+    <Compile Include="Editors\Asset editor\items\AssetBase.cs" />
+    <Compile Include="Editors\Asset editor\items\AssetEditor.cs" />
+    <Compile Include="Editors\Asset editor\items\AssetSelectionList.cs" />
+    <Compile Include="Editors\Asset editor\items\AssetValueItemCollection.cs" />
+    <Compile Include="Editors\Asset editor\items\AssetValueItem.cs" />
+    <Compile Include="Editors\Asset editor\items\IAssetOwner.cs" />
+    <Compile Include="Editors\CodeEditor\Functions\Search\CodeEditorSearcher.cs" />
+    <Compile Include="Editors\Flow\functions\Dragdrop\FlowEditorDropAdvisor.cs" />
+    <Compile Include="Editors\Flow\functions\Dragdrop\FlowEditorItemDragAdvisor.cs" />
+    <Compile Include="Editors\Flow\functions\Dragdrop\FlowEditorItemDropAdvisor.cs" />
+    <Compile Include="Editors\Frames\Collections\FramesCollection.cs" />
+    <Compile Include="Editors\Frames\Items\FERestrictionBool.cs" />
+    <Compile Include="Editors\Frames\Items\FERestrictionRoot.cs" />
+    <Compile Include="Editors\Frames\Items\IFrameOwner.cs" />
+    <Compile Include="Editors\Asset editor\items\ObjectEditor.cs" />
+    <Compile Include="Editors\Asset editor\Views\AssetsDictionary.xaml.cs">
+      <DependentUpon>AssetsDictionary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Frames\Items\ObjectFramesEditor.cs" />
+    <Compile Include="Editors\Frames\Views\FERestrictionsView.xaml.cs">
+      <DependentUpon>FERestrictionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Frames\Views\FrameItems.xaml.cs">
+      <DependentUpon>FrameItems.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Frames\Views\FramesEditorView.xaml.cs">
+      <DependentUpon>FramesEditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Frames\Views\ObjectFramesEditorView.xaml.cs">
+      <DependentUpon>ObjectFramesEditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Visuals\items\Visual.cs" />
+    <Compile Include="Editors\Visuals\Collections\VisualFrameCollection.cs" />
+    <Compile Include="Editors\Visuals\items\VisualsEditor.cs" />
+    <Compile Include="Editors\Visuals\items\VisualItem.cs" />
+    <Compile Include="Editors\Visuals\Collections\VisualItemCollection.cs" />
+    <Compile Include="Modules\DlgModuleExport.xaml.cs">
+      <DependentUpon>DlgModuleExport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DlgNewObject.xaml.cs">
+      <DependentUpon>DlgNewObject.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DlgOverlays.xaml.cs">
+      <DependentUpon>DlgOverlays.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DlgSelectMeaning.xaml.cs">
+      <DependentUpon>DlgSelectMeaning.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DlgSelectMeanings.xaml.cs">
+      <DependentUpon>DlgSelectMeanings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\base\Controls\ScrollablePanel.cs" />
+    <Compile Include="Editors\base\Controls\SelectedItemAdorner.cs" />
+    <Compile Include="Editors\CodeEditor\CodeItems\CodeItemLockExpression.cs" />
+    <Compile Include="Editors\CodeEditor\CodeItems\CodeItemToLockList.cs" />
+    <Compile Include="Editors\CodeEditor\Controls\CodeItems\CtrlCodeItemBlock.xaml.cs">
+      <DependentUpon>CtrlCodeItemBlock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\CodeEditor\Controls\CodeItems\CtrlCodeItemLockExp.xaml.cs">
+      <DependentUpon>CtrlCodeItemLockExp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\CodeEditor\Controls\CodeItems\CtrlCondExpression.xaml.cs">
+      <DependentUpon>CtrlCondExpression.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\CodeEditor\Controls\CodeItems\CtrlCondStatement.xaml.cs">
+      <DependentUpon>CtrlCondStatement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\CodeEditor\Controls\CodeItems\CtrlDropTarget.xaml.cs">
+      <DependentUpon>CtrlDropTarget.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\CodeEditor\Controls\CodePagePanel\CPPHeaderedItemList.cs" />
+    <Compile Include="Editors\CodeEditor\Controls\CodePagePanel\CPPItemBase.cs" />
+    <Compile Include="Editors\CodeEditor\Controls\CodePagePanel\CodePagePanel.cs" />
+    <Compile Include="Editors\CodeEditor\Controls\CodePagePanel\CPPItemList.cs" />
+    <Compile Include="Editors\CodeEditor\Controls\CodePagePanel\CPPItem.cs" />
+    <Compile Include="Editors\CodeEditor\Controls\CodePagePanel\CtrlExpander.xaml.cs">
+      <DependentUpon>CtrlExpander.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\CodeEditor\Functions\Dragdrop\CodeItemPanelDropAdvisor.cs" />
+    <Compile Include="Editors\Flow\functions\Dragdrop\FlowConditionalDropAdvisor.cs" />
+    <Compile Include="Editors\Flow\functions\Dragdrop\FlowConditonalPartDropAdvisor.cs" />
+    <Compile Include="Editors\Flow\FlowItems\FlowCollection.cs" />
+    <Compile Include="Editors\Flow\functions\FlowEditorSearcher.cs" />
+    <Compile Include="Editors\Flow\Views\FlowItemCondionalPartBorder.cs" />
+    <Compile Include="Editors\Flow\Views\FlowItemConditionalBackView.xaml.cs">
+      <DependentUpon>FlowItemConditionalBackView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Flow\Views\FlowItemConditionalFrontView.xaml.cs">
+      <DependentUpon>FlowItemConditionalFrontView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Flow\Views\FlowItems.xaml.cs">
+      <DependentUpon>FlowItems.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Flow\Views\FlowPanel\EnclosedFlowPanelItemList.cs" />
+    <Compile Include="Editors\Flow\Views\FlowPanel\FlowPanel.cs" />
+    <Compile Include="Editors\Flow\Views\FlowPanel\FlowPanelItem.cs" />
+    <Compile Include="Editors\Flow\Views\FlowPanel\FlowPanelItemBase.cs" />
+    <Compile Include="Editors\Flow\Views\FlowPanel\FlowPanelItemList.cs" />
+    <Compile Include="Editors\Flow\Views\FlowPanel\OverlayedFlowPanelItemList.cs" />
+    <Compile Include="Editors\Frames\Collections\FERestrictionSegmentCollection.cs" />
+    <Compile Include="Editors\Frames\Collections\FrameCollection.cs" />
+    <Compile Include="Editors\Frames\Collections\FrameSequenceItemCollection.cs" />
+    <Compile Include="Editors\Frames\DragDrop\FERestrictionsDropAdvisor.cs" />
+    <Compile Include="Editors\Frames\DragDrop\FrameDragAdvisor.cs" />
+    <Compile Include="Editors\Frames\DragDrop\FrameDropAdvisor.cs" />
+    <Compile Include="Editors\Frames\DragDrop\FrameListDropAdvisor.cs" />
+    <Compile Include="Editors\Frames\FEFilterTemplateSelector.cs" />
+    <Compile Include="Editors\Frames\Items\FECustomRestriction.cs" />
+    <Compile Include="Editors\Frames\Items\FERestriction.cs" />
+    <Compile Include="Editors\Frames\Items\FERestrictionBase.cs" />
+    <Compile Include="Editors\Frames\Items\FERestrictionGroup.cs" />
+    <Compile Include="Editors\Frames\Items\FERestrictionSegment.cs" />
+    <Compile Include="Editors\Frames\Items\FrameSequenceItem.cs" />
+    <Compile Include="Editors\Frames\Collections\RestrictionsCollection.cs" />
+    <Compile Include="Editors\Frames\Undo data\FrameUndoItem.cs" />
+    <Compile Include="Editors\MindMap\Controls\MindMapPanel.cs" />
+    <Compile Include="Editors\MindMap\Items\MindMapItemSelectionList.cs" />
+    <Compile Include="Editors\Overview\EditorsOverviewSearcher.cs" />
+    <Compile Include="IDocumentInfo.cs" />
+    <Compile Include="Modules\ModuleManager.xaml.cs">
+      <DependentUpon>ModuleManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Asset editor\Views\AssetEditorView.xaml.cs">
+      <DependentUpon>AssetEditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Asset editor\items\AssetItem.cs" />
+    <Compile Include="Editors\Asset editor\items\AssetCollection.cs" />
+    <Compile Include="Tools\Debugger\DebugItems\InvalidChangeDebugData.cs" />
+    <Compile Include="Tools\Debugger\DebugItems\SplitPath.cs" />
+    <Compile Include="Tools\Debugger\DebugItems\SplitPathItem.cs" />
+    <Compile Include="Tools\Debugger\DebugItems\WatchCollection.cs" />
+    <Compile Include="Tools\Debugger\Processor\AttachedNeuronsDict.cs" />
+    <Compile Include="Tools\Debugger\Processor\VariableValue.cs" />
+    <Compile Include="Tools\Debugger\Profiler\MemProfiledProcessor.cs" />
+    <Compile Include="Tools\Debugger\Profiler\MemProfiledVar.cs" />
+    <Compile Include="Tools\Debugger\Profiler\MemProfiler.cs" />
+    <Compile Include="Tools\Debugger\Profiler\MemProfilerItem.cs" />
+    <Compile Include="Tools\Debugger\Profiler\MemprofilerView.xaml.cs">
+      <DependentUpon>MemprofilerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Debugger\Testcases\Items\TestCase.cs" />
+    <Compile Include="Tools\Debugger\Testcases\Items\TestCaseItem.cs" />
+    <Compile Include="Tools\Debugger\Testcases\Items\TestCaseResultItem.cs" />
+    <Compile Include="Tools\Debugger\Testcases\Items\TestCaseRunner.cs" />
+    <Compile Include="Tools\Debugger\Testcases\Items\TestCaseSelectedItems.cs" />
+    <Compile Include="Tools\Debugger\Testcases\Views\TestCaseDictionary.xaml.cs">
+      <DependentUpon>TestCaseDictionary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Debugger\Testcases\Views\TestCaseView.xaml.cs">
+      <DependentUpon>TestCaseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Explorer\ExplorerChildrenCollection.cs" />
+    <Compile Include="Tools\Explorer\ExplorerItemCollection.cs" />
+    <Compile Include="BrainData\DesignerData\OverlayText.cs" />
+    <Compile Include="Tools\Explorer\ExplorerItemsControl.cs" />
+    <Compile Include="Tools\Explorer\ExplorerSearcher.cs" />
+    <Compile Include="Tools\Explorer\ExplorerSelection.cs" />
+    <Compile Include="Tools\Explorer\NeuronExplorer.cs" />
+    <Compile Include="Tools\Navigation\NavigationStore.cs" />
+    <Compile Include="Tools\Processing\search\DisplayPathSet.cs" />
+    <Compile Include="Tools\DisplayPath\DisplayPath.cs" />
+    <Compile Include="Tools\DisplayPath\DisplayPathItem.cs" />
+    <Compile Include="Tools\DisplayPath\DPIChild.cs" />
+    <Compile Include="Tools\DisplayPath\roots\DPICodeEditorRoot.cs" />
+    <Compile Include="Tools\DisplayPath\DPILink.cs" />
+    <Compile Include="Tools\DisplayPath\DPILinkIn.cs" />
+    <Compile Include="Tools\DisplayPath\DPILinkIndexIn.cs" />
+    <Compile Include="Tools\DisplayPath\DPILinkIndexOut.cs" />
+    <Compile Include="Tools\DisplayPath\DPILinkOut.cs" />
+    <Compile Include="Tools\DisplayPath\DPIParent.cs" />
+    <Compile Include="Tools\DisplayPath\DPIRoot.cs" />
+    <Compile Include="Tools\Processing\search\ISearchDataProvider.cs" />
+    <Compile Include="Tools\Processing\ProcessTracker.cs" />
+    <Compile Include="Tools\Processing\search\SearcherProcess.cs" />
+    <Compile Include="Tools\Processing\SearchResources.xaml.cs">
+      <DependentUpon>SearchResources.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\CodeEditor\Functions\Search\CodeSearchResults.cs" />
+    <Compile Include="Tools\Processing\search\SearchResults.cs" />
+    <Compile Include="Tools\Thesaurus\DragDrop\SubRelationshipsDropAdvisor.cs" />
+    <Compile Include="Tools\Thesaurus\DragDrop\SubThesaurusCollectionDropAdvisor.cs" />
+    <Compile Include="Tools\Thesaurus\DragDrop\SubThesaurusItemDragAdvisor.cs" />
+    <Compile Include="Tools\Thesaurus\DragDrop\ThesaurusListItemDropAdvisor.cs" />
+    <Compile Include="Tools\Thesaurus\Functions\ThesaurusBuilder.cs" />
+    <Compile Include="Tools\Thesaurus\Functions\ThesSearcher.cs" />
+    <Compile Include="Tools\Thesaurus\items\ThesaurusLinkedItems.cs" />
+    <Compile Include="Tools\Thesaurus\collections\ThesaurusSubItemCollection.cs" />
+    <Compile Include="Tools\Thesaurus\collections\SubRelationshipsCollection.cs" />
+    <Compile Include="Tools\Thesaurus\collections\ThesaursItemCollection.cs" />
+    <Compile Include="Tools\Thesaurus\collections\ThesaurusRelItemCollection.cs" />
+    <Compile Include="Tools\Thesaurus\items\ThesaurusSubItem.cs" />
+    <Compile Include="Tools\Thesaurus\collections\ThesChildItemsCollection.cs" />
+    <Compile Include="Tools\Thesaurus\items\ThesObjectLinkedItems.cs" />
+    <Compile Include="Tools\Thesaurus\items\ThesaurusLinkedItem.cs" />
+    <Compile Include="Tools\Thesaurus\Undo\RootItemUndoData.cs" />
+    <Compile Include="Tools\Thesaurus\Undo\ThesRelItemUndoData.cs" />
+    <Compile Include="Tools\Timing\TimerDragAdvisor.cs" />
+    <Compile Include="Tools\Timing\Timers.cs" />
+    <Compile Include="Tools\Toolbox\ToolBoxItemCollection.cs" />
+    <Compile Include="Undo data\ClusterUndoItem.cs" />
+    <Compile Include="Dialogs\DlgSelectDeletionMethodl.xaml.cs">
+      <DependentUpon>DlgSelectDeletionMethodl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DlgPasteSpecial.xaml.cs">
+      <DependentUpon>DlgPasteSpecial.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\CodeEditor\CodeItems\ICodeItemsOwner.cs" />
+    <Compile Include="Editors\CodeEditor\CommonCodeItemsControls.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>CommonCodeItemsControls.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Debugger\Processor\IProcessorsOwner.cs" />
+    <Compile Include="Tools\Debugger\Processor\ProcManFolder.cs" />
+    <Compile Include="Tools\Debugger\Processor\ProcManItem.cs" />
+    <Compile Include="Tools\Debugger\Expressions\CtrlDebugStatic.xaml.cs">
+      <DependentUpon>CtrlDebugStatic.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Debugger\Expressions\CtrlDebugAssignment.xaml.cs">
+      <DependentUpon>CtrlDebugAssignment.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Debugger\Expressions\CtrlDebugBoolExpression.xaml.cs">
+      <DependentUpon>CtrlDebugBoolExpression.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Debugger\Expressions\CtrlDebugByRef.xaml.cs">
+      <DependentUpon>CtrlDebugByRef.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Debugger\Expressions\CtrlDebugConditionalStatement.xaml.cs">
+      <DependentUpon>CtrlDebugConditionalStatement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Debugger\Expressions\CtrlDebugResultStatement.xaml.cs">
+      <DependentUpon>CtrlDebugResultStatement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Debugger\Expressions\CtrlDebugVariable.xaml.cs">
+      <DependentUpon>CtrlDebugVariable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DlgInspectExpression.xaml.cs">
+      <DependentUpon>DlgInspectExpression.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\base\Controls\CtrlEditorBase.cs">
+    </Compile>
+    <Compile Include="Editors\CodeEditor\CodeItems\CodeItemGlobal.cs" />
+    <Compile Include="Comm channels\Wordnet\Items\IWordNetItem.cs" />
+    <Compile Include="Editors\CodeEditor\CtrlGlobal.xaml.cs">
+      <DependentUpon>CtrlGlobal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DlgAssemblyFromGac.xaml.cs">
+      <DependentUpon>DlgAssemblyFromGac.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Comm channels\Wordnet\Items\WordNetItem.cs" />
+    <Compile Include="Comm channels\Wordnet\Items\WordNetRelationship.cs" />
+    <Compile Include="Dialogs\DlgPOSEditor.xaml.cs">
+      <DependentUpon>DlgPOSEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\base\EditorItem.cs" />
+    <Compile Include="Editors\Overview\DragDrop\EditorItemDragAdvisor.cs" />
+    <Compile Include="Editors\Overview\DragDrop\EditorItemDropAdvisor.cs" />
+    <Compile Include="Editors\Overview\DragDrop\EditorsOverviewDropAdvisor.cs" />
+    <Compile Include="Editors\Flow\FlowItems\FlowEditor.cs" />
+    <Compile Include="Editors\Flow\Views\FlowEditorView.xaml.cs">
+      <DependentUpon>FlowEditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Flow\FlowItems\FlowItemCollection.cs" />
+    <Compile Include="Editors\Flow\FlowItems\FlowItem.cs" />
+    <Compile Include="Editors\base\IEditorSelection.cs" />
+    <Compile Include="Editors\Flow\FlowItems\FlowItemBlock.cs" />
+    <Compile Include="Editors\Flow\FlowItems\FlowItemConditional.cs" />
+    <Compile Include="Editors\Flow\FlowItems\FlowItemConditionalPart.cs" />
+    <Compile Include="Editors\Flow\FlowItems\FlowItemStatic.cs" />
+    <Compile Include="Editors\Flow\functions\Dragdrop\FlowPanelDropAdvisor.cs" />
+    <Compile Include="Editors\Flow\functions\Dragdrop\FlowListItemDragAdvisor.cs" />
+    <Compile Include="Editors\Flow\functions\Dragdrop\FlowListItemDropAdvisor.cs" />
+    <Compile Include="Editors\Flow\Views\FlowItemStaticView.xaml.cs">
+      <DependentUpon>FlowItemStaticView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Flow\Views\FlowItemConditionalPartView.xaml.cs">
+      <DependentUpon>FlowItemConditionalPartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Flow\Views\StaticFlowItemContentSelector.cs" />
+    <Compile Include="Tools\Debugger\Processor\ExecutionFrameItem.cs" />
+    <Compile Include="Undo data\NeuronDataUndoItem.cs" />
+    <Compile Include="WPF\Controls\NeuronEditing\NeuronBrowser\DropDownNSSelector.xaml.cs">
+      <DependentUpon>DropDownNSSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPF\Controls\MyTreeView.cs" />
+    <Compile Include="WPF\Controls\NeuronEditing\NeuronEditor\FastNeuronDataEditor.cs" />
+    <Compile Include="WPF\Controls\NeuronEditing\NeuronEditor\NeuronDataEditor.xaml.cs">
+      <DependentUpon>NeuronDataEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPF\Controls\NeuronEditing\NeuronEditor\NeuronDataEditorDropAdvisor.cs" />
+    <Compile Include="WPF\Controls\ObservingCanvas.cs" />
+    <Compile Include="WPF\Controls\SpinButton.xaml.cs">
+      <DependentUpon>SpinButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPF\Controls\TiltWheelProvider.cs" />
+    <Compile Include="WPF\Controls\TreeViewPanel\ITreeViewPanelItem.cs" />
+    <Compile Include="WPF\Controls\TreeViewPanel\ITreeViewRoot.cs" />
+    <Compile Include="WPF\Controls\TreeViewPanel\TreeViewPanel.cs" />
+    <Compile Include="WPF\Controls\TreeViewPanel\TreeViewPanelItem.cs" />
+    <Compile Include="WPF\Controls\WatermarkService.cs" />
+    <Compile Include="WPF\Converters\LeftMarginConverter.cs" />
+    <Compile Include="WPF\Converters\MultiBoolConverter.cs" />
+    <Compile Include="WPF\Converters\NeuronToImageBrushConverter.cs" />
+    <Compile Include="WPF\EventManagers\AfterLoadEventManager.cs" />
+    <Compile Include="Comm channels\Reflection\AssemblyData.cs" />
+    <Compile Include="BrainData\DesignerData\DesignerDataFile.cs" />
+    <Compile Include="Comm channels\Reflection\ReflectionChannel.cs" />
+    <Compile Include="Comm channels\Reflection\ReflectionChannelView.xaml.cs">
+      <DependentUpon>ReflectionChannelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BrainData\Collections\ClusterCollection.cs" />
+    <Compile Include="Editors\Overview\EditorCollection.cs" />
+    <Compile Include="Editors\base\EditorStyleSelector.cs" />
+    <Compile Include="Editors\Overview\EditorFolder.cs" />
+    <Compile Include="Editors\Helpers\EditorsHelper.cs" />
+    <Compile Include="Editors\base\EditorBase.cs" />
+    <Compile Include="Editors\Flow\FlowItems\Flow.cs" />
+    <Compile Include="Editors\Flow\Views\FlowView.xaml.cs">
+      <DependentUpon>FlowView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\base\NeuronEditor.cs" />
+    <Compile Include="Editors\Frames\Items\FrameElement.cs" />
+    <Compile Include="Editors\Frames\Collections\FrameElementCollection.cs" />
+    <Compile Include="Editors\Frames\Items\FrameSequence.cs" />
+    <Compile Include="Editors\Frames\Items\FrameItemBase.cs" />
+    <Compile Include="Editors\Frames\Collections\FrameOrderCollection.cs" />
+    <Compile Include="Editors\Frames\DragDrop\FrameElementListDropAdvisor.cs" />
+    <Compile Include="Editors\Frames\DragDrop\FrameSequenceListDropAdvisor.cs" />
+    <Compile Include="Editors\Frames\DragDrop\FrameElementListItemDropAdvisor.cs" />
+    <Compile Include="Editors\Frames\DragDrop\FrameSequenceListItemDropAdvisor.cs" />
+    <Compile Include="Editors\Frames\DragDrop\FrameElementListItemDragAdvisor.cs" />
+    <Compile Include="Editors\Frames\DragDrop\FrameSequenceListItemDragAdvisor.cs" />
+    <Compile Include="Editors\MindMap\Controls\MindMapNoteView.xaml.cs">
+      <DependentUpon>MindMapNoteView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Thesaurus\items\ThesaurusRelItem.cs" />
+    <Compile Include="Tools\Thesaurus\DragDrop\ThesaurusListDropAdvisor.cs" />
+    <Compile Include="Tools\Thesaurus\DragDrop\ThesaurusListItemDragAdvisor.cs" />
+    <Compile Include="Tools\Thesaurus\items\IThesaurusData.cs" />
+    <Compile Include="Tools\Thesaurus\items\Thesaurus.cs" />
+    <Compile Include="Tools\Thesaurus\items\ThesaurusItem.cs" />
+    <Compile Include="WPF\EventManagers\NewRootEventManager.cs" />
+    <Compile Include="Tools\Description\DescriptionView.xaml.cs">
+      <DependentUpon>DescriptionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DlgFixBrokenRefs.xaml.cs">
+      <DependentUpon>DlgFixBrokenRefs.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DlgAbout.xaml.cs">
+      <DependentUpon>DlgAbout.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Debugger\ProcessorsOverview.xaml.cs">
+      <DependentUpon>ProcessorsOverview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Debugger\Processor\ProcessorManager.cs" />
+    <Compile Include="Tools\Debugger\Processor\ProcItem.cs" />
+    <Compile Include="Tools\Debugger\ProcManVariablesDropAdvisor.cs" />
+    <Compile Include="Tools\Debugger\DebugItems\Watch.cs" />
+    <Compile Include="Comm channels\Reflection\FunctionData.cs" />
+    <Compile Include="Comm channels\Reflection\TypeData.cs" />
+    <Compile Include="Comm channels\Reflection\NamespaceData.cs" />
+    <Compile Include="Comm channels\Reflection\ReflectionData.cs" />
+    <Compile Include="Dialogs\DlgImportFrameNet.xaml.cs">
+      <DependentUpon>DlgImportFrameNet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Frames\Items\Frame.cs" />
+    <Compile Include="Editors\Frames\Items\FrameEditor.cs" />
+    <Compile Include="Editors\Frames\Views\FrameEditorView.xaml.cs">
+      <DependentUpon>FrameEditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPF\EventManagers\POSGroupCreatedEventManager.cs" />
+    <Compile Include="WPF\EventManagers\WordNetFinishedEventManager.cs" />
+    <Compile Include="WPF\EventManagers\WordNetStartedEventManager.cs" />
+    <Compile Include="BrainData\Events\LoadedEventManager.cs" />
+    <Compile Include="BrainData\Events\ClearedEventManager.cs" />
+    <Compile Include="Editors\CodeEditor\CtrlByRef.xaml.cs">
+      <DependentUpon>CtrlByRef.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\CodeEditor\CodeItems\CodeItemByRef.cs" />
+    <Compile Include="Comm channels\Wordnet\Items\WordNetEventItem.cs" />
+    <Compile Include="Comm channels\Wordnet\WordNetChannelView.xaml.cs">
+      <DependentUpon>WordNetChannelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BrainData\Project management\ProjectManager.cs" />
+    <Compile Include="Dialogs\DlgStringQuestion.xaml.cs">
+      <DependentUpon>DlgStringQuestion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\CodeEditor\CodeItems\ExpandableCodeItem.cs" />
+    <Compile Include="Tools\Explorer\NeuronExplorerItem.cs" />
+    <Compile Include="WPF\EventManagers\RelationshipCreatedEventManager.cs" />
+    <Compile Include="WPF\EventManagers\ObjectCreatedEventManager.cs" />
+    <Compile Include="WPF\EventManagers\RelationshipTypeCreatedEventManager.cs" />
+    <Compile Include="Undo data\BrainUndoItem.cs" />
+    <Compile Include="Editors\CodeEditor\CodeItems\CodeItemCodeBlock.cs" />
+    <Compile Include="Comm channels\Text\TextChanellTrackingData.cs" />
+    <Compile Include="Tools\Debugger\DebugItems\DebugChild.cs" />
+    <Compile Include="Tools\Debugger\DebugItems\DebugNeuronChildren.cs" />
+    <Compile Include="Tools\Debugger\DebugItems\DebugRef.cs" />
+    <Compile Include="Undo data\LinkUndoItem.cs" />
+    <Compile Include="Undo data\NeuronUndoItem.cs" />
+    <Compile Include="Tools\Timing\TimerCollection.cs" />
+    <Compile Include="Tools\Timing\NeuralTimer.cs" />
+    <Compile Include="Tools\Timing\TimersView.xaml.cs">
+      <DependentUpon>TimersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Undo data\BrainUndoMonitor.cs" />
+    <Compile Include="Comm channels\Wordnet\Items\WordNetChannel.cs" />
+    <Compile Include="WPF\EventManagers\BeforeSaveEventManager.cs" />
+    <Compile Include="Comm channels\Resources\AudioReference.cs" />
+    <Compile Include="Comm channels\Audio\AudioChannel.cs" />
+    <Compile Include="Comm channels\Audio\AudioChannelView.xaml.cs">
+      <DependentUpon>AudioChannelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BrainData\BrainData.cs" />
+    <Compile Include="BrainData\Collections\BreakPointCollection.cs" />
+    <Compile Include="Editors\CodeEditor\CodeItems\CodeEditorPage.cs" />
+    <Compile Include="Editors\CodeEditor\CodeEditorView.xaml.cs">
+      <DependentUpon>CodeEditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\CodeEditor\CodeItems\CodeItem.cs" />
+    <Compile Include="Editors\CodeEditor\CodeItems\CodeEditor.cs" />
+    <Compile Include="Editors\CodeEditor\Functions\Dragdrop\CodeListDropAdvisor.cs" />
+    <Compile Include="Editors\CodeEditor\CodeItems\CodeItemCollection.cs" />
+    <Compile Include="Editors\CodeEditor\CodeItems\CodeItemStatement.cs" />
+    <Compile Include="Editors\CodeEditor\CodeItems\CodeItemConditionalStatement.cs" />
+    <Compile Include="Editors\CodeEditor\CodeItems\CodeItemBoolExpression.cs" />
+    <Compile Include="Editors\CodeEditor\CodeItems\CodeItemConditionalExpression.cs" />
+    <Compile Include="Editors\CodeEditor\CodeItems\CodeItemResult.cs" />
+    <Compile Include="Editors\CodeEditor\CodeItems\CodeItemResultStatement.cs" />
+    <Compile Include="Editors\CodeEditor\CodeItems\CodeItemSearchExpression.cs" />
+    <Compile Include="Editors\CodeEditor\CodeItems\CodeItemVariable.cs" />
+    <Compile Include="Editors\CodeEditor\CodeItems\CodeItemStatic.cs" />
+    <Compile Include="Editors\CodeEditor\Functions\Dragdrop\CodeItemDropAdvisor.cs" />
+    <Compile Include="Editors\CodeEditor\CtrlSearchExpression.xaml.cs">
+      <DependentUpon>CtrlSearchExpression.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\CodeEditor\CtrlBoolExpression.xaml.cs">
+      <DependentUpon>CtrlBoolExpression.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\CodeEditor\Functions\Dragdrop\CodeItemDragAdvisor.cs" />
+    <Compile Include="Editors\base\EditorItemSelectionList.cs" />
+    <Compile Include="Editors\CodeEditor\CtrlStatement.xaml.cs">
+      <DependentUpon>CtrlStatement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\base\Controls\CtrlEditorItem.cs" />
+    <Compile Include="Editors\CodeEditor\CtrlResultStatement.xaml.cs">
+      <DependentUpon>CtrlResultStatement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\CodeEditor\CtrlStatic.xaml.cs">
+      <DependentUpon>CtrlStatic.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\CodeEditor\CtrlVariable.xaml.cs">
+      <DependentUpon>CtrlVariable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\CodeEditor\Functions\Dragdrop\CodeListItemDragAdvisor.cs" />
+    <Compile Include="Editors\CodeEditor\Functions\Dragdrop\CodeListItemDropAdvisor.cs" />
+    <Compile Include="Editors\CodeEditor\CtrlCodeEditorPage.xaml.cs">
+      <DependentUpon>CtrlCodeEditorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\CodeEditor\CodeItems\CodeItemAssignment.cs" />
+    <Compile Include="Editors\CodeEditor\CtrlAssignment.xaml.cs">
+      <DependentUpon>CtrlAssignment.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Comm channels\Resources\CtrlResourceManager.xaml.cs">
+      <DependentUpon>CtrlResourceManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Debugger\ProcessorView.xaml.cs">
+      <DependentUpon>ProcessorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Debugger\Processor\ExecutionFrame.cs" />
+    <Compile Include="Tools\Debugger\DebugItems\DebugItem.cs" />
+    <Compile Include="Tools\Debugger\DebugItems\DebugLink.cs" />
+    <Compile Include="Tools\Debugger\DebugItems\DebugNeuron.cs" />
+    <Compile Include="Dialogs\DlgSelectNeurons.xaml.cs">
+      <DependentUpon>DlgSelectNeurons.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DlgCreateCluster.xaml.cs">
+      <DependentUpon>DlgCreateCluster.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\MindMap\Items\EdgePoint.cs" />
+    <Compile Include="Tools\Explorer\FreeExplorerItem.cs" />
+    <Compile Include="Tools\Explorer\ReservedExplorerItem.cs" />
+    <Compile Include="Comm channels\Images\ImageChannel.cs" />
+    <Compile Include="Comm channels\Images\ImageChannelView.xaml.cs">
+      <DependentUpon>ImageChannelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Comm channels\Resources\ImageReference.cs" />
+    <Compile Include="Comm channels\Resources\ResourceReference.cs" />
+    <Compile Include="Editors\MindMap\Items\MindMapCluster.cs" />
+    <Compile Include="Editors\Overview\EditorsOverview.xaml.cs">
+      <DependentUpon>EditorsOverview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Comm channels\Text\TextChannel.cs" />
+    <Compile Include="WPF\Converters\NeuronIdToInfoConverter.cs" />
+    <Compile Include="WPF\Converters\DivConverter.cs" />
+    <Compile Include="Tools\Explorer\ExplorerDropAdvisor.cs" />
+    <Compile Include="BrainData\INeuronWrapper.cs" />
+    <Compile Include="Editors\MindMap\DlgSelectLinks.xaml.cs">
+      <DependentUpon>DlgSelectLinks.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Explorer\ExplorerDragSourceAdvisor.cs" />
+    <Compile Include="BrainData\Collections\SmallIDCollection.cs" />
+    <Compile Include="Tools\Description\IDescriptionable.cs" />
+    <Compile Include="BrainData\INeuronInfo.cs" />
+    <Compile Include="Editors\MindMap\Controls\LinkOverlay.xaml.cs">
+      <DependentUpon>LinkOverlay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BrainData\Collections\NeuronCollection.cs" />
+    <Compile Include="BrainData\NeuronInfo.cs" />
+    <Compile Include="WPF\Converters\NeuronToInfoConverter.cs" />
+    <Compile Include="Tools\Toolbox\InstructionToolBoxItem.cs" />
+    <Compile Include="Editors\MindMap\Controls\ItemResizer.xaml.cs">
+      <DependentUpon>ItemResizer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Comm channels\CommChannel.cs" />
+    <Compile Include="Comm channels\CommChannelCollection.cs" />
+    <Compile Include="Tools\Debugger\Processor\DebugProcessor.cs" />
+    <Compile Include="Dialogs\DlgLink.xaml.cs">
+      <DependentUpon>DlgLink.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPF\DragDrop\DragDropManager.cs" />
+    <Compile Include="WPF\DragDrop\DragSourceBase.cs" />
+    <Compile Include="WPF\DragDrop\DropPreviewAdorner.cs" />
+    <Compile Include="WPF\DragDrop\DropTargetBase.cs" />
+    <Compile Include="Tools\Explorer\ExplorerItem.cs" />
+    <Compile Include="Helper.cs" />
+    <Compile Include="Tools\Explorer\InvalidExplorerItem.cs" />
+    <Compile Include="Editors\MindMap\MindMapDragSourceAdvisor.cs" />
+    <Compile Include="Editors\MindMap\MindMapDropTargetAdvisor.cs" />
+    <Compile Include="Editors\MindMap\Items\MindMapItemCollection.cs" />
+    <Compile Include="Editors\MindMap\Controls\MindMapView.xaml.cs">
+      <DependentUpon>MindMapView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\MindMap\Items\MindMapItem.cs" />
+    <Compile Include="Editors\MindMap\Items\MindMapLink.cs" />
+    <Compile Include="Editors\MindMap\Items\MindMapNeuron.cs" />
+    <Compile Include="Editors\MindMap\Items\MindMapNote.cs" />
+    <Compile Include="Editors\MindMap\Items\MindMap.cs" />
+    <Compile Include="Tools\Explorer\NeuronExplorerView.xaml.cs">
+      <DependentUpon>NeuronExplorerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BrainData\DesignerData\NeuronData.cs" />
+    <Compile Include="BrainData\DesignerData\NeuronDataDictionary.cs" />
+    <Compile Include="Tools\Toolbox\ToolboxDragSourceAdvisor.cs" />
+    <Compile Include="Tools\Toolbox\NeuronToolBoxItem.cs" />
+    <Compile Include="Tools\Toolbox\TypeToolBoxItem.cs" />
+    <Compile Include="WPF\Converters\TypeToResourceConverter.cs" />
+    <Compile Include="WPF\Converters\NeuronToResourceConverter.cs" />
+    <Compile Include="Tools\Thesaurus\visual\ThesaurusView.xaml.cs">
+      <DependentUpon>ThesaurusView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\MindMap\Items\PositionedMindMapItem.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Comm channels\Text\TextChannelView.xaml.cs">
+      <DependentUpon>TextChannelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\base\Controls\SelectionAdorner.cs" />
+    <Compile Include="Tools\Toolbox\ToolBoxItem.cs" />
+    <Compile Include="Tools\Toolbox\ToolBox.xaml.cs">
+      <DependentUpon>ToolBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\WindowOptions.xaml.cs">
+      <DependentUpon>WindowOptions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="XmlObjectStore.cs" />
+    <Resource Include="Images\TextPatterns\ListView.png" />
+    <Resource Include="Images\TextPatterns\MasterdetailView.png" />
+    <Resource Include="Images\TextPatterns\ResponseForAsPattern.png" />
+    <Resource Include="Images\SaveTimer_Enabled.png" />
+    <Resource Include="Images\queries\RunningResult.png" />
+    <Resource Include="Images\queries\build.png" />
+    <Resource Include="Images\queries\build_enabled.png" />
+    <Resource Include="Images\queries\include.png" />
+    <Resource Include="Images\queries\query.png" />
+    <Resource Include="Images\queries\query_enabled.png" />
+    <Resource Include="Images\TextPatterns\ToggleDoPatterns.png" />
+    <Resource Include="Images\Tools\chatlogHistory.png" />
+    <Resource Include="Images\TextPatterns\PatternRequiresResponse.png" />
+    <Resource Include="Images\searchoptions.png" />
+    <Resource Include="Images\TextPatterns\textbox.png" />
+    <Resource Include="Images\TextPatterns\PatternNoQuestion.png" />
+    <Resource Include="Images\TextPatterns\PatternEndPart.png" />
+    <Resource Include="Images\TextPatterns\PatternPart.png" />
+    <Resource Include="Images\Edit\DeleteVerySmall_Enabled.png" />
+    <Resource Include="Images\splash\CBDBlueAbout.jpg" />
+    <Resource Include="Images\splash\CBDGreenAbout.jpg" />
+    <Resource Include="Images\splash\CBDRedAbout.jpg" />
+    <Resource Include="Images\Edit\Add_Enabled.png" />
+    <Resource Include="Images\Edit\DeleteSmall_Enabled.png" />
+    <!--<Resource Condition=" '$(Configuration)' == 'Debug PRO'" Include="Images\Icon\GreenCBD.ico" />
+    <Resource Condition=" '$(Configuration)' == 'Release PRO'" Include="Images\Icon\GreenCBD.ico" />-->
+    <!--<Resource Condition=" '$(Configuration)' == 'Release basic'" Include="Images\Icon\blueCBD.ico" />-->
+    <!--<Resource Condition=" '$(Configuration)' == 'Debug basic'" Include="Images\Icon\blueCBD.ico" />-->
+    <!--<Resource Condition=" '$(Configuration)' == 'Release'" Include="Images\Icon\redCBD.ico" />
+    <Resource Condition=" '$(Configuration)' == 'Debug' " Include="Images\Icon\redCBD.ico" />-->
+    <Resource Include="Images\Edit\Find_Enabled.png" />
+    <Resource Include="Images\Commchannel\FloatingChar_Enabled.png" />
+    <Resource Include="Images\Properties.png" />
+    <Resource Include="Images\TextPatterns\TextPattern.png" />
+    <Resource Include="Images\TextPatterns\TextPattern_Enabled.png" />
+    <Resource Include="Images\Commchannel\chatbot.png" />
+    <Resource Include="Images\Commchannel\chatbot_Enabled.png" />
+    <Resource Include="Images\Commchannel\mic_Enabled.png" />
+    <Resource Include="Images\Commchannel\mic.png" />
+    <Resource Include="Images\Commchannel\Transparancy.png" />
+    <Resource Include="Images\Commchannel\AntiAliasing.png" />
+    <Resource Include="Images\Commchannel\AntiAliasing_Enabled.png" />
+    <Resource Include="Images\Commchannel\Highlight_Enabled.png" />
+    <Resource Include="Images\VisualF\VisualFrame.png" />
+    <Resource Include="Images\VisualF\VisualFrame_Enabled.png" />
+    <EmbeddedResource Include="Properties\Resources.qps-ploc.resx">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.qps-ploc.xlf</DependentUpon>
+      <culture>qps-ploc</culture>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <Content Include="..\help\NND.chm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DefaultData\App_Offline.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DefaultData\DefaultData.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Images\Tools\Testcase.png" />
+    <Resource Include="Images\Frame\BoolFilter.png" />
+    <Resource Include="Images\Frame\BoolFilter_Enabled.png" />
+    <Resource Include="Images\CodeSearch.png" />
+    <Resource Include="Images\CodeSearch_Enabled.png" />
+    <Resource Include="Images\Frame\Object_Frames.png" />
+    <Resource Include="Images\Frame\Object_Frames_Enabled.png" />
+    <Resource Include="Images\Asset\AddSubAsset.png" />
+    <Resource Include="Images\Asset\AddSubAsset_Enabled.png" />
+    <Resource Include="Images\Asset\NewAssetRecord.png" />
+    <Resource Include="Images\Asset\NewAssetRecordWS.png" />
+    <Resource Include="Images\Asset\NewAssetRecordWS_Enabled.png" />
+    <Resource Include="Images\Asset\NewAssetRecord_Enabled.png" />
+    <Resource Include="Images\Asset\NewAsset.png" />
+    <Resource Include="Images\Asset\NewAsset_Enabled.png" />
+    <Resource Include="Images\Asset\objectAsset.png" />
+    <Resource Include="Images\Asset\objectAsset_Enabled.png" />
+    <Resource Include="Images\Asset\asset.png" />
+    <Resource Include="Images\Asset\asset_Enabled.png" />
+    <Resource Include="Images\MemProfiler\GotoUnfreeze.png" />
+    <Resource Include="Images\MemProfiler\GotoUnfreeze_Enabled.png" />
+    <Resource Include="Images\MemProfiler\StoreSplitPath.png" />
+    <Resource Include="Images\MemProfiler\StoreSplitPath_Enabled.png" />
+    <Resource Include="Images\MemProfiler\GotoEnd.png" />
+    <Resource Include="Images\MemProfiler\GotoEnd_Enabled.png" />
+    <Resource Include="Images\MemProfiler\GotoStart.png" />
+    <Resource Include="Images\MemProfiler\GotoStart_Enabled.png" />
+    <Resource Include="Images\Tools\MemProfiler.png" />
+    <Resource Include="Images\Flow\ShowOverlays.png" />
+    <Resource Include="Images\NewFolder_Enabled.png" />
+    <Resource Include="Images\NewCode_Enabled.png" />
+    <Resource Include="Images\Frame\Frame_Enabled.png" />
+    <Resource Include="Images\NewMindMap_Enabled.png" />
+    <Resource Include="Images\Commchannel\Audio_Enabled.png" />
+    <Resource Include="Images\Commchannel\Audio.png" />
+    <Resource Include="Images\Commchannel\clear.png" />
+    <Resource Include="Images\Commchannel\send.png" />
+    <Resource Include="Images\Frame\CustomFilter.png" />
+    <Resource Include="Images\Frame\CustomFilter_Enabled.png" />
+    <Resource Include="Images\Commchannel\network.png" />
+    <Resource Include="Images\brackets.png" />
+    <Resource Include="Images\ClosedFolder.png" />
+    <Resource Include="Images\Tools\log.png" />
+    <Resource Include="Images\Tools\Description.png" />
+    <Resource Include="Images\Tools\Debug.png" />
+    <Resource Include="Images\Tools\Timers.png" />
+    <Resource Include="Images\Tools\thesaurus.png" />
+    <Resource Include="Images\Tools\Project.png" />
+    <Resource Include="Images\Tools\Explorer.png" />
+    <Resource Include="Images\Tools\Tools.png" />
+    <Resource Include="Images\Thesaurus\POS.png" />
+    <Resource Include="Images\BrowseNeuron.png" />
+    <Resource Include="Images\BrowseNeuron_Enabled.png" />
+    <Resource Include="Images\Thesaurus\SubRelationship.png" />
+    <Resource Include="Images\Thesaurus\SubRelationship_Enabled.png" />
+    <Resource Include="Images\Frame\FilterSegment.png" />
+    <Resource Include="Images\Frame\FilterSegment_Enabled.png" />
+    <Resource Include="Images\Thesaurus\Relationship.png" />
+    <Resource Include="Images\Arrows\Down1_Enabled.png" />
+    <Resource Include="Images\Arrows\Left1_Enabled.png" />
+    <Resource Include="Images\Arrows\Right1_Enabled.png" />
+    <Resource Include="Images\Arrows\Up1_Enabled.png" />
+    <Resource Include="Images\Frame\FrameElement.png" />
+    <Resource Include="Images\Frame\FrameSequence.png" />
+    <Resource Include="Images\Frame\FilterGroup.png" />
+    <Resource Include="Images\Frame\Filter_Enabled.png" />
+    <Resource Include="Images\Frame\FilterGroup_Enabled.png" />
+    <Resource Include="Images\Stop.png" />
+    <Resource Include="Images\Stop_Enabled.png" />
+    <Resource Include="Images\BreakOnException.png" />
+    <Resource Include="Images\Reset.png" />
+    <Resource Include="Images\Flow\Flow_ViewList.png" />
+    <Resource Include="Images\Flow\AddFlow.png" />
+    <Resource Include="Images\Flow\ConditionalPart.png" />
+    <Resource Include="Images\Flow\Flow.png" />
+    <Resource Include="Images\Flow\Loop.png" />
+    <Resource Include="Images\Flow\Option.png" />
+    <Resource Include="Images\Remove.png" />
+    <Resource Include="Images\Remove_Enabled.png" />
+    <Resource Include="Images\Flow\ConditionalPart_Enabled.png" />
+    <Resource Include="Images\Flow\Loop_Enabled.png" />
+    <Resource Include="Images\Flow\Option_Enabled.png" />
+    <Resource Include="Images\Flow\AddFlow_Enabled.png" />
+    <Resource Include="Images\NewCode.png" />
+    <Resource Include="Images\Edit\pasteSpecial.png" />
+    <Resource Include="Images\Edit\Paste.png" />
+    <Resource Include="Images\Edit\Cut.png" />
+    <Resource Include="Images\Edit\Copy.png" />
+    <Resource Include="Images\Edit\pasteSpecial_Enabled.png" />
+    <Resource Include="Images\Edit\Paste_Enabled.png" />
+    <Resource Include="Images\Edit\Copy_Enabled.png" />
+    <Resource Include="Images\Edit\Cut_Enabled.png" />
+    <Resource Include="Images\view_left_right.png" />
+    <Resource Include="Images\view_top_bottom.png" />
+    <Resource Include="Images\NewFolder.png" />
+    <Resource Include="Images\Arrows\Down1.png" />
+    <Resource Include="Images\Arrows\Right1.png" />
+    <Resource Include="Images\Arrows\Left1.png" />
+    <Resource Include="Images\Arrows\Up1.png" />
+    <Resource Include="Images\Frame\FrameSequence_Enabled.png" />
+    <Resource Include="Images\Frame\FrameElement_Enabled.png" />
+    <Resource Include="Images\Frame\Frame.png" />
+    <Resource Include="Images\Flow\Flow_Enabled.png" />
+    <Resource Include="Images\folder_cache.png" />
+    <Resource Include="Images\brain.ico" />
+    <Resource Include="Images\Edit\Find.png" />
+    <Resource Include="Images\Commchannel\AdvancedInputView.png" />
+    <Resource Include="Images\Commchannel\AdvancedInputView_Enabled.png" />
+    <Resource Include="Images\Commchannel\dotnet.jpg" />
+    <Resource Include="Images\Asset\AssetItemList_Enabled.png" />
+    <Resource Include="Images\Asset\AssetItemValue_Enabled.png" />
+    <Resource Include="Images\Asset\AssetItemList.png" />
+    <Resource Include="Images\Asset\AssetItemValue.png" />
+    <Content Include="DefaultData\Design_Layout.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DefaultData\Sandbox_Layout.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Icon\Win32ResBlue.res" />
+    <None Include="Images\Icon\Win32ResRed.res" />
+    <None Include="Images\Icon\Win32ResGreen.res" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CharacterEngine\CharacterEngine.csproj">
+      <Project>{C944651B-300A-41A2-B76D-DF305E0E2937}</Project>
+      <Name>CharacterEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Characters\Characters.csproj">
+      <Project>{27E6A73D-BA6B-4DF5-B93A-010D6FD83157}</Project>
+      <Name>Characters</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CmdShell\CmdShell.csproj">
+      <Project>{8FA7FD26-5535-4573-A273-258678C83DBC}</Project>
+      <Name>CmdShell</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CustomImportSupport\CustomConduitSupport.csproj">
+      <Project>{3D466A01-0201-4158-95BA-7C51D2C3A8DC}</Project>
+      <Name>CustomConduitSupport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrameNetSin\FrameNetProvider.csproj">
+      <Project>{F75AC765-2774-40F6-AA6B-EA538BD68055}</Project>
+      <Name>FrameNetProvider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HAB\HAB.csproj">
+      <Project>{2CDD4836-1AC7-47C8-B878-5AF7EA721B2B}</Project>
+      <Name>HAB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lobes\Sensory Interfaces.csproj">
+      <Project>{941A6023-577E-498D-83F0-D0DDE573F8D3}</Project>
+      <Name>Sensory Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NNLFrontEnd\Parser.csproj">
+      <Project>{C0BDE6FB-9270-42B9-AD14-6CC3C915D089}</Project>
+      <Name>Parser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QuerySupport\QuerySupport.csproj">
+      <Project>{0C610E2C-ECC2-4551-AC99-10192F08B85A}</Project>
+      <Name>QuerySupport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tokenizer\Tokenizer.csproj">
+      <Project>{47E9938B-7C5D-48DD-A896-CBB4EF9CE913}</Project>
+      <Name>Tokenizer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VerbNetProvider\VerbNetProvider.csproj">
+      <Project>{D4BA0CF2-728B-4E7B-90AC-2D6A1124C93A}</Project>
+      <Name>VerbNetProvider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WordNetSin\WordNetSin.csproj">
+      <Project>{B88AABCC-F255-4518-9E82-E51FF64C8E0D}</Project>
+      <Name>WordNetSin</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\FindNextHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Redo_Enabled.png" />
+    <Resource Include="Images\Undo_Enabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Play_Enabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Pause_Enabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\NewMindMap.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Step_Enabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Redo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Pause.png" />
+    <Resource Include="Images\Play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Step.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\delete.png" />
+    <Resource Include="Images\delete_Enabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\BringForwardHS.png" />
+    <Resource Include="Images\BringToFrontHS.png" />
+    <Resource Include="Images\DoubleRightArrow_Enabled.png" />
+    <Resource Include="Images\SendBackwardHS.png" />
+    <Resource Include="Images\SendToBackHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\DoubleRightArrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\tablet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Open.png" />
+    <Resource Include="Images\Open_Enabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\DoubleRightArrow2.png" />
+    <Resource Include="Images\DoubleRightArrow2_Enabled.png" />
+    <Resource Include="Images\RightArrow2.png" />
+    <Resource Include="Images\RightArrow2_Enabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\splash\splash blue.jpg" Condition="'$(Configuration)' == 'Release basic'" />
+    <Resource Include="Images\splash\splash blue.jpg" Condition=" '$(Configuration)' == 'Debug basic'" />
+    <Resource Include="Images\splash\splash red.jpg" Condition="'$(Configuration)' == 'Release'" />
+    <Resource Include="Images\splash\splash red.jpg" Condition=" '$(Configuration)' == 'Debug'" />
+    <Resource Include="Images\splash\splash green.jpg" Condition="'$(Configuration)' == 'Release PRO'" />
+    <Resource Include="Images\splash\splash green.jpg" Condition=" '$(Configuration)' == 'Debug PRO'" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\SaveAll_Enabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\SaveAll.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Audio.png" />
+    <Resource Include="Images\Audio_Enabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Expiration.png" />
+    <Resource Include="Images\Expiration_Enabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Sync.png" />
+    <Resource Include="Images\Sync_Enabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ViewCode_Enabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ViewCode.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\New.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\New_Enabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\TextEditing\CheckSpelling.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\TextEditing\Color_fontHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\TextEditing\List_Bullets.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\TextEditing\List_Numbered.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\TextEditing\text_center.png" />
+    <Resource Include="Images\TextEditing\text_left.png" />
+    <Resource Include="Images\TextEditing\text_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\TextEditing\bold.png" />
+    <Resource Include="Images\TextEditing\italic.png" />
+    <Resource Include="Images\TextEditing\underline.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\TextEditing\text_block.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Run.png" />
+    <Resource Include="Images\Run_Enabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\chip.png" />
+    <Resource Include="Images\Frame\Filter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <XliffResource Include="Properties\Resources.qps-ploc.xlf">
+      <Generator>XliffResxGenerator</Generator>
+      <LastGenOutput>Resources.qps-ploc.resx</LastGenOutput>
+    </XliffResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.ResxResources.targets" Label="MultilingualAppToolkit" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <!--<Target Name="AfterBuild" DependsOnTargets="AssignTargetPaths;Compile;ResolveKeySource" Inputs="$(MSBuildAllProjects);@(IntermediateAssembly)" Outputs="$(OutputPath)$(_SGenDllName)" Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">-->
+  <!-- Delete the file because I can't figure out how to force the SGen task. -->
+  <!--<Delete Files="$(TargetDir)$(TargetName).XmlSerializers.dll" ContinueOnError="true" />
+    <SGen BuildAssemblyName="$(TargetFileName)" BuildAssemblyPath="$(OutputPath)" References="@(ReferencePath)" ShouldGenerateSerializer="true" UseProxyTypes="false" KeyContainer="$(KeyContainerName)" KeyFile="$(KeyOriginatorFile)" DelaySign="$(DelaySign)" ToolPath="$(SGenToolPath)">
+      <Output TaskParameter="SerializationAssembly" ItemName="SerializationAssembly" />
+    </SGen>
+  </Target>-->
+</Project>

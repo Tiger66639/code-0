@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This is the DTD for the luxxx.xml files, which contain information
+about the annotation objects: lexunit-annotation, subcorpora, annotationSets,
+layers, etc.  Its format can be summarized as:
+
+<lexunit-annotation>
+ <definition>
+ <lexemes>
+	<lexeme>*
+ <subcorpus>*
+   <annotationSet>*
+      <sentence>
+        <text>
+        <parts-of-speech>*
+          <pos>*
+      <layers>
+        <layer>*
+          <labels>
+            <label>*
+-->
+
+
+
+
+<!ELEMENT lexunit-annotation (definition, lexemes, subcorpus*)> 
+<!ATTLIST lexunit-annotation ID NMTOKEN #REQUIRED
+            name CDATA #REQUIRED
+            frame NMTOKENS #REQUIRED
+            pos (N | V | A | ADV | PREP | NUM) #REQUIRED
+            incorporatedFE CDATA #REQUIRED>
+
+<!ELEMENT definition (#PCDATA)>
+
+<!ELEMENT lexemes (lexeme*)>
+<!ELEMENT lexeme (#PCDATA)>
+<!ATTLIST lexeme
+			ID NMTOKEN #REQUIRED
+			pos CDATA #REQUIRED
+			breakBefore (true | false) #REQUIRED
+			headword (true | false) #REQUIRED>
+
+<!ELEMENT subcorpus (annotationSet*)>
+<!ATTLIST subcorpus
+			name CDATA #REQUIRED>
+
+<!ELEMENT annotationSet (layers?, sentence?)>
+<!ATTLIST annotationSet
+			ID NMTOKEN #REQUIRED
+			status CDATA #REQUIRED>
+
+<!ELEMENT sentence (text, parts-of-speech*)>
+<!ATTLIST sentence
+			ID NMTOKEN #REQUIRED
+			aPos NMTOKEN #IMPLIED>
+
+<!ELEMENT text (#PCDATA)>
+
+<!ELEMENT parts-of-speech (pos*)>
+<!ATTLIST parts-of-speech
+			type CDATA #REQUIRED>
+
+<!ELEMENT pos EMPTY>
+<!ATTLIST pos
+			name CDATA #REQUIRED
+			start NMTOKEN #IMPLIED
+			end NMTOKEN #IMPLIED>
+
+<!ELEMENT layers (layer*)>
+<!ELEMENT layer (labels?)>
+<!ATTLIST layer 
+			ID NMTOKEN #REQUIRED
+            name CDATA #REQUIRED
+			rank NMTOKEN #IMPLIED>
+
+<!ELEMENT labels (label*)>
+<!ELEMENT label EMPTY>
+<!ATTLIST label
+			ID NMTOKEN #REQUIRED
+			name CDATA #REQUIRED
+			start NMTOKEN #IMPLIED
+			end NMTOKEN #IMPLIED
+			itype CDATA #IMPLIED>

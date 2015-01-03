@@ -1,0 +1,88 @@
+﻿<Window x:Class="JaStDev.HAB.Designer.DlgSelectDeletionMethod"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Delete special"
+        x:Name="this"
+        ShowInTaskbar="False"
+        WindowState="Normal"
+        WindowStyle="ToolWindow"
+        WindowStartupLocation="CenterOwner"
+        SizeToContent="WidthAndHeight">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="DialogSettings.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Bottom">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <Button IsDefault="True"
+                        Click="OnClickOk">
+                    Ok
+                    <Button.ToolTip>
+                        Close the window and delete the selected items.
+                    </Button.ToolTip>
+                </Button>
+                <Button IsCancel="True">
+                    Cancel
+                    <Button.ToolTip>
+                        Cancel the operation close the window.
+                    </Button.ToolTip>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+        <GroupBox DockPanel.Dock="Top"
+                  Header="Deletion method"
+                  ToolTip="Specify what should happen with the selected items.">
+            <StackPanel>
+                <RadioButton
+                    ToolTip="Only remove the selected items from the editor, leave the actual neuron in the network."
+                    x:Name="BtnRemove"
+                    Checked="DeleteGroup_Checked">
+                    Remove
+                </RadioButton>
+                <RadioButton
+                    ToolTip="Permanently delete the neurons from the network if they are no longer clustered or linked to by another neuron (they may still have children or link to other neurons)"
+                    x:Name="BtnDeleteNoRef"
+                    Checked="DeleteGroup_Checked">
+                    Delete when no longer referenced
+                </RadioButton>
+                <RadioButton
+                    ToolTip="Permanently delete the selected neurons from the network (even if the neurons are still used by a cluster or linked to by other neurons)."
+                    Checked="DeleteGroup_Checked"
+                    x:Name="BtnDelete"
+                    IsChecked="True">
+                    Delete
+                </RadioButton>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="Branch handling"
+                  ToolTip="Specify what should happen with children and linked-to items of the deleted neurons."
+                  x:Name="GrpSub">
+            <StackPanel>
+                <RadioButton ToolTip="Don't do anything with them, leave them in the network."
+                             Checked="SubGroup_Checked"
+                             x:Name="BtnNothing"
+                             IsChecked="True">
+                    Don't do anything
+                </RadioButton>
+                <RadioButton
+                    ToolTip="Permanently delete the neurons from the network if they are no longer clustered or linked to by another neuron (they may still have children or link to other neurons)"
+                    x:Name="BtnSubDeleteNoRef"
+                    Checked="SubGroup_Checked">
+                    Delete when no longer referenced
+                </RadioButton>
+                <RadioButton
+                    ToolTip="Permanently delete the neurons from the network, even if they are still referenced (references will automatically be removed)."
+                    x:Name="BtnSubDelete"
+                    Checked="SubGroup_Checked">
+                    Delete
+                </RadioButton>
+            </StackPanel>
+        </GroupBox>
+
+    </DockPanel>
+</Window>

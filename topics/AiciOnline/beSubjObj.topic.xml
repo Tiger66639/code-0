@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>beSubjObj</Name>
+  <Rules>
+    <Rule>
+      <Name>BeSubjObj</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^be:verb.be ~subject ~object</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals>
+        <Conditional>
+          <Condition>
+            <Expression>$result:IsaOf(#bot.mem.obj.val) == true || #bot.mem.obj.val:IsaOf($result) == true</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>yes, #bot.mem.who.inv $be:conjugate(#bot.mem.who.val) #bot.mem.obj.inv\.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+        <Conditional>
+          <Condition>
+            <Expression>$result &amp;&amp; #bot.mem.attrib.val</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>No, #bot.mem.who.inv $be:conjugate(#bot.mem.who.val) #bot.mem.obj.FrontInv $result\.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+      </Conditionals>
+      <Outputs>
+        <Output>
+          <Expression>I don't know if #bot.mem.who.inv $be:conjugate(#bot.mem.who.val) #bot.mem.obj.inv\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>$result = #bot.mem.who.val.(#bot.mem.attrib.val);
+</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>BeSubjVerbObject</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^be:verb.be ~subject ^v:verb  ~object</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals>
+        <Conditional>
+          <Condition>
+            <Expression>#bot.mem.who.val.($v).(#bot.mem.obj.val):IsNot == true</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>No, #bot.mem.who.inv ^verb.be:conjugate(#bot.mem.who.val) not $v #bot.mem.obj.inv\.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+        <Conditional>
+          <Condition>
+            <Expression>#bot.mem.who.val.($v).(#bot.mem.obj.val)</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>Yep, #bot.mem.who.inv ^verb.be:conjugate(#bot.mem.who.val) $v #bot.mem.obj.inv\.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+            <Output>
+              <Expression>Yes, I believe #bot.mem.who.inv ^verb.be:conjugate(#bot.mem.who.val) $v #bot.mem.obj.inv\.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+      </Conditionals>
+      <Outputs />
+      <IsOutputSequenced />
+    </Rule>
+  </Rules>
+</Topic>

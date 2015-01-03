@@ -1,0 +1,44 @@
+﻿@model Aici.Models.ChatInteraction
+
+<script type="text/javascript">
+
+
+   function ClearInputAndFocus() {
+      toBottom();
+      var objDiv = document.getElementById("Input");
+      objDiv.focus();
+      @if(Model.SyncWith == "CT")
+      {
+         <text>
+         //PlayText("@Model.LastOutput");
+         </text>
+      }
+   }
+
+</script>
+
+<div  id="DivLogView">
+    @Html.Partial("LogView")
+</div>
+ @* don't render the form and input if the user has created a custom page. *@
+ @if (Model.UseCustomPage == false)   
+ {
+    using (Ajax.BeginForm("Send", HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString(), new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "SendContainer", OnSuccess = "ClearInputAndFocus", OnComplete = "toBottom", InsertionMode = InsertionMode.Replace }))
+   {
+      @Html.ValidationSummary(true)
+     <div class="InputWrapper">
+         <input class="chatbotinput" id="Input" name="Input" type="text" value="" autocomplete="off" />
+     </div>
+     <input class="chatbotsendbutton" type="submit" value="Send" />
+   }
+ }
+ @*<div id="audio"></div>  *@
+
+
+ @if (string.IsNullOrEmpty(Model.LastOutput) == false)
+ {
+ @*<script>
+     speak("@Model.LastOutput ");
+ </script>*@
+ }
+

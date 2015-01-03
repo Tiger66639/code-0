@@ -1,0 +1,250 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.Test.TestCaseView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls"
+             xmlns:cf="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+             xmlns:dd="clr-namespace:DnD"
+             xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+             Background="Transparent"
+             Focusable="True"
+             IsHitTestVisible="True">
+    <UserControl.CommandBindings>
+        <CommandBinding Command="self:App.AddTestCaseItemCmd" CanExecute="AddSibling_CanExecute"
+                        Executed="AddSibling_Executed" />
+        <CommandBinding Command="self:App.AddChildTestCaseItemCmd" CanExecute="AdddChild_CanExecute"
+                        Executed="AdddChild_Executed" />
+        <CommandBinding Command="self:App.StopTestCaseCmd" CanExecute="Stop_CanExecute" Executed="Stop_Executed" />
+        <CommandBinding Command="self:App.RunTestCaseCmd" CanExecute="Run_CanExecute" Executed="Run_Executed" />
+        <CommandBinding Command="Delete" CanExecute="Delete_CanExecute" Executed="Delete_Executed" />
+    </UserControl.CommandBindings>
+    <UserControl.InputBindings>
+        <KeyBinding Command="self:App.AddTestCaseItemCmd" Modifiers="Control" Key="I" />
+        <KeyBinding Command="self:App.AddChildTestCaseItemCmd" Modifiers="Shift+Control" Key="I" />
+        <KeyBinding Command="Delete" Key="Del" />
+    </UserControl.InputBindings>
+    <DockPanel>
+        <Expander Style="{StaticResource SimpleExpandDownStyle}"
+                  Focusable="False"
+                  IsExpanded="{Binding Source={x:Static self:Properties.Settings.Default}, Path=ToolbarExpandedTestCases, Mode=TwoWay}"
+                  DockPanel.Dock="Top">
+            <ToolBar>
+                <Button ToolTip="Add a new child test (Shft+Ctrl+I)"
+                        x:Name="BtnAddSub"
+                        Command="self:App.AddChildTestCaseItemCmd"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    Sibling
+                </Button>
+                <Button ToolTip="Add a new sibling test (Ctrl+I)"
+                        x:Name="BtnAddSibling"
+                        Command="self:App.AddTestCaseItemCmd"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    Child
+                </Button>
+                <Separator />
+                <Button ToolTip="Delete the selected item (del)"
+                        x:Name="BtnDelete"
+                        Command="Delete"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    Delete
+                </Button>
+                <Separator />
+                <ComboBox ItemsSource="{Binding Path=TextChannels}"
+                          SelectedItem="{Binding Path=RunOn}"
+                          ItemTemplate="{StaticResource TestCaseTextChannelTemplate}"
+                          ToolTip="Select the Text sensory interface to run the tests on."
+                          MinWidth="120" />
+                <Button ToolTip="Run the testcase"
+                        x:Name="BtnRun"
+                        Command="self:App.RunTestCaseCmd"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    Run
+                </Button>
+                <Button ToolTip="Stop running the testcase"
+                        x:Name="BtnStop"
+                        Command="self:App.StopTestCaseCmd"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    Stop
+                </Button>
+            </ToolBar>
+        </Expander>
+        <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20" />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ScrollBar Grid.Column="0"
+                       Grid.Row="2"
+                       x:Name="ScrollHor"
+                       Value="{Binding Path=HorScrollPos, Mode=TwoWay}"
+                       Minimum="0"
+                       Maximum="{Binding ElementName=TestCasePanel, Path=HorizontalMax, Mode=OneWay}"
+                       ViewportSize="{Binding ElementName=TestCasePanel, Path=ActualWidth}"
+                       SmallChange="10"
+                       LargeChange="{Binding ElementName=TestCasePanel, Path=ActualWidth}"
+                       Orientation="Horizontal"
+                       HorizontalAlignment="Stretch"
+                       Visibility="{Binding ElementName=TestCasePanel, Path=HorBarVisibility}" />
+            <ScrollBar Grid.Column="1"
+                       Grid.Row="0"
+                       Grid.RowSpan="2"
+                       x:Name="ScrollVer"
+                       Value="{Binding Path=VerScrollPos, Mode=TwoWay}"
+                       Minimum="0"
+                       ViewportSize="{Binding ElementName=TestCasePanel, Path=VerViewportSize}"
+                       SmallChange="1"
+                       LargeChange="{Binding ElementName=TestCasePanel, Path=VerLargeChange}"
+                       Maximum="{Binding ElementName=TestCasePanel, Path=VerticalMax, Mode=OneWay}"
+                       Orientation="Vertical"
+                       VerticalAlignment="Stretch"
+                       Visibility="{Binding ElementName=TestCasePanel, Path=VerBarVisibility}" />
+
+            <Grid HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{Binding Path=IsEnabledWidth}" />
+                    <ColumnDefinition Width="{Binding Path=TestWidth}" />
+                    <ColumnDefinition Width="{Binding Path=VerifyWidth}" />
+                    <ColumnDefinition Width="{Binding Path=ResultWidth}" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+
+                <Border Style="{StaticResource AssetHeaderBorderStyle}"
+                        ToolTip="Test details and input string">
+                    <Grid>
+                        <TextBlock Style="{StaticResource AssetHeaderTextStyle}">Enabled</TextBlock>
+                        <Thumb Style="{StaticResource AssetHeaderColThumbStyle}"
+                               DragDelta="ThumbIsEnabled_DragDelta" />
+                    </Grid>
+                </Border>
+
+                <Border Grid.Column="1"
+                        Style="{StaticResource AssetHeaderBorderStyle}"
+                        ToolTip="The input string that needs to be sent to the network.">
+                    <Grid>
+                        <TextBlock Style="{StaticResource AssetHeaderTextStyle}">Test</TextBlock>
+                        <Thumb Style="{StaticResource AssetHeaderColThumbStyle}"
+                               DragDelta="ThumbTest_DragDelta" />
+                    </Grid>
+                </Border>
+
+                <Border Grid.Column="2"
+                        Style="{StaticResource AssetHeaderBorderStyle}"
+                        ToolTip="The regex (.net dialect) to verify the output against.">
+                    <Grid>
+                        <TextBlock Style="{StaticResource AssetHeaderTextStyle}">Verify</TextBlock>
+                        <Thumb Style="{StaticResource AssetHeaderColThumbStyle}"
+                               DragDelta="ThumbVerify_DragDelta" />
+                    </Grid>
+                </Border>
+
+                <Border Grid.Column="3"
+                        Style="{StaticResource AssetHeaderBorderStyle}"
+                        ToolTip="The value that was returned.">
+                    <Grid>
+                        <TextBlock Style="{StaticResource AssetHeaderTextStyle}">Result</TextBlock>
+                        <Thumb Style="{StaticResource AssetHeaderColThumbStyle}"
+                               DragDelta="ThumbResult_DragDelta" />
+                    </Grid>
+                </Border>
+
+
+                <Border Grid.Column="4"
+                        Style="{StaticResource AssetHeaderBorderStyle}"
+                        ToolTip="Information about running the test: Pass-Fail, Run status, duration and the number of processors used.">
+                    <TextBlock Style="{StaticResource AssetHeaderTextStyle}">Process info</TextBlock>
+                </Border>
+            </Grid>
+
+            <AdornerDecorator ClipToBounds="True"
+                              Grid.Row="1">
+                <Ctrls:TreeViewPanel HorizontalAlignment="Stretch"
+                                     VerticalAlignment="Stretch"
+                                     Background="White"
+                                     FallbackValue="Loading..."
+                                     ItemsSource="{Binding }"
+                                     ItemContainerStyle="{StaticResource TrvPanelItemTestCaseItemStyle}"
+                                     x:Name="TestCasePanel"
+                                     ClipToBounds="True"
+                                     HorizontalOffset="{Binding Path=HorScrollPos, Mode=TwoWay}"
+                                     VerticalOffset="{Binding Path=VerScrollPos, Mode=TwoWay}"
+                                     Ctrls:TiltWheelProvider.TiltWheel="TestCasePanel_TiltWheel"
+                                     Focusable="True"
+                                     MouseDown="TestCasePanel_MouseDown">
+                    <Ctrls:TreeViewPanel.ItemTemplate>
+                        <!--We put this inline for the 'loaded' event-->
+                        <DataTemplate>
+                            <Border Background="Transparent"
+                                    Padding="0"
+                                    BorderThickness="0,0,0,1"
+                                    BorderBrush="LightGray"
+                                    Loaded="TestCaseItem_Loaded"
+                                    DataContextChanged="TestCaseItem_DataContextChanged">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="{Binding Path=IsEnabledWidth, Mode=OneWay}" />
+                                        <ColumnDefinition Width="{Binding Path=TestWidth, Mode=OneWay}" />
+                                        <ColumnDefinition Width="{Binding Path=VerifyWidth, Mode=OneWay}" />
+                                        <ColumnDefinition Width="{Binding Path=ResultWidth, Mode=OneWay}" />
+                                        <ColumnDefinition Width="{Binding Path=RunWidth, Mode=OneWay}" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <CheckBox IsChecked="{Binding Path=IsEnabled}"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Center" />
+
+                                    <TextBox Grid.Column="1"
+                                             Text="{Binding Path=InputString, UpdateSourceTrigger=PropertyChanged}"
+                                             HorizontalAlignment="Stretch"
+                                             Style="{StaticResource VisibleOnMouseOverTextBox}"
+                                             GotFocus="TextBox_GotFocus"
+                                             cf:FocusManager.IsFocused="{Binding Path=NeedsFocus}" />
+
+                                    <TextBox Grid.Column="2"
+                                             Text="{Binding Path=ValidationRegex, UpdateSourceTrigger=PropertyChanged}"
+                                             HorizontalAlignment="Stretch"
+                                             GotFocus="TextBox_GotFocus"
+                                             Style="{StaticResource VisibleOnMouseOverTextBox}" />
+
+                                    <TextBox Grid.Column="3"
+                                             Text="{Binding Path=LastResult.Result, Mode=OneWay}"
+                                             HorizontalAlignment="Left"
+                                             BorderThickness="0"
+                                             IsReadOnly="True" />
+
+                                    <StackPanel Orientation="Horizontal"
+                                                Grid.Column="4">
+                                        <ToggleButton IsChecked="{Binding Path=IsRunning}"
+                                                      Margin="4,0,4,0"
+                                                      Style="{StaticResource ToggleIndicator}"
+                                                      BorderBrush="Blue"
+                                                      Background="Transparent"
+                                                      Foreground="Green"
+                                                      ToolTip="When filled, this test is currently running." />
+                                        <ToggleButton
+                                            IsChecked="{Binding Path=LastResult.IsPassed, Mode=OneWay, FallbackValue={x:Null}}"
+                                            Style="{StaticResource PassFailIndicator}"
+                                            ToolTip="Pass-fail status of the last run for this test"
+                                            Margin="0,0,4,0" />
+
+                                        <TextBlock Text="{Binding Path=LastResult.Duration}"
+                                                   HorizontalAlignment="Left"
+                                                   ToolTip="The duration of the test." />
+                                        <TextBlock Text="{Binding Path=LastResult.TotalThreads, StringFormat=; ({0})}"
+                                                   HorizontalAlignment="Left"
+                                                   ToolTip="The nr of processors use to calculate the result." />
+
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </Ctrls:TreeViewPanel.ItemTemplate>
+                </Ctrls:TreeViewPanel>
+            </AdornerDecorator>
+        </Grid>
+    </DockPanel>
+</UserControl>

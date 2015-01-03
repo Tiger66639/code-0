@@ -1,0 +1,64 @@
+﻿<Window x:Class="JaStDev.HAB.Designer.DlgBuildThesaurus"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:HAB="clr-namespace:JaStDev.HAB;assembly=JaStDev.HabCore"
+        xmlns:prop="clr-namespace:JaStDev.HAB.Designer.Properties"
+        Title="Fix broken references"
+        x:Name="this"
+        Width="460"
+        WindowStyle="SingleBorderWindow"
+        SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="DialogSettings.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Bottom">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <Button IsDefault="True"
+                        x:Name="BtnStartStop"
+                        Click="OnClickStart">
+                    Start
+                    <Button.ToolTip>
+                        Start the process.
+                    </Button.ToolTip>
+                </Button>
+                <Button x:Name="BtnOk"
+                        Click="BtnOk_Click"
+                        IsEnabled="False">
+                    Ok
+                    <Button.ToolTip>
+                        Store the new thesaurus in the project.
+                    </Button.ToolTip>
+                </Button>
+                <Button IsCancel="True"
+                        x:Name="BtnClose"
+                        Click="BtnClose_Click">
+                    Cancel
+                    <Button.ToolTip>
+                        Cancel the operation and keep the existing thesaurus.
+                    </Button.ToolTip>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel DockPanel.Dock="Bottom">
+            <TextBlock Text="{Binding Path=CurrentWordIndex, StringFormat=Processing {0}}"
+                       HorizontalAlignment="Center" />
+            <ProgressBar Margin="8,8,8,0"
+                         Minimum="0"
+                         Height="16"
+                         Value="{Binding Path=CurrentWordIndex}"
+                         Maximum="{Binding Path=TotalWords}" />
+            <CheckBox IsChecked="{Binding Path=IncludeAllRoots}"
+                      Margin="8,8,8,0">
+                Objects don't need children to be a root.
+            </CheckBox>
+        </StackPanel>
+    </DockPanel>
+</Window>

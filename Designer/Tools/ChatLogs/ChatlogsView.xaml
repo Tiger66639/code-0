@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.ChatlogsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:Ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls">
+    <UserControl.CommandBindings>
+        <CommandBinding Command="Delete" CanExecute="Delete_CanExecute" Executed="Delete_Executed" />
+    </UserControl.CommandBindings>
+    <UserControl.Resources>
+        <ContextMenu x:Key="MnuLogs">
+            <MenuItem Header="Delete" Command="Delete" />
+            <MenuItem Header="Delete all" Click="DeleteAll_Click" />
+        </ContextMenu>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.3*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <ListBox Name="LstChatLogs"
+                 ContextMenu="{StaticResource MnuLogs}"
+                 ItemsSource="{Binding Path=Logs}"
+                 SelectedItem="{Binding Path=SelectedItem, Mode=OneWay}"
+                 DisplayMemberPath="Name"
+                 BorderThickness="0">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <EventSetter Event="Selected" Handler="LstChatLogs_Selected" />
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
+        <GridSplitter Grid.Column="1"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Stretch"
+                      ShowsPreview="True"
+                      Width="6" />
+        <Ctrls:ChatBotDialogCtrl ItemsSource="{Binding Path=SelectedItem.ConversationLog, Mode=OneWay}"
+                                 Grid.Column="2"
+                                 VerticalScrollBarVisibility="Auto"
+                                 IsReadOnly="True"
+                                 BorderThickness="0" />
+    </Grid>
+</UserControl>

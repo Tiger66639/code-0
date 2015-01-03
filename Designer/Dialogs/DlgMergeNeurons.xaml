@@ -1,0 +1,81 @@
+﻿<Window x:Class="JaStDev.HAB.Designer.DlgMergeNeurons"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Merge neurons"
+        x:Name="this"
+        Width="320"
+        Height="340"
+        WindowStyle="SingleBorderWindow"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="DialogSettings.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <DockPanel>
+
+        <GroupBox Header="Change"
+                  Style="{StaticResource DlgStyleGrpBoxTop}"
+                  DockPanel.Dock="Top">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0">From:</TextBlock>
+                <TextBox Grid.Column="1"
+                         ToolTip="The id of the neuron that needs to be merged"
+                         x:Name="TxtFrom" />
+                <TextBlock Grid.Column="2">Into:</TextBlock>
+                <TextBox Grid.Column="3"
+                         ToolTip="The id of the neuron to merge the pervious into"
+                         x:Name="TxtTo" />
+            </Grid>
+        </GroupBox>
+
+        <StackPanel HorizontalAlignment="Right"
+                    Orientation="Horizontal"
+                    DockPanel.Dock="Bottom">
+            <Button IsDefault="True"
+                    x:Name="BtnStart"
+                    Click="OnClickStart">
+                Start
+                <Button.ToolTip>
+                    Start the process.
+                </Button.ToolTip>
+            </Button>
+            <Button IsCancel="True"
+                    x:Name="BtnClose">
+                Close
+                <Button.ToolTip>
+                    Close the window.
+                </Button.ToolTip>
+            </Button>
+        </StackPanel>
+
+        <ProgressBar Margin="8,8,8,0"
+                     Minimum="0"
+                     Height="16"
+                     Value="{Binding ElementName=this, Path=CurrentPos}"
+                     Maximum="{Binding ElementName=this, Path=Maximum}"
+                     DockPanel.Dock="Bottom" />
+
+        <TextBlock Text="{Binding ElementName=this, Path=CurrentPos, StringFormat=Processing {0}.}"
+                   HorizontalAlignment="Center"
+                   Margin="8,0,0,0"
+                   DockPanel.Dock="Bottom" />
+
+        <GroupBox Header="Errors"
+                  Style="{StaticResource DlgStyleGrpBoxTop}">
+            <ListBox ItemsSource="{Binding ElementName=this, Path=Errors}"
+                     BorderThickness="0"
+                     Background="Transparent" />
+        </GroupBox>
+
+    </DockPanel>
+</Window>

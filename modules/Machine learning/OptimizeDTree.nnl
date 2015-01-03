@@ -1,0 +1,75 @@
+class ML
+{  
+
+   //Provides functionality to build a series of decision trees, each with a different number
+   //and order of variables. This forest can then be used to find the best performing tree(s)
+   //and prune the rest, so that the remaining trees can be used with the DTree class.
+   class OptimizedDTree
+   {
+      //the entry point of the forest. Use this to save a new or reload a previously created forest for testing.
+      var Root;
+      
+      //place all the indexes of the variables that contain continuous intege or double values. This allows the forest to treat them correctly.
+      int[] ContinuousValues;
+      
+      //adds the specified list of values to the trees for training (building the decision tree).
+      Train(var values, var result)
+      {
+         if(count(Root) == 0)
+            BuildRoot(data);
+         foreach(var iTree in GetChildren(Root))
+            AddTrainData(data, result, iTree);
+      }
+      
+      //pushes the specified list of values through the decision tree and returns the list of trees
+      //that returned the correct result.
+      Test(var values): var
+      {
+      }
+      
+      
+      
+      //gets automatically called when the root object needs to be created. This is a cluster that contains an intneuron for each variable that is used as a start point.
+      //builds a cluster for each tree. each cluster gets a serires of ints, which represent the indexes of the variables to use. The sequence of the indexes determins
+      //the sequene of the variables for the tree.
+      BuildRoot(var data)
+      {
+         int iDataCount = count(data);
+         int iCurPos;
+         var iTrees, iTree, iAllVars, iSelectedVars, iFound, iVar;
+         
+         Sort(ContinuousValues);
+         int iCurContValue;                                                   //for walking through the list of continous values, so we can set things up correctly.
+         while(iCurPos < iDataCount)
+         {
+            var iNew = new(IntNeuron, iCurPos);
+            Add(iAllVars, iNew);                                              //create a new intNeuron for each datapoint and store it in a list. This will be used to randomly select items from.
+            if(count(ContinuousValues) > iCurContValue && ContinuousValues[iCurContValue] == iCurPos) //check if the column is labeled as a continuous value. If this is the case, the data points need to be converted to 'bigger', 'smaller' or equal, for which we need a cutoff value.
+               AddLink(iNew, data[iCurPos], Cutoff);                          //this means that at least 1 record will be 'equal to'.   
+            iCurPos++;
+         }
+        
+         Root = MakeCluster(DTreeRoot);                                            //create the root, so we can already link to it.
+         int iCount = 0;
+         foreach(iVar in iAllVars)
+         {
+            iSelectedVars = iVar;                                                //start a new list
+            iTree = MakeCluster(DTreeRoot, iSelectedVars);
+            Add(iTrees, iTree);
+            for(int i = iCount+1; i < Count(iAllVars); i++)
+            {
+               Add(iSelectedVars, iAllVars[i]);
+               iTree = MakeCluster(DTreeRoot, iSelectedVars);
+               Add(iTrees, iTree);
+            }
+            iCount++;
+         }
+         
+         AddChild(Root, iTrees);                                                            //stores the trees in the root.
+         iAllVars = MakeCluster('indexes' , iAllVars);                                      //we also store a list of all the variables, so we can quickly get the objects when closing the training data.
+         AddLink(iAllVars, root, 'indexes');                                                 //and hook up the list of variables to the tree, so it can easily be found again.
+      }
+      
+      
+   }
+}

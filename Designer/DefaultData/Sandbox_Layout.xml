@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<LayoutRoot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <RootPanel Orientation="Vertical">
+    <LayoutPanel Orientation="Horizontal" DockHeight="1.35294117647059*">
+      <LayoutAnchorablePane Id="e4077a31-7646-423a-8dcd-3663c8d39b66" DockWidth="228" FloatingWidth="240"
+                            FloatingHeight="533" FloatingLeft="397" FloatingTop="496">
+        <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Toolbox" ContentId="Toolbox"
+                          FloatingLeft="491" FloatingTop="502" FloatingWidth="240" FloatingHeight="533"
+                          LastActivationTimeStamp="01/15/2013 14:32:58" />
+        <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Explorer" ContentId="Explorer"
+                          FloatingLeft="485" FloatingTop="505" FloatingWidth="240" FloatingHeight="533"
+                          LastActivationTimeStamp="01/15/2013 14:32:51" />
+        <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Thesaurus" ContentId="Thesaurus"
+                          FloatingLeft="397" FloatingTop="496" FloatingWidth="240" FloatingHeight="533"
+                          LastActivationTimeStamp="01/15/2013 14:32:44" />
+        <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Project" IsSelected="True"
+                          ContentId="Project" FloatingLeft="571" FloatingTop="753" FloatingWidth="240"
+                          FloatingHeight="533" LastActivationTimeStamp="01/15/2013 14:32:59"
+                          PreviousContainerId="e4077a31-7646-423a-8dcd-3663c8d39b66" PreviousContainerIndex="1" />
+      </LayoutAnchorablePane>
+      <LayoutDocumentPane />
+    </LayoutPanel>
+    <LayoutAnchorablePaneGroup Orientation="Horizontal" DockWidth="240" DockHeight="170.5" FloatingWidth="240"
+                               FloatingHeight="533" FloatingLeft="827" FloatingTop="750">
+      <LayoutAnchorablePane DockHeight="170.5" FloatingWidth="240" FloatingHeight="533" FloatingLeft="827"
+                            FloatingTop="750">
+        <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Log" ContentId="Log" FloatingLeft="827"
+                          FloatingTop="750" FloatingWidth="240" FloatingHeight="533"
+                          LastActivationTimeStamp="01/15/2013 14:33:11" />
+        <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Description" ContentId="Description"
+                          FloatingLeft="827" FloatingTop="750" FloatingWidth="240" FloatingHeight="533" />
+        <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Timers" ContentId="Timers"
+                          FloatingLeft="827" FloatingTop="750" FloatingWidth="240" FloatingHeight="533" />
+        <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Debugger" IsSelected="True"
+                          ContentId="Debugger" FloatingLeft="827" FloatingTop="750" FloatingWidth="240"
+                          FloatingHeight="533" LastActivationTimeStamp="01/15/2013 14:33:18" />
+      </LayoutAnchorablePane>
+    </LayoutAnchorablePaneGroup>
+  </RootPanel>
+  <TopSide />
+  <RightSide />
+  <LeftSide />
+  <BottomSide />
+  <FloatingWindows />
+  <Hidden>
+    <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Neuron profiler" ContentId="MemProfiler"
+                      LastActivationTimeStamp="01/15/2013 14:32:56" />
+    <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Search results" ContentId="SearchResults" />
+  </Hidden>
+</LayoutRoot>

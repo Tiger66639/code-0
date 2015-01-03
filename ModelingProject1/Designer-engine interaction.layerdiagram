@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<layerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="8b1795d7-3a4e-45e6-a64b-8214e0432fac" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/LayerDesigner">
+  <layers>
+    <layer Id="229b733b-ae24-40b9-ab82-624791b4547f" name="Designer">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="568bcdfe-6910-4a7a-9423-22258ac9c879" direction="Forward">
+          <layerMoniker Id="f2896ffb-d70c-4168-8538-fb7b18374d9a" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+      <childLayers>
+        <layer Id="82858e27-a4b0-489a-a3ca-554608f2a22e" name="Tools">
+          <childLayers>
+            <layer Id="3a4da177-3b5d-4e6e-9209-f5cc060e19e7" name="Debugger">
+              <childLayers>
+                <layer Id="f2670c84-06be-487c-9c2b-5246c48767f2" name="Profiler" />
+                <layer Id="dfd0c554-dd5b-48e6-a7cf-d7523fb6f918" name="Processor" />
+              </childLayers>
+            </layer>
+            <layer Id="e8ef6455-eb95-4ac5-8d6b-4415e66809a8" name="Processor" />
+          </childLayers>
+        </layer>
+        <layer Id="3067eb72-b7a8-4607-8886-2289571a91d3" name="Editors &amp; communication channels" />
+        <layer Id="62886f36-cc14-4516-ac70-9312dfaee29d" name="Event system">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="eb55db05-a920-4151-8465-bdb77b14bdb3" direction="Forward">
+              <layerMoniker Id="e28b51a0-4cc1-423c-807f-eafea0b6486c" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+        </layer>
+        <layer Id="ad7de167-4122-4e75-9392-45bfdd851969" name="Collections" />
+        <layer Id="0d19f669-7200-405a-a1dc-d5b0c72c8587" name="Designer data&#xD;&#xA;">
+          <childLayers>
+            <layer Id="2b82ad11-64d3-4cd7-86b2-ce32251665ae" name="Designer table" />
+            <layer Id="c975c22a-3762-4299-8013-85571958af23" name="Designer store" />
+            <layer Id="ed3a23ee-0c4f-4b6d-beec-5dec3680f418" name="NeuronData Dict" />
+          </childLayers>
+        </layer>
+        <layer Id="50444875-39c4-4d54-b5fb-cdd0098e7671" name="Streaming" />
+        <layer Id="6e7c1143-be06-444a-8ca8-770b66fd473f" name="Project managment" />
+      </childLayers>
+    </layer>
+    <layer Id="870e4043-82ef-4f16-a5da-3fa0a35570ad" name="Thread manager" />
+    <layer Id="f2896ffb-d70c-4168-8538-fb7b18374d9a" name="Brain">
+      <childLayers>
+        <layer Id="e28b51a0-4cc1-423c-807f-eafea0b6486c" name="event system" />
+      </childLayers>
+    </layer>
+  </layers>
+</layerModel>

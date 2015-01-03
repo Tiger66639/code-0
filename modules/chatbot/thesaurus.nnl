@@ -1,0 +1,1906 @@
+class Thes
+{
+   using common;
+   using PathCommon;
+
+/*   used as the meaning of a link from one of the pos values to a double, indicating the relative weight of each pos compared to the other ones. 
+     For instance, if a word can be a verb and a noun, the verb is always prefered over the noun (when possible).
+     
+     Also used as the meaning for a link from a result-cluster to an int to pass the value that indicates the maximum weight that has been found, back
+     to the start of the parse. (this is for the pattern matcher).  */
+   Neuron Weight{ }
+   
+   //used to assign the inverted value to another value. This is used to link I with You
+   Neuron Inverted;
+   
+   /* The 'Part of speech' neuron which is used as the meaning for a link from an object (cluster) to a neuron that identifies it's part of speech. */ 
+   neuron Pos : 135{}
+   
+    // Used as the meaning for a link from a neuron to another neuron to indicate that it is a noun.  
+    //the weight for each pos has to be smaller than the weight of a variable, otherwise 1 thes var of type conj will give higher match than thes-var (noun) + regular var.
+   neuron Noun : 83  { Weight: 0.00000001; }
+   neuron Verb: 82   { Weight: 0.00000002; }
+   neuron Adj: 84    { Weight: 0.00000003; }
+   neuron Adv: 85    { Weight: 0.00000004; }
+   neuron Prep: 106  { Weight: 0.00000005; }
+   neuron Interj: 108{ Weight: 0.00000006; }
+   neuron Conj: 107  { Weight: 0.00000007; } 
+  
+   Neuron isa: 1286 {}
+   
+   
+   //this object is used by wordnet to attach a textual meaning to a word.
+   NeuronCluster Wordnet_Meaning(Statics.Object) : 1241 { }
+   //represents the self == the bot.  the link 'InvertPerson' is defined as a function later on in the code.
+   Neuron I: 1016 { Inverted: You; }
+   //represents the person that the bot is talking too.
+   Neuron You: 1017{ }
+   //Identifies a pronoun used in formal situations. For instance, in dutch, there is 'u', 'uw',..
+   Neuron Formal: 1020 {}
+   Neuron female: 1015 {}
+   Neuron other : 1018 {}
+   Neuron male: 1014 {}
+   Neuron it: 1019 {}
+   /*
+     This cluster contains all the person mappings available in the project. Add new person mappings here, so that no code needs to be adjusted.
+    */
+   Cluster Personmappings
+   {
+      this()
+      {
+         plural;   //tries to extract the plural value from the current the path result and stores it in 'next'.         
+         Singular;   //The singular relationship is stored as the reverse of the plural, so check if the current item is the plural of something.    
+         it;
+         other;
+         you;
+         i;
+         female;
+         male;
+         formal;   //Identifies a pronoun used in formal situations. For instance, in dutch, there is 'u', 'uw',..    
+      }
+   }
+   
+   //declares all the known conjugation forms.
+   Cluster AllConjugations
+   {
+      this()
+      {
+         FirstPersonPresent; 
+         SecondPersonPresent; 
+         ThirdPersonPresent; 
+         PluralFirstPresent;
+         pluralsecondpresent; 
+         pluralthirdpresent; 
+         pasttense;
+         presentparticle;
+         pastparticle; 
+         FirstPersonPast;
+         SecondPersonPast;
+         ThirdPersonPast;
+         PluralFirstPast;
+         pluralsecondPast; 
+         pluralthirdPast; 
+         Superlative; 
+         Comparative; 
+         Plural;
+      }
+   }
+   
+   Cluster AllVerbConjugations
+   {
+      this()
+      {
+         FirstPersonPresent; 
+         SecondPersonPresent;
+         ThirdPersonPresent;
+         PluralFirstPresent;
+         pluralsecondpresent;
+         pluralthirdpresent;
+         pasttense;
+         presentparticle;
+         pastparticle;
+         FirstPersonPast;
+         SecondPersonPast;
+         ThirdPersonPast;
+         PluralFirstPast;
+         pluralsecondPast; 
+         pluralthirdPast; 
+      }
+   }
+   
+   
+   // This global is used by the 'End of CheckThesRel' to return the result of the split. 
+   //Global ThesSplitResult(copy);
+   Var getposfor;
+   
+   bind ^ BindThes register UseStatics                                           //let the compiler know that this binding needs to be registered so that it can be used for binding variables by other parts of the system, like output patterns.
+   {
+      var fPosFilter;            //determins the part of speech to filter on.
+      var fRelationship = IsA;         //Determins the relationship to traverse in the thesaurus.   
+      var isacluster;
+      var fToCallAtEnd;           //stores the callback that needs to be used at the end. This allows us to use the same code for both get and set operations) 
+      //starting point for a thes set operation (makes certain that it is done in a blocked call so we can use splits without interfering with the caller.
+      this(var toCall)
+      {
+         waitfor DoBindThesSet(toCall, PatternMatcher.SplitResults, OutputSin);
+      }
+      
+      //a helper function for the thes binding to make the setter functions async.
+      DoBindThesSet(var toCall, var splitResults, var output)
+      {
+         PatternMatcher.SplitResults = splitResults;
+         if (Count(splitResults) > 0)
+         {
+            OutputSin = output;
+            LoadPatternResults();
+         } 
+         BindThes.fToCallAtEnd = Empty.emptycallback;
+         call(toCall);
+      }
+      
+      //starting point for a thes get operation (makes certain that it is done in a blocked call so we can use splits without interfering with the caller.
+      this(var toCall): var
+      {
+         return waitfor DoBindThesGet(toCall, PatternMatcher.SplitResults, OutputSin);
+      }
+      
+      //a helper cluster for the thes binding to make the getter functions async.
+      //note: the result is returned by the split-callback handler
+      DoBindThesGet(var toCall, var splitResults, var output): var
+      {
+         OutputSin = output;
+         var iRelationship = isa;
+         if (Count(splitResults) > 0)
+         {
+            PatternMatcher.splitresults = splitResults;
+            LoadPatternResults();
+         }
+         Split(endofgetthesBindcallback, ref(BindThes.fToCallAtEnd), endofgetthesBindcallback);  //with this split, we prepare the callback in 2 ways: other callers know which one to call + the callback is already set.
+         Call(toCall);
+         AddSplitresult(Statics.ReturnValue);                                             //the result of the call still needs to be added too the split result. This is important in case that there are muliple results + making certain that the result stack doesn't get corrupted.
+      }
+      
+      //makes certain that 'OutputThesPath' only contains 1 item, which is an object./
+      ConvertToObject(var toConv): var
+      {
+         Split(fToCallAtEnd, ref(toConv), toConv);
+         if (GetClusterMeaning(toConv) == Statics.PosGroup)
+            toConv = GetChildrenFiltered(toConv, ref(filtervar), ref((GetClusterMeaning(filtervar) == Statics.Object)));
+         else if(GetClusterMeaning(toConv) != Statics.Object)
+            toConv = GetClustersWithMeaning(toConv, Statics.Object);
+         Split(fToCallAtEnd, ref(toConv), toConv);
+         return toConv;
+      }
+      
+      //returns all  the thes children from 'input' with as text defined in 'value'
+      GetThesChild(var input, var value): var
+      {
+         var iObjects;
+         isacluster = GetFirstOut(input, fRelationship);
+         if (Count(isacluster) > 0)
+            iObjects = GetChildrenFiltered(isacluster, ref(filtervar), ref((((filtervar == value) || ContainsChildren(filtervar, value)) || LinkExists(filtervar, value, Statics.NameOfMember))));
+         if (Count(iObjects) == 0)                                //when no more objects, no more possible values.
+            ExitSolve();
+         return iObjects;
+      }
+      
+      //converts the value to an object, converts any plurals to singular value
+      //and filsters agains the part of speech.
+      GetStartOfThesPath(var value): var
+      {
+         var iObjects;
+         var found = GetFirstIn(value, plural);                         //resolve plurals, can be set at text level. 
+         if (Count(found) > 0)
+            Split(fToCallAtEnd, ref(value), value, found); 
+         var iClusterMeaning = GetClusterMeaning(value);
+         if (iClusterMeaning == Statics.PosGroup)
+            iObjects = GetChildrenFiltered(value, ref(filtervar), ref((GetClusterMeaning(filtervar) == Statics.Object)));
+         else if(iClusterMeaning != statics.Object)
+            iObjects = GetClustersWithMeaning(value, Statics.Object);
+         else
+            iObjects = value;
+         var iToAdd = GetInFiltered(value, ref(filterMeaning), ref(filterFrom), ref(filterMeaning == Statics.NameOfMember && GetClusterMeaning(filterFrom) == Statics.Object ));
+         if(count(iToAdd) > 0)
+            Add(iObjects, iToAdd);     //also need to make certain that we have all 'name of member' related objects   
+         if (Count(iObjects) > 0)
+         {
+            Split(fToCallAtEnd, ref(iObjects), iObjects);
+            found = GetFirstIn(iObjects, plural);                          //after finding the object, check again if there is a plural relatioship to be found.
+            if (Count(found) > 0)
+               iObjects = found;
+         }
+         else
+            ExitSolve();                                                //when no more objects, no more possible values.
+         if (Count(fPosFilter) > 0)
+         {
+            Thes.getposfor = iObjects;
+            var foundpos = Thes.getposofitem();   
+            if (foundpos !Contains fPosFilter)
+               ExitSolve();
+            Clear(ref(fPosFilter));                                  //if we found and matched the pos 1 time, don't need to try it again.
+         }
+         return(iObjects);
+      }
+      
+      //define all the possible root values for the binding + all the operators that may follow the root value
+      {
+         //handles the first item in a thes path. Checks if it is a pos, if so, the pos is stored for further usage.
+         //otherwise, the first items in the thes path are stored.
+         get(var value): var
+         {
+            if (ContainsChildren(Statics.Relationships, value))
+               fRelationship = value;
+            else if(TypeOf(value) == neuron)
+            {
+               if (value != Statics.Empty)   //if 'empty' is specified as pos (thats means 'all'), don't store a pos type.    
+               {
+                  //SetClusterMeaning(thessplitresult, value); 
+                  fPosFilter = value;
+               }
+            }
+            else
+               return GetStartOfThesPath(value);
+            return;                                               //start was a pos or relationship value, so return an empty value.
+         }
+         
+         //makes certain that the value is stored as a child of 'lastPathItem' from input.
+         +=(var input, var value)
+         {
+            split(fToCallAtEnd, ref(input), input);                           //make certain that each input var is unique
+            //when we get here, there must be an input value, othrewise an exitSolve was called.   
+            value = DoThesaurusOperation.ConvertOperandToObject(value);
+            var isaCluster = GetFirstOut(input, fRelationship);
+            if(count(isaCluster) > 0)
+            {
+               if(ContainsChildren(isaCluster, value) == false)
+                  AddChild(isaCluster, value);
+               else
+                  error(input, " Already contains ", value, " as a thes child");
+            }
+            else
+            {
+               isaCluster = MakeCluster(fRelationship, value);
+               AddLink(input, isaCluster, fRelationship);
+            }
+         }
+         
+         
+         //sub paths, like: ^noun.test define how to get and set a value + which operators can come after the getter.
+         . ThesDot
+         {       
+            //returns the the thes child from 'input' with as text defined in 'value'
+            get(var input, var value): var
+            {
+               if(count(input) > 0)                      //could be that the previous part in the path was a pos or relationship indicator
+               {
+                  split(fToCallAtEnd, ref(input), input);                           //make certain that each input var is unique
+                  return GetThesChild(input, value);
+               }
+               else
+                  return GetStartOfThesPath(value);
+            }
+            
+            //makes certain that the value is stored as a child of 'lastPathItem' from input.
+            +=(var input, var value)
+            {  
+               split(fToCallAtEnd, ref(input), input);                           //make certain that each input var is unique
+               //when we get here, there must be an input value, othrewise an exitSolve was called.   
+               value = DoThesaurusOperation.ConvertOperandToObject(value);
+               var isaCluster = GetFirstOut(input, fRelationship);
+               if(count(isaCluster) > 0)
+               {
+                  if(ContainsChildren(isaCluster, value) == false)
+                     AddChild(isaCluster, value);
+                  else
+                     error(input, " Already contains ", value, " as a thes child");
+               }
+               else
+               {
+                  isaCluster = MakeCluster(fRelationship, value);
+                  AddLink(input, isaCluster, fRelationship);
+               }
+            }
+            
+            ==(var left, var right): bool                                     //compare 2 values
+            {
+               return ComparePathValues(left, right);
+            }
+            
+            (ThesDot)
+            (ThesIndex)
+            (ThesOutLink)
+            (ThesFunction)                                     //a reference to thes functions, they may also follow a 'dot. operator. 
+            
+            //the static * selects all
+            *     
+            {
+               get(var input): var
+               {
+                  split(fToCallAtEnd, ref(input), input);                           //make certain that each input var is unique
+                  isacluster = GetFirstOut(input, fRelationship);
+                  var iObjects;
+                  if (Count(isacluster) > 0)
+                     iObjects = GetChildren(isacluster);
+                  if (Count(iObjects) == 0)                                //when no more objects, no more possible values.
+                     ExitSolve();
+                  return iObjects;
+               }
+               
+               (ThesDot)
+               (ThesIndex)
+               (ThesOutLink)
+               (ThesFunction)                                     //a reference to thes functions, they may also follow a 'dot. operator.
+            }
+            
+         }
+         
+         [] ThesIndex
+         {
+            //gets the value at the specified index.
+            get(var input, int index): var
+            {
+               split(fToCallAtEnd, ref(input), input);                           //make certain that each input var is unique
+               var isacluster = GetFirstOut(input, fRelationship);
+               if(ChildCount(isacluster) > index)
+                  return GetChildAt(isacluster,index);
+               else
+               {
+                  error("index out of bounds");   
+                  ExitSolve();
+               }
+            }
+            
+            +=(var input, int index, var value)
+            {
+               split(fToCallAtEnd, ref(input), input);                           //make certain that each input var is unique
+               value = DoThesaurusOperation.ConvertOperandToObject(value);
+               var isaCluster = GetFirstOut(input, fRelationship);
+               if(count(isaCluster) > 0)
+               {
+                  if(ContainsChildren(isaCluster, value) == false)
+                  {
+                     if(ChildCount(isaCluster) < index)
+                        InsertChild(isaCluster, value, index);
+                     else
+                     {
+                        warning("index out of range: can't insert ", value, " into ", input, " at index ", index);
+                        AddChild(isaCluster, value);
+                     }
+                  }   
+                  else
+                     error(input, " Already contains ", value, " as a thes child");
+               }
+               else
+               {
+                  warning("index out of range: can't insert ", value, " into ", input, " at index ", index);
+                  isaCluster = MakeCluster(fRelationship, value);
+                  AddLink(input, isaCluster, fRelationship);
+               }
+            }
+            
+            ==(var left, var right): bool                                     //compare 2 values
+            {
+               return ComparePathValues(left, right);
+            }
+            
+            (ThesDot)
+            (ThesOutLink)
+            (ThesFunction)
+         }
+         
+         //outgoing links in thespaths are used to define conjugation values like 'plural', 'firstPersonPresent',..
+         -> ThesOutLink
+         {
+            //gets the conjugation 
+            get(var input, var outlinkmeaning): var
+            {
+               split(fToCallAtEnd, ref(input), input);                           //make certain that each input var is unique
+               if (Count(outlinkmeaning) > 0)
+                  return GetFirstOut(input, outlinkmeaning);
+               return;                                            //do a return with no value, this will make certain that an empty value is returned.
+            }
+            
+            //assigns a new value to the conjugation.
+            set(var input, var outlinkmeaning, var value) 
+            {
+               split(fToCallAtEnd, ref(input), input);                           //make certain that each input var is unique
+               value = DoThesaurusOperation.ConvertOperandToObject(value);                             //converts the data, found in 'operand', to an object. When there are multiple values in the operand, a compound word is first created.    
+               input = ConvertToObject(input);                           //makes certain that 'OutputThesPath' only contains 1 item, which is an object.    
+               AddLink(input, value, outlinkmeaning);
+            }
+            
+            ==(var left, var right): bool                                     //compare 2 values
+            {
+               return ComparePathValues(left, right);
+            }
+            
+            (ThesDot)
+            (ThesIndex)
+            (ThesOutLink)
+            (ThesFunction)
+         }
+         
+         //all the functions that can be called in a thes path.
+         : ThesFunction                                         //all functions can also be used after a pos value?
+         {
+            //a function can be followed by all other parts.
+            (ThesDot)
+            (ThesIndex)
+            (ThesOutLink)
+            (ThesFunction)
+                  
+            //Gets the immediate thesaurus parent from the input value. the 'isa' relationship is presumed.
+            ThesParent(var input): var
+            {
+               var iRes;
+               foreach(input in input)
+                  add(iRes, GetThesParent(input));
+               return iRes;
+            }
+            
+            //Gets the immediate thesaurus parent from the input value. If no meaning is defined, the 'isa' relationship is presumed.
+            ThesParent(var input, var meaning): var
+            {
+               split(fToCallAtEnd, ref(input), input);
+               return GetThesParent.ForMeaning(input, meaning);
+            }
+         
+            IsRelated(var input, var to, var relationship): bool
+            {
+               split(fToCallAtEnd, ref(input), input); //makes certain that the previous result, which is still a thes cluster, is split up into all of it's children, so that
+               return Search.IsThesRelated(input, to, relationship);
+            }
+            
+            /*
+              Tries to conjugatte the verb to the form that corresponds with the argument. The argument should be 1 item, usually  '#bot.MextMem.who.val'. No attempt is made to try to convert objects to conjugation mappings, all objects are treated as 'it'.
+             */
+            ConjugateVerb(var input, var relativeTo):var
+            {
+               split(fToCallAtEnd, ref(input), input);
+               return Convert.ConjugateVerb(input, relativeTo);
+            }
+            
+            /*
+              Tries to conjugatte the verb to the inverted form that corresponds with the argument (so 'you' becomes 'I'). The argument should be 1 item, usually  '#bot.MextMem.who.val'. No attempt is made to try to convert objects to conjugation mappings, all objects are treated as 'it'.
+            */ 
+            ConjugateInvVerb(var input, var relativeTo): var
+            {  
+               split(fToCallAtEnd, ref(input), input);
+               return Convert.ConjugateVerb.Inv(input, relativeTo);
+            }
+            
+            //returns all the assets that directly link to the input as value. No effort is made to convert the value to object/text/posgroup, only a direct link is used.
+            GetAssetsFromValue(var input): var
+            {
+               split(fToCallAtEnd, ref(input), input);
+               return Search.GetAssetsFromValue(input, ());
+            }
+            
+            //returns all the assets that directly link to the input as value for the specified attribute value. No effort is made to convert the value to object/text/posgroup, only a direct link is used.
+            GetAssetsFromValue(var input, var attribVal): var
+            {
+               split(fToCallAtEnd, ref(input), input);
+               return Search.GetAssetsFromValue(input, attribVal);
+            }
+            
+            //returns all the assets that directly link to the input as value.   No effort is made to convert the value to object/text/posgroup, only a direct link is used.
+            FindAssetsFromValue(var input): var
+            {
+               split(fToCallAtEnd, ref(input), input);
+               return Search.FindAssetsFromValue(input, ());
+            }
+            
+            //returns all the assets that directly link to the input as value for the specified attribute value.  No effort is made to convert the value to object/text/posgroup, only a direct link is used.
+            FindAssetsFromValue(var input, var attribVal): var
+            {
+               split(fToCallAtEnd, ref(input), input);
+               return Search.FindAssetsFromValue(input, attribVal);
+            }
+            
+            //Returns the assets that have items with an attribute specified in the input.
+            AttributeFor(var input): var
+            {
+               split(fToCallAtEnd, ref(input), input);
+               return Search.GetAttributeFor(input);
+            }
+            
+            //the attribute of the input should be calculated. This attribute can be used in an asset relationship. This is done by trying to find a thesaurus node that has a link to itself with the 'attribute' meaning.
+            Attribute(var callbackIn): var
+            {
+               split(fToCallAtEnd, ref(callbackIn), CallbackIn);
+               if(count(callbackIn) > 0)
+                  return waitfor Assets.CalculateAttribute(callbackIn, OutputSin, PatternMatcher.SplitResults);
+               else
+                  return;
+            }
+            //the attribute of the input should be calculated. This attribute can be used in an asset relationship. This is done by trying to find a thesaurus node that has a link to itself with the 'attribute' meaning.
+            //The callback can supply argumetns, which will be used as 'context'. The closer a result matches one of the context values, the higher the weight of the result will be.
+            Attribute(var callbackIn, var context): var
+            {
+               split(fToCallAtEnd, ref(callbackIn), callBackIn);
+               if(count(callbackIn) > 0)
+                  return waitfor Assets.CalculateAttribute.WithContext(callbackIn, OutputSin, PatternMatcher.SplitResults, context);
+               else
+                  return;
+            }
+            
+            //Returns true if the input (which should be a cluster in some form) contains any of the specified arguments as child. The arguments can be objects or text, automatic conversion is done.
+            ContainsChild(var list, var child): bool
+            {
+               return CalculateContainsChild(list, child);
+            }
+            
+            /*
+               Converts the input into an asset, taking into account for 'I', 'you', 'he/she', 'it', 'plural', 'singular', 'male', 'female'. If the input can't be mapped to 'I', you,... it is interpreted as the name of something and will try to find a focused object that has the specified name.
+               I and you are first inverted, so I is interpreted as the user, while 'you' is interpreted as the bot.
+               Input has to be objects, with at least 1 thesaurus parent to perform the mappings.
+                */
+            ObjectToAsset(var input): var
+            {
+               split(fToCallAtEnd, ref(input), input);
+               return Convert.ObjectToAsset(input, ());
+            }
+            
+            /*
+                 Converts the input into an asset, taking into account for 'I', 'you', 'he/she', 'it', 'plural', 'singular', 'male', 'female'. If the input can't be mapped to 'I', you,... it is interpreted as the name of something and will try to find a focused object that has the specified name.
+               I and you are first inverted, so I is interpreted as the user, while 'you' is interpreted as the bot.
+               Input has to be objects, with at least 1 thesaurus parent to perform the mappings.
+                */
+            ObjectToAsset(var input, var context): var
+            {
+               split(fToCallAtEnd, ref(input), input);
+               return Convert.ObjectToAsset(input, context);
+            }
+            
+            //same as ObjectToAsset, for legacy.
+            ResolvePerson(var input): var
+            {
+               split(fToCallAtEnd, ref(input), input);
+               return Convert.ObjectToAsset(input, ());
+            }
+            
+            //same as ObjectToAsset, for legacy.
+            ResolvePerson(var input, var context): var
+            {
+               split(fToCallAtEnd, ref(input), input);
+               return Convert.ObjectToAsset(input, context);
+            }         
+            
+            //inverts I and You
+            InvertPerson(var toInvert): var
+            {
+               split(fToCallAtEnd, ref(toInvert), toInvert);
+               return Convert.InvertPerson(toInvert);
+            }
+            
+            //switches I and he/she 
+            InvertPerson2(var toInvert): var
+            {
+               split(fToCallAtEnd, ref(toInvert), toInvert);
+               return Convert.InvertPerson2(toInvert);
+            }
+            
+            //checks if the item in the argument is a thesaurus child (with the 'is a' relationship) of the path. 
+            IsaOf(var input, var toCheck): bool
+            {
+               split(fToCallAtEnd, ref(input), input);
+               return waitFor Search.IsaOf(input, toCheck);
+            }
+            
+            /* input: an object
+              output: The instruction contained in the object. */
+            GetInstruction(var callbackIn): var
+            {
+               split(fToCallAtEnd, ref(callbackIn), callbackIn);
+               return GetChildrenOfType(callbackin, Statics.Instruction);
+            }
+         }
+      }
+   }
+  
+   
+   /*
+     Gets the part of speech(es) of the input variable.
+   Input: GetPosFor =a textneuron or object for which to get all the possible pos's for (some words can have more then 1 possibillty).
+   return value: 0,1 or more nouns that represent the known part of speeches.
+    */
+   ExpressionsBlock GetPosOfItem
+   {
+      var thesTo;
+      var clusters;
+      var toConvert;
+      statements(): var
+      {
+         if (ContainsLinksOut(getposfor, Pos))     //we do a smal optimisation: many objects have a simle outgoing link, so check for this and return this value when possible. If this is not the case, we always need to find all the objects, we can't just find all the posgroups, cause they don't all have to be defined.    
+            return GetFirstOut(getposfor, Pos);
+         else
+         {
+            var iParents = GetClustersWithMeaning(getPosFor, Statics.PosGroup);     //perhaps the object itself is directly in a posgroup.
+            if(count(iParents) > 0)
+            {
+               var iRes;
+               foreach(iParents in iParents)
+                  Add(iRes, GetFirstOut(iParents, Pos));
+               return iRes;
+            }
+            else                                                              //if not directly in posgroup, do a search up the thesaurus tree and return all the pos values.
+               return WaitFor InternalGetPosOfItem(getPosFor);
+         }   
+      }
+      InternalGetPosOfItem(var getPosFor): var
+      {
+         var found = GetFirstIn(getPosFor, plural);
+         if (Count(found) > 0)
+            Split(EndOfGetPosOfItem, ref(toconvert), found, getPosFor);
+         else
+            toconvert = getPosFor;
+         if (GetClusterMeaning(toconvert) != Statics.Object)
+         {
+            found = GetClustersWithMeaning(toconvert, Statics.PosGroup);
+            if (Count(found) > 0)
+               Add(found, GetClustersFiltered(toconvert, ref(filtervar), ref(((GetClusterMeaning(filtervar) == Statics.Object) && (IsClusteredByAny(filtervar, found) == false)))));
+            else
+            {
+               found = GetClustersWithMeaning(toconvert, Statics.Object);
+               if (Count(found) == 0)
+                  ExitSolve();
+            }
+            Split(EndOfGetPosOfItem, ref(found), found);
+            toconvert = GetFirstIn(found, plural);
+            if (Count(toconvert) > 0)
+               found = toconvert;
+         }
+         else
+         {
+            found = Union(toconvert, GetClustersWithMeaning(toconvert, Statics.PosGroup));
+            Split(EndOfGetPosOfItem, ref(found), found);
+         }
+         var posoffound = GetFirstOut(found, Pos);
+         if (Count(posoffound) > 0)
+            AddSplitResult(posoffound);
+         else if(GetClusterMeaning(found) == Statics.Object)
+         {
+            toconvert = GetClustersWithMeaning(found, Statics.PosGroup);
+            if (Count(toconvert) > 0)
+            {
+               Split(EndOfGetPosOfItem, ref(found), toconvert);
+               posoffound = GetFirstOut(found, Pos);
+               if (Count(posoffound) > 0)
+                  AddSplitResult(posoffound);
+               else
+               {
+                  var thesmeaning = isa;
+                  clusters = GetClustersWithMeaning(found, thesmeaning);
+                  while (Count(clusters) > 0)
+                  {
+                     Split(EndOfGetPosOfItem, ref(thesto), clusters);
+                     thesto = GetFirstIn(thesto, thesmeaning);
+                     posoffound = GetFirstOut(thesto, Pos);
+                     if (Count(posoffound) > 0)
+                     {
+                        AddSplitResult(posoffound);
+                        ExitSolve();
+                     }
+                     else
+                     {
+                        toconvert = GetClustersWithMeaning(thesto, Statics.PosGroup);
+                        if (Count(toconvert) > 0)
+                        {
+                           Split(EndOfGetPosOfItem, ref(found), toconvert);
+                           posoffound = GetFirstOut(found, Pos);
+                           if (Count(posoffound) > 0)
+                           {
+                              AddSplitResult(posoffound);
+                              ExitSolve();
+                           }
+                        }
+                     }
+                     clusters = GetClustersWithMeaning(thesto, thesmeaning);
+                  }
+               }
+            }
+            else
+            {
+               var thesmeaning = isa;
+               clusters = GetClustersWithMeaning(found, thesmeaning);
+               while (Count(clusters) > 0)
+               {
+                  Split(EndOfGetPosOfItem, ref(thesto), clusters);
+                  thesto = GetFirstIn(thesto, thesmeaning);
+                  posoffound = GetFirstOut(thesto, Pos);
+                  if (Count(posoffound) > 0)
+                  {
+                     AddSplitResult(posoffound);
+                     ExitSolve();
+                  }
+                  else
+                  {
+                     toconvert = GetClustersWithMeaning(thesto, Statics.PosGroup);
+                     if (Count(toconvert) > 0)
+                     {
+                        Split(EndOfGetPosOfItem, ref(found), toconvert);
+                        posoffound = GetFirstOut(found, Pos);
+                        if (Count(posoffound) > 0)
+                        {
+                           AddSplitResult(posoffound);
+                           ExitSolve();
+                        }
+                     }
+                  }
+                  clusters = GetClustersWithMeaning(thesto, thesmeaning);
+               }
+            }
+         }
+      }
+      
+      EndOfGetPosOfItem(): var
+      {
+         return GetSplitResults();
+      }
+   }
+   
+     
+   ExpressionsBlock DoThesaurusOperation
+   {
+      Var fOutputThesPathResult;
+      var fOperand;
+      statements(var todo)
+      {
+         var exec = New(neuron);
+         AddLink(exec, todo, DoThesaurusOperation);
+         if (Count(PatternMatcher.SplitResults, OutputSin) > 0)
+            AddInfo(exec, todo, DoThesaurusOperation, PatternMatcher.SplitResults, OutputSin);   //these vars can be empty when importing through the wordnet sin (for contact info).    
+         BlockedSolve(exec);
+      }
+      
+      //makes certain that 'OutputThesPath' only contains 1 item, which is an object./
+      ConvertThespathToObjects()
+      {
+         Split(Empty.emptycallback, ref(fOutputThesPathResult), fOutputThesPathResult);
+         if (GetClusterMeaning(fOutputThesPathResult) == Statics.PosGroup)
+         {
+            fOutputThesPathResult = GetChildrenFiltered(fOutputThesPathResult, ref(filtervar), ref((GetClusterMeaning(filtervar) == Statics.Object)));
+            Split(Empty.emptycallback, ref(fOutputThesPathResult), fOutputThesPathResult);
+         }
+         else if(GetClusterMeaning(fOutputThesPathResult) != Statics.Object)
+         {
+            fOutputThesPathResult = GetClustersWithMeaning(fOutputThesPathResult, Statics.Object);
+            Split(Empty.emptycallback, ref(fOutputThesPathResult), fOutputThesPathResult);
+         }
+      }
+      
+      //converts the data, found in 'operand', to an object. When there are multiple values in the operand, a compound word is first created.
+      ConvertOperandToObject(var toConvert): var
+      {
+         var OperandObjectContent;
+         var iOperandItem;
+         if (Count(toConvert) > 1)
+         {
+            var found;
+            foreach (iOperandItem in toConvert)
+            {
+               switch (GetClusterMeaning(iOperandItem))
+               {
+                  case Statics.CompoundWord: add(ref(OperandObjectContent), GetChildren(iOperandItem));
+                  case Statics.Object:
+                  {
+                     found = GetFirst(GetChildrenFiltered(iOperandItem, ref(filtervar), ref(((TypeOf(filtervar) == textneuron) || (GetClusterMeaning(filtervar) == Statics.CompoundWord)))));
+                     if (GetClusterMeaning(found) == Statics.CompoundWord)
+                        found = GetChildrenOfType(found, textneuron);
+                     add(ref(OperandObjectContent), found);
+                  }
+                  case Statics.PosGroup:
+                  {
+                     found = GetFirst(GetChildrenFiltered(iOperandItem, ref(filtervar), ref(((TypeOf(filtervar) == textneuron) || (GetClusterMeaning(filtervar) == Statics.CompoundWord)))));
+                     if (GetClusterMeaning(found) == Statics.CompoundWord)
+                        found = GetChildrenOfType(found, textneuron);
+                     add(ref(OperandObjectContent), found);
+                  }
+                  case Statics.Argument: add(OperandObjectContent, GetChildren(iOperandItem));                          //an argument list is like a compound.
+                  default: add(ref(OperandObjectContent), iOperandItem);
+               }
+            }
+            iOperandItem = GetCommonParentsFiltered(ref(filtervar), ref(((GetClusterMeaning(filtervar) == Statics.CompoundWord) && (GetChildren(filtervar) == OperandObjectContent))), OperandObjectContent);
+            if (Count(iOperandItem) == 0)
+               iOperandItem = MakeCluster(Statics.CompoundWord, OperandObjectContent);
+            else if(Count(iOperandItem) > 1)
+            {
+               iOperandItem = GetFirst(iOperandItem);
+               Error("Multiple compound/argument found for the same set of words:", OperandObjectContent);
+            }
+            toConvert = MakeCluster(Statics.Object, iOperandItem);
+         }
+         else if(GetClusterMeaning(toConvert) != Statics.Object)
+         {
+            if (GetClusterMeaning(toConvert) == Statics.PosGroup)
+            {
+               toConvert = GetChildrenFiltered(toConvert, ref(filtervar), ref((GetClusterMeaning(filtervar) == Statics.Object)));
+               Split(Empty.emptycallback, ref(toConvert), toConvert);
+            }
+            else
+               toConvert = MakeCluster(Statics.Object, toConvert);
+         }
+         return toConvert;
+      }
+      
+      exec()
+      {
+         Delete(Statics.CurrentFrom);
+         var todo = Statics.CurrentTo;
+         var iOp = GetFirstOut(todo, Statics.Operator);
+         PatternMatcher.SplitResults = GetFirst(Statics.CurrentInfo);
+         if (Count(Statics.CurrentInfo) > 0)
+         {
+            OutputSin = GetLast(Statics.CurrentInfo);
+            LoadPatternResults();
+         }
+         var iLeftPart = GetFirstOut(todo, Statics.LeftPart);
+         fOperand = GetFirstOut(todo, Statics.RightPart);
+         var iVarCollector, isacluster;
+         if (Count(fOperand) > 0)
+         {
+            fOperand = CalculateOperand(fOperand);
+            if (Count(pattern) > 0)
+               iVarCollector = GetFirstOut(pattern, GetFirstChild(iLeftPart));
+            switch (iOp)
+            {
+               case Statics.Assignment:
+               {
+                  if (Count(iVarCollector) > 0)
+                     fOutputThesPathResult = Variables.GetVarResult(iLeftPart);
+                  else if(GetClusterMeaning(iLeftPart) == Statics.Object)
+                     fOutputThesPathResult = iLeftPart;
+                  else
+                     fOutputThesPathResult = GetThesPathResult(iLeftPart);
+                  if (Count(fOutputThesPathResult) > 0)
+                  {
+                     var outlinkmeaning = SolveSubPath(GetFirstChild(GetFirstOut(todo, Statics.outlink)));
+                     fOperand = ConvertOperandToObject(fOperand);   //converts the data, found in 'operand', to an object. When there are multiple values in the operand, a compound word is first created.    
+                     ConvertThespathToObjects();   //makes certain that 'OutputThesPath' only contains 1 item, which is an object.    
+                     AddLink(fOutputThesPathResult, fOperand, outlinkmeaning);
+                  }
+                  else
+                     Error("Can't perform ", GetFirstIn(todo, Statics.ParsedDoPattern), ": couldn't calculate the left part");
+               }
+               case Statics.AssignAdd:
+               {
+                  if (Count(iVarCollector) > 0) 
+                     fOutputThesPathResult = Variables.GetVarResult(iLeftPart);
+                  else if(GetClusterMeaning(iLeftPart) == Statics.Object)
+                     fOutputThesPathResult = iLeftPart;
+                  else
+                     fOutputThesPathResult = getthespathresult(iLeftPart);
+                  if (Count(fOutputThesPathResult) > 0)
+                  {
+                     fOperand = ConvertOperandToObject(fOperand);   //converts the data, found in 'operand', to an object. When there are multiple values in the operand, a compound word is first created.    
+                     ConvertThespathToObjects();   //makes certain that 'OutputThesPath' only contains 1 item, which is an object.    
+                     isacluster = GetFirstOut(fOutputThesPathResult, isa);
+                     if (Count(isacluster) > 0)
+                        AddChild(isacluster, fOperand);
+                     else
+                     {
+                        isacluster = MakeCluster(isa, fOperand);
+                        AddLink(fOutputThesPathResult, isacluster, isa);
+                     }
+                  }
+                  else
+                     Error("Can't perform ", GetFirstIn(todo, Statics.ParsedDoPattern), ": couldn't calculate the left part");
+               }
+               case Statics.AssignRemove:
+               {
+                  if (Count(iVarCollector) > 0)
+                     fOutputThesPathResult = Variables.GetVarResult(iLeftPart);
+                  else if(GetClusterMeaning(iLeftPart) == Statics.Object)
+                     fOutputThesPathResult = iLeftPart;
+                  else
+                     fOutputThesPathResult = GetThesPathResult(iLeftPart);
+                  if (Count(fOutputThesPathResult) > 0)
+                  {
+                     ConvertThespathToObjects();   //makes certain that 'OutputThesPath' only contains 1 item, which is an Statics.Object.    
+                     isacluster = GetFirstOut(fOutputThesPathResult, isa);
+                     if (Count(isacluster) > 0)
+                     {
+                        if (ContainsChildren(isacluster, fOperand))
+                        {
+                           RemoveChild(isacluster, fOperand);
+                           CleanValue(fOperand);   //Cleans out a logical group (&& or ||), object, compound or asset when there are no more links or parents.     Input: Clean = possibly 1 or more clusters with meaning &&, ||, object, asset or compound. It will delete the cluster + all children which are no longer reffed, recusrively.    
+                        }
+                        else
+                        {
+                           fOperand = GetChildrenFiltered(isacluster, ref(filtervar), ref(ContainsChildren(filtervar, fOperand)));
+                           foreach (fOperand in fOperand)
+                           {
+                              RemoveChild(isacluster, fOperand);
+                              CleanValue(fOperand);   //Cleans out a logical group (&& or ||), object, compound or asset when there are no more links or parents.     Input: Clean = possibly 1 or more clusters with meaning &&, ||, object, asset or compound. It will delete the cluster + all children which are no longer reffed, recusrively.    
+                           }
+                        }
+                     }
+                  }
+                  else
+                     Error("Can't perform ", GetFirstIn(todo, Statics.ParsedDoPattern), ": couldn't calculate the left part");
+               }
+               default:
+               {
+                  Error("Unknown operator: ", iOp, " in pattern: ", Statics.CurrentInfo);
+                  ExitSolve();
+               }
+            }
+            
+         }
+         else if(iOp == Statics.NotEqual)
+         {
+            iVarCollector = GetFirstOut(pattern, GetFirstChild(iLeftPart));
+            if (Count(iVarCollector) > 0)
+               fOutputThesPathResult = Variables.GetVarResult(iLeftPart);
+            else if(GetClusterMeaning(iLeftPart) == Statics.Object)
+               fOutputThesPathResult = iLeftPart;
+            else
+               fOutputThesPathResult = GetThesPathResult(iLeftPart);
+            if (Count(fOutputThesPathResult) > 0)
+            {
+               var outlinkmeaning = SolveSubPath(GetFirstChild(GetFirstOut(todo, Statics.outlink)));
+               ConvertThespathToObjects();   //makes certain that 'OutputThesPath' only contains 1 item, which is an Statics.Object.    
+               RemoveLinksOut(fOutputThesPathResult, outlinkmeaning);
+            }
+            else
+               Error("Can't perform ", GetFirstIn(todo, Statics.ParsedDoPattern), ": couldn't calculate the left part");
+         }
+         else
+            Error("Missing right part");
+      }
+   }
+   
+   /*
+     This function should eventually be scripted out into the 'Thes-related' project.
+   input: a list of textneurons, for which to find related words that are present in the argument list.
+   argument: an object, who's 'is-a' children will be compared to the object that the function will work on.
+   output: 0, 1 or more words comming from the argument's list of children that have a thesaurus relationship with the input.
+    */
+   NeuronCluster GetThesRelated(Statics.Code): 1339
+   {
+      this()
+      {
+         var exec = New(neuron);
+         var callresult = New(neuroncluster);
+         AddChild(callresult, callbackin);
+         AddLink(exec, callresult, GetThesRelated);
+         AddInfo(exec, callresult, GetThesRelated, callbackargs);
+         BlockedSolve(exec);
+         callbackout = GetChildren(callresult);
+         Delete(callresult);
+      }
+      exec()
+      {
+         var iAllInputs, iCheckAgainst, found;
+         splitresult = Statics.CurrentTo;
+         Delete(Statics.CurrentFrom);
+         callbackargs = GetLast(Statics.CurrentInfo);
+         BuildCallbackArgs();   //converts the cluster found in 'CallbackArgs' into a list of items, as defined by it's children, which can be static neurons or variables.    
+         callbackargs = GetFirstOut(callbackargs, isa);   //the argument is the root thesaurus item, the children are in a list connected to the root item (is-a relationship)    
+         foreach (found in GetChildren(callbackargs))
+            Add(ref(iCheckAgainst), GetChildren(found));   //the argument list contains objects, but these can't be compared against the objects of the thesaurus cause the argumetn list is custom loaded (custom objects), so get the textneurons, and compare against those.    
+         var iCurLocInThes = GetChildren(Statics.CurrentTo);
+         ClearChildren(Statics.CurrentTo);
+         foreach (iCurLocInThes in iCurLocInThes)
+         {
+            if (GetClusterMeaning(iCurLocInThes) == Statics.PosGroup)
+               Add(ref(iAllInputs), GetChildrenFiltered(iCurLocInThes, ref(filtervar), ref((GetClusterMeaning(filtervar) == Statics.Object))));
+            else if(GetClusterMeaning(iCurLocInThes) != Statics.Object)
+               Add(ref(iAllInputs), GetClustersWithMeaning(iCurLocInThes, Statics.Object));
+         }
+         if (Count(iAllInputs) > 0)
+            Split(GetThesRelatedFinished, ref(iCurLocInThes), iAllInputs);
+         else
+            ExitSolve();
+         var related = GetInFiltered(iCurLocInThes, ref(filtermeaning), ref(filterfrom), ref((GetChildren(AllConjugations) Contains filtermeaning)));
+         var iResults;
+         foreach (found in related)
+         {
+            iResults = Filter(ref(filtervar), ref(ContainsChildren(found, filtervar)), iCheckAgainst);
+            if (Count(iResults) > 0)
+               AddSplitResult(iResults);
+         }
+         var thesMeaning;
+         Split(GetThesRelatedFinished, ref(iCurLocInThes), iCurLocInThes, related);
+         Split(GetThesRelatedFinished, ref(thesmeaning), GetChildren(Statics.Relationships));
+         var iFullPath;
+         var isacluster = GetClustersWithMeaning(iCurLocInThes, thesmeaning);
+         while (Count(isacluster) > 0)
+         {
+            Split(GetThesRelatedFinished, ref(isacluster), isacluster);
+            if (iFullPath !Contains isacluster)
+               Add(ref(iFullPath), isacluster);
+            else
+            {
+               Clear(ref(iCurLocInThes));
+               Break();
+            }   //we need to check for recursion in the thesaurus.    
+            iCurLocInThes = GetFirstIn(isacluster, thesmeaning);
+            iResults = Filter(ref(filtervar), ref(ContainsChildren(iCurLocInThes, filtervar)), iCheckAgainst);
+            if (Count(iResults) > 0)
+               AddSplitResult(iResults);
+            isacluster = GetClustersWithMeaning(iCurLocInThes, thesmeaning);
+         }
+      }
+      GetThesRelatedFinished()
+      {
+         if (Count(GetSplitResults()) > 0)
+            AddChild(splitresult, GetRandom(GetSplitResults()));
+      }
+   }
+   
+   /*
+     tries to extract the plural value from the current the path result and stores it in 'next'. 
+    */
+   NeuronCluster plural(Statics.Code): 1000
+   {
+      this()
+      {
+         if (GetClusterMeaning(callbackin) == Statics.Object)
+         {
+            if (ContainsLinksOut(callbackin, plural))
+               callbackout = GetFirstOut(callbackin, plural);
+            else if(ContainsLinksIn(callbackin, plural) == false)
+               Clear(ref(callbackout));
+            else
+               callbackout = callbackin;
+         }
+         else
+         {
+            Clear(ref(callbackout));
+            var found = GetClustersWithMeaning(callbackin, Statics.Object);
+            foreach (callbackin in found)
+            {
+               if (ContainsLinksOut(callbackin, plural))
+                  callbackout = Union(callbackout, GetFirstOut(callbackin, plural));
+               else if(ContainsLinksIn(callbackin, plural))
+                  callbackout = Distinct(callbackout, callbackin);
+            }
+         }
+      }
+   }
+   /*
+     The singular relationship is stored as the reverse of the plural, so check if the current item is the plural of something.
+    */
+   NeuronCluster Singular(Statics.Code): 1001
+   {
+      this()
+      {
+         if (GetClusterMeaning(callbackin) == Statics.Object)
+         {
+            if (ContainsLinksIn(callbackin, plural))
+               callbackout = GetFirstIn(callbackin, plural);
+            else if(ContainsLinksOut(callbackin, plural) == false)
+               Clear(ref(callbackout));
+            else
+               callbackout = callbackin;
+         }
+         else
+         {
+            Clear(ref(callbackout));
+            var found = GetClustersWithMeaning(callbackin, Statics.Object);
+            foreach (callbackin in found)
+            {
+               if (ContainsLinksIn(callbackin, plural))
+                  callbackout = Union(callbackout, GetFirstIn(callbackin, plural));
+               else if(ContainsLinksOut(callbackin, plural) == true)
+                  callbackout = Distinct(callbackout, callbackin);
+            }
+         }
+      }
+   }
+   NeuronCluster Superlative(Statics.Code): 1011
+   {
+      this()
+      {
+         switch (GetClusterMeaning(callbackin))
+         {
+            case Statics.Object:
+            {
+               if (ContainsLinksOut(callbackin, Superlative))
+                  callbackout = GetFirstOut(callbackin, Superlative);
+               else if(ContainsLinksIn(callbackin, Comparative))
+               {
+                  callbackin = GetFirstIn(callbackin, Comparative);
+                  if (Count(callbackin) > 0)
+                     callbackout = GetFirstOut(callbackin, Superlative);
+                  else
+                     Clear(ref(callbackout));
+               }
+               else if(ContainsLinksIn(callbackin, Superlative) == false)
+                  Clear(ref(callbackout));
+               else
+                  callbackout = callbackin;
+            }
+            case Statics.PosGroup:
+            {
+               Clear(ref(callbackout));
+               var found = GetChildrenFiltered(callbackin, ref(filtervar), ref((GetClusterMeaning(filtervar) == Statics.Object)));
+               foreach (callbackin in found)
+               {
+                  if (ContainsLinksOut(callbackin, Superlative))
+                     callbackout = Union(callbackout, GetFirstOut(callbackin, Superlative));
+                  else if(ContainsLinksIn(callbackin, Comparative))
+                  {
+                     callbackin = GetFirstIn(callbackin, Comparative);
+                     if (Count(callbackin) > 0)
+                        callbackout = Union(callbackout, GetFirstOut(callbackin, Superlative));
+                  }
+                  else if(ContainsLinksIn(callbackin, Superlative) == true)
+                     callbackout = Distinct(callbackout, callbackin);
+               }
+            }
+            default:
+            {
+               Clear(ref(callbackout));
+               var found = GetClustersWithMeaning(callbackin, Statics.Object);
+               foreach (callbackin in found)
+               {
+                  if (ContainsLinksOut(callbackin, Superlative))
+                     callbackout = Union(callbackout, GetFirstOut(callbackin, Superlative));
+                  else if(ContainsLinksIn(callbackin, Comparative))
+                  {
+                     callbackin = GetFirstIn(callbackin, Comparative);
+                     if (Count(callbackin) > 0)
+                        callbackout = Union(callbackout, GetFirstOut(callbackin, Superlative));
+                  }
+                  else if(ContainsLinksIn(callbackin, Superlative) == true)
+                     callbackout = Distinct(callbackout, callbackin);
+               }
+            }
+         }
+         
+      }
+   }
+   NeuronCluster Comparative(Statics.Code): 1012
+   {
+      this()
+      {
+         switch (GetClusterMeaning(callbackin))
+         {
+            case Statics.Object:
+            {
+               if (ContainsLinksOut(callbackin, Comparative))
+                  callbackout = GetFirstOut(callbackin, Comparative);
+               else if(ContainsLinksIn(callbackin, Superlative))
+               {
+                  callbackin = GetFirstIn(callbackin, Superlative);
+                  if (Count(callbackin) > 0)
+                     callbackout = GetFirstOut(callbackin, Comparative);
+                  else
+                     Clear(ref(callbackout));
+               }
+               else if(ContainsLinksIn(callbackin, Comparative) == false)
+                  Clear(ref(callbackout));
+            }
+            case Statics.PosGroup:
+            {
+               Clear(ref(callbackout));
+               var found = GetChildrenFiltered(callbackin, ref(filtervar), ref((GetClusterMeaning(filtervar) == Statics.Object)));
+               foreach (callbackin in found)
+               {
+                  if (ContainsLinksOut(callbackin, Comparative))
+                     callbackout = Union(callbackout, GetFirstOut(callbackin, Comparative));
+                  else if(ContainsLinksIn(callbackin, Superlative))
+                  {
+                     callbackin = GetFirstIn(callbackin, Superlative);
+                     if (Count(callbackin) > 0)
+                        callbackout = Union(callbackout, GetFirstOut(callbackin, Comparative));
+                  }
+                  else if(ContainsLinksIn(callbackin, Comparative) == true)
+                     callbackout = Distinct(callbackout, callbackin);
+               }
+            }
+            default:
+            {
+               Clear(ref(callbackout));
+               var found = GetClustersWithMeaning(callbackin, Statics.Object);
+               foreach (callbackin in found)
+               {
+                  if (ContainsLinksOut(callbackin, Comparative))
+                     callbackout = Union(callbackout, GetFirstOut(callbackin, Comparative));
+                  else if(ContainsLinksIn(callbackin, Superlative))
+                  {
+                     callbackin = GetFirstIn(callbackin, Superlative);
+                     if (Count(callbackin) > 0)
+                        callbackout = Union(callbackout, GetFirstOut(callbackin, Comparative));
+                  }
+                  else if(ContainsLinksIn(callbackin, Comparative) == true)
+                     callbackout = Distinct(callbackout, callbackin);
+               }
+            }
+         }
+         
+      }
+   }
+   
+   NeuronCluster FirstPersonPast(Statics.Code): 1289
+   {
+      this()
+      {
+         if (GetClusterMeaning(callbackin) != Statics.Object)
+            callbackin = GetClustersWithMeaning(callbackin, Statics.Object);
+         Clear(ref(callbackout));
+         foreach (callbackin in callbackin)
+         {
+            if (ContainsLinksIn(callbackin, FirstPersonPast))
+               callbackout = Distinct(callbackout, callbackin);
+            else
+            {
+               callbackin = GetInFiltered(callbackin, ref(filtermeaning), ref(filterfrom), ref((GetChildren(AllVerbConjugations) Contains filtermeaning)));
+               if (Count(callbackin) > 0)
+               {
+                  var found = GetFirstOut(callbackin, FirstPersonPast);
+                  if (Count(found) > 0)
+                     callbackout = Union(callbackout, found);
+                  else
+                     callbackout = Distinct(callbackout, callbackin);
+               }
+            }
+         }
+      }
+   }
+   NeuronCluster  SecondPersonPast(Statics.Code): 1290
+   {
+      this()
+      {
+         if (GetClusterMeaning(callbackin) != Statics.Object)
+            callbackin = GetClustersWithMeaning(callbackin, Statics.Object);
+         Clear(ref(callbackout));
+         foreach (callbackin in callbackin)
+         {
+            if (ContainsLinksIn(callbackin, SecondPersonPast))
+               callbackout = Distinct(callbackout, callbackin);
+            else
+            {
+               callbackin = GetInFiltered(callbackin, ref(filtermeaning), ref(filterfrom), ref((GetChildren(AllVerbConjugations) Contains filtermeaning)));
+               if (Count(callbackin) > 0)
+               {
+                  var found = GetFirstOut(callbackin, SecondPersonPast);
+                  if (Count(found) > 0)
+                     callbackout = Union(callbackout, found);
+                  else
+                     callbackout = Distinct(callbackout, callbackin);
+               }
+            }
+         }
+      }
+   }
+   NeuronCluster  ThirdPersonPast(Statics.Code): 1291
+   {
+      this()
+      {
+         if (GetClusterMeaning(callbackin) != Statics.Object)
+            callbackin = GetClustersWithMeaning(callbackin, Statics.Object);
+         Clear(ref(callbackout));
+         foreach (callbackin in callbackin)
+         {
+            if (ContainsLinksIn(callbackin, ThirdPersonPast))
+               callbackout = Distinct(callbackout, callbackin);
+            else
+            {
+               callbackin = GetInFiltered(callbackin, ref(filtermeaning), ref(filterfrom), ref((GetChildren(AllVerbConjugations) Contains filtermeaning)));
+               if (Count(callbackin) > 0)
+               {
+                  var found = GetFirstOut(callbackin, ThirdPersonPast);
+                  if (Count(found) > 0)
+                     callbackout = Union(callbackout, found);
+                  else
+                     callbackout = Distinct(callbackout, callbackin);
+               }
+            }
+         }
+      }
+   }
+   NeuronCluster  PluralFirstPast(Statics.Code): 1343
+   {
+      this()
+      {
+         if (GetClusterMeaning(callbackin) != Statics.Object)
+            callbackin = GetClustersWithMeaning(callbackin, Statics.Object);
+         Clear(ref(callbackout));
+         foreach (callbackin in callbackin)
+         {
+            if (ContainsLinksIn(callbackin, PluralFirstPast))
+               callbackout = Distinct(callbackout, callbackin);
+            else
+            {
+               callbackin = GetInFiltered(callbackin, ref(filtermeaning), ref(filterfrom), ref((GetChildren(AllVerbConjugations) Contains filtermeaning)));
+               if (Count(callbackin) > 0)
+               {
+                  var found = GetFirstOut(callbackin, PluralFirstPast);
+                  if (Count(found) > 0)
+                     callbackout = Union(callbackout, found);
+                  else
+                     callbackout = Distinct(callbackout, callbackin);
+               }
+            }
+         }
+      }
+   }
+   
+   NeuronCluster  pluralsecondPast(Statics.Code): 1344
+   {
+      this()
+      {
+         if (GetClusterMeaning(callbackin) != Statics.Object)
+            callbackin = GetClustersWithMeaning(callbackin, Statics.Object);
+         Clear(ref(callbackout));
+         foreach (callbackin in callbackin)
+         {
+            if (ContainsLinksIn(callbackin, pluralsecondPast))
+               callbackout = Distinct(callbackout, callbackin);
+            else
+            {
+               callbackin = GetInFiltered(callbackin, ref(filtermeaning), ref(filterfrom), ref((GetChildren(AllVerbConjugations) Contains filtermeaning)));
+               if (Count(callbackin) > 0)
+               {
+                  var found = GetFirstOut(callbackin, pluralsecondPast);
+                  if (Count(found) > 0)
+                     callbackout = Union(callbackout, found);
+                  else
+                     callbackout = Distinct(callbackout, callbackin);
+               }
+            }
+         }
+      }
+   }
+
+   NeuronCluster  pluralthirdPast(Statics.Code): 1345
+   {
+      this()
+      {
+         if (GetClusterMeaning(callbackin) != Statics.Object)
+            callbackin = GetClustersWithMeaning(callbackin, Statics.Object);
+         Clear(ref(callbackout));
+         foreach (callbackin in callbackin)
+         {
+            if (ContainsLinksIn(callbackin, pluralthirdPast))
+               callbackout = Distinct(callbackout, callbackin);
+            else
+            {
+               callbackin = GetInFiltered(callbackin, ref(filtermeaning), ref(filterfrom), ref((GetChildren(AllVerbConjugations) Contains filtermeaning)));
+               if (Count(callbackin) > 0)
+               {
+                  var found = GetFirstOut(callbackin, pluralthirdPast);
+                  if (Count(found) > 0)
+                     callbackout = Union(callbackout, found);
+                  else
+                     callbackout = Distinct(callbackout, callbackin);
+               }
+            }
+         }
+      }
+   }
+   
+   NeuronCluster FirstPersonPresent(Statics.Code): 1002
+   {
+      this()
+      {
+         if (GetClusterMeaning(callbackin) != Statics.Object)
+            callbackin = GetClustersWithMeaning(callbackin, Statics.Object);
+         Clear(ref(callbackout));
+         foreach (callbackin in callbackin)
+         {
+            if (ContainsLinksIn(callbackin, FirstPersonPresent))
+               callbackout = Distinct(callbackout, callbackin);
+            else
+            {
+               callbackin = GetInFiltered(callbackin, ref(filtermeaning), ref(filterfrom), ref((GetChildren(AllVerbConjugations) Contains filtermeaning)));
+               if (Count(callbackin) > 0)
+               {
+                  var found = GetFirstOut(callbackin, FirstPersonPresent);
+                  if (Count(found) > 0)
+                     callbackout = Union(callbackout, found);
+                  else
+                     callbackout = Distinct(callbackout, callbackin);
+               }
+            }
+         }
+      }
+   }
+   NeuronCluster SecondPersonPresent(Statics.Code): 1003
+   {
+      this()
+      {
+         if (GetClusterMeaning(callbackin) != Statics.Object)
+            callbackin = GetClustersWithMeaning(callbackin, Statics.Object);
+         Clear(ref(callbackout));
+         foreach (callbackin in callbackin)
+         {
+            if (ContainsLinksIn(callbackin, SecondPersonPresent))
+               callbackout = Distinct(callbackout, callbackin);
+            else
+            {
+               callbackin = GetInFiltered(callbackin, ref(filtermeaning), ref(filterfrom), ref((GetChildren(AllVerbConjugations) Contains filtermeaning)));
+               if (Count(callbackin) > 0)
+               {
+                  callbackin = GetFirstOut(callbackin, SecondPersonPresent);
+                  if (Count(callbackin) > 0)
+                     callbackout = Distinct(callbackout, callbackin);
+               }
+            }
+         }
+      }
+   }
+   NeuronCluster ThirdPersonPresent(Statics.Code): 1004
+   {
+      this()
+      {
+         if (GetClusterMeaning(callbackin) != Statics.Object)
+            callbackin = GetClustersWithMeaning(callbackin, Statics.Object);
+         Clear(ref(callbackout));
+         foreach (callbackin in callbackin)
+         {
+            if (ContainsLinksIn(callbackin, ThirdPersonPresent))
+               callbackout = Distinct(callbackout, callbackin);
+            else
+            {
+               callbackin = GetInFiltered(callbackin, ref(filtermeaning), ref(filterfrom), ref((GetChildren(AllVerbConjugations) Contains filtermeaning)));
+               if (Count(callbackin) > 0)
+               {
+                  callbackin = GetFirstOut(callbackin, ThirdPersonPresent);
+                  if (Count(callbackin) > 0)
+                     callbackout = Distinct(callbackout, callbackin);
+               }
+            }
+         }
+      }
+   }
+   NeuronCluster PluralFirstPresent(Statics.Code): 1005
+   {
+      this()
+      {
+         if (GetClusterMeaning(callbackin) != Statics.Object)
+            callbackin = GetClustersWithMeaning(callbackin, Statics.Object);
+         Clear(ref(callbackout));
+         foreach (callbackin in callbackin)
+         {
+            if (ContainsLinksIn(callbackin, PluralFirstPresent))
+               callbackout = Distinct(callbackout, callbackin);
+            else
+            {
+               callbackin = GetInFiltered(callbackin, ref(filtermeaning), ref(filterfrom), ref((GetChildren(AllVerbConjugations) Contains filtermeaning)));
+               if (Count(callbackin) > 0)
+               {
+                  callbackin = GetFirstOut(callbackin, PluralFirstPresent);
+                  if (Count(callbackin) > 0)
+                     callbackout = Distinct(callbackout, callbackin);
+               }
+            }
+         }
+      }
+   }
+   NeuronCluster PluralSecondPresent(Statics.Code): 1006
+   {
+      this()
+      {
+         if (GetClusterMeaning(callbackin) != Statics.Object)
+            callbackin = GetClustersWithMeaning(callbackin, Statics.Object);
+         Clear(ref(callbackout));
+         foreach (callbackin in callbackin)
+         {
+            if (ContainsLinksIn(callbackin, PluralSecondPresent))
+               callbackout = Distinct(callbackout, callbackin);
+            else
+            {
+               callbackin = GetInFiltered(callbackin, ref(filtermeaning), ref(filterfrom), ref((GetChildren(AllVerbConjugations) Contains filtermeaning)));
+               if (Count(callbackin) > 0)
+               {
+                  callbackin = GetFirstOut(callbackin, PluralSecondPresent);
+                  if (Count(callbackin) > 0)
+                     callbackout = Distinct(callbackout, callbackin);
+               }
+            }
+         }
+      }
+   }
+   NeuronCluster PluralThirdPresent(Statics.Code): 1007
+   {
+      this()
+      {
+         if (GetClusterMeaning(callbackin) != Statics.Object)
+            callbackin = GetClustersWithMeaning(callbackin, Statics.Object);
+         Clear(ref(callbackout));
+         foreach (callbackin in callbackin)
+         {
+            if (ContainsLinksIn(callbackin, PluralThirdPresent))
+               callbackout = Distinct(callbackout, callbackin);
+            else
+            {
+               callbackin = GetInFiltered(callbackin, ref(filtermeaning), ref(filterfrom), ref((GetChildren(AllVerbConjugations) Contains filtermeaning)));
+               if (Count(callbackin) > 0)
+               {
+                  callbackin = GetFirstOut(callbackin, PluralThirdPresent);
+                  if (Count(callbackin) > 0)
+                     callbackout = Distinct(callbackout, callbackin);
+               }
+            }
+         }
+      }
+   }
+   NeuronCluster PastTense(Statics.Code): 1008
+   {
+      this()
+      {
+         if (GetClusterMeaning(callbackin) != Statics.Object)
+            callbackin = GetClustersWithMeaning(callbackin, Statics.Object);
+         Clear(ref(callbackout));
+         foreach (callbackin in callbackin)
+         {
+            if (ContainsLinksIn(callbackin, PastTense))
+               callbackout = Distinct(callbackout, callbackin);
+            else
+            {
+               callbackin = GetInFiltered(callbackin, ref(filtermeaning), ref(filterfrom), ref((GetChildren(AllVerbConjugations) Contains filtermeaning)));
+               if (Count(callbackin) > 0)
+               {
+                  callbackin = GetFirstOut(callbackin, PastTense);
+                  if (Count(callbackin) > 0)
+                     callbackout = Distinct(callbackout, callbackin);
+               }
+            }
+         }
+      }
+   }
+   NeuronCluster PresentParticle(Statics.Code): 1247
+   {
+      this()
+      {
+         if (GetClusterMeaning(callbackin) != Statics.Object)
+            callbackin = GetClustersWithMeaning(callbackin, Statics.Object);
+         Clear(ref(callbackout));
+         foreach (callbackin in callbackin)
+         {
+            if (ContainsLinksIn(callbackin, PresentParticle))
+               callbackout = Distinct(callbackout, callbackin);
+            else
+            {
+               callbackin = GetInFiltered(callbackin, ref(filtermeaning), ref(filterfrom), ref((GetChildren(AllVerbConjugations) Contains filtermeaning)));
+               if (Count(callbackin) > 0)
+               {
+                  callbackin = GetFirstOut(callbackin, PresentParticle);
+                  if (Count(callbackin) > 0)
+                     callbackout = Distinct(callbackout, callbackin);
+               }
+            }
+         }
+      }
+   }
+   NeuronCluster PastParticle(Statics.Code): 1246
+   {
+      this()
+      {
+         if (GetClusterMeaning(callbackin) != Statics.Object)
+            callbackin = GetClustersWithMeaning(callbackin, Statics.Object);
+         Clear(ref(callbackout));
+         foreach (callbackin in callbackin)
+         {
+            if (ContainsLinksIn(callbackin, PastParticle))
+               callbackout = Distinct(callbackout, callbackin);
+            else
+            {
+               callbackin = GetInFiltered(callbackin, ref(filtermeaning), ref(filterfrom), ref((GetChildren(AllVerbConjugations) Contains filtermeaning)));
+               if (Count(callbackin) > 0)
+               {
+                  callbackin = GetFirstOut(callbackin, PastParticle);
+                  if (Count(callbackin) > 0)
+                     callbackout = Distinct(callbackout, callbackin);
+               }
+            }
+         }
+      }
+   }
+   
+   /*
+     Get the infinitve form of the verb.
+    */
+   NeuronCluster infinitive(Statics.Code): 1254
+   {
+      this()
+      {
+         if (GetClusterMeaning(callbackin) != Statics.object)
+            callbackin = GetClustersWithMeaning(callbackin, Statics.object);
+         Clear(ref(callbackout));
+         foreach (callbackin in callbackin)
+         {
+            if (ContainsLinksIn(callbackin, GetChildren(AllVerbConjugations)))
+               callbackout = Distinct(callbackout, callbackin);
+            else
+            {
+               callbackin = GetInFiltered(callbackin, ref(filtermeaning), ref(filterfrom), ref(GetChildren(AllVerbConjugations) Contains filtermeaning));
+               callbackout = Distinct(callbackout, callbackin);
+            }
+         }
+      }
+   }
+   
+   
+   NeuronCluster wordnetmeaning(Statics.Code): 1255
+   {
+      this()
+      {
+         var found;
+         switch (GetClusterMeaning(callbackin))
+         {
+            case Statics.Object:
+               callbackout = GetFirstOut(callbackin, Wordnet_Meaning);
+            case Statics.PosGroup:
+            {
+               Clear(ref(callbackout));
+               found = GetChildrenFiltered(callbackin, ref(filtervar), ref((GetClusterMeaning(filtervar) == Statics.Object)));
+               foreach (callbackin in found)
+                  callbackout = Union(callbackout, GetFirstOut(callbackin, Wordnet_Meaning));
+            }
+            default:
+            {
+               Clear(ref(callbackout));
+               found = GetClustersWithMeaning(callbackin, Statics.Object);
+               foreach (callbackin in found)
+                  callbackout = Union(callbackout, GetFirstOut(callbackin, Wordnet_Meaning));
+            }
+         }
+         
+      }
+   }
+   
+   NeuronCluster Opposite(Statics.Code): 1264
+   {
+      this()
+      {
+         var found;
+         switch (GetClusterMeaning(callbackin))
+         {
+            case Statics.Object:
+            {
+               callbackout = GetFirstOut(callbackin, Opposite);
+               if (Count(callbackout) == 0)
+               {
+                  found = GetFirstIn(callbackin, Opposite);
+                  if (GetClusterMeaning(found) == Opposite)
+                     callbackout = GetChildren(found);
+                  else
+                     callbackout = found;
+               }
+            }
+            case Statics.PosGroup:
+            {
+               Clear(ref(callbackout));
+               found = GetChildrenFiltered(callbackin, ref(filtervar), ref((GetClusterMeaning(filtervar) == Statics.Object)));
+               foreach (callbackin in found)
+               {
+                  found = GetFirstOut(callbackin, Opposite);
+                  if (Count(found) == 0)
+                     found = GetFirstIn(callbackin, Opposite);
+                  if (GetClusterMeaning(found) == Opposite)
+                     callbackout = Union(callbackout, GetChildren(found));
+                  else
+                     callbackout = Union(callbackout, found);
+               }
+            }
+            default:
+            {
+               Clear(ref(callbackout));
+               found = GetClustersWithMeaning(callbackin, Statics.Object);
+               foreach (callbackin in found)
+               {
+                  found = GetFirstOut(callbackin, Opposite);
+                  if (Count(found) == 0)
+                     found = GetFirstIn(callbackin, Opposite);
+                  if (GetClusterMeaning(found) == Opposite)
+                     callbackout = Union(callbackout, GetChildren(found));
+                  else
+                     callbackout = Union(callbackout, found);
+               }
+            }
+         }
+         
+      }
+   }
+   
+   
+   //used by several thesaurus methods as a split-callback.
+   NeuronCluster endofgetthesBindcallback
+   {
+      this(): var
+      {
+         return GetSplitResults();
+      }
+   }
+   
+   //used by several thesaurus methods as a split-callback.
+   NeuronCluster endofgetthesauruscallback
+   {
+      this()
+      {
+         //AddChild(thessplitresult, GetSplitResults());
+      }
+   }
+   
+   /*
+     solves a thesaurus path and returns all the possible values at the end of the path. This is used to get all the valid values for a thesaurus path, so we can check if any of the values is in the input.
+   Input: next= a cluster who's children define a path in the thesaurus. The first item can be one of the  pos neurons. should have at least 1 textneuron as child.
+   Output:
+   ThesPathResult=all the textneurons that are at the end of the thes-path.
+   Note: if the thesaurus path didn't lead anywhere (for instance, no valid pos), no values are returned.
+
+    */
+   ExpressionsBlock GetThesPathResult
+   {
+      statements(var next): var
+      {
+         var exec = New(neuroncluster);
+         AddLink(exec, next, GetThesPathResult);
+         if (Count(PatternMatcher.splitresults, OutputSin) > 0)
+            AddInfo(exec, next, GetThesPathResult, PatternMatcher.splitresults, OutputSin);   //these vars can be empty when importing through the wordnet sin (for contact info).    
+         BlockedSolve(exec);
+         var iRes = GetChildren(exec);
+         Delete(exec);
+         return iRes;
+      }
+      exec()
+      {
+         var iPosToSearch, iCurLocInThes;
+         OutputSin = GetLast(Statics.CurrentInfo);
+         //thessplitresult = Statics.CurrentFrom;
+         var iRelationship = isa;
+         if (Count(Statics.CurrentInfo) > 1)
+         {
+            PatternMatcher.splitresults = GetFirst(Statics.CurrentInfo);
+            LoadPatternResults();
+         }
+         ResolveOperands(GetOutgoing(Statics.CurrentTo, Statics.operand));
+         Split(endofgetthesauruscallback, ref(iCurLocInThes), GetFirstChild(Statics.CurrentTo));   //so we have an initial split and the callback properly setup.    
+         index = New(IntNeuron);
+         if (ContainsChildren(Statics.Relationships, iCurLocInThes))
+         {
+            iRelationship = iCurLocInThes;
+            Index++;
+            iCurLocInThes = GetChildAt(Statics.CurrentTo, index);
+            if (TypeOf(iCurLocInThes) == neuron)
+            {
+               if (iCurLocInThes != Statics.Empty)
+               {
+                  //SetClusterMeaning(thessplitresult, iCurLocInThes);  //if 'empty' is specified as pos (thats means 'all'), don't store a pos type.    
+                  iPosToSearch= iCurLocInThes;
+               }
+               Index++;
+               iCurLocInThes = GetChildAt(Statics.CurrentTo, index);
+            }
+         }
+         else if(TypeOf(iCurLocInThes) == neuron)
+         {
+            if (iCurLocInThes != Statics.Empty)
+            {
+               //SetClusterMeaning(thessplitresult, iCurLocInThes); //if 'empty' is specified as pos (thats means 'all'), don't store a pos type.    
+               iPosToSearch= iCurLocInThes;
+            }   
+            Index++;
+            iCurLocInThes = GetChildAt(Statics.CurrentTo, index);
+         }
+         iCurLocInThes = SolveSubPath(iCurLocInThes);
+         var iObjects, isacluster;
+         if (Count(iCurLocInThes) > 0)
+         {
+            var found = GetFirstIn(iCurLocInThes, plural);
+            if (Count(found) > 0)
+               Split(endofgetthesauruscallback, ref(iCurLocInThes), iCurLocInThes, found);
+            if (GetClusterMeaning(iCurLocInThes) == Statics.PosGroup)
+               iObjects = GetChildrenFiltered(iCurLocInThes, ref(filtervar), ref((GetClusterMeaning(filtervar) == Statics.Object)));
+            else
+               iObjects = Union(GetClustersWithMeaning(iCurLocInThes, Statics.Object), GetIncomming(iCurLocInThes, Statics.NameOfMember));
+            if (Count(iObjects) > 0)
+            {
+               var ObjectItem;
+               Split(endofgetthesauruscallback, ref(objectitem), iObjects);
+               found = GetFirstIn(objectitem, plural);
+               if (Count(found) > 0)
+                  objectitem = found;
+               if (IsInitialized(ref(iPosToSearch)))
+               {
+                  Thes.getposfor = objectitem;
+                  var foundpos = Thes.getposofitem();   
+                  if (foundpos !Contains iPosToSearch)
+                     ExitSolve();
+               }
+               Index++;
+               if (index < ChildCount(Statics.CurrentTo))
+               {
+                  iObjects = objectitem;
+                  while (index < ChildCount(Statics.CurrentTo))
+                  {
+                     iCurLocInThes = GetChildAt(Statics.CurrentTo, index);
+                     Split(endofgetthesauruscallback, ref(iObjects), iObjects);
+                     switch (GetClusterMeaning(iCurLocInThes))
+                     {
+                        case Statics.Code:
+                        {
+                           callbackin = iObjects;
+                           Call(iCurLocInThes);
+                           iObjects = callbackout;
+                           Clear(ref(callbackargs));
+                        }
+                        case Statics.arguments:
+                        {
+                           callbackargs = Union(callbackargs, iCurLocInThes);
+                           Index++;
+                           Continue();
+                        }
+                        case Statics.Index:
+                        {
+                           isacluster = GetFirstOut(iObjects, isa);
+                           iCurLocInThes = GetFirstChild(iCurLocInThes);
+                           if (TypeOf(iCurLocInThes) == Statics.resultstatement)
+                              iCurLocInThes = Execute(iCurLocInThes);
+                           else if(TypeOf(iCurLocInThes) != IntNeuron)
+                           {
+                              Error("Unknown index expression in thesaurus path");
+                              ExitSolve();
+                           }
+                           iObjects = GetChildAt(isacluster, iCurLocInThes);
+                        }
+                        case Statics.outlink:
+                        {
+                           var outlinkmeaning = SolveSubPath(GetFirstChild(iCurLocInThes));
+                           if (Count(outlinkmeaning) > 0)
+                              iObjects = GetFirstOut(iObjects, outlinkmeaning);
+                           else
+                              Clear(ref(iObjects));
+                        }
+                        default:
+                        {
+                           isacluster = GetFirstOut(iObjects, iRelationship);
+                           if (Count(isacluster) > 0)
+                           {
+                              iCurLocInThes = SolveSubPath(iCurLocInThes);
+                              iObjects = GetChildrenFiltered(isacluster, ref(filtervar), ref((((filtervar == iCurLocInThes) || ContainsChildren(filtervar, iCurLocInThes)) || LinkExists(filtervar, iCurLocInThes, Statics.NameOfMember))));
+                           }
+                           else
+                              ExitSolve();
+                        }
+                     }
+                     Index++;
+                     if (Count(iObjects) == 0)
+                        ExitSolve();
+                  }
+                  AddSplitResult(iObjects);
+               }
+               else
+                  AddSplitResult(objectitem);
+            }
+         }
+      }
+   }
+   
+   
+      
+      /*
+     returns a random child of a thesaurus node through the 'is a' relationship. If the current item is a textneuron, a random object parent is first selected. 
+    */
+   NeuronCluster random(Statics.Code): 1263
+   {
+      this()
+      {
+         if (GetClusterMeaning(callbackin) == Statics.object)
+         {
+            callbackout = callbackin;
+            callbackin = GetFirstOut(callbackin, isa);
+            if (Count(callbackin) > 0)
+               callbackout = GetRandomChild(callbackin);
+         }
+         else
+         {
+            var found = GetClustersWithMeaning(callbackin, Statics.object);
+            if (Count(found) > 0)
+            {
+               callbackout = GetRandom(found);
+               callbackin = GetFirstOut(callbackout, isa);
+               if (Count(callbackin) > 0)
+                  callbackout = GetRandomChild(callbackin);
+            }
+            else
+               callbackout = callbackin;
+         }
+      }
+   }
+}

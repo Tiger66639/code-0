@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>Arithmetic</Name>
+  <Rules>
+    <Rule>
+      <Name>How much is calculation</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>How much is ~Numbers.expression </Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>What gives ~Numbers.expression</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>~Numbers.expression equals </Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>what does ~Numbers.expression give</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>what is ~Numbers.expression</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>I think that would be $result\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <Do>
+        <Expression>$result = #bot.mem.amount:PopChild;
+</Expression>
+      </Do>
+    </Rule>
+    <Rule>
+      <Name>What is the sum of</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>what is the sum of ~numbers.unary { , [and]  ~numbers.unary  | ; [and] ~numbers.unary  | and ~numbers.unary   }</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>My gut says that makes $result\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>Mmm, numbercrunchers in my head came up with $result\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>$result, me thinks. Yes, $result it should be.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>$result = Addition(#bot.mem.amount);</Expression>
+      </ToCal>
+    </Rule>
+  </Rules>
+</Topic>

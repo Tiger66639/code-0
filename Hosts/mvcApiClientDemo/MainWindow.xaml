@@ -1,0 +1,14 @@
+﻿<Window x:Class="mvcApiClientDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525"
+        Closing="Window_Closing">
+   <DockPanel>
+      <DockPanel DockPanel.Dock="Bottom">
+         <Button Click="Button_Click">Send</Button>
+         <TextBox Name="TxtInput" />
+      </DockPanel>
+      <TextBlock Name="TxtOutput"
+                 TextWrapping="Wrap"/>
+   </DockPanel>
+</Window>

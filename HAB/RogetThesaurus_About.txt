@@ -1,0 +1,2 @@
+The roget thesuarus parser is currently unavailable for VS2008 because the Lexer and parser packages haven't been ported yet
+to VS2008

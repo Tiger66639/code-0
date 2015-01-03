@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>Answer</Name>
+  <Rules>
+    <Rule>
+      <Name>new rule 1</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>$v</Expression>
+        </Pattern>
+      </Patterns>
+      <ResponsesFor>
+        <ResponseForGroup>
+          <ResponsesForItems>
+            <ResponseFor style="pattern">do you like thee</ResponseFor>
+          </ResponsesForItems>
+          <Conditionals>
+            <Conditional>
+              <Condition />
+              <Outputs>
+                <Output>
+                  <Expression>ok, I see.</Expression>
+                  <QuestionCanFollow>True</QuestionCanFollow>
+                </Output>
+              </Outputs>
+              <IsOutputSequenced />
+            </Conditional>
+          </Conditionals>
+        </ResponseForGroup>
+      </ResponsesFor>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>What the beep do you mean?</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Rule>
+  </Rules>
+</Topic>

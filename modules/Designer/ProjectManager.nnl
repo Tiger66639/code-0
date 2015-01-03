@@ -1,0 +1,33 @@
+//defines external references
+class ProjectManager
+{
+   //looks for a project with the specified name.
+   [external 
+    <LibRef>
+      <AssemblyName>HAB.Designer.exe</AssemblyName>
+      <TypeName>JaStDev.HAB.Designer.ProjectManager</TypeName>
+      <MethodName>FindTopic</MethodName>
+      <MappedName>Proj_FindTopic</MappedName>
+      <ParameterTypes>
+        <string>System.String</string>
+      </ParameterTypes>
+    </LibRef>
+   ]
+   FindTopic(string name): var;
+   
+   //looks for a project with the specified name.
+   [external
+    <LibRef>
+      <AssemblyName>HAB.Designer.exe</AssemblyName>
+      <TypeName>JaStDev.HAB.Designer.ProjectManager</TypeName>
+      <MethodName>AddTopic</MethodName>
+      <MappedName>Proj_AddTopic</MappedName>
+      <ParameterTypes>
+        <string>JaStDev.HAB.Neuron, JaStDev.HabCore, Version=0.8.4690.35771, Culture=neutral, PublicKeyToken=null</string>
+        <string>System.String</string>
+      </ParameterTypes>
+    </LibRef>
+   ]
+   AddTopic(var toAdd, string name);
+   
+}

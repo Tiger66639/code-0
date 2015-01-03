@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="qps-ploc" original="Resources.resx" tool-id="MultilingualAppToolkit" product-name="Designer" product-version="1.0.0.0" build-num="0">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="3.1.1250.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="Resx">
+        <trans-unit id="Resx/NeuronIDFormat" translate="yes" xml:space="preserve">
+          <source>NeuronIDFormat</source>
+          <target state="new">NeuronIDFormat</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Identifies a neuron id on the clipboard/dragdrop</note>
+          </trans-unit>
+        <trans-unit id="Resx/XamlFormat" translate="yes" xml:space="preserve">
+          <source>XAML</source>
+          <target state="new">XAML</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Identifies xaml text on the clipboard/dragdrop</note>
+          </trans-unit>
+        <trans-unit id="Resx/MindMapItemFormat" translate="yes" xml:space="preserve">
+          <source>MINDMAPITEM</source>
+          <target state="new">MINDMAPITEM</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Identifies a mindmap item on the clipboard/dragdrop</note>
+          </trans-unit>
+        <trans-unit id="Resx/MindMapLinkSide" translate="yes" xml:space="preserve">
+          <source>MindMapLinkSide</source>
+          <target state="new">MindMapLinkSide</target>
+        </trans-unit>
+        <trans-unit id="Resx/UIElementFormat" translate="yes" xml:space="preserve">
+          <source>UIElement</source>
+          <target state="new">UIElement</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Identifies a UIElement on the clipboard/dragdrop</note>
+          </trans-unit>
+        <trans-unit id="Resx/MultiMindMapItemFormat" translate="yes" xml:space="preserve">
+          <source>MultiMindMapItemFormat</source>
+          <target state="new">MultiMindMapItemFormat</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Identifies multiple mindmap items on the clipboard/dragdrop</note>
+          </trans-unit>
+        <trans-unit id="Resx/MultiUIElementFormat" translate="yes" xml:space="preserve">
+          <source>MultiUIElementFormat</source>
+          <target state="new">MultiUIElementFormat</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Identifies multiple UIElements on the clipboard/dragdrop</note>
+          </trans-unit>
+        <trans-unit id="Resx/MultiNeuronIDFormat" translate="yes" xml:space="preserve">
+          <source>MultiNeuronIDFormat</source>
+          <target state="new">MultiNeuronIDFormat</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Identifies multiple neuron id's on the clipboard/dragdrop</note>
+          </trans-unit>
+        <trans-unit id="Resx/DelayLoadFormat" translate="yes" xml:space="preserve">
+          <source>DelayLoadFormat</source>
+          <target state="new">DelayLoadFormat</target>
+        </trans-unit>
+        <trans-unit id="Resx/ToolboxItemFormat" translate="yes" xml:space="preserve">
+          <source>ToolboxItemFormat</source>
+          <target state="new">ToolboxItemFormat</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Identifies a Toolbox on the clipboard/dragdrop</note>
+          </trans-unit>
+        <trans-unit id="Resx/CodeItemFormat" translate="yes" xml:space="preserve">
+          <source>CODEITEMFORMAT</source>
+          <target state="new">CODEITEMFORMAT</target>
+        </trans-unit>
+        <trans-unit id="Resx/DelayLoadResultType" translate="yes" xml:space="preserve">
+          <source>DelayLoadResultType</source>
+          <target state="new">DelayLoadResultType</target>
+        </trans-unit>
+        <trans-unit id="Resx/FrameSequenceFormat" translate="yes" xml:space="preserve">
+          <source>FRAMESEQUENCEFORMAT</source>
+          <target state="new">FRAMESEQUENCEFORMAT</target>
+        </trans-unit>
+        <trans-unit id="Resx/FrameEvokerFormat" translate="yes" xml:space="preserve">
+          <source>FRAMEEVOKERFORMAT</source>
+          <target state="new">FRAMEEVOKERFORMAT</target>
+        </trans-unit>
+        <trans-unit id="Resx/FrameElementFormat" translate="yes" xml:space="preserve">
+          <source>FRAMEELEMENTFORMAT</source>
+          <target state="new">FRAMEELEMENTFORMAT</target>
+        </trans-unit>
+        <trans-unit id="Resx/EDITORFORMAT" translate="yes" xml:space="preserve">
+          <source>EditorOverviewFORMAT</source>
+          <target state="new">EditorOverviewFORMAT</target>
+        </trans-unit>
+        <trans-unit id="Resx/FLOWITEMFORMAT" translate="yes" xml:space="preserve">
+          <source>FLOWITEMFORMAT</source>
+          <target state="new">FLOWITEMFORMAT</target>
+        </trans-unit>
+        <trans-unit id="Resx/APPREFFORMAT" translate="yes" xml:space="preserve">
+          <source>APP_REF_FORMAT</source>
+          <target state="new">APP_REF_FORMAT</target>
+        </trans-unit>
+        <trans-unit id="Resx/WebSite" translate="yes" xml:space="preserve">
+          <source>http://bragisoft.com</source>
+          <target state="new">http://bragisoft.com</target>
+        </trans-unit>
+        <trans-unit id="Resx/NoProjectTreeItemSelected" translate="yes" xml:space="preserve">
+          <source>There is no Tree item selected in the project overview to put new items in.</source>
+          <target state="new">There is no Tree item selected in the project overview to put new items in.</target>
+        </trans-unit>
+        <trans-unit id="Resx/FRAMEFORMAT" translate="yes" xml:space="preserve">
+          <source>FRAMEFORMAT</source>
+          <target state="new">FRAMEFORMAT</target>
+        </trans-unit>
+        <trans-unit id="Resx/FERestrictionFormat" translate="yes" xml:space="preserve">
+          <source>FERESTRICTIONFORMAT</source>
+          <target state="new">FERESTRICTIONFORMAT</target>
+        </trans-unit>
+        <trans-unit id="Resx/FrameOriginFormat" translate="yes" xml:space="preserve">
+          <source>FRAMEORIGINFORMAT</source>
+          <target state="new">FRAMEORIGINFORMAT</target>
+        </trans-unit>
+        <trans-unit id="Resx/ThesaurusRelationshipFormat" translate="yes" xml:space="preserve">
+          <source>ThesaurusRelationshipFormat</source>
+          <target state="new">ThesaurusRelationshipFormat</target>
+        </trans-unit>
+        <trans-unit id="Resx/IsThesRelRecursiveFormat" translate="yes" xml:space="preserve">
+          <source>IsThesRelRecursiveFormat</source>
+          <target state="new">IsThesRelRecursiveFormat</target>
+        </trans-unit>
+        <trans-unit id="Resx/CUTOPERATION" translate="yes" xml:space="preserve">
+          <source>CUTOPERATION</source>
+          <target state="new">CUTOPERATION</target>
+        </trans-unit>
+        <trans-unit id="Resx/FLOWEDITORFORMAT" translate="yes" xml:space="preserve">
+          <source>FLOWEDITORFORMAT</source>
+          <target state="new">FLOWEDITORFORMAT</target>
+        </trans-unit>
+        <trans-unit id="Resx/ASSETRECORDFORMAT" translate="yes" xml:space="preserve">
+          <source>ASSETRECORDFORMAT</source>
+          <target state="new">ASSETRECORDFORMAT</target>
+        </trans-unit>
+        <trans-unit id="Resx/MULTIASSETRECORDFORMAT" translate="yes" xml:space="preserve">
+          <source>MULTIASSETRECORDFORMAT</source>
+          <target state="new">MULTIASSETRECORDFORMAT</target>
+        </trans-unit>
+        <trans-unit id="Resx/VISUALFRAMEFORMAT" translate="yes" xml:space="preserve">
+          <source>VISUALFRAMEFORMAT</source>
+          <target state="new">VISUALFRAMEFORMAT</target>
+        </trans-unit>
+        <trans-unit id="Resx/MIXEDTEXTPATTERNFORMAT" translate="yes" xml:space="preserve">
+          <source>MIXEDTEXTPATTERNFORMAT</source>
+          <target state="new">MIXEDTEXTPATTERNFORMAT</target>
+        </trans-unit>
+        <trans-unit id="Resx/TEXTPATTERNDEFFORMAT" translate="yes" xml:space="preserve">
+          <source>TEXTPATTERNDEFFORMAT</source>
+          <target state="new">TEXTPATTERNDEFFORMAT</target>
+        </trans-unit>
+        <trans-unit id="Resx/TEXTPATTERNFORMAT" translate="yes" xml:space="preserve">
+          <source>TEXTPATTERNFORMAT</source>
+          <target state="new">TEXTPATTERNFORMAT</target>
+        </trans-unit>
+        <trans-unit id="Resx/TopicFileFilter" translate="yes" xml:space="preserve">
+          <source>Topic files (*.topic.xml)|*.topic.xml|All files (*.*)|*.*</source>
+          <target state="new">Topic files (*.topic.xml)|*.topic.xml|All files (*.*)|*.*</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">File filter for topics</note>
+          </trans-unit>
+        <trans-unit id="Resx/ThesaurusFileFilter" translate="yes" xml:space="preserve">
+          <source>thesaurus files (*.thesaurus.xml)|*.thesaurus.xml|All files (*.*)|*.*</source>
+          <target state="new">thesaurus files (*.thesaurus.xml)|*.thesaurus.xml|All files (*.*)|*.*</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">File filter for thesaurus files</note>
+          </trans-unit>
+        <trans-unit id="Resx/ThesaurusSectionFileFilter" translate="yes" xml:space="preserve">
+          <source>thesaurus section files (*.section.xml)|*.section.xml|</source>
+          <target state="new">thesaurus section files (*.section.xml)|*.section.xml|</target>
+        </trans-unit>
+        <trans-unit id="Resx/CSVFileFilter" translate="yes" xml:space="preserve">
+          <source>csv files (*.csv)|*.csv|All files (*.*)|*.*</source>
+          <target state="new">csv files (*.csv)|*.csv|All files (*.*)|*.*</target>
+        </trans-unit>
+        <trans-unit id="Resx/globalsFileFilter" translate="yes" xml:space="preserve">
+          <source>global pattern files (*.global.xml)|*.global.xml|All files (*.*)|*.*</source>
+          <target state="new">global pattern files (*.global.xml)|*.global.xml|All files (*.*)|*.*</target>
+        </trans-unit>
+        <trans-unit id="Resx/CONDITIONPATTERNFORMAT" translate="yes" xml:space="preserve">
+          <source>CONDITIONPATTERNFORMAT</source>
+          <target state="new">CONDITIONPATTERNFORMAT</target>
+        </trans-unit>
+        <trans-unit id="Resx/DOPATTERNFORMAT" translate="yes" xml:space="preserve">
+          <source>DOPATTERNFORMAT</source>
+          <target state="new">DOPATTERNFORMAT</target>
+        </trans-unit>
+        <trans-unit id="Resx/INVALIDPATTERNFORMAT" translate="yes" xml:space="preserve">
+          <source>INVALIDPATTERNFORMAT</source>
+          <target state="new">INVALIDPATTERNFORMAT</target>
+        </trans-unit>
+        <trans-unit id="Resx/OUTPUTPATTERNFORMAT" translate="yes" xml:space="preserve">
+          <source>OUTPUTPATTERNFORMAT</source>
+          <target state="new">OUTPUTPATTERNFORMAT</target>
+        </trans-unit>
+        <trans-unit id="Resx/AssetFileFilter" translate="yes" xml:space="preserve">
+          <source>Asset files (*.asset.xml)|*.asset.xml|All files (*.*)|*.*</source>
+          <target state="new">Asset files (*.asset.xml)|*.asset.xml|All files (*.*)|*.*</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">File filter for assets</note>
+          </trans-unit>
+        <trans-unit id="Resx/CustomSpellingDict" translate="yes" xml:space="preserve">
+          <source>CustomDict.lex</source>
+          <target state="new">CustomDict.lex</target>
+        </trans-unit>
+        <trans-unit id="Resx/IgnoreAllDict" translate="yes" xml:space="preserve">
+          <source>IgnoreAllDict.lex</source>
+          <target state="new">IgnoreAllDict.lex</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">the file that contains the spellings that need to be ignored for this session.</note>
+          </trans-unit>
+        <trans-unit id="Resx/PatternsForText" translate="yes" xml:space="preserve">
+          <source>Patterns for </source>
+          <target state="new">Patterns for </target>
+        </trans-unit>
+        <trans-unit id="Resx/AttachedTopicsFileName" translate="yes" xml:space="preserve">
+          <source>attachedTopics.bin</source>
+          <target state="new">attachedTopics.bin</target>
+        </trans-unit>
+        <trans-unit id="Resx/ASSETCOLUMN" translate="yes" xml:space="preserve">
+          <source>ASSETCOLUMN</source>
+          <target state="new">ASSETCOLUMN</target>
+        </trans-unit>
+        <trans-unit id="Resx/WORDNETDRAGFORMAT" translate="yes" xml:space="preserve">
+          <source>WORDNETDRAGFORMAT</source>
+          <target state="new">WORDNETDRAGFORMAT</target>
+        </trans-unit>
+        <trans-unit id="Resx/NNLFileFilter" translate="yes" xml:space="preserve">
+          <source>Neural network files (*.nnl)|*.nnl|All files (*.*)|*.*</source>
+          <target state="new">Neural network files (*.nnl)|*.nnl|All files (*.*)|*.*</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">source code module files</note>
+          </trans-unit>
+        <trans-unit id="Resx/ModuleFileFilter" translate="yes" xml:space="preserve">
+          <source>module files (*.nnm)|*.nnm|All files (*.*)|*.*</source>
+          <target state="new">module files (*.nnm)|*.nnm|All files (*.*)|*.*</target>
+        </trans-unit>
+        <trans-unit id="Resx/SourceFilesFilter" translate="yes" xml:space="preserve">
+          <source>source files (*.nnl)|*.nnl|All files (*.*)|*.*</source>
+          <target state="new">source files (*.nnl)|*.nnl|All files (*.*)|*.*</target>
+        </trans-unit>
+        <trans-unit id="Resx/QueryFileFilter" translate="yes" xml:space="preserve">
+          <source>Queries (*.xnq)|*.xnq|All files (*.*)|*.*</source>
+          <target state="new">Queries (*.xnq)|*.xnq|All files (*.*)|*.*</target>
+        </trans-unit>
+        <trans-unit id="Resx/ChatLogFileFilter" translate="yes" xml:space="preserve">
+          <source>chatlog files (*.xcl)|*.xcl|All files (*.*)|*.*</source>
+          <target state="new">chatlog files (*.xcl)|*.xcl|All files (*.*)|*.*</target>
+        </trans-unit>
+        <trans-unit id="Resx/ImportTopicFileFilter" translate="yes" xml:space="preserve">
+          <source>Topic files (*.topic.xml)|*.topic.xml|AIML files (*.aiml)|*.aiml|All files (*.*)|*.*</source>
+          <target state="new">Topic files (*.topic.xml)|*.topic.xml|AIML files (*.aiml)|*.aiml|All files (*.*)|*.*</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">File filter for importing topics</note>
+          </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>

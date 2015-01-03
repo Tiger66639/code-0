@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.CtrlCustomConduitProgress"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             Background="White"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+            <TextBlock HorizontalAlignment="Center"
+                       Text="Files:"
+                       Margin="0,8,0,0" />
+            <ProgressBar Minimum="0"
+                         Maximum="1"
+                         SmallChange="0.05"
+                         LargeChange="0.1"
+                         Orientation="Horizontal"
+                         ToolTip="The current position within the list of files."
+                         Height="20"
+                         Margin="8,4,8,8"
+                         Value="{Binding Path=Process.FilesPosition}" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="1">
+            <TextBlock HorizontalAlignment="Center"
+                       Text="File position:"
+                       Margin="0,8,0,0" />
+            <ProgressBar Minimum="0"
+                         SmallChange="0.05"
+                         LargeChange="0.1"
+                         Maximum="1"
+                         Orientation="Horizontal"
+                         ToolTip="The current position within the file."
+                         Height="20"
+                         Margin="8,4,8,8"
+                         Value="{Binding Path=Process.FilePosition}" />
+        </StackPanel>
+
+        <Button Grid.Row="2"
+                Margin="8"
+                Width="80"
+                VerticalAlignment="Bottom"
+                Click="BtnCancel_Click"
+                IsEnabled="{Binding Path=IsRunning}"
+                HorizontalAlignment="Right">
+            Stop
+        </Button>
+
+    </Grid>
+</UserControl>

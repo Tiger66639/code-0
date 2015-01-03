@@ -1,0 +1,42 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Aici.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="MaxConcurrentProcessors" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">25</Value>
+    </Setting>
+    <Setting Name="InitProcessorStackSize" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="SendTimeOutMs" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">10000</Value>
+    </Setting>
+    <Setting Name="MinReservedBlockedProcessors" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">70</Value>
+    </Setting>
+    <Setting Name="LogFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">D:\Users\Esus\Documents\AIOnline\Logs\general.log</Value>
+    </Setting>
+    <Setting Name="ConversationsLogLoc" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">D:\Users\Esus\Documents\AIOnline\Logs</Value>
+    </Setting>
+    <Setting Name="DBLocation" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">D:\Users\Esus\Documents\AIOnline\Alice</Value>
+    </Setting>
+    <Setting Name="HtmlAsPartial" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="IPFilter" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="UseCustomPage" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="DefaultController" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Html</Value>
+    </Setting>
+    <Setting Name="CrazyTalkChar" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">D:\Users\Esus\Documents\bots\characters\CrazyTalkTest.ctm</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

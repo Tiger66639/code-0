@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This is the DTD for the metaRelation.xml file, which contains information
+about Meta Relations.  Its format can be summarized as:
+
+<meta-relations>
+  <meta-relation-type>*
+	<meta-relation>*
+-->
+<!ELEMENT meta-relations (meta-relation-type*)>
+
+<!ATTLIST meta-relations 
+	XMLCreated  CDATA     #REQUIRED>
+
+<!ELEMENT meta-relation-type (meta-relation*)>
+
+<!ATTLIST meta-relation-type
+	ID NMTOKEN #REQUIRED
+	name CDATA #REQUIRED
+	A-relation CDATA #REQUIRED
+	B-relation CDATA #REQUIRED
+	relation_type CDATA #REQUIRED>
+
+<!ELEMENT meta-relation EMPTY>
+
+<!ATTLIST meta-relation
+	ID NMTOKEN #REQUIRED
+	name CDATA #REQUIRED
+	A-relation CDATA #REQUIRED
+	A-relationId CDATA #REQUIRED
+	B-relation CDATA #REQUIRED
+	B-relationId CDATA #REQUIRED>

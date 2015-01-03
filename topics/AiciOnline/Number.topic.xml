@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>Number</Name>
+  <Rules>
+    <Rule>
+      <Name>noun</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^n:noun.(language unit).numeral { [and] (^n:noun.(language unit).numeral | ^n:number )}</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.Number = $n:ToNumber;</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>number</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^n:number</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.Number = $n;</Expression>
+      </ToCal>
+    </Rule>
+  </Rules>
+</Topic>

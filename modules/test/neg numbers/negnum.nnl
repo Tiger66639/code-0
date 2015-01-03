@@ -1,0 +1,13 @@
+//test negative const declarations.
+Cluster LearnPattern(code)
+{
+   this()
+   {
+      var indexoftext;
+      if (Count(indexoftext) == 0)
+      {
+         indexoftext = New(intneuron);   //create a new object, otherwise we will freeze the -1 object and destroy some code.    
+         Execute(ref(indexoftext)) = -1;   //need to store the -1 in the content of the var, the var doesn't need a ref to -1.    
+      }   //for the thes-var results, always try to store an index nr.    
+   }
+}

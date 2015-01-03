@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>Name</Name>
+  <Rules>
+    <Rule>
+      <Name>new rule 1</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>My name is ^n:noun.property.name</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>I (am|'m) ^n:noun.property.name</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>I (am|'m) called ^n:noun.property.name</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>call me ^n:noun.property.name</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals>
+        <Conditional>
+          <Condition>
+            <Expression>count(#user.name) == 0</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>Hi $n:ucase, nice to meet you</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+            <Output>
+              <Expression>Glad to get to know you $n:ucase</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+            <Output>
+              <Expression>Hello $n:ucase, I'll remember that name.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+          <Do>
+            <Expression>#user.name = $n;</Expression>
+          </Do>
+        </Conditional>
+        <Conditional>
+          <Condition>
+            <Expression>#user.name == $n</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>Hi $n:ucase, I think I already knew that.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+            <Output>
+              <Expression>There you are again, $n:ucase</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+            <Output>
+              <Expression>Nice to know your name remaind the same $n:ucase</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+      </Conditionals>
+      <Outputs>
+        <Output>
+          <Expression>Hu, I thought you were called $ori:ucase, ahh well chaning to $n\...</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>That's strange, I thought you were $ori:ucase, not $n\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>Updating records from $ori:ucase to $n:ucase</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>Let me change that to $n cause I thought you were called $ori:ucase\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <Do>
+        <Expression>$ori = #user.name;
+#user.name = $n;
+</Expression>
+      </Do>
+      <ToCal>
+        <Expression>#bot.mem.who.val = #user;
+#bot.mem.who.val.inv = 'you';</Expression>
+      </ToCal>
+    </Rule>
+  </Rules>
+</Topic>

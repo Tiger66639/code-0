@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>Age</Name>
+  <Rules>
+    <Rule>
+      <Name>What is possesive age</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>what is ^subj:adj.possesive age</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals>
+        <Conditional>
+          <Condition>
+            <Expression>$result</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>$result years.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+      </Conditionals>
+      <Outputs>
+        <Output>
+          <Expression>I don't know when #bot.mem.who.inv brithday is.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.who.inv = L(^subj:InvertPerson);
+#bot.mem.who.val = ^subj:ResolvePerson;
+$result = $time:year - #bot.mem.who.val.birthday:year;</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>How old by subject</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>how old ^be:verb.be ~subject</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals>
+        <Conditional>
+          <Condition>
+            <Expression>$result</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>$result years.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+      </Conditionals>
+      <Outputs>
+        <Output>
+          <Expression>I don't know when #bot.mem.who.inv brithday $be:conjugateverb(#bot.mem.who.inv)\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>$result = $time:year - #bot.mem.who.val.birthday:year;</Expression>
+      </ToCal>
+    </Rule>
+  </Rules>
+</Topic>

@@ -1,0 +1,119 @@
+﻿<Window x:Class="JaStDev.HAB.Designer.DlgCleanOrphans"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:HAB="clr-namespace:JaStDev.HAB;assembly=JaStDev.HabCore"
+        Title="Clean"
+        x:Name="this"
+        SizeToContent="Width"
+        Height="484"
+        WindowStyle="SingleBorderWindow"
+        WindowStartupLocation="CenterOwner"
+        Topmost="True"
+        ShowInTaskbar="False">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="DialogSettings.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+
+            <DataTemplate x:Key="SelectForImportTemplate">
+                <CheckBox IsChecked="{Binding Path=IsSelected, Mode=TwoWay}" />
+            </DataTemplate>
+
+            <DataTemplate x:Key="OrphanItemTemplate">
+                <ContentPresenter Content="{Binding Path=Item}">
+                    <ContentPresenter.ToolTip>
+                        <ToolTip>
+                            <FlowDocumentReader Document="{Binding Path=Item.Description, Mode=OneTime}"
+                                                IsFindEnabled="False"
+                                                IsPageViewEnabled="False"
+                                                IsPrintEnabled="False"
+                                                IsTwoPageViewEnabled="False"
+                                                MinWidth="100"
+                                                MinHeight="80"
+                                                ViewingMode="Scroll" />
+                        </ToolTip>
+                    </ContentPresenter.ToolTip>
+                </ContentPresenter>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </Window.Resources>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Bottom">
+            <StackPanel Orientation="Horizontal"
+                        Margin="8,0,0,0"
+                        HorizontalAlignment="Right">
+                <Button IsDefault="True"
+                        x:Name="BtnStartStop"
+                        Click="OnClickStart">
+                    Start
+                    <Button.ToolTip>
+                        Start the process.
+                    </Button.ToolTip>
+                </Button>
+
+                <Button x:Name="BtnDelete"
+                        Click="OnDelete_Click"
+                        IsEnabled="False">
+                    Delete
+                    <Button.ToolTip>
+                        Delete all the orphans that were found.
+                    </Button.ToolTip>
+                </Button>
+
+                <Button IsCancel="True"
+                        x:Name="BtnClose">
+                    Close
+                    <Button.ToolTip>
+                        Close the window.
+                    </Button.ToolTip>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel DockPanel.Dock="Bottom">
+            <TextBlock Text="{Binding ElementName=this, Path=CurrentPos, StringFormat=Processing {0}.}"
+                       HorizontalAlignment="Center" />
+            <ProgressBar Margin="8,8,8,0"
+                         Minimum="0"
+                         Height="16"
+                         Value="{Binding ElementName=this, Path=CurrentPos}"
+                         Maximum="{Binding ElementName=this, Path=Maximum}" />
+        </StackPanel>
+        <CheckBox DockPanel.Dock="Bottom"
+                  Checked="ChkSelectAl_Checked"
+                  x:Name="ChkSelectAll"
+                  Unchecked="ChkSelectAl_Unchecked"
+                  Indeterminate="ChkSelectAl_Indeterminate"
+                  Margin="8,0,0,0"
+                  IsThreeState="True">
+            (De)select all
+        </CheckBox>
+        <Border Margin="8"
+                BorderBrush="Gray"
+                BorderThickness="1">
+
+
+            <ListView ItemsSource="{Binding ElementName=this, Path=Orphans}"
+                      SelectionMode="Single"
+                      x:Name="LstOrphans">
+                <ListView.View>
+                    <GridView AllowsColumnReorder="true"
+                              ColumnHeaderToolTip="Frame Information">
+
+                        <GridViewColumn CellTemplate="{StaticResource SelectForImportTemplate}"
+                                        Header="Import"
+                                        Width="50" />
+
+                        <GridViewColumn CellTemplate="{StaticResource OrphanItemTemplate}"
+                                        Header="Item"
+                                        Width="Auto" />
+                    </GridView>
+
+                </ListView.View>
+
+            </ListView>
+        </Border>
+    </DockPanel>
+</Window>

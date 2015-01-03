@@ -1,0 +1,393 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+                    xmlns:dd="clr-namespace:DnD"
+                    xmlns:Ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls"
+                    xmlns:eff="clr-namespace:LearnWPF.Effects;assembly=LearnWPF.Effects">
+
+    <self:MindMapDragSourceAdvisor x:Key="MindMapItemDragAdvisor" />
+    <self:MindMapDropTargetAdvisor x:Key="MindMapDropAdvisor" />
+
+
+    <Style x:Key="MindMapDragThumb" TargetType="{x:Type Thumb}">
+        <Setter Property="Background" Value="AliceBlue" />
+        <Setter Property="BorderBrush" Value="SteelBlue" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Opacity" Value="0.5" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}" />
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Opacity" Value="1" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <ScaleTransform ScaleX="{Binding ElementName=This, Path=ToControl.Owner.ZoomInverse, Mode=OneWay}"
+                                ScaleY="{Binding ElementName=This, Path=ToControl.Owner.ZoomInverse, Mode=OneWay}" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--We assign this template to the DlgSelectNeurons dialog.-->
+    <DataTemplate x:Key="SelectableClusterForMindMaps">
+        <StackPanel Orientation="Horizontal">
+            <Image Source="{StaticResource ImgNeuronCluster}"
+                   Height="16" />
+            <CheckBox Content="{Binding Path=NeuronInfo.DisplayTitle}"
+                      IsChecked="{Binding Path=IsSelected}"
+                      Margin="8,0,0,0" />
+        </StackPanel>
+    </DataTemplate>
+
+    <!--Expander styles used for notes-->
+    <Style x:Key="NoteExpanderHeaderFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border>
+                        <Rectangle Margin="0"
+                                   StrokeThickness="1"
+                                   Stroke="Black"
+                                   StrokeDashArray="1 2"
+                                   SnapsToDevicePixels="true" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <LinearGradientBrush x:Key="NoteExpanderArrowFill" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="White" Offset="0" />
+            <GradientStop Color="#FFBFBFBF" Offset="0.5" />
+            <GradientStop Color="#FF878787" Offset="1" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="NoteExpanderArrowHoverFill" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#FFF0F8FE" Offset="0" />
+            <GradientStop Color="#FFE0F3FE" Offset="0.3" />
+            <GradientStop Color="#FF6FA7C5" Offset="1" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="NoteExpanderArrowPressedFill" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#FFDCF0FA" Offset="0" />
+            <GradientStop Color="#FFC5E6F7" Offset="0.2" />
+            <GradientStop Color="#FF5690D0" Offset="1" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <Style x:Key="NoteExpanderDownHeaderStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border Padding="{TemplateBinding Padding}">
+                        <Grid Background="Transparent"
+                              SnapsToDevicePixels="False">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="19" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Ellipse x:Name="circle"
+                                     Width="19"
+                                     Height="19"
+                                     Stroke="DarkGray"
+                                     HorizontalAlignment="Center"
+                                     VerticalAlignment="Center"
+                                     Fill="{DynamicResource NoteExpanderArrowFill}" />
+                            <Path x:Name="arrow"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Stroke="#666"
+                                  StrokeThickness="2"
+                                  SnapsToDevicePixels="false"
+                                  Data="M 1,1.5 L 4.5,5 L 8,1.5" />
+                            <ContentPresenter Grid.Column="1"
+                                              Margin="4,0,0,0"
+                                              HorizontalAlignment="Left"
+                                              VerticalAlignment="Center"
+                                              SnapsToDevicePixels="True"
+                                              RecognizesAccessKey="True" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" TargetName="arrow" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Stroke" Value="#FF3C7FB1" TargetName="circle" />
+                            <Setter Property="Fill" Value="{DynamicResource NoteExpanderArrowHoverFill}"
+                                    TargetName="circle" />
+                            <Setter Property="Stroke" Value="#222" TargetName="arrow" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Stroke" Value="#FF526C7B" TargetName="circle" />
+                            <Setter Property="StrokeThickness" Value="1.5" TargetName="circle" />
+                            <Setter Property="Fill" Value="{DynamicResource NoteExpanderArrowPressedFill}"
+                                    TargetName="circle" />
+                            <Setter Property="Stroke" Value="#FF003366" TargetName="arrow" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="NoteExpander" TargetType="{x:Type Expander}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Expander}">
+                    <DockPanel>
+                        <Border DockPanel.Dock="Top"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="3"
+                                SnapsToDevicePixels="true">
+                            <StackPanel Orientation="Horizontal">
+                                <ToggleButton x:Name="HeaderSite"
+                                              Margin="1"
+                                              MinWidth="0"
+                                              MinHeight="0"
+                                              Style="{StaticResource NoteExpanderDownHeaderStyle}"
+                                              FocusVisualStyle="{StaticResource NoteExpanderHeaderFocusVisual}"
+                                              IsChecked="{Binding Path=IsExpanded,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+                                              Foreground="{TemplateBinding Foreground}"
+                                              Padding="{TemplateBinding Padding}"
+                                              FontFamily="{TemplateBinding FontFamily}"
+                                              FontSize="{TemplateBinding FontSize}"
+                                              FontStyle="{TemplateBinding FontStyle}"
+                                              FontStretch="{TemplateBinding FontStretch}"
+                                              FontWeight="{TemplateBinding FontWeight}"
+                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                <!--we put this seperatly from the togglebutton so we can use this to drag the item around-->
+                                <ContentPresenter Content="{TemplateBinding Header}"
+                                                  ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" />
+                            </StackPanel>
+                        </Border>
+                        <ContentPresenter x:Name="ExpandSite"
+                                          DockPanel.Dock="Bottom"
+                                          Visibility="Collapsed"
+                                          Focusable="false"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}" />
+                    </DockPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsExpanded" Value="true">
+                            <Setter Property="Visibility" Value="Visible" TargetName="ExpandSite" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--default template for clusters.-->
+    <DataTemplate x:Key="MindMapNeuronClusterTemplate">
+        <Grid HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch"
+              Background="Transparent"
+              dd:DragDropManager.DragSource="{StaticResource MindMapItemDragAdvisor}">
+            <Image x:Name="ImgBackground"
+                   Source="{Binding Path=Item, Converter={StaticResource NeuronToNoBorderImgConv}}"
+                   Stretch="Fill"
+                   IsHitTestVisible="False" />
+            <!--This path defines the outer border of the link lines. (required to calculate the edge). 
+               We also use it to draw a border line that always has a width of 1-->
+            <Path Data="{Binding Path=Item, Converter={StaticResource NeuronToOutlineConvForCluster}}"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  Stretch="Fill"
+                  StrokeThickness="1"
+                  Stroke="#FF0B4275"
+                  IsHitTestVisible="False" />
+            <!---->
+            <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Margin="0,12,0,0">
+                <TextBox Text="{Binding Path=NeuronInfo.DisplayTitle}"
+                         HorizontalAlignment="Center"
+                         BorderThickness="0"
+                         Background="Transparent"
+                         VerticalAlignment="Center" />
+                <Ctrls:DropDownNSSelector x:Name="CmbMeanings"
+                                          HorizontalAlignment="Center"
+                                          MinWidth="40"
+                                          SelectedNeuron="{Binding Path=Meaning, Mode=TwoWay}"
+                                          ToolTip="The meaning of the cluster.">
+                    <Ctrls:DropDownNSSelector.ItemsSources>
+                        <Ctrls:BrowserDataSource PageHeader="Default meanings"
+                                                 PageToolTip="The available default link and cluster meanings."
+                                                 ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=DefaultMeaningsData}"
+                                                 AsTree="False" />
+                        <Ctrls:BrowserDataSource PageHeader="Thesaurus"
+                                                 PageToolTip="All the outputs declared in the topics attached to thesaurus items"
+                                                 ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=Thesaurus.BrowsableItems, Mode=OneWay}"
+                                                 AsTree="True" />
+                    </Ctrls:DropDownNSSelector.ItemsSources>
+                </Ctrls:DropDownNSSelector>
+            </StackPanel>
+        </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Path=ChildCount}" Value="0">
+                <Setter TargetName="ImgBackground" Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect />
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+
+    <!--default template for a neuron.-->
+    <DataTemplate x:Key="MindMapNeuronTemplate">
+        <!--Needs a background, otherwise can't drag-->
+        <Grid HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch"
+              Background="Transparent"
+              dd:DragDropManager.DragSource="{StaticResource MindMapItemDragAdvisor}">
+            <Image x:Name="ImgBackground"
+                   Source="{Binding Path=Item, Converter={StaticResource NeuronToImgConv}}"
+                   Stretch="Fill"
+                   IsHitTestVisible="False" />
+            <!--this was a test, to see where the outline was-->
+            <!--<ItemsControl ItemsSource="{Binding Path=EdgePoints}">
+            <ItemsControl.ItemContainerStyle>
+               <Style>
+                  <Setter Property="Canvas.Left" Value="{Binding Path=Point.X}"/>
+                  <Setter Property="Canvas.Top" Value="{Binding Path=Point.Y}"/>
+               </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+               <DataTemplate>
+                  <Border Width="5"
+                          Height="5"
+                          Background="Black"
+                          BorderBrush="Black"
+                          BorderThickness="1"/>
+               </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+               <ItemsPanelTemplate>
+                  <Canvas/>
+               </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.RenderTransform>
+               <TranslateTransform X="{Binding Path=XInv}" Y="{Binding Path=YInv}"/>
+            </ItemsControl.RenderTransform>
+         </ItemsControl>-->
+            <TextBox Text="{Binding Path=NeuronInfo.DisplayTitle}"
+                     HorizontalAlignment="Center"
+                     BorderThickness="0"
+                     Background="Transparent"
+                     VerticalAlignment="Center" />
+        </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Path=ChildCount}" Value="0">
+                <Setter TargetName="ImgBackground" Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect />
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <!--default template for a text neuron.-->
+    <DataTemplate x:Key="MindMapTextNeuronTemplate">
+        <!--Needs a background, otherwise can't drag-->
+        <Grid Width="{Binding Path=Width}"
+              Height="{Binding Path=Height}"
+              Background="Transparent"
+              dd:DragDropManager.DragSource="{StaticResource MindMapItemDragAdvisor}">
+            <!--This path defines the outer border of the link lines. (required to calculate the edge). 
+                     We also use this to put the shade on cause the image is transparent, giving it a bad color when the dropshadow is on.-->
+            <Path x:Name="ImgBackground"
+                  Data="{Binding Path=Item, Converter={StaticResource NeuronToOutlineConv}}"
+                  Fill="White"
+                  Stroke="White"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  Stretch="Fill"
+                  IsHitTestVisible="False" />
+            <Image Source="{Binding Path=Item, Converter={StaticResource NeuronToImgConv}}"
+                   Stretch="Fill"
+                   IsHitTestVisible="False" />
+            <!---->
+            <TextBox BorderThickness="0"
+                     Background="Transparent"
+                     Text="{Binding Path=Item.Text}"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Center" />
+        </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Path=ChildCount}" Value="0">
+                <Setter TargetName="ImgBackground" Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect />
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+
+    <!--default template for mind map links.
+      The context menu for links is defined in LinkOverlay.xaml
+   -->
+    <DataTemplate x:Key="MindMapLinkTemplate">
+        <Canvas>
+            <TextBlock Text="{Binding Path=MeaningInfo.DisplayTitle}"
+                       Canvas.Left="{Binding Path=TextPos.X}"
+                       Canvas.Top="{Binding Path=TextPos.Y}" />
+
+            <!--the line-->
+            <Polyline Points="{Binding Path=Points, Mode=OneWay}"
+                      Stroke="Black"
+                      StrokeThickness="1"
+                      Visibility="{Binding Path=PointsVisibility}" />
+            <!--the arrow
+         Needs a background, otherwise can't drag-->
+            <Grid Width="10"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top"
+                  Height="10">
+                <Path Data="M 10,0 L 0,5 L10,10"
+                      Stroke="Black"
+                      Fill="Transparent"
+                      StrokeThickness="1"
+                      Tag="end">
+                    <Path.RenderTransform>
+                        <!--RenderTransformOrigin="0.5,0.5"-->
+                        <TransformGroup>
+                            <!--This translation is required so a rotation will be round the tip of the triangle (given a render transfor of 0,0 - which is required, otherwise it reacts strange)-->
+                            <TranslateTransform Y="-5" />
+                            <!--also need a rotation so that it looks like it's following the diretion of the line, data provided by mindmapLink-->
+                            <RotateTransform Angle="{Binding Path=EndAngle, Mode=OneWay}" />
+                            <!--need to put it at the correct spot, a listboxitem for a link stretches the entire canvas, so we can do our own layout.-->
+                            <TranslateTransform X="{Binding Path=EndPoint.X}" Y="{Binding Path=EndPoint.Y}" />
+
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+
+            </Grid>
+        </Canvas>
+    </DataTemplate>
+
+</ResourceDictionary>

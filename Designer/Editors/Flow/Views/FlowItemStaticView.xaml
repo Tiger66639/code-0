@@ -1,0 +1,30 @@
+﻿<ContentControl x:Class="JaStDev.HAB.Designer.FlowItemStaticView"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+                KeyboardNavigation.IsTabStop="False"
+                MouseDoubleClick="ContentControl_MouseDoubleClick">
+    <ContentControl.Template>
+        <ControlTemplate TargetType="{x:Type ContentControl}">
+            <ContentPresenter />
+            <ControlTemplate.Triggers>
+                <DataTrigger Binding="{Binding Path=IsSelected}" Value="True">
+                    <Setter Property="ContentControl.Foreground"
+                            Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                </DataTrigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </ContentControl.Template>
+    <StackPanel Orientation="Horizontal">
+        <ContentPresenter Content="{Binding}"
+                          x:Name="TheContent"
+                          ContentTemplateSelector="{StaticResource StaticFlowItemContentSelector}"
+                          VerticalAlignment="Center" />
+        <ItemsControl Style="{StaticResource OverlayItemsControlStyleBracketed}"
+                      VerticalAlignment="Bottom"
+                      VerticalContentAlignment="Bottom"
+                      ItemsSource="{Binding Path=NeuronInfo.Overlays, Mode=OneWay}"
+                      ItemTemplate="{StaticResource FlowItemOverlayTemplate}"
+                      Visibility="{Binding RelativeSource={RelativeSource AncestorType=self:FlowEditorView}, Path=OverlayVisibility, Mode=OneWay}" />
+    </StackPanel>
+</ContentControl>

@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.AudioChannelView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:cf="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+             xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+             cf:Help.Topic="audiochannel.html">
+    <DockPanel>
+        <Expander Style="{StaticResource SimpleExpandDownStyle}"
+                  IsExpanded="{Binding Source={x:Static self:Properties.Settings.Default}, Path=ToolbarExpandedAudioChannel, Mode=TwoWay}"
+                  Focusable="False"
+                  DockPanel.Dock="Top">
+            <ToolBar />
+        </Expander>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="6" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Border x:Name="BrdIn"
+                    Grid.Row="1">
+                <Image x:Name="ImgIn"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"
+                       Stretch="Fill" />
+            </Border>
+            <GridSplitter ShowsPreview="True"
+                          Grid.Row="1"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch" />
+            <Border x:Name="BrdOut"
+                    Grid.Row="1">
+                <Image x:Name="ImgOut"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"
+                       Stretch="Fill" />
+            </Border>
+        </Grid>
+        <!--We need this border to get the initiail size of the image, bogus-->
+    </DockPanel>
+</UserControl>

@@ -1,0 +1,74 @@
+class System
+{
+   using common;
+   //this code cluster is used as a function to call other functions by reference.
+   //the first argument of this function should always be a neuron that represents a function. This is the real function that will be called.
+   //this cluster is registered in the parser mappings list, cause it is used in the output patterns (call an os function by as a reference).
+   NeuronCluster CallRef: 1249 { }
+   
+   //for calling .net functions.
+   ReflectionSin OS_out: 1248 { }
+   
+   //contains a possible error, caused by trying to call a .net function through the reflection sin, which raised an exception.
+   Variable LastError: 1337{}
+
+   //sends the function-neuron and arguments to the OS-reflection sin.
+   [CallOS]
+   ExpressionsBlock CallOsFunction
+   {
+      statements(var function): var
+      {
+         var tosend = New(neuron);
+         var iArgs = New(neuroncluster);
+         var oscallresult, operandresult;
+         
+         while(ParamStackCount() > 0)
+         {
+            PopValue(operandresult);
+            if (Count(operandresult) > 1)
+            {
+               operandresult = MakeCluster(Statics.argument, operandresult);
+               InsertChild(iArgs, operandresult, 0);                                            //the args are returned in reverse order (it's a stack), so add in reverse order.
+               Freeze(operandresult);
+            }
+            else
+               InsertChild(iArgs, operandresult, 0);                                            //the args are returned in reverse order (it's a stack), so add in reverse order.   
+         }
+         if (function == CallRef)
+         {
+            function = GetFirstChild(iArgs);
+            RemoveChildAt(iArgs, 0);
+         }
+         AddLink(tosend, function, Statics.reflectionsincall);
+         AddLink(tosend, iArgs, Statics.arguments);
+         Output(OS_out, tosend);
+         LastError = GetFirstOut(tosend, Statics.reflectionsinexception);
+         if (Count(LastError) > 0)
+         {
+            Error(LastError);
+            var varcollector = ref(LastError);
+            var iVarCluster = GetFirst(GetChildrenFiltered(PatternMatcher.SplitResults, ref(filtervar), ref((GetClusterMeaning(filtervar) == varcollector))));
+            if (Count(iVarCluster) > 0)
+            {
+               ClearChildren(iVarCluster);
+               AddChild(iVarCluster, LastError);
+            }
+            else
+            {
+               iVarCluster = MakeCluster(varcollector, LastError);
+               AddChild(PatternMatcher.SplitResults, iVarCluster);
+            }
+            Freeze(LastError, PatternMatcher.SplitResults, iVarCluster);
+         }
+         oscallresult = GetFirstOut(tosend, Statics.Value);
+         if (TypeOf(oscallresult) == neuroncluster)
+         {
+            var temp = GetChildren(oscallresult);
+            Delete(oscallresult);
+            oscallresult = temp;
+         }
+         Freeze(tosend, iArgs, oscallresult);
+         return oscallresult;
+      }
+   }
+}

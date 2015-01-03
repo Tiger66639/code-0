@@ -1,0 +1,87 @@
+﻿<Window x:Class="JaStDev.HAB.Designer.DlgLink"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+        Title="Link"
+        x:Name="TheWindow"
+        WindowStyle="SingleBorderWindow"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False"
+        Height="161" Width="336">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="DialogSettings.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="MindMapNeuronTemplate">
+                <DockPanel>
+                    <Image DockPanel.Dock="Left"
+                           Margin="0,1,4,1"
+                           Source="{Binding Path=Item, Converter={StaticResource NeuronToImgConv}}"
+                           Width="16"
+                           Height="14"
+                           Stretch="Fill" />
+                    <TextBlock Text="{Binding Path=NeuronInfo.DisplayTitle}"
+                               TextTrimming="CharacterEllipsis" />
+                </DockPanel>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </Window.Resources>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Bottom">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <Button IsDefault="True"
+                        Click="OnClickOk">
+                    Ok
+                    <Button.ToolTip>
+                        Apply the changes and close the window.
+                    </Button.ToolTip>
+                </Button>
+                <Button IsCancel="True">
+                    Cancel
+                    <Button.ToolTip>
+                        Undo the changes and close the window.
+                    </Button.ToolTip>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+        <Grid VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="28" />
+                <RowDefinition Height="28" />
+                <RowDefinition Height="28" />
+            </Grid.RowDefinitions>
+
+            <TextBlock>From:</TextBlock>
+            <ComboBox Grid.Column="1"
+                      Name="CmbFrom"
+                      ItemsSource="{Binding ElementName=TheWindow, Path=FromList}"
+                      ItemTemplate="{StaticResource MindMapNeuronTemplate}"
+                      SelectedItem="{Binding ElementName=TheWindow, Path=SelectedFrom, Mode=TwoWay}" />
+
+            <TextBlock Grid.Row="1">To:</TextBlock>
+            <ComboBox Grid.Row="1"
+                      Grid.Column="1"
+                      Name="CmbTo"
+                      ItemsSource="{Binding ElementName=TheWindow, Path=ToList}"
+                      ItemTemplate="{StaticResource MindMapNeuronTemplate}"
+                      SelectedItem="{Binding ElementName=TheWindow, Path=SelectedTo, Mode=TwoWay}" />
+
+            <TextBlock Grid.Row="2">Meaning:</TextBlock>
+            <ComboBox Grid.Row="2"
+                      Grid.Column="1"
+                      Name="CmbMeaning"
+                      ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=DefaultMeanings}"
+                      SelectedItem="{Binding ElementName=TheWindow, Path=SelectedMeaning, Mode=TwoWay}"
+                      ItemTemplate="{StaticResource MeaningTemplate}" />
+
+        </Grid>
+    </DockPanel>
+</Window>

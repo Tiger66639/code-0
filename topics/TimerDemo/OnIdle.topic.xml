@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>OnIdle</Name>
+  <Rules />
+  <Questions>
+    <Conditional>
+      <Condition />
+      <Outputs>
+        <Output>
+          <Expression>Hello, Is someone there?</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>Is someone there?</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Conditional>
+  </Questions>
+</Topic>

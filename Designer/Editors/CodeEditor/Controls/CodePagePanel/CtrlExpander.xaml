@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.WPF.Controls.CtrlExpander"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:dd="clr-namespace:DnD"
+             Focusable="True"
+             Background="Transparent"
+             dd:DragDropManager.DragSource="{StaticResource CodeListItemDragAdvisor}"
+             dd:DragDropManager.DropTarget="{StaticResource CodeListItemDropAdvisor}">
+    <Grid Margin="0,4,8,0">
+        <ToggleButton x:Name="Toggle"
+                      Focusable="False"
+                      Style="{StaticResource ExpanderDownHeaderStyle}"
+                      FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}"
+                      IsChecked="{Binding Path=IsExpanded,Mode=TwoWay}"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Right"
+                      Unchecked="Toggle_Unchecked"
+                      Checked="Toggle_Checked" />
+    </Grid>
+</UserControl>

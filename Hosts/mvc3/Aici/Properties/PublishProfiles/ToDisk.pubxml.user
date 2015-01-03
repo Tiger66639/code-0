@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <LastUsedBuildConfiguration>Release</LastUsedBuildConfiguration>
+    <LastUsedPlatform>Any CPU</LastUsedPlatform>
+    <TimeStampOfAssociatedLegacyPublishXmlFile>2013-01-19T19:48:15.5360114+01:00</TimeStampOfAssociatedLegacyPublishXmlFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="bin/Aici.dll">
+      <publishTime>04/25/2013 17:42:27</publishTime>
+    </File>
+    <File Include="bin/Characters.dll">
+      <publishTime>04/25/2013 17:41:41</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.dll">
+      <publishTime>10/30/2012 09:40:21</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.xml">
+      <publishTime>10/30/2012 09:40:21</publishTime>
+    </File>
+    <File Include="bin/JaStDev.DataCore.dll">
+      <publishTime>10/30/2012 09:33:57</publishTime>
+    </File>
+    <File Include="bin/JaStDev.HabCore.dll">
+      <publishTime>04/25/2013 17:41:12</publishTime>
+    </File>
+    <File Include="bin/JaStDev.HabCore.XmlSerializers.dll">
+      <publishTime>04/25/2013 17:41:13</publishTime>
+    </File>
+    <File Include="bin/JaStDev.LogService.dll">
+      <publishTime>04/22/2013 11:11:37</publishTime>
+    </File>
+    <File Include="bin/JaStDev.Sins.dll">
+      <publishTime>04/25/2013 17:41:14</publishTime>
+    </File>
+    <File Include="bin/JaStDev.UndoSystem.dll">
+      <publishTime>10/30/2012 09:33:53</publishTime>
+    </File>
+    <File Include="bin/JaStDev.WordNetSin.dll">
+      <publishTime>04/25/2013 15:17:05</publishTime>
+    </File>
+    <File Include="bin/NNLParsers.dll">
+      <publishTime>04/25/2013 15:17:02</publishTime>
+    </File>
+    <File Include="bin/os.MonoDroid.dll">
+      <publishTime>04/07/2013 19:47:53</publishTime>
+    </File>
+    <File Include="bin/QuerySupport.dll">
+      <publishTime>04/25/2013 15:17:03</publishTime>
+    </File>
+    <File Include="bin/System.Web.Abstractions.dll">
+      <publishTime>03/18/2010 19:31:26</publishTime>
+    </File>
+    <File Include="bin/Tokenizer.dll">
+      <publishTime>04/25/2013 17:41:39</publishTime>
+    </File>
+    <File Include="Content/Site.css">
+      <publishTime>03/30/2013 15:56:23</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>10/30/2012 09:40:16</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>10/30/2012 09:40:15</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.5.1-vsdoc.js">
+      <publishTime>10/30/2012 09:40:16</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.5.1.js">
+      <publishTime>10/30/2012 09:40:16</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.5.1.min.js">
+      <publishTime>10/30/2012 09:40:16</publishTime>
+    </File>
+    <File Include="Scripts/jquery-ui-1.8.11.js">
+      <publishTime>10/30/2012 09:40:16</publishTime>
+    </File>
+    <File Include="Scripts/jquery-ui-1.8.11.min.js">
+      <publishTime>10/30/2012 09:40:16</publishTime>
+    </File>
+    <File Include="Scripts/jquery.unobtrusive-ajax.js">
+      <publishTime>10/30/2012 09:40:16</publishTime>
+    </File>
+    <File Include="Scripts/jquery.unobtrusive-ajax.min.js">
+      <publishTime>10/30/2012 09:40:16</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate-vsdoc.js">
+      <publishTime>10/30/2012 09:40:16</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.js">
+      <publishTime>10/30/2012 09:40:16</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.min.js">
+      <publishTime>10/30/2012 09:40:16</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.unobtrusive.js">
+      <publishTime>10/30/2012 09:40:16</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.unobtrusive.min.js">
+      <publishTime>10/30/2012 09:40:16</publishTime>
+    </File>
+    <File Include="Scripts/MicrosoftAjax.debug.js">
+      <publishTime>10/30/2012 09:40:16</publishTime>
+    </File>
+    <File Include="Scripts/MicrosoftAjax.js">
+      <publishTime>10/30/2012 09:40:16</publishTime>
+    </File>
+    <File Include="Scripts/MicrosoftMvcAjax.debug.js">
+      <publishTime>10/30/2012 09:40:16</publishTime>
+    </File>
+    <File Include="Scripts/MicrosoftMvcAjax.js">
+      <publishTime>10/30/2012 09:40:16</publishTime>
+    </File>
+    <File Include="Scripts/MicrosoftMvcValidation.debug.js">
+      <publishTime>10/30/2012 09:40:16</publishTime>
+    </File>
+    <File Include="Scripts/MicrosoftMvcValidation.js">
+      <publishTime>10/30/2012 09:40:16</publishTime>
+    </File>
+    <File Include="Scripts/modernizr-1.7.js">
+      <publishTime>10/30/2012 09:40:16</publishTime>
+    </File>
+    <File Include="Scripts/modernizr-1.7.min.js">
+      <publishTime>10/30/2012 09:40:16</publishTime>
+    </File>
+    <File Include="Scripts/Scroll.js">
+      <publishTime>04/06/2013 17:57:45</publishTime>
+    </File>
+    <File Include="Views/Account/ChangePassword.cshtml">
+      <publishTime>10/30/2012 09:40:17</publishTime>
+    </File>
+    <File Include="Views/Account/ChangePasswordSuccess.cshtml">
+      <publishTime>10/30/2012 09:40:17</publishTime>
+    </File>
+    <File Include="Views/Account/LogOn.cshtml">
+      <publishTime>10/30/2012 09:40:17</publishTime>
+    </File>
+    <File Include="Views/Account/Register.cshtml">
+      <publishTime>10/30/2012 09:40:17</publishTime>
+    </File>
+    <File Include="Views/Api/Index.cshtml">
+      <publishTime>10/30/2012 09:40:17</publishTime>
+    </File>
+    <File Include="Views/ApiText/Index.cshtml">
+      <publishTime>10/30/2012 09:40:17</publishTime>
+    </File>
+    <File Include="Views/CT/Index.cshtml">
+      <publishTime>04/06/2013 19:40:15</publishTime>
+    </File>
+    <File Include="Views/Home/About.cshtml">
+      <publishTime>10/30/2012 09:40:17</publishTime>
+    </File>
+    <File Include="Views/Home/Index.cshtml">
+      <publishTime>10/30/2012 09:40:17</publishTime>
+    </File>
+    <File Include="Views/Html/Index.cshtml">
+      <publishTime>04/06/2013 19:36:19</publishTime>
+    </File>
+    <File Include="Views/Html/Send.cshtml">
+      <publishTime>10/30/2012 09:40:17</publishTime>
+    </File>
+    <File Include="Views/Html/test.cshtml">
+      <publishTime>10/30/2012 09:40:17</publishTime>
+    </File>
+    <File Include="Views/Shared/Error.cshtml">
+      <publishTime>10/30/2012 09:40:17</publishTime>
+    </File>
+    <File Include="Views/Shared/LogView.cshtml">
+      <publishTime>04/06/2013 15:01:41</publishTime>
+    </File>
+    <File Include="Views/Shared/Send.cshtml">
+      <publishTime>04/06/2013 19:54:07</publishTime>
+    </File>
+    <File Include="Views/Shared/_Layout.cshtml">
+      <publishTime>04/06/2013 17:31:43</publishTime>
+    </File>
+    <File Include="Views/Shared/_LogOnPartial.cshtml">
+      <publishTime>10/30/2012 09:40:17</publishTime>
+    </File>
+    <File Include="Views/Web.config">
+      <publishTime>04/06/2013 15:15:11</publishTime>
+    </File>
+    <File Include="Views/_ViewStart.cshtml">
+      <publishTime>10/30/2012 09:40:17</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>04/25/2013 16:00:33</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

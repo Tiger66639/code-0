@@ -1,0 +1,20 @@
+﻿<self:CtrlEditorItem x:Class="JaStDev.HAB.Designer.CtrlStatic"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+                     xmlns:hab="clr-namespace:JaStDev.HAB;assembly=JaStDev.HabCore"
+                     xmlns:dd="clr-namespace:DnD"
+                     Background="Transparent"
+                     Focusable="True"
+                     x:Name="this">
+    <Grid Background="Transparent"
+          Height="24">
+        <Image Source="{Binding Path=Item, Converter={StaticResource NeuronToImgConv}}"
+               Style="{StaticResource CodeItemBackgroundImageStyle}"
+               IsHitTestVisible="False" />
+        <TextBlock HorizontalAlignment="Center"
+                   Margin="8,0,8,0"
+                   VerticalAlignment="Center"
+                   Text="{Binding Path=NeuronInfo.DisplayTitle}" />
+    </Grid>
+</self:CtrlEditorItem>

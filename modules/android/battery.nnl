@@ -1,0 +1,36 @@
+class Battery
+{
+  
+   [external
+      <LibRef>
+        <AssemblyName>D:\Users\Esus\Documents\dev\VS\Projects\AI-SF\Designer\bin\Debug\os.MonoDroid.dll</AssemblyName>
+        <TypeName>os.MonoDroid.PhoneManagement</TypeName>
+        <MethodName>GetBatteryTemp</MethodName>
+        <MappedName>GetBatteryTemp</MappedName>
+        <ParameterTypes />
+      </LibRef>
+   ]
+   GetBatteryTemp(): int; 
+   
+   [external
+      <LibRef>
+        <AssemblyName>D:\Users\Esus\Documents\dev\VS\Projects\AI-SF\Designer\bin\Debug\os.MonoDroid.dll</AssemblyName>
+        <TypeName>os.MonoDroid.PhoneManagement</TypeName>
+        <MethodName>GetBatteryLevel</MethodName>
+        <MappedName>GetBatteryLevel</MappedName>
+        <ParameterTypes />
+      </LibRef>
+   ]
+   GetBatterLevel(): var;
+   
+   [external
+      <LibRef>
+        <AssemblyName>D:\Users\Esus\Documents\dev\VS\Projects\AI-SF\Designer\bin\Debug\os.MonoDroid.dll</AssemblyName>
+        <TypeName>os.MonoDroid.PhoneManagement</TypeName>
+        <MethodName>GetBatteryVoltage</MethodName>
+        <MappedName>GetBatteryVoltage</MappedName>
+        <ParameterTypes />
+      </LibRef>
+   ]
+   GetBatteryVoltage(): var;
+}

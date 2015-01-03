@@ -1,0 +1,3 @@
+E:\Users\Esus\Documents\VS\code-0\Hosts\mvcApiClientDemo\obj\x86\Debug\ResolveAssemblyReference.cache
+E:\Users\Esus\Documents\VS\code-0\Hosts\mvcApiClientDemo\obj\x86\Debug\mvcApiClientDemo.Properties.Resources.resources
+E:\Users\Esus\Documents\VS\code-0\Hosts\mvcApiClientDemo\obj\x86\Debug\mvcApiClientDemo.csproj.GenerateResource.Cache

@@ -1,0 +1,27 @@
+﻿<ResourceDictionary x:Class="JaStDev.HAB.Designer.ImageChannelResourceDict"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:self="clr-namespace:JaStDev.HAB.Designer">
+
+
+    <x:Array x:Key="ImageChannelEditingModes" x:Type="{x:Type InkCanvasEditingMode}">
+        <x:Static Member="InkCanvasEditingMode.Ink" />
+        <x:Static Member="InkCanvasEditingMode.Select" />
+        <x:Static Member="InkCanvasEditingMode.EraseByPoint" />
+        <x:Static Member="InkCanvasEditingMode.EraseByStroke" />
+    </x:Array>
+
+    <DrawingAttributes x:Key="ImageChannelDrawingAttribs" />
+
+
+    <!--Template for ImageReference resources.-->
+    <DataTemplate DataType="{x:Type self:ImageReference}">
+        <Image Height="100">
+            <Image.Source>
+                <BitmapImage DecodePixelHeight="100" CacheOption="OnLoad" UriSource="{Binding Path=FileName}" />
+            </Image.Source>
+        </Image>
+    </DataTemplate>
+
+</ResourceDictionary>

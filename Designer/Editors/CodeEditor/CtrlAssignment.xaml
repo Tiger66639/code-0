@@ -1,0 +1,75 @@
+﻿<self:CtrlEditorItem x:Class="JaStDev.HAB.Designer.CtrlAssignment"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+                     xmlns:hab="clr-namespace:JaStDev.HAB;assembly=JaStDev.HabCore"
+                     xmlns:dd="clr-namespace:DnD"
+                     xmlns:Ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls"
+                     Ctrls:CodePagePanel.IsNextStatement="{Binding Path=IsNextStatement}"
+                     Ctrls:CodePagePanel.IsSelected="{Binding Path=IsSelected}"
+                     Background="Transparent"
+                     Focusable="True"
+                     x:Name="this">
+    <Grid>
+        <!--the image indicating multiple usage-->
+        <Path Data="{Binding Source={StaticResource ImgAssignmentPath}}"
+              Visibility="{Binding Path=IsMultiUsed, Converter={StaticResource BoolToVisConv}}"
+              Stretch="Fill"
+              Stroke="Black"
+              StrokeThickness="1"
+              Fill="{StaticResource ImgAssignmentBrush}">
+            <Path.RenderTransform>
+                <TranslateTransform X="4" Y="-4" />
+            </Path.RenderTransform>
+        </Path>
+        <!--the image-->
+        <Path Data="{Binding Source={StaticResource ImgAssignmentPath}}"
+              Stretch="Fill"
+              Stroke="Black"
+              StrokeThickness="1"
+              Fill="{StaticResource ImgAssignmentBrush}" />
+        <StackPanel Orientation="Horizontal"
+                    Margin="16,0,16,0">
+
+            <!--Left part-->
+            <Grid Style="{StaticResource CodeItemDropTargetGrid}"
+                  Tag="{Binding ElementName=CPLeftPart}"
+                  dd:DragDropManager.DropTarget="{StaticResource ResultCodeItemDropAdvisor}"
+                  dd:DragDropManager.DragSource="{StaticResource CodeItemDragAdvisor}">
+                <Border Style="{StaticResource CodeItemDropTargetBorder}"
+                        Visibility="{Binding Path=NotHasLeftPart, Converter={StaticResource BoolToVisConv}, Mode=OneWay}">
+                    <TextBlock Style="{StaticResource CodeItemDropTargetText}"
+                               ToolTip="Left part of expression">
+                        <Italic>Left</Italic>
+                    </TextBlock>
+                </Border>
+                <ContentPresenter Content="{Binding Path=LeftPart, Mode=TwoWay}"
+                                  x:Name="CPLeftPart" />
+            </Grid>
+
+            <TextBlock Margin="4,0,4,0"
+                       VerticalAlignment="Center">
+                <Bold>=</Bold>
+            </TextBlock>
+            <!--Right part part-->
+            <Grid Style="{StaticResource CodeItemDropTargetGrid}"
+                  Tag="{Binding ElementName=CPRightPart}"
+                  dd:DragDropManager.DropTarget="{StaticResource CodeItemDropAdvisor}"
+                  dd:DragDropManager.DragSource="{StaticResource CodeItemDragAdvisor}">
+                <Border Style="{StaticResource CodeItemDropTargetBorder}"
+                        Visibility="{Binding Path=NotHasRightPart, Converter={StaticResource BoolToVisConv}, Mode=OneWay}">
+                    <TextBlock Style="{StaticResource CodeItemDropTargetText}"
+                               ToolTip="Right part of expression">
+                        <Italic>Right</Italic>
+                    </TextBlock>
+                </Border>
+                <ContentPresenter Content="{Binding Path=RightPart, Mode=TwoWay}"
+                                  x:Name="CPRightPart" />
+            </Grid>
+
+        </StackPanel>
+        <!-- Breakpoint-->
+        <ToggleButton Style="{StaticResource DebugToggleButton}"
+                      IsChecked="{Binding Path=IsBreakPoint}" />
+    </Grid>
+</self:CtrlEditorItem>

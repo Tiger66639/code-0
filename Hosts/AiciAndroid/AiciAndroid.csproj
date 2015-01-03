@@ -1,0 +1,308 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{38FE99A7-43EE-4BCE-B250-B2A2CC1A9318}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AiciAndroid</RootNamespace>
+    <AssemblyName>AiciAndroid</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <AndroidApplication>true</AndroidApplication>
+    <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <AndroidSupportedAbis>armeabi</AndroidSupportedAbis>
+    <AndroidStoreUncompressedFileExtensions />
+    <MandroidI18n />
+    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
+    <DeployExternal>False</DeployExternal>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidLinkMode>None</AndroidLinkMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <AndroidLinkMode>SdkOnly</AndroidLinkMode>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="LogService.MonoDroid, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Components\Log\LogService.MonoDroid\bin\Release\LogService.MonoDroid.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Android" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Activities\helpers\AiciPrefs.cs" />
+    <Compile Include="Activities\helpers\AssetInstaller.cs" />
+    <Compile Include="Activities\helpers\ColorPickerPreference.cs" />
+    <Compile Include="Activities\helpers\ImagePickerPreference.cs" />
+    <Compile Include="Activities\InfoActivity.cs" />
+    <Compile Include="Activities\AddCalendarItemActivity.cs" />
+    <Compile Include="Activities\AiciActivity.cs" />
+    <Compile Include="Activities\AiciPreferencesActivity.cs" />
+    <Compile Include="Activities\helpers\ContactsLoader.cs" />
+    <Compile Include="Network\AiciBinder.cs" />
+    <Compile Include="Network\AiciServer.cs" />
+    <Compile Include="Activities\helpers\LogAdapter.cs" />
+    <Compile Include="Network\ChatLogManager.cs" />
+    <Compile Include="Network\IAiciServerCallbacks.cs" />
+    <Compile Include="Network\NetworkManager.cs" />
+    <Compile Include="Network\UILogItem.cs" />
+    <Compile Include="Network\TextLogService.cs" />
+    <Compile Include="Resources\Resource.Designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Activities\helpers\STT.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AboutResources.txt" />
+    <None Include="Assets\AboutAssets.txt" />
+    <AndroidResource Include="Resources\Layout\AddCalendarItem.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\Layout\TitleBar.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\Layout\Info.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\Layout\ImagePickerPref.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\Layout\ColorPickerPref.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\Layout\MainList.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\Values\Strings.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\Drawable\Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\Layout\Log_List_Item.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\HAB.MonoDroid\HAB.MonoDroid.csproj">
+      <Project>{AC38E9EF-4230-400F-BC67-724EDBB37C82}</Project>
+      <Name>HAB.MonoDroid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lobes\SensoryInterfaces.MonoDroid\SensoryInterfaces.MonoDroid.csproj">
+      <Project>{1B2D3E17-970C-422B-B1F6-900E7B67446E}</Project>
+      <Name>SensoryInterfaces.MonoDroid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\os.MonoDroid\os.MonoDroid.csproj">
+      <Project>{AD384360-99B6-4AFA-8BE6-9D497D62FD01}</Project>
+      <Name>os.MonoDroid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Tokenizer.MonoDroid\Tokenizer.MonoDroid.csproj">
+      <Project>{3F248E7F-B0F1-4DC6-AE02-9DDD108FCE82}</Project>
+      <Name>Tokenizer.MonoDroid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ColorPickerDialog\ColorPickerDialog.csproj">
+      <Project>{AA17D372-1414-4973-AD69-3D6D035AD042}</Project>
+      <Name>ColorPickerDialog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{87538000-3537-4DBD-AF74-C0726C348B20}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataCore\DataCore.csproj">
+      <Project>{40F38367-E571-495E-AC94-0793B3477AF3}</Project>
+      <Name>DataCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WordNetSin.MonoDroid\WordNetSin.MonoDroid.csproj">
+      <Project>{CE91F431-152D-4391-B64C-D4205264FFDB}</Project>
+      <Name>WordNetSin.MonoDroid</Name>
+    </ProjectReference>
+    <ProjectReference Include="CmdShell\CmdShell.csproj">
+      <Project>{B57DC327-587C-4E23-BD65-8050B31C1EAC}</Project>
+      <Name>CmdShell</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\Layout\prefs.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\Menu\MainMenu.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\test.xml" />
+    <AndroidAsset Include="..\..\Networks\android\brain.xml">
+      <Link>Assets\brain.xml</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\EntryPointsForJaStDev.HAB.TextSin.dat">
+      <Link>Assets\Data\EntryPointsForJaStDev.HAB.TextSin.dat</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\EntryPointsForJaStDev.HAB.Brain.dat">
+      <Link>Assets\Data\EntryPointsForJaStDev.HAB.Brain.dat</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\JaStDev.HAB.ReflectionSin_5504Assemblies.xml">
+      <Link>Assets\Data\JaStDev.HAB.ReflectionSin_5504Assemblies.xml</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\JaStDev.HAB.ReflectionSin_5504Methods.xml">
+      <Link>Assets\Data\JaStDev.HAB.ReflectionSin_5504Methods.xml</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\JaStDev.HAB.ReflectionSin_5504FunctionAssemblies.xml">
+      <Link>Assets\Data\JaStDev.HAB.ReflectionSin_5504FunctionAssemblies.xml</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\JaStDev.HAB.Time_Days.xml">
+      <Link>Assets\Data\JaStDev.HAB.Time_Days.xml</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\JaStDev.HAB.Time_DaysOfWeek.xml">
+      <Link>Assets\Data\JaStDev.HAB.Time_DaysOfWeek.xml</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\JaStDev.HAB.Time_Hours.xml">
+      <Link>Assets\Data\JaStDev.HAB.Time_Hours.xml</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\JaStDev.HAB.Time_Minutes.xml">
+      <Link>Assets\Data\JaStDev.HAB.Time_Minutes.xml</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\JaStDev.HAB.Time_Months.xml">
+      <Link>Assets\Data\JaStDev.HAB.Time_Months.xml</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\JaStDev.HAB.Time_Seconds.xml">
+      <Link>Assets\Data\JaStDev.HAB.Time_Seconds.xml</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\JaStDev.HAB.Time_Years.xml">
+      <Link>Assets\Data\JaStDev.HAB.Time_Years.xml</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\JaStDev.HAB.WordNetSin_LinkDefs.xml">
+      <Link>Assets\Data\JaStDev.HAB.WordNetSin_LinkDefs.xml</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\strings.txt">
+      <Link>Assets\Data\strings.txt</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\Neurons1.dat">
+      <Link>Assets\Data\Neurons1.dat</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\Neurons1.fb">
+      <Link>Assets\Data\Neurons1.fb</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\Neurons1.idx">
+      <Link>Assets\Data\Neurons1.idx</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\Neurons2.dat">
+      <Link>Assets\Data\Neurons2.dat</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\Neurons2.fb">
+      <Link>Assets\Data\Neurons2.fb</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\Neurons2.idx">
+      <Link>Assets\Data\Neurons2.idx</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\Neurons3.dat">
+      <Link>Assets\Data\Neurons3.dat</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\Neurons3.fb">
+      <Link>Assets\Data\Neurons3.fb</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\Neurons3.idx">
+      <Link>Assets\Data\Neurons3.idx</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\Neurons4.dat">
+      <Link>Assets\Data\Neurons4.dat</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\Neurons4.fb">
+      <Link>Assets\Data\Neurons4.fb</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\Neurons4.idx">
+      <Link>Assets\Data\Neurons4.idx</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\Neurons5.dat">
+      <Link>Assets\Data\Neurons5.dat</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\Neurons5.fb">
+      <Link>Assets\Data\Neurons5.fb</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\Neurons5.idx">
+      <Link>Assets\Data\Neurons5.idx</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\Neurons6.dat">
+      <Link>Assets\Data\Neurons6.dat</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\Neurons6.fb">
+      <Link>Assets\Data\Neurons6.fb</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\Neurons6.idx">
+      <Link>Assets\Data\Neurons6.idx</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\Neurons7.dat">
+      <Link>Assets\Data\Neurons7.dat</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\Neurons7.fb">
+      <Link>Assets\Data\Neurons7.fb</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\Neurons7.idx">
+      <Link>Assets\Data\Neurons7.idx</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\Neurons8.dat">
+      <Link>Assets\Data\Neurons8.dat</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\Neurons8.fb">
+      <Link>Assets\Data\Neurons8.fb</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\Networks\android\Data\Neurons8.idx">
+      <Link>Assets\Data\Neurons8.idx</Link>
+    </AndroidAsset>
+    <Content Include="Properties\AndroidManifest.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <AndroidResource Include="Resources\Drawable\drawable-hdpi\ic_btn_speak_now.png" />
+    <AndroidResource Include="Resources\Drawable\drawable-hdpi\ic_menu_preferences.png" />
+    <AndroidResource Include="Resources\Drawable\drawable-hdpi\ic_menu_refresh.png" />
+    <AndroidResource Include="Resources\Drawable\ic_btn_speak_now.png" />
+    <AndroidResource Include="Resources\Drawable\ic_menu_preferences.png" />
+    <AndroidResource Include="Resources\Drawable\ic_menu_refresh.png" />
+    <Content Include="Resources\Drawable\drawable-hdpi\ic_menu_call.png" />
+    <AndroidResource Include="Resources\Drawable\ic_menu_call.png" />
+    <AndroidResource Include="Resources\Drawable\sym_action_email.png" />
+    <Content Include="Resources\Drawable\drawable-hdpi\sym_action_email.png" />
+    <AndroidResource Include="Resources\Drawable\ic_menu_help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\Modules\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+     Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

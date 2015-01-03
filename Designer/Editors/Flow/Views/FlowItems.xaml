@@ -1,0 +1,495 @@
+﻿<ResourceDictionary x:Class="JaStDev.HAB.Designer.FlowItems"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:dd="clr-namespace:DnD"
+                    xmlns:cf="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+                    xmlns:self="clr-namespace:JaStDev.HAB.Designer">
+
+    <self:FlowPanelDropAdvisor x:Key="FLowPanelDropAdvisor" />
+    <self:FlowListItemDropAdvisor x:Key="FlowListItemDropAdvisor" />
+    <self:FlowListItemDragAdvisor x:Key="FlowListItemDragAdvisor" />
+    <self:FlowConditionalDropAdvisor x:Key="FlowCondDropAdvisor" />
+    <self:FlowConditonalPartDropAdvisor x:Key="FlowCondPartDropAdvisor" />
+    <self:FlowEditorDropAdvisor x:Key="FlowEditorDropAdv" />
+    <self:FlowEditorItemDragAdvisor x:Key="FlowEditorItemDragAdv" />
+
+    <!--a style for the images in the contextmenu's and the like, this is a copy of the version in 
+   app.xaml cause it is not shared correclty (this is a seperate dict, imported into app.xaml, which defines the 
+   style later on, so we recreate-->
+    <Style x:Key="TlbFlowItemsImageStyle" TargetType="{x:Type Image}">
+        <Setter Property="Width" Value="16" />
+        <Setter Property="Height" Value="16" />
+    </Style>
+
+    <!--Default context menu for flow items (statics, conditional and part).-->
+    <ContextMenu x:Key="FlowItemContextMenu">
+        <MenuItem Header="Add">
+            <MenuItem Header="Static"
+                      Command="self:App.AddFlowStaticCmd" />
+            <MenuItem Header="New object"
+                      Command="self:App.AddFlowNewObjectCmd" />
+            <MenuItem Header="New neuron"
+                      Command="self:App.AddFlowNewNeuronCmd" />
+            <Separator />
+            <MenuItem Header="Option"
+                      Command="self:App.AddFlowOptionCmd" />
+            <MenuItem Header="Loop"
+                      Command="self:App.AddFlowLoopCmd" />
+            <MenuItem Header="Conditional part"
+                      Command="self:App.AddFlowCondPartCmd" />
+
+        </MenuItem>
+        <MenuItem Header="Insert">
+            <MenuItem Header="Static"
+                      Command="self:App.InsertFlowStaticCmd" />
+            <MenuItem Header="New object"
+                      Command="self:App.InsertFlowNewObjectCmd" />
+            <MenuItem Header="New neuron"
+                      Command="self:App.AddFlowNewNeuronCmd" />
+            <Separator />
+            <MenuItem Header="Option"
+                      Command="self:App.InsertFlowOptionCmd" />
+            <MenuItem Header="Loop"
+                      Command="self:App.InsertFlowLoopCmd" />
+            <MenuItem Header="Conditional part"
+                      Command="self:App.InsertFlowCondPartCmd" />
+        </MenuItem>
+        <Separator />
+        <MenuItem Command="Cut">
+            <MenuItem.Icon>
+                <Image Source="/Images/Edit/Cut_Enabled.png" Style="{StaticResource TlbFlowItemsImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Command="Copy">
+            <MenuItem.Icon>
+                <Image Source="/Images/Edit/Copy_Enabled.png" Style="{StaticResource TlbFlowItemsImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Command="Paste">
+            <MenuItem.Icon>
+                <Image Source="/Images/Edit/Paste_Enabled.png" Style="{StaticResource TlbFlowItemsImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <Separator />
+        <MenuItem Header="Delete"
+                  ToolTip="Remove the flow from the editor and delete it from the network if no longer referenced, toghether with the entire branch."
+                  Command="Delete"
+                  InputGestureText="Del" />
+        <MenuItem Command="self:App.DeleteSpecialCmd"
+                  ToolTip="Display a dialog box to select the delete options."
+                  Header="Delete special"
+                  InputGestureText="Ctrl+Del" />
+        <Separator />
+        <MenuItem Command="self:App.RenameCmd"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                  Header="Rename"
+                  InputGestureText="F2" />
+        <MenuItem Header="Change to" ItemsSource="{StaticResource ChangeToMenuItems}" />
+        <MenuItem Header="Synchronize"
+                  InputGestureText="F4"
+                  ToolTip="Synchronize the currently selected Flow item with the explorer."
+                  Command="self:App.SyncCmd">
+            <MenuItem.Icon>
+                <Image Source="/Images/Sync_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="Browse neuron"
+                  Command="self:GlobalCommands.BrowseNeuronCmd"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                  ToolTip="Look at all the relationships of the neuron through a neuron debug view."
+                  InputGestureText="F8">
+            <MenuItem.Icon>
+                <Image Source="/Images/BrowseNeuron_Enabled.png"
+                       Style="{StaticResource TlbFlowItemsImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <Separator />
+
+        <MenuItem Header="Share link"
+                  ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=NeuronInfo.OverlayedItems, Mode=OneWay}"
+                  ItemTemplate="{StaticResource ShareLinkMenuItemTemplate}" />
+        <Separator />
+        <MenuItem Header="Is looped"
+                  IsCheckable="True"
+                  IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.IsLooped, Mode=TwoWay}" />
+        <MenuItem Header="Selection required"
+                  IsCheckable="True"
+                  IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.IsSelectionRequired, Mode=TwoWay}" />
+        <MenuItem Header="Requires floating separators"
+                  IsCheckable="True"
+                  IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.RequiresFloatingSeparator, Mode=TwoWay}"
+                  IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.IsLooped, FallbackValue=False}" />
+        <Separator />
+        <MenuItem Header="View frames..." Command="self:GlobalCommands.ViewAttachedFramessCmd"
+                  ToolTip="Show the object-frames editor for the selected item."
+                  InputGestureText="Shift+F6"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+            <MenuItem.Icon>
+                <Image Source="/Images/Frame/Object_Frames_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="View asset..." Command="self:GlobalCommands.ViewAttachedAssetsCmd"
+                  ToolTip="Show the asset editor for the selected item."
+                  InputGestureText="Shift+F5"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+            <MenuItem.Icon>
+                <Image Source="/Images/Asset/objectAsset_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="View code..." Command="self:GlobalCommands.ViewCodeCmd"
+                  ToolTip="Open and show a code editor for the selected item."
+                  InputGestureText="Shift+F4"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+            <MenuItem.Icon>
+                <Image Source="/Images/ViewCode_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+    </ContextMenu>
+
+    <!--context menu for flow list (main flow editor).-->
+    <ContextMenu x:Key="FlowListContextMenu">
+        <MenuItem Header="Add">
+            <MenuItem Header="Static"
+                      Command="self:App.AddFlowStaticCmd" />
+            <MenuItem Header="New object"
+                      Command="self:App.AddFlowNewObjectCmd" />
+            <MenuItem Header="New neuron"
+                      Command="self:App.AddFlowNewNeuronCmd" />
+            <Separator />
+            <MenuItem Header="Option"
+                      Command="self:App.AddFlowOptionCmd" />
+            <MenuItem Header="Loop"
+                      Command="self:App.AddFlowLoopCmd" />
+            <MenuItem Header="Conditional part"
+                      Command="self:App.AddFlowCondPartCmd" />
+        </MenuItem>
+        <Separator />
+        <MenuItem Command="Cut">
+            <MenuItem.Icon>
+                <Image Source="/Images/Edit/Cut_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Command="Copy">
+            <MenuItem.Icon>
+                <Image Source="/Images/Edit/Copy_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Command="Paste">
+            <MenuItem.Icon>
+                <Image Source="/Images/Edit/Paste_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <Separator />
+        <MenuItem Header="Delete"
+                  ToolTip="Remove the flow from the editor and delete it from the network if no longer referenced, toghether with the entire branch."
+                  Command="Delete"
+                  InputGestureText="Del" />
+        <MenuItem Command="self:App.DeleteSpecialCmd"
+                  ToolTip="Display a dialog box to select the delete options."
+                  Header="Delete special"
+                  InputGestureText="Ctrl+Del" />
+        <Separator />
+        <MenuItem Command="self:App.RenameCmd"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                  Header="Rename"
+                  InputGestureText="F2" />
+        <MenuItem Header="Change to" ItemsSource="{StaticResource ChangeToMenuItems}" />
+        <MenuItem Header="Synchronize"
+                  InputGestureText="F4"
+                  ToolTip="Synchronize the currently selected Flow item with the explorer."
+                  Command="self:App.SyncCmd">
+            <MenuItem.Icon>
+                <Image Source="/Images/Sync_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="Browse neuron"
+                  Command="self:GlobalCommands.BrowseNeuronCmd"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                  ToolTip="Look at all the relationships of the neuron through a neuron debug view."
+                  InputGestureText="F8">
+            <MenuItem.Icon>
+                <Image Source="/Images/BrowseNeuron_Enabled.png"
+                       Style="{StaticResource TlbFlowItemsImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <Separator />
+        <MenuItem Header="Share link"
+                  ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=NeuronInfo.OverlayedItems, Mode=OneWay}"
+                  ItemTemplate="{StaticResource ShareLinkMenuItemTemplate}" />
+        <Separator />
+        <MenuItem Header="View frames..." Command="self:GlobalCommands.ViewAttachedFramessCmd"
+                  ToolTip="Show the object-frames editor for the selected item."
+                  InputGestureText="Shift+F6"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+            <MenuItem.Icon>
+                <Image Source="/Images/Frame/Object_Frames_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="View asset..." Command="self:GlobalCommands.ViewAttachedAssetsCmd"
+                  ToolTip="Show the asset editor for the selected item."
+                  InputGestureText="Shift+F5"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+            <MenuItem.Icon>
+                <Image Source="/Images/Asset/objectAsset_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="View code..." Command="self:GlobalCommands.ViewCodeCmd"
+                  ToolTip="Open and show a code editor for the selected item."
+                  InputGestureText="Shift+F4"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+            <MenuItem.Icon>
+                <Image Source="/Images/ViewCode_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+    </ContextMenu>
+
+
+    <!--For flows-->
+    <ContextMenu x:Key="FlowContextMenu">
+        <MenuItem Header="Add flow" Command="self:App.AddFlowCmd" />
+        <MenuItem Header="Flow type">
+            <MenuItem Header="Normal"
+                      ToolTip="When checked the flow acts like a normal static object: it can only appear where it is declared."
+                      IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.IsNormal, Mode=TwoWay}"
+                      IsCheckable="True" />
+            <MenuItem Header="floating"
+                      ToolTip="When checked the flow can be found in any location of the input stream, but not between 2 statics."
+                      IsCheckable="True"
+                      IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.IsFloating, Mode=TwoWay}" />
+            <MenuItem Header="Non destructive floating"
+                      ToolTip="When checked the flow can be found in any location, also between 2 statics."
+                      IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.IsNDFloating, Mode=TwoWay}"
+                      IsCheckable="True" />
+            <Separator />
+            <MenuItem Header="Float stores result"
+                      ToolTip="When checked the result data of the floating flow will be included in the final result, otherwise it is dropped."
+                      IsCheckable="True"
+                      IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.KeepsDataAllowed}"
+                      IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.KeepsData, Mode=TwoWay}" />
+        </MenuItem>
+        <Separator />
+        <MenuItem Header="Delete"
+                  Command="Delete"
+                  ToolTip="Remove the flow from the editor and delete it from the network if no longer referenced, toghether with the entire branch."
+                  InputGestureText="Del" />
+        <MenuItem Command="self:App.DeleteSpecialCmd"
+                  ToolTip="Display a dialog box to select the delete options."
+                  Header="Delete special"
+                  InputGestureText="Ctrl+Del" />
+        <Separator />
+        <MenuItem Command="self:App.RenameCmd"
+                  Header="Rename"
+                  InputGestureText="F2" />
+        <MenuItem Header="Change to" ItemsSource="{StaticResource ChangeToMenuItems}" />
+        <MenuItem Header="Synchronize"
+                  InputGestureText="F4"
+                  ToolTip="Synchronize the currently selected item with the explorer."
+                  Command="self:App.SyncCmd">
+            <MenuItem.Icon>
+                <Image Source="/Images/Sync_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="Browse neuron"
+                  Command="self:GlobalCommands.BrowseNeuronCmd"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}"
+                  ToolTip="Look at all the relationships of the neuron through a neuron debug view."
+                  InputGestureText="F8">
+            <MenuItem.Icon>
+                <Image Source="/Images/BrowseNeuron_Enabled.png"
+                       Style="{StaticResource TlbFlowItemsImageStyle}" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <Separator />
+        <MenuItem Header="Share link"
+                  ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=NeuronInfo.OverlayedItems, Mode=OneWay}"
+                  ItemTemplate="{StaticResource ShareLinkMenuItemTemplate}" />
+        <Separator />
+        <MenuItem Header="View frames..." Command="self:GlobalCommands.ViewAttachedFramessCmd"
+                  ToolTip="Show the object-frames editor for the selected item."
+                  InputGestureText="Shift+F6"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+            <MenuItem.Icon>
+                <Image Source="/Images/Frame/Object_Frames_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="View asset..." Command="self:GlobalCommands.ViewAttachedAssetsCmd"
+                  ToolTip="Show the asset editor for the selected item."
+                  InputGestureText="Shift+F5"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+            <MenuItem.Icon>
+                <Image Source="/Images/Asset/objectAsset_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="View code..." Command="self:GlobalCommands.ViewCodeCmd"
+                  ToolTip="Open and show a code editor for the selected item."
+                  InputGestureText="Shift+F4"
+                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Item}">
+            <MenuItem.Icon>
+                <Image Source="/Images/ViewCode_Enabled.png" />
+            </MenuItem.Icon>
+        </MenuItem>
+    </ContextMenu>
+
+    <Style x:Key="FlowPanelCondPartBackgroundStyle" TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="AliceBlue" />
+        <Setter Property="CornerRadius" Value="3" />
+        <Setter Property="MinWidth" Value="16" />
+        <Setter Property="MinHeight" Value="16" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="BorderBrush" Value="DarkGray" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="ContextMenu" Value="{StaticResource FlowItemContextMenu}" />
+        <Setter Property="dd:DragDropManager.DragSource" Value="{StaticResource FlowListItemDragAdvisor}" />
+        <Setter Property="dd:DragDropManager.DropTarget" Value="{StaticResource FlowCondPartDropAdvisor}" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=IsSelected}" Value="True">
+                <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="FlowPanelCondBackgroundStyle" TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="dd:DragDropManager.DropTarget" Value="{StaticResource FlowCondDropAdvisor}" />
+        <Setter Property="dd:DragDropManager.DragSource" Value="{StaticResource FlowListItemDragAdvisor}" />
+        <Setter Property="ContextMenu" Value="{StaticResource FlowItemContextMenu}" />
+    </Style>
+
+
+    <!--Style used by static items.-->
+    <Style x:Key="FlowPanelElementStyle" TargetType="{x:Type ContentControl}">
+        <Setter Property="dd:DragDropManager.DropTarget" Value="{StaticResource FlowListItemDropAdvisor}" />
+        <Setter Property="ContextMenu" Value="{StaticResource FlowItemContextMenu}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="dd:DragDropManager.DragSource" Value="{StaticResource FlowListItemDragAdvisor}" />
+    </Style>
+
+
+    <!--Used by the Overlay items on all the flow items, to display the presence of a link.-->
+    <Style x:Key="OverlayItemsControlStyle" TargetType="{x:Type ItemsControl}">
+        <Setter Property="Visibility"
+                Value="{Binding Path=NeuronInfo.HasOverlays, Converter={StaticResource BoolToVisConv}}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="Background" Value="#90FFFFFF" />
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style x:Key="OverlayItemsControlStyleVertical" TargetType="{x:Type ItemsControl}"
+           BasedOn="{StaticResource OverlayItemsControlStyle}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="OverlayItemsControlStyleBracketed" TargetType="{x:Type ItemsControl}"
+           BasedOn="{StaticResource OverlayItemsControlStyle}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ItemsControl}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="true">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontSize="8"
+                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                       Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HasItems, Converter={StaticResource BoolToVisConv}}">
+                                (
+                            </TextBlock>
+                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <TextBlock FontSize="8"
+                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                       Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HasItems, Converter={StaticResource BoolToVisConv}}">
+                                )
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--DataTemplate for Static flow items: normal display-->
+    <DataTemplate x:Key="FlowItemStaticNormalView">
+        <TextBlock x:Name="TxtValue"
+                   Text="{Binding Path=NeuronInfo.DisplayTitle}"
+                   cf:FocusManager.IsFocused="{Binding Path=IsSelected}"
+                   Focusable="True" />
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Path=IsLink}" Value="True">
+                <Setter TargetName="TxtValue" Property="TextDecorations" Value="Underline" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <!--DataTemplate for Static flow items: with an icon to the left-->
+    <DataTemplate x:Key="FlowItemStaticLeftIcon">
+        <StackPanel Orientation="Horizontal">
+            <Image Source="{Binding Path=Item, Converter={StaticResource NeuronToImgConv}}"
+                   Width="16"
+                   Height="16" />
+            <TextBlock x:Name="TxtValue"
+                       Text="{Binding Path=NeuronInfo.DisplayTitle}"
+                       cf:FocusManager.IsFocused="{Binding Path=IsSelected}"
+                       Focusable="True" />
+        </StackPanel>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Path=IsLink}" Value="True">
+                <Setter TargetName="TxtValue" Property="TextDecorations" Value="Underline" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <!--DataTemplate for Static flow items: with an icon underneath the text.-->
+    <DataTemplate x:Key="FlowItemStaticUnderIcon">
+        <Grid>
+            <Image Source="{Binding Path=Item, Converter={StaticResource NeuronToImgConv}}"
+                   Height="20"
+                   HorizontalAlignment="Stretch"
+                   Stretch="Fill"
+                   VerticalAlignment="Stretch" />
+            <TextBlock x:Name="TxtValue"
+                       Text="{Binding Path=NeuronInfo.DisplayTitle}"
+                       Focusable="True"
+                       cf:FocusManager.IsFocused="{Binding Path=IsSelected}"
+                       Margin="8,0,8,0" />
+        </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Path=IsLink}" Value="True">
+                <Setter TargetName="TxtValue" Property="TextDecorations" Value="Underline" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <!--The data template used to display a single overlay item for a flow item.-->
+    <DataTemplate x:Key="FlowItemOverlayTemplate">
+        <TextBlock Foreground="{Binding Path=Overlay.Foreground}"
+                   ToolTip="{Binding Path=Overlay.Tooltip}"
+                   FontSize="8"
+                   Text="{Binding Path=Overlay.Text}"
+                   Margin="2,0,2,0" />
+    </DataTemplate>
+
+    <self:StaticFlowItemContentSelector x:Key="StaticFlowItemContentSelector" />
+
+
+    <!--Used to change the background color of the flow list, depending on the alternation count.-->
+    <AlternationConverter x:Key="FlowListBackgroundConverter">
+        <SolidColorBrush>White</SolidColorBrush>
+        <SolidColorBrush>LightBlue</SolidColorBrush>
+    </AlternationConverter>
+
+</ResourceDictionary>

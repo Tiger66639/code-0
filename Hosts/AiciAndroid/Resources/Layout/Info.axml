@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+	    android:layout_height="fill_parent">
+	<LinearLayout 
+	    android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent">
+	
+	   <TextView android:layout_width="fill_parent"
+	             android:layout_height="wrap_content"
+	             android:text="@string/Info_About_Title"/>
+	   <TextView android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:text="Aici is an android integrated chatbot running on a resonating neural net."/>
+	   <TextView android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	             android:id="@+id/homepage"
+	                android:text="For more info, check http:\\bragisoft.com"/>
+	   <TextView android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:text="@string/Info_By_Title"/>
+	
+	   <TextView android:layout_width="fill_parent"
+	             android:layout_height="wrap_content"
+	             android:text="@string/Info_availableCommands_Title"/>
+	   <TextView android:layout_width="fill_parent"
+	             android:layout_height="wrap_content"
+	             android:text="     (when the -default- network is selected)"/>
+	   <TextView android:layout_width="fill_parent"
+	             android:layout_height="wrap_content"
+	             android:text="- shut up | silence | silent | quiet"/>
+	   <TextView android:layout_width="fill_parent"
+	               android:layout_height="wrap_content"
+	             android:text="- shake | vibrate | vibration"/>
+	   <TextView android:layout_width="fill_parent"
+	               android:layout_height="wrap_content"
+	             android:text="- ring | ringing on | normal mode"/>
+      <TextView android:layout_width="fill_parent"
+	               android:layout_height="wrap_content"
+	             android:text="- what is the battery (temperature | voltage | level)"/>
+      
+      
+	   <TextView android:layout_width="fill_parent"
+	               android:layout_height="wrap_content"
+	             android:paddingTop="8px"
+	             android:text="- (call |phone |ring) ~(simple subject)"/>
+	   <TextView android:layout_width="fill_parent"
+	               android:layout_height="wrap_content"
+	             android:text="- (call |phonecall) to ~(simple subject)"/>
+	   <TextView android:layout_width="fill_parent"
+	               android:layout_height="wrap_content"
+	             android:paddingTop="8px"
+	             android:text="- send [a|an] (email|mail) to ~(simple subject)"/>
+	   <TextView android:layout_width="fill_parent"
+	               android:layout_height="wrap_content"
+	             android:text="- send [a|an] (email|mail) to ~(simple subject) (and|to|,) let (her|him|it) know that $value "/>
+      <TextView android:layout_width="fill_parent"
+	               android:layout_height="wrap_content"
+	             android:text="- (gmail|email)"/>
+	   <TextView android:layout_width="fill_parent"
+	               android:layout_height="wrap_content"
+	             android:paddingTop="8px"
+	             android:text="- let ~(simple subject) know [that] $value "/>
+	   <TextView android:layout_width="fill_parent"
+	               android:layout_height="wrap_content"
+	             android:text="- send [an] sms to ~(simple subject)"/>
+      <TextView android:layout_width="fill_parent"
+	               android:layout_height="wrap_content"
+	             android:paddingTop="8px"
+	             android:text="- Open google"/>
+      <TextView android:layout_width="fill_parent"
+	               android:layout_height="wrap_content"
+	             android:text="- Search on google"/>
+      <TextView android:layout_width="fill_parent"
+	               android:layout_height="wrap_content"
+	             android:text="- show images about a subject (show me a xxx)"/>
+      <TextView android:layout_width="fill_parent"
+	               android:layout_height="wrap_content"
+	             android:text="- Open photo gallery"/>
+	
+	   <TextView android:layout_width="fill_parent"
+	             android:paddingTop="16px"
+	             android:layout_height="wrap_content"
+	             android:text="@string/Info_Chatting_Title"/>
+	   <TextView android:layout_width="fill_parent"
+	               android:layout_height="wrap_content"
+	             android:text="- Hello"/>
+	   <TextView android:layout_width="fill_parent"
+	               android:layout_height="wrap_content"
+	             android:text="- Date and time questions"/>
+	   <TextView android:layout_width="fill_parent"
+	               android:layout_height="wrap_content"
+	             android:text="- ask about Birthday/age"/>
+	   <TextView android:layout_width="fill_parent"
+	               android:layout_height="wrap_content"
+	             android:text="- simple math"/>
+	   <TextView android:layout_width="fill_parent"
+	               android:layout_height="wrap_content"
+	             android:text="- complete sequences"/>
+	   <TextView android:layout_width="fill_parent"
+	               android:layout_height="wrap_content"
+	             android:text="- record/ask about likes-dislikes"/>
+		<TextView android:layout_width="fill_parent"
+	               android:layout_height="wrap_content"
+	             android:text="- Ask about the weather"/>
+	
+	</LinearLayout>	
+</ScrollView>

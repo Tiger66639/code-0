@@ -1,0 +1,41 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls">
+
+    <ctrls:NeuronDataEditorDropAdvisor x:Key="NDEditorDropAdvisor" />
+
+    <Style TargetType="{x:Type ctrls:FastNeuronDataEditor}">
+        <Setter Property="ctrls:FastNeuronDataEditor.ToggleButtonStyle">
+            <Setter.Value>
+                <Style TargetType="ToggleButton" BasedOn="{StaticResource SimpleExpanderDownHeaderStyle}">
+                    <Setter Property="Focusable" Value="False" />
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                    <Setter Property="VerticalAlignment" Value="Stretch" />
+                    <Setter Property="ToolTip" Value="Show/hide a list of possible values" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="DeleteButtonStyle">
+            <Setter.Value>
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                    <Setter Property="Width" Value="8" />
+                    <!--<Setter Property="Height" Value="8"/>-->
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="ToolTip" Value="Reset or remove the value." />
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="TextBoxStyle">
+            <Setter.Value>
+                <Style TargetType="TextBox">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Height" Value="16" />
+                    <Setter Property="BorderThickness" Value="0" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+</ResourceDictionary>

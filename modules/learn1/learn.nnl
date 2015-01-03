@@ -1,0 +1,89 @@
+class Variables
+{
+   using PathCommon;
+   using common;
+   
+   
+   Cluster AutoLearned: 1287 {}
+
+   //callback for var-path
+   //builds a new input pattern, based on the last input statement found in the log
+   //The input pattern is added to a new rule (which is added to a special 'learned' topic. 
+   //The rule is  linked to the CallbackIn, which is an output pattern.
+   //callbackOut will contain the newly created input pattern when done (single textneuron).
+   Cluster LearnPattern(Statics.code): 1272
+   {
+      this()
+      {
+         var iInputs = GetLastInputFromLog();
+         int iCount = Count(iInputs);
+         if(iCount > 0)
+         {
+            CallbackOut = ToS(false, iInputs);                                //we need to convert the list of words back to a single sentence, so we have a visual representation for the pattern.
+            int iStart = 0;
+            while(iStart < count(iInputs) && ContainsChildren(PatternMatcher.ToSkip, iInputs[iStart])) //make certain that the start of the input pattern isn't a space.
+               iStart++;
+            var iCurrent = iInputs[iStart];
+            AddLink(CallBackOut, iCurrent, Statics.ParsedPatternStart);
+            for(int i = iStart + 1; i < iCount; i++)
+            {
+               var iMeaning = iInputs[i];
+               if(ContainsChildren(PatternMatcher.ToSkip, iMeaning) == false)                            //again, we need to skip all spaces, they don't belong in the input pattern.
+               {
+                  var iNext = GetFirstOut(iCurrent, iMeaning);
+                  if(count(iNext) == 0)
+                  {
+                     iNext = new(Neuron);
+                     AddLink(iCurrent, iNext, iMeaning);
+                     AddLink(CallBackOut, iNext, Statics.ParsedPatternPart);
+                  }
+                  iCurrent = iNext;
+               }
+            }
+            AddLink(iCurrent, CallBackOut, Statics.Rule);
+            var iRule = MakeCluster(Statics.Rule, CallbackOut);                    //add it to a new rule
+            var iOutput = MakeCluster(Statics.OutputPatterns, CallbackIn);          //link the rule with the output.
+            AddLink(iRule, iOutput, Statics.OutputPatterns);
+            AddChild(AutoLearned, iRule);                               //add the rule to the default topic.
+         }
+      }
+      
+      GetLastInputFromLog(): var
+      {
+         var log = GetFirstOut(OutputSin, PatternMatcher.CurrentConversation);
+         if(count(log) > 0 && ChildCount(log) > 2)
+         {
+            var iFound = GetChildAt(log, ChildCount(log) - 3);
+            return GetChildrenRange(iFound, 0, ChildCount(ifound) -1);     //each log item also contains a date-time stamp at the end, which has to be removed.
+         }
+      }
+   }
+
+   //callback for var-path
+   //builds an output pattern based on the content of CallbackIn and returns this (through CallbackOut).
+   Cluster BuildOutputPattern(Statics.code): 1273
+   {
+      this()
+      {
+         if(Count(CallBackIn) > 0)
+         {
+         //warning: this still needs to be changed. In the current code, we presume that the pattern uses '$Input' as CallbackIn. This could also be something else, we need to make certain that we don't accidentally 
+         //store a compound that shouldn't be (variables create compounds when they have multiple words collected).
+         
+            //var iItems;
+            //foreach(var i in CallbackIn)
+           // {
+           //    if(typeof(i) == neuroncluster)
+           //    {
+           //       if(GetClusterMeaning(i) == posgroup
+           //    }
+           //    else
+           //      iItems += i;
+           // }
+            CallbackOut = ToS(false, CallBackIn);    //we need to convert the list of words back to a single sentence, to form the neuron that represents the pattern (also useful for the editors). This string shouldn't be indexed (doesn't need to be found directly in input as a whole). so save the string dict.
+            var iParsedPattern = MakeCluster(Statics.ParsedPatternOutput, CallbackIn);
+            AddLink(CallbackOut, iParsedPattern, Statics.ParsedPatternOutput);
+         }
+      }
+   }
+}

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<publishData>
+  <publishProfile publishUrl="ftp://ftp.bragisoft.com/bragisoft.com/wwwroot/AiciClient" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="JanBogaerts/AiciWeb" publishMethod="FTP" replaceMatchingFiles="False" userName="bragisof" savePWD="True" userPWD="AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAcRsz/+mncESjUF4Ykdxk+gAAAAACAAAAAAADZgAAqAAAABAAAAAeWxmPgaaL14nA5RMYUAi0AAAAAASAAACgAAAAEAAAAFC6PwHa9JfHd8xADOYho6AYAAAApEAvDkldkoPWmip7KKOwjvONh6cS64TVFAAAADlXh1nN9Tpq9yRS2s1kOMGh4gri" SelectedForPublish="True">
+    <file relUrl="bin/AiciWeb.Web.pdb" publishTime="03/14/2011 18:59:26" />
+    <file relUrl="bin/JaStDev.DataCore.dll" publishTime="01/10/2011 13:55:02" />
+    <file relUrl="AiciWebTestPage.aspx" publishTime="08/10/2010 18:49:52" />
+    <file relUrl="ClientBin/AiciWeb.xap" publishTime="03/14/2011 18:59:28" />
+    <file relUrl="bin/JaStDev.HabCore.XmlSerializers.dll" publishTime="03/14/2011 18:28:24" />
+    <file relUrl="AiciService.svc" publishTime="08/10/2010 19:04:52" />
+    <file relUrl="bin/JaStDev.HabCore.dll" publishTime="03/14/2011 18:28:23" />
+    <file relUrl="bin/JaStDev.WordNetSin.pdb" publishTime="03/09/2011 19:57:40" />
+    <file relUrl="bin/JaStDev.UndoSystem.xml" publishTime="09/25/2010 20:40:09" />
+    <file relUrl="bin/JaStDev.UndoSystem.pdb" publishTime="09/25/2010 20:40:09" />
+    <file relUrl="bin/JaStDev.Sins.pdb" publishTime="03/14/2011 18:28:24" />
+    <file relUrl="AiciWebTestPage.html" publishTime="08/10/2010 18:49:52" />
+    <file relUrl="bin/JaStDev.DataCore.pdb" publishTime="01/10/2011 13:55:02" />
+    <file relUrl="bin/JaStDev.Sins.dll" publishTime="03/14/2011 18:28:24" />
+    <file relUrl="bin/JaStDev.HabCore.pdb" publishTime="03/14/2011 18:28:23" />
+    <file relUrl="Web.config" publishTime="03/14/2011 18:59:35" />
+    <file relUrl="bin/JaStDev.LogService.pdb" publishTime="06/03/2009 16:01:52" />
+    <file relUrl="bin/AiciWeb.Web.dll" publishTime="03/14/2011 18:59:26" />
+    <file relUrl="bin/JaStDev.UndoSystem.dll" publishTime="09/25/2010 20:40:09" />
+    <file relUrl="bin/Exocortex.DSP.v1.dll" publishTime="10/05/2003 22:41:42" />
+    <file relUrl="bin/JaStDev.WordNetSin.dll" publishTime="03/09/2011 19:57:40" />
+    <file relUrl="bin/System.ServiceModel.PollingDuplex.dll" publishTime="04/01/2010 01:06:26" />
+    <file relUrl="bin/JaStDev.LogService.dll" publishTime="06/03/2009 16:01:53" />
+    <file relUrl="Silverlight.js" publishTime="08/10/2010 18:49:53" />
+  </publishProfile>
+</publishData>

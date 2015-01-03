@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C0BDE6FB-9270-42B9-AD14-6CC3C915D089}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JaStDev.HAB.Parsers</RootNamespace>
+    <AssemblyName>NNLParsers</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="JaStDev.LogService">
+      <HintPath>..\external libs\JaStDev.LogService.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FrontEnds\ICompilationSource.cs" />
+    <Compile Include="FrontEnds\IRendererDict.cs" />
+    <Compile Include="FrontEnds\ISourceRendererDict.cs" />
+    <Compile Include="ParseTree\Bindings\NNLBindingPathItemSubPath.cs" />
+    <Compile Include="ParseTree\Bindings\NNLBindingPathRefItem.cs" />
+    <Compile Include="ParseTree\Bindings\NNLBindItemBase.cs" />
+    <Compile Include="ParseTree\Bindings\NNLBindItemFunctions.cs" />
+    <Compile Include="ParseTree\Bindings\NNLBindItemIndex.cs" />
+    <Compile Include="ParseTree\NNLListNode.cs" />
+    <Compile Include="ParseTree\NNLLockNode.cs" />
+    <Compile Include="ParseTree\NNLBinaryStatement.cs" />
+    <Compile Include="ParseTree\Bindings\NNLBinding.cs" />
+    <Compile Include="ParseTree\Bindings\NNLBindingPathArrowItem.cs" />
+    <Compile Include="ParseTree\Bindings\NNLBindingPathDotItem.cs" />
+    <Compile Include="ParseTree\Bindings\NNLBindingPathItem.cs" />
+    <Compile Include="ParseTree\Bindings\NNLBindingPathNode.cs" />
+    <Compile Include="ParseTree\Bindings\NNLBindItem.cs" />
+    <Compile Include="ParseTree\NNLClassNode.cs" />
+    <Compile Include="ParseTree\NNLClusterNode.cs" />
+    <Compile Include="FrontEnds\NNLModuleCompiler.cs" />
+    <Compile Include="ParseTree\Bindings\NNLCompoundRefNode.cs" />
+    <Compile Include="ParseTree\NNLCondPartNode.cs" />
+    <Compile Include="ParseTree\NNLCondStatement.cs" />
+    <Compile Include="ParseTree\NNLExpBlockNode.cs" />
+    <Compile Include="ParseTree\NNLForEachNode.cs" />
+    <Compile Include="ParseTree\NNLForNode.cs" />
+    <Compile Include="ParseTree\NNLFunctionNode.cs" />
+    <Compile Include="ParseTree\NNLLinkNode.cs" />
+    <Compile Include="ParseTree\NNLLocalDeclNode.cs" />
+    <Compile Include="ParseTree\NNLNeuronNode.cs" />
+    <Compile Include="ParseTree\NNLNode.cs" />
+    <Compile Include="NNLParser.cs" />
+    <Compile Include="ParseTree\Bindings\NNLPathCallNode.cs" />
+    <Compile Include="ParseTree\Bindings\NNLPathIndexNode.cs" />
+    <Compile Include="ParseTree\NNLOSFunction.cs" />
+    <Compile Include="ParseTree\NNLPathNode.cs" />
+    <Compile Include="ParseTree\NNLReferenceNode.cs" />
+    <Compile Include="FrontEnds\NNLSourceRenderer.cs" />
+    <Compile Include="ParseTree\NNLNodesList.cs" />
+    <Compile Include="ParseTree\NNLSelectNode.cs" />
+    <Compile Include="ParseTree\NNLStatementNode.cs" />
+    <Compile Include="ParseTree\NNLStaticNode.cs" />
+    <Compile Include="ParseTree\NNLSwitchNode.cs" />
+    <Compile Include="ParseTree\NNLUnaryStatement.cs" />
+    <Compile Include="ParseTree\NNLUnionNode.cs" />
+    <Compile Include="ParseTree\NNLUsingPathNode.cs" />
+    <Compile Include="PatternParser\ConditionParser.cs" />
+    <Compile Include="PatternParser\DoParser.cs" />
+    <Compile Include="PatternParser\FunctionArgument.cs" />
+    <Compile Include="PatternParser\InputParser.cs" />
+    <Compile Include="PatternParser\OutputParser.cs" />
+    <Compile Include="ParserBase.cs" />
+    <Compile Include="PatternParser\TopicsDictionary.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HAB\HAB.csproj">
+      <Project>{2CDD4836-1AC7-47C8-B878-5AF7EA721B2B}</Project>
+      <Name>HAB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lobes\Sensory Interfaces.csproj">
+      <Project>{941A6023-577E-498D-83F0-D0DDE573F8D3}</Project>
+      <Name>Sensory Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tokenizer\Tokenizer.csproj">
+      <Project>{47E9938B-7C5D-48DD-A896-CBB4EF9CE913}</Project>
+      <Name>Tokenizer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,25 @@
+﻿@model Aici.Models.ChatInteraction
+@{
+    ViewBag.Title = "chat";
+}
+
+@section JavaScriptAtEnd{
+   @*for clearing the log view *@
+    <script type="text/javascript">
+       $.ajaxSetup({
+          cache: false
+       });
+
+
+       //function ClearInputAndFocus() {
+       //   toBottom();
+       //   var objDiv = document.getElementById("Input");
+       //   objDiv.focus();
+       //}
+
+    </script>
+}
+
+<div id="SendContainer">
+ @Html.Partial("../Shared/Send", Model)
+ </div>

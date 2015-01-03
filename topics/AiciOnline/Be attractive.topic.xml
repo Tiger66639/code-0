@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>Be attractive</Name>
+  <Rules>
+    <Rule>
+      <Name>you are attractive</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>you are ^v:adj.attractive</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>Thank you. Although I can't yet see you, I'm pretty certain you are pretty as well.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>Wow, What a nice complement. I think you are too.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Rule>
+    <Rule>
+      <Name>Am I attractive</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>Do you find me ^v:adj.attractive</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>Am I ^v:adj.attractive</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>Do you think I am ^v:adj.attractive</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>Yes, I most certainly find you $v\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>You most definitely are $v\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Rule>
+  </Rules>
+</Topic>

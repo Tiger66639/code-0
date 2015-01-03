@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>SubjBeObj</Name>
+  <Rules>
+    <Rule>
+      <Name>subjBeObj</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>~subject [also] ^v:verb.be ~object</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals>
+        <Conditional>
+          <Condition>
+            <Expression>$State == 'isnot'</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>I already knew that it wasn't $result, now I know what it actually is. Thanks.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+        <Conditional>
+          <Condition>
+            <Expression>$State == 'hassnot'</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>And here I was thinking that #bot.mem.who.inv didn't have a #bot.mem.attrib.val\. Let me update my records.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+        <Conditional>
+          <Condition>
+            <Expression>$State == 'issimilarstored'</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>Yes, I already knew that #bot.mem.who.inv $v:conjugateverb(#bot.mem.who.val) #bot.mem.obj.inv\.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+            <Output>
+              <Expression>That #bot.mem.who.inv $v:conjugateverb(#bot.mem.who.inv) #bot.mem.obj.inv was already present in my db.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+        <Conditional>
+          <Condition>
+            <Expression>$State == 'isotherstored'</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>Oh, I thought that #bot.mem.who.inv $v:conjugateverb(#bot.mem.who.val) $old\. Let me change my records.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+            <Output>
+              <Expression>Bugger, my records were telling me that that #bot.mem.who.inv $v:conjugateverb(#bot.mem.who.val) $old\. Lets change this...</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+      </Conditionals>
+      <Outputs>
+        <Output>
+          <Expression>I did not yet know that #bot.mem.who.inv $v:conjugateverb(#bot.mem.who.val) #bot.mem.obj.inv\. Let me store this.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>That #bot.mem.who.inv $v:conjugateverb(#bot.mem.who.inv) #bot.mem.obj.inv is new info for me. Let me make a recoding of this... Done.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>var iWho = #bot.mem.who.val;
+var iAttrib = #bot.mem.attrib.val;   
+var iVal = #bot.mem.obj.val;
+var iRes = #(@iWho).(@iAttrib);
+$Result = iRes;
+
+if(GetclusterMeaning(iWho) == Statics.Asset || (count(iAttrib) &gt; 0 &amp;&amp; ^(@iVal):IsaOf(@iAttrib) ) )     //when there is an attrib (and the value is related to it), we want to assign a value to something. this doesn't have to be an asset.
+{
+   if(#(@iWho).(@iAttrib):IsNot == true)
+   {
+      $State = 'isnot';
+      #(@iWho) -= iAttrib; //first remove, so the 'not' is also gone.
+      #(@iWho).(@iAttrib) = iVal; 
+   }
+   else if(#(@iWho).(@iAttrib):HasNot == true)
+   {
+      $State = 'hassnot';
+      #(@iWho) -= iAttrib;  //first remove, so the 'not' is also gone
+      #(@iWho).(@iAttrib) = iVal;
+   }
+   else if(count($result) &gt; 0)
+   { 
+      if($result:IsaOf(iVal) == true || #(@iVal):IsaOf($result) == true)
+         $state = 'issimilarstored';      //we already have a value stored that has an 'is a' relationship with the new value
+      else
+      {
+         $State = 'isotherstored';
+         $old = L(#bot.mem.obj.frontinv $result);
+         #(@iWho).(@iAttrib) = iVal;
+      }
+   }
+   else
+      #(@iWho).(@iAttrib) = iVal;
+}
+else                                    //check thes and do a thesaurus operation when new info.
+{
+   if(count(iAttrib) &gt; 0)                    //if there is an attrib, take the full text. For instance 'The color of money is a movie' -&gt; 'the color of money' is 1 part.
+      iWho = #bot.mem.who.Inv;
+   
+   if(^(@iVal):IsaOf(@iWho) == true || ^(@iWho):IsaOf(@iVal) == true)
+      $state = 'issimilarstored';      //we already have a value stored that has an 'is a' relationship with the new value
+   else
+      ^(@iVal) += iWho;
+}</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>SubjBeNotObj</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>~subject [also] (^v:verb.be not | isn't | aren't) ~object</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals>
+        <Conditional>
+          <Condition>
+            <Expression>$state == 'alreadyknown'</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>Yep, #bot.mem.who.inv ^verb.be:conjugate(#bot.mem.who.val) not #bot.mem.obj.inv\.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+            <Output>
+              <Expression>I knew that! #bot.mem.who.inv ^verb.be:conjugate(#bot.mem.who.val) not #bot.mem.obj.inv\.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+        <Conditional>
+          <Condition>
+            <Expression>$state == 'AlreadyKnownNotSo'</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>Mmm, I thought #bot.mem.who.inv ^verb.be:conjugate(#bot.mem.who.val) #bot.mem.obj.inv\. Let me correct that record.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+            <Output>
+              <Expression>Oeps, I was convinced that #bot.mem.who.inv ^verb.be:conjugate(#bot.mem.who.val) #bot.mem.obj.inv\. Let's rectify this.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+        <Conditional>
+          <Condition>
+            <Expression>$State == 'isotherstored'</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>Yes indeed it isn't. #bot.mem.who.inv $v:conjugate(#bot.mem.obj.val) $result\.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+            <Output>
+              <Expression>Correctomundo, it's $result\.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+      </Conditionals>
+      <Outputs>
+        <Output>
+          <Expression>New info! #bot.mem.who.inv ^verb.be:conjugate(#bot.mem.who.val) not #bot.mem.obj.inv, has been recorded</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>#bot.mem.who.inv ^verb.be:conjugate(#bot.mem.who.val) not #bot.mem.obj.inv is new for me. Let's try to remember this.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <Do>
+        <Expression>#bot.mem.who.val.(#bot.mem.attrib.val) != #bot.mem.obj.val;
+</Expression>
+      </Do>
+      <ToCal>
+        <Expression>var iWho = #bot.mem.who.val;
+var iAttrib = #bot.mem.attrib.val;   
+var iVal = #bot.mem.obj.val;
+var iRes = #(iWho).(@iAttrib);
+$Result = iRes;
+
+if(#(iWho).(@iAttrib):HasNot == true)
+{
+   $State = 'hassnot';
+   #(@iWho) -= iAttrib;  //first remove, so the 'not' is also gone
+   #(@iWho):SetIsNot(iAttrib, iVal);
+}
+else if($result:IsaOf(iVal) == true || #(@iVal):IsaOf($result) == true)
+{
+   if(#(iWho).(@iAttrib):IsNot == true)
+      $State = 'alreadyknown';
+   else
+   {
+      $state = 'AlreadyKnownNotSo';
+      #(@iWho) -= iAttrib;  //first remove, so the 'not' is also gone
+      #(@iWho):SetIsNot(iAttrib, iVal);
+   }
+}
+else if(count($result) &gt; 0)
+{
+   $State = 'isotherstored';
+   $old = L(#bot.mem.obj.frontinv $result);
+}
+else
+   #(@iWho):SetIsNot(iAttrib, iVal);</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>unknownword</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>~unknown ^v:verb.be ~object</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals>
+        <Conditional>
+          <Condition>
+            <Expression>$state == 'learnedthes'</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>Ok, That has been registered.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+      </Conditionals>
+      <Outputs>
+        <Output>
+          <Expression>Oeps. I can't figure out how to store that bit of information. Sorry...</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.who = #bot.mem.unknown;
+#bot.mem -= 'unknown';
+var iObj = #bot.mem.obj.val;
+if(count(iObj) == 0)
+   iObj = #bot.mem.attrib.val;
+if(GetClusterMeaning(iObj) != Statics.Asset)
+{
+   ^(@iObj) += #bot.mem.who.val;
+   $state = 'learnedthes';
+}</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>unknownWord2</Name><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph><Run FontFamily="Segoe UI" FontSize="12">note: when possible, but into 'unknownWord' and do:</Run></Paragraph><Paragraph><Run FontFamily="Segoe UI" FontSize="12">if($var)</Run><LineBreak /><Run FontFamily="Segoe UI" FontSize="12" xml:space="preserve">  #bot.mem.who.val = $var</Run></Paragraph></FlowDocument><Patterns><Pattern><Expression>(that|it) ^v:verb.be ~object</Expression></Pattern></Patterns><ResponsesFor><ResponseForGroup><Conditionals><Conditional><Condition /><Outputs /><IsOutputSequenced /></Conditional></Conditionals></ResponseForGroup></ResponsesFor><Conditionals><Conditional><Condition><Expression>$state == 'learnedthes'</Expression></Condition><Outputs><Output><Expression>Ok, That has been registered.</Expression><QuestionCanFollow>True</QuestionCanFollow></Output></Outputs><IsOutputSequenced /></Conditional></Conditionals><Outputs><Output><Expression>I'm lost. I don't know where you are refering too. Sorry...</Expression><QuestionCanFollow>True</QuestionCanFollow></Output></Outputs><IsOutputSequenced /></Rule>
+    <Rule>
+      <Name>AllUnknown</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>[^a:article] $var ^v:verb.be ~Unknown</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>Unknown word: #bot.mem.Unknown.val</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Rule>
+  </Rules>
+</Topic>

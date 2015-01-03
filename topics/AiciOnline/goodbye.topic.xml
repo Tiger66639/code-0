@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>goodbye</Name>
+  <Rules>
+    <Rule>
+      <Name>bye</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^h:interjection.bye</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>^h</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Rule>
+  </Rules>
+</Topic>

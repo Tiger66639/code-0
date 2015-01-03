@@ -1,0 +1,168 @@
+//globally accessible values
+
+   neuron exec : 45;       //Used as the meaning for a link between a neuron and a cluster containing expressions that will be executed when the link is being solved.
+   Neuron OnTick: 49;      //Used as the meaning for a link between a timer neuron and a cluster containing expressions that will be executed when the link is being solved.   
+  // neuron true : 60 {}     //Represents the boolean 'True' value as used by the BoolExpression
+  // neuron false : 61 {}    //Represents the boolean 'False' value as used by the BoolExpression.
+   
+   //neuron TimeSpan : 300 {}
+   //Neuron neuron: 86 {}       //Identifies the neuron type.  Used by the 'New', 'TypeOF', 'GetChildren of TypeX',... instructions.
+   //Neuron NeuronCluster: 87 {}
+   //Neuron DoubleNeuron: 88 {}
+   //Neuron IntNeuron: 89 {}
+   //Neuron TextNeuron: 90 {}
+
+//references to the statically defined neurons.
+class Statics
+{   
+   //neuron Condition : 47 {}                 //Used as the meaning for a link from a conditional part to it's condition or for a link from a conditional statement and the cluster containing all of it's conditional parts.
+   //Neuron Code: 48 {}
+   //neuron statements : 49 {}                       //Used as the meaning for a link from a code block or conditional part to a cluster containing expressions (with as meaning 'Code' = 48).
+   //neuron Operator : 50 {}                      //Used as the meaning for a link from a BoolExpression to the neuron that represents the operrator to use.  This is usually either: '=='53, '<'54, '>'55, '<='56, '>='57, '!='58 or 'contains'59.
+   //neuron LeftPart : 51 {}             //Used as the meaning for a link from a boolExpression to the left part of the expression.
+   //neuron RightPart : 52 {}        //Used as the meaning for a link from a boolExpression to the right part of the expression.
+   //The 'is different' operator.
+   neuron NotEqual : 58 {}
+   
+   neuron true: 60 {}
+   neuron false: 61 {}
+   //neuron Instruction : 62 {}         //Used as the meaning for a link from a Statement or ResultStatement to the instruction that it will call. Also used to identify instruction neurons in the 'typeof' operator.
+   //neuron arguments : 63 {}            //Used as the meaning for a link from a Statement or ResultStatement to a NeuronCluster containing expressions that represent the argument values for the instruction that it will call.
+   
+   //Used as the meaning for a link from a variable to a neuron that will be the initial value for the neuron if it hasn't been used yet in the current context. Also used as the meaning from an asset item to it's value.
+   //neuron Value : 73 {}
+    // This neuron lets the SearchExpression know that it needs to search the incomming links list of the neuron that needs to be searched.
+    // Also used as the meaning for a knowledge cluster that represents an incomming statement.
+   //neuron in : 79 {}   
+   //neuron out : 80 {}   //This neuron lets the SearchExpression know that it needs to search the outgoing links list of the neuron that needs to be searched. Also used as the meaning for a knowledge cluster that represents an outgoing statement.
+   
+   //Neuron BoolExpression: 91 {}     //Identifies the BoolExpression type.  Used by the 'New', 'TypeOF', 'GetChildren of TypeX',... instructions.
+   //Neuron ConditionalPart: 92 {}
+   //Neuron ConditionalStatement: 93 {}
+   //Neuron Statement: 94 {}
+   //Neuron ResultStatement: 95 {}
+   //neuron variable : 97 {}          //Identifies the Variable type.  Used by the 'New', 'TypeOF', 'GetChildren of TypeX',... instructions.
+   //neuron assignment : 98{}         //Identifies the Assignment type.  Used by the 'New', 'TypeOF', 'GetChildren of TypeX',... instructions.
+   //neuron empty : 99 {}             //Represents the 'Empty' state. This neuron is returned by some instructions to indicate an error state or some other kind invalid state.
+   neuron currentfrom : 100 {}      //This variable provides access to the current from part of the link that is being executed (if any).
+   neuron CurrentTo : 101 {}        //This variable provides access to the current To part of the link that is being executed (if any).
+   neuron currentmeaning : 102 {}      //This variable provides access to the current meaning part of the link that is being executed (if any).
+   neuron CurrentInfo : 103 {}         //This variable provides access to the current Info part of the link that is being executed (if any).
+   
+   //This variable provides access to the sin that triggered the activity in the current context (if any).
+   neuron CurrentSin : 114 {}
+
+   //Stands for the logical And operator '&&' used by BoolExpression
+   neuron AndAnd : 119{}
+   neuron OrOr : 120 {}             //Stands for the logical Or operator '||' used by BoolExpression
+   
+   //Used as the meaning for a link from a 'ByRefExpression to the expression it needs to return a reference for.
+   //neuron Argument : 123 {}
+   
+   //Used as the meaning for a NeuronCluster that represents an object, which is a single point of 'knoledge'.  This cluster contains neurons that all refer to the same thing, but from a differnt aspect.  For instance, the cluster can have a TextNeuron that represents it's textual value, a neuron used an input link and one as an output link.  All 3 represent the same thing, but froma different aspect: text, input, output.
+   //neuron Object : 134 {}
+   
+   //used as the linkmeaning for cluster that contains TextNeurons to build a compound word (a word that actually exists out of combining several words) ex: doppler effect, piano grande,...
+   //neuron CompoundWord : 137 {}
+   
+   //This cluster contains all the relationships that are currently known by the WordNetSin.
+   cluster relationships(list) : 143 {} 
+    
+   //Send this neuron to the TextSin to indicate that a new textblock should be started.  If there was a previous textblock active, this is closed first and the event is triggered.
+   //For as long as there is a textblock active, all neurons sent to the textsin are accumulated into a string, only when either the 'EndTextBlock' or the 'BeginTextBlock' is sent, is the event for the string raised.
+   //neuron BeginTextblock : 154 {}
+   //neuron endtextblock : 155 {}        //Send this neuron to the TextSin to indicate that an existing textblock should be closed.  This will trigger the event. For as long as there is a textblock active, all neurons sent to the textsin are accumulated into a string, only when either the 'EndTextBlock' or the 'BeginTextBlock' is sent, is the event for the string raised.
+   
+   
+   //neuron questions : 156 {}        //Used as the meaning for a link from a topic cluster (pattern editor) to a cluster containing outputclusters, similar to the conditionals attached to rules.
+   //neuron reflectionsincall : 157 {}      //Used by the ReflectionSin as a possible state to indicate that it will try to call a function when output is sent to it.
+   //neuron NameOfMember : 158 {}        //Used by the ReflectionSin as the meaning for a link from an output neuron to the name of a memeber (function/field/property) to call/render.  When this is used to call a function, this function must first have been loaded so that the sin knows about it.
+   
+
+   //Used as the meaning for a cluster that contains object clusters that share the same TextNeuron and POS (part of speach) value. This allows for faster parsing since only  1 split is performed per pos type.
+   //neuron PosGroup : 246 {}
+   
+   //The 'does not contain item' operator. It checks if the left side doesn't contain any item from the right side.
+   //neuron Notcontains : 269 {}
+   
+   // Used as the meaning for a link from a neuron to a TextNeuron, to indicate that the function call (defined by the 'from' neuron), caused an exception of the specified type-name (the 'to' part).
+   //neuron reflectionsinexception : 288 { }   
+ 
+   //This system variable returns the current system time in the form of a cluster (with meaning 'Time'), containing an int neuron for: year, month, day, hour, minute, second. In that order.
+   neuron Time : 295 {}   
+ 
+   //Used as the meaning for a  link from an asset item to an object, to indicate the type of attribute that the asset item represents (as concrete knoweldge).
+   //neuron Attribute : 310 {}
+ 
+   neuron Topic : 321 {}                        //Used as the meaning for a cluster that groups a set of text pattern definitions together. Also used as the meaning for a link from the final neuron in the parsed pattern, to the pattern group that it belongs to , so we can find the outputs for a certain pattern.
+   neuron Rule: 322 {}
+   Neuron OutputPatterns: 323 {}
+   //neuron invalidresponsesforpattern : 324 {}   //Used as the meaning for a link from a text neuron to a cluster (which also has this neuron as meaning), to indicate the outputs that should be used if there was no valid response given to the output value found in 'to'.
+   //neuron ResponseForOutputs : 325 {}           //Used as the meaning for a link from a textneuron (patten-output) to a cluster containing textneurons, to indicate all the valid questions for which this is a valid response.
+   //neuron ParsedPatternStart : 326 {}           //Used as the meaning for a link from a textneuron (single text pattern item) to another textneuron, which is the start of the parse tree for the pattern item. This allows us to find the start of a parse for removing it.
+   //neuron ParsedPatternPart: 327 {}
+   //neuron ParsedPatternOutput: 328 {}           //Used as the meaning for a link from an OutputPattern item to a cluster (with the same meaning), to indicate how the output pattern should be rendered to the output.
+   
+   
+   cluster patternfallbackvalues : 335 {}    //Contains all the output statements that can be used when there is no valid pattern match found.   
+   //neuron UsedResponses : 336 {}          //Used as the meaning for a link from an 'OutputPatterns' cluster to another cluster, which has this neuron as meaning. The cluster stores all the responses that have already been used and should therefor not be used again until all others have been used.
+   //cluster ConversationStarts : 337{}     //This neuronCluster contains all the output statements which should be used as openings to start the conversation with.
+   //cluster ParsedVariable : 338 {}        //Used as the meaning for a cluster that represents the parsed form of a regular varaible. Also used to store all the regular variables that are the start of a pattern. This is used so we can find which variables need to be used as starts.
+   cluster ParsedThesVariable : 339 {}    //Used as the meaning for a cluster that represents the parsed form of a thesaurus varaible. Also used to store all the thesaurus variables that are the start of a pattern. This is used so we can find which variables need to be used as starts.
+   //neuron DoPatterns : 340 {}          //Used as the meaning for a cluster that contains the action-patterns of an output section. Also used as the meaning for a link from an output section and the cluster with this meaning.
+   cluster ParsedAssetVariable : 341 {}      //Used as the meaning for a cluster that represents the parsed form of an asset varaible.
+   //neuron operand : 342 {}             //Used as the meaning of a link between a conditional pattern and a cluster. The content of the cluster is used to calculate the value that needs to be compared for the conditional. The conditional pattern also has an extra link that contains the boolean expression that will calculate the actual result of the conditional, after all the operands where calculated.
+   //neuron parseddopattern : 343{}       //Used as the meaning for a link from a do-pattern (textNeuron) to a neuron to indicate which action needs to be performed.
+   //neuron AssignAdd : 344 {}           //Represents the += symbol. For the asset/thesarurus do-patterns, this is used as an 'add' instruction.
+   //neuron AssignRemove : 345 {}           //Represents the -= symbol. For the asset/thesarurus do-patterns, this is used as an 'remove' instruction.
+   
+   //Determins how an output is picked from it's list: random or in sequence. Used as the meaning for a link from an output cluster.
+   //neuron OutputListTraversalMode : 347 {}
+   
+   //neuron Sequence : 349 {}                  //Used as a value (to part of a link) for the OutpuListTraverselMode. It indcates that items should be picked in sequence from the list.
+   //cluster DoAfterStatement : 350 { }        //A cluster that contains do patterns that should be executed after each input/output processing.
+   //neuron inputpatternpartialmode : 351 {}   //Used as the meaning for a link from an input pattern to 'PartialInputPattern' or 'PartialInputPatterFallback' to indicate that it is a partial pattern + which type of partial.
+   
+   
+   
+   //neuron partialinputpatternfallback : 353 {}     //Used as the to part for a link from an inputpattern with meaning 'InputPatterPartialMode', to indicate that the pattern can be declared mulitple times. The context will be determined by the pattern editor (or topic) that contains it (only 1 editor may contain the same input pattern). If there is no context found (no topic already encountered), use the pattern with this value. Only 1 allowed per duplication set.
+   //neuron Index : 354 {}                       //Used as the meaning for a cluster found in asset/thesaurus paths to indicate that the item at the specified index should be used. The index itself can be a variable reference.
+   cluster RepeatPatterns : 355 {}               //contains all the patterns (or conditionals) that should be used when there is a repetition.   
+   //neuron FirstUpperCase : 356 {}               //This neuron is used to let a textsin know that the next word it receives should have it's first letter capitalized.
+   //neuron alluppercase : 357 {}                 //This neuron is used to let a textsin know that the next word it receives should be capitalized completely.
+   //neuron uppercasemap : 358 {}                 //Used as the meaning for a cluster that defines a map to capitalize the letters ina word. The map contains integers which represent the locations of every capitalized letter, so it can be recreated. The TextSins use this to convert the next word that is received.
+   
+   //neuron calculate : 361 {}           //Used as the meaning for a link from a rule to a do-patterns cluster. These do patterns will be executed when the rule is activated, before any of the conditions on the output are executed.   
+   //neuron Context : 362 {}             //Used as the meaning for a link from a bot to an outputs cluster (no code, no conditions), to indicate how to calculate the context values for callbacks like 'Attribute'. 
+   neuron OrSmaller : 363 {}           //Used as the meaning for a link from an input pattern to itself, to indicate that the pattern can only produce a valid match if the first word of the input is matched by the pattern (so the pattern needs to be at the start of the input).
+   neuron BiggerOr : 364 {}            //Used as the meaning for a link from an input pattern to itself, to indicate that the pattern can only produce a valid match if the last word of the input is matched by the pattern (so the pattern needs to be at the end of the input).
+   //neuron Delay : 365 { }              //Used as the meaning for a link from a parsed-do pattern to itself. It indicates that the execution of the do pattern should be delayed untill everything else has been processed.
+   //neuron CollectSpaces : 366 {}       //Used as a link from a parsed variable to itself, to indicate that the variable should also collect all the spaces between the words that it collects.
+   //neuron subtopics : 367 {}           //Used as the meaning for a link from a pattern to parts that represent sub topics. Also the start neuron for patterns that start with sub topics.
+   //neuron subrules : 368 {}      //Used as the meaning for a link from a pattern to parts that represent sub rules. Also the start neuron for patterns that start with sub rules.
+   
+   //Represents the  !+=  symbol.
+   //neuron assignaddnot : 372 {  }
+   //neuron number : 373 {}        //Used by parsedThesaurus clusters, to indicate that any type of number is allowed.
+   neuron outlink : 374 {}       //used as the meaning for a cluster to indicate that a direct outlink should be taken in a thesaurus or var path.
+   //neuron list : 375{}           //Used as the meaning for a  cluster to indicate that the cluster contains a list of items. This is used to collect input data like: a, b, c, d Also used to indicate that the ;= operator should be executed in do patterns that assign to assets.
+   
+   
+   //neuron TextSin : 382 {}
+   
+   //neuron intsin : 385 {}
+   
+   //  Used as the meaning for a link from a rule to a code cluster used for evaluating the rule's possibility.
+   //neuron evaluate : 389 { }
+   
+   //Used as the meaning for a link from an invalidResponseFor pattern to itself, to indicate that the bot still requires a valid response after the InvalidResponsefor value has been rendered (otherwise, the system no longer requires a response after an invalid response is rendered).
+   //neuron requiresresponse : 392 {}
+   
+   //with this variable, you get the result returned by the last function.
+   //variable ReturnValue: 407 {}
+   
+  
+
+   
+    
+}

@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>Simple object</Name>
+  <Rules>
+    <Rule>
+      <Name>art noun</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^a:art ^o:noun</Expression>
+          <DuplicationMode>partial</DuplicationMode>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.obj.Inv = L($a $o);
+#bot.mem.obj.val = $o;
+#Bot.mem.obj.frontInv = $a;
+if(count(#bot.mem.attrib) == 0)
+   #bot.mem.attrib.Val = $o:attribute;</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>demonstrativePronoun noun</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^d:pronoun.demonstrative ^o:noun</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.obj.Inv = L($d $o);
+#bot.mem.obj.val = $o;
+#Bot.mem.obj.frontInv = $d;
+if(count(#bot.mem.attrib) == 0)
+   #bot.mem.attrib.Val = $o:attribute;
+</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>PossesiveAdj condition</Name>
+      <Patterns>
+        <Pattern><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph><Run FontFamily="Segoe UI" FontSize="12">my color</Run></Paragraph></FlowDocument><Expression>^obj:adj.possesive ^s:noun.condition</Expression><DuplicationMode>partial</DuplicationMode></Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>var iPerson = $obj:ResolvePerson;
+#bot.mem.obj.Inv = L($obj:InvertPerson $s);
+#Bot.mem.obj.frontInv = $obj:InvertPerson;
+if(count(#bot.mem.attrib) == 0)
+{
+   #Bot.mem.attrib.val = $s;
+   var iWho = #bot.mem.Who.val;
+   #bot.mem.Who.val = iPerson;
+   #bot.mem.obj.val = iWho;
+}
+else if(#bot.mem.attrib.val == $s)
+   #bot.mem.obj.val = #(@iPerson).($s);
+else
+{
+   #Bot.mem.obj.valAttribute = $s;
+   #bot.mem.obj.val = @iPerson;
+}</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>PossesiveAdj noun</Name>
+      <Patterns>
+        <Pattern><FlowDocument PagePadding="5,0,5,0" AllowDrop="True" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"><Paragraph><Run FontFamily="Segoe UI" FontSize="12">my house</Run></Paragraph></FlowDocument><Expression>^obj:adj.possesive ^s:noun</Expression><DuplicationMode>partial</DuplicationMode></Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>var iPerson = #(^obj:ResolvePerson);
+#bot.mem.obj.Inv = L($obj:InvertPerson $s);
+#Bot.mem.obj.frontInv = $obj;
+if(count(#bot.mem.attrib) == 0)
+{
+   #Bot.mem.attrib.val = $s;
+   #bot.mem.obj.val = #bot.mem.Who.val;
+   #bot.mem.Who.val = iPerson;
+
+}
+else 
+{
+   var iResolvedObj = #(@iPerson).($s);
+   if(count(iResolvedObj) &gt; 0)
+      #bot.mem.obj.val = iResolvedObj;
+   else
+   {
+      #bot.mem.obj.val = iPerson;
+      #bot.mem.obj.valPath = $s;
+   }
+}</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>art adj noun</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^a:art.a ^f:adj ^o:noun</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.obj.Inv = L($a $f $o);
+#bot.mem.obj.val = $o;
+#Bot.mem.obj.frontInv = L($a $f);
+#bot.mem.obj.Filter = $f;
+if(count(#bot.mem.attrib) == 0)
+   #bot.mem.attrib.val = $o:attribute;</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>PossessiveAdj Adj Cond</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^obj:adj.possesive ^f:adj ^s:noun.condition</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.obj.Inv = L($obj:InvertPerson $f $s);
+#Bot.mem.obj.frontInv = ^obj:InvertPerson;
+var iPerson = $obj:ResolvePerson;
+if(count(#bot.mem.attrib) == 0)
+{
+   #Bot.mem.attrib.val = $s;
+   #bot.mem.Temp.Who.Val = #bot.mem.Who.Val; //temporarely store the 'who' data, so we can assign it back to 'obj'
+   #bot.mem.Temp.Who.Inv = #bot.mem.Who.Inv;
+   #bot.mem.Who.val = iPerson;
+   #bot.mem.Who.Inv = #bot.mem.obj.inv;
+   #bot.mem.obj = #bot.mem.Temp.Who;
+   #bot.mem.Temp -= Who;
+}
+else if(#bot.mem.attrib.val == $s)
+   #bot.mem.obj.val = #(@iPerson).($s);
+else
+{
+   #Bot.mem.obj.valAttribute = $s;
+   #bot.mem.obj.val = iPerson;
+}</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>PossesiveAdj adj matter</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^obj:adj.possesive ^f:adj ^s:noun.matter</Expression>
+          <DuplicationMode>partial</DuplicationMode>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>var iPerson = $obj:ResolvePerson;
+#bot.mem.obj.Inv = L($obj:InvertPerson $f $s);
+#Bot.mem.obj.frontInv = $obj;
+if(count(#bot.mem.attrib) == 0)
+{
+   #Bot.mem.attrib.val = $s;
+   #bot.mem.obj.val = iPerson;
+}
+else 
+{
+   var iResolvedObj = #(@iPerson).($s);
+   if(count(iResolvedObj) &gt; 0)
+      #bot.mem.obj.val = iResolvedObj;
+   else
+   {
+      #bot.mem.obj.val = iPerson;
+      #bot.mem.obj.valPath = $s;
+   }
+}</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>adj or noun</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^subj:adj</Expression>
+          <DuplicationMode>partial</DuplicationMode>
+        </Pattern>
+        <Pattern>
+          <Expression>^subj:noun</Expression>
+          <DuplicationMode>partial</DuplicationMode>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.obj.inv = $subj;
+#bot.mem.obj.val = $subj;
+if(count(#bot.mem.attrib) == 0)
+   #bot.mem.attrib.val = $subj:attribute;</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>ObjectPronoun</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>^s:pronoun.object</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs />
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>#bot.mem.obj.inv = $s:InvertPerson;
+#bot.mem.obj.val = $s:ResolvePerson;</Expression>
+      </ToCal>
+    </Rule>
+  </Rules>
+</Topic>

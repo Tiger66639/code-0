@@ -1,0 +1,382 @@
+﻿<self:CtrlEditorBase x:Class="JaStDev.HAB.Designer.FlowEditorView"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+                     xmlns:cf="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                     xmlns:dd="clr-namespace:DnD"
+                     x:Name="this"
+                     Focusable="True"
+                     Background="Transparent"
+                     Loaded="Editor_Loaded">
+    <self:CtrlEditorBase.CommandBindings>
+        <CommandBinding Command="self:App.RenameCmd" CanExecute="Rename_CanExecute" Executed="Rename_Executed" />
+        <CommandBinding Command="self:App.InsertFlowOptionCmd" CanExecute="InsertFlowItem_CanExecute"
+                        Executed="InsertOption_Executed" />
+        <CommandBinding Command="self:App.InsertFlowLoopCmd" CanExecute="InsertFlowItem_CanExecute"
+                        Executed="InsertLoop_Executed" />
+        <CommandBinding Command="self:App.InsertFlowStaticCmd" CanExecute="InsertFlowItem_CanExecute"
+                        Executed="InsertStatic_Executed" />
+        <CommandBinding Command="self:App.InsertFlowNewObjectCmd" CanExecute="InsertFlowItem_CanExecute"
+                        Executed="InsertNewObject_Executed" />
+        <CommandBinding Command="self:App.InsertFlowNewNeuronCmd" CanExecute="InsertFlowItem_CanExecute"
+                        Executed="InsertNewNeuron_Executed" />
+        <CommandBinding Command="self:App.InsertFlowCondPartCmd" CanExecute="InsertCondPart_CanExecute"
+                        Executed="InsertCondPart_Executed" />
+
+        <CommandBinding Command="self:App.AddFlowOptionCmd" CanExecute="AddFlowItem_CanExecute"
+                        Executed="AddOption_Executed" />
+        <CommandBinding Command="self:App.AddFlowLoopCmd" CanExecute="AddFlowItem_CanExecute"
+                        Executed="AddLoop_Executed" />
+        <CommandBinding Command="self:App.AddFlowStaticCmd" CanExecute="AddFlowItem_CanExecute"
+                        Executed="AddStatic_Executed" />
+        <CommandBinding Command="self:App.AddFlowNewObjectCmd" CanExecute="AddFlowItem_CanExecute"
+                        Executed="AddNewObject_Executed" />
+        <CommandBinding Command="self:App.AddFlowNewNeuronCmd" CanExecute="AddFlowItem_CanExecute"
+                        Executed="AddNewNeuron_Executed" />
+        <CommandBinding Command="self:App.AddFlowCondPartCmd" CanExecute="InsertCondPart_CanExecute"
+                        Executed="AddCondPart_Executed" />
+        <CommandBinding Command="self:App.ChangeFlowOptionToLoopCmd" CanExecute="InsertCondPart_CanExecute"
+                        Executed="ChangeOptionToLoop_Executed" />
+        <CommandBinding Command="self:App.ChangeFlowLoopToOptionCmd" CanExecute="InsertCondPart_CanExecute"
+                        Executed="ChangeLoopToOption_Executed" />
+        <CommandBinding Command="self:App.ToggleFlowLoopSelectionRequirementCmd"
+                        CanExecute="ToggleFlowLoopSelectionRequirement_CanExecute"
+                        Executed="ToggleFlowLoopSelectionRequirement_Executed" />
+
+        <CommandBinding Command="PreviousPage" CanExecute="PrevPage_CanExecute" Executed="PrevPage_Executed" />
+        <CommandBinding Command="NextPage" CanExecute="NextPage_CanExecute" Executed="NextPage_Executed" />
+        <CommandBinding Command="self:App.AddFlowCmd" Executed="AddFlow_Executed" />
+        <CommandBinding Command="self:App.FindNextCmd" Executed="FindNextCmd_Executed"
+                        CanExecute="FindNextCmd_CanExecute" />
+        <CommandBinding Command="BrowseBack" Executed="BrowseBack_Executed" CanExecute="BrowseBack_CanExecute" />
+        <CommandBinding Command="BrowseForward" Executed="BrowseForward_Executed" CanExecute="BrowseForward_CanExecute" />
+    </self:CtrlEditorBase.CommandBindings>
+    <self:CtrlEditorBase.InputBindings>
+        <KeyBinding Command="self:App.RenameCmd" Key="F2" />
+        <KeyBinding Command="Delete" Key="Del" />
+        <KeyBinding Command="self:App.DeleteSpecialCmd" Key="Del" Modifiers="Control" />
+        <KeyBinding Command="NextPage" Key="Down" Modifiers="Alt" />
+        <KeyBinding Command="PreviousPage" Key="Up" Modifiers="Alt" />
+        <KeyBinding Command="self:App.FindNextCmd" Key="F3" />
+
+        <KeyBinding Key="Del"
+                    Modifiers="Control"
+                    Command="self:App.DeleteSpecialCmd" />
+
+
+    </self:CtrlEditorBase.InputBindings>
+
+    <DockPanel>
+        <Expander Style="{StaticResource SimpleExpandDownStyle}"
+                  IsExpanded="{Binding Source={x:Static self:Properties.Settings.Default}, Path=ToolbarExpandedFlowEditor, Mode=TwoWay}"
+                  Focusable="False"
+                  DockPanel.Dock="Top">
+            <!--FocusScope needs to be True for the toolbar, otherwise, when we press a button (create a flow for instance), it keeps focus on the button, and doesn't go to the flow view.-->
+            <ToolBar FocusManager.IsFocusScope="True">
+                <Button Command="BrowseBack"
+                        x:Name="BtnBrowseBack">
+                    <Image
+                        Source="{Binding ElementName=BtnBrowseBack, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Arrows/Left1.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+
+                <Button Command="BrowseForward"
+                        x:Name="BtnBrowseForward">
+                    <Image
+                        Source="{Binding ElementName=BtnBrowseForward, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Arrows/Right1.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Separator />
+
+                <Button ToolTip="Add a new flow (F)"
+                        x:Name="BtnAddFlow"
+                        Command="self:App.AddFlowCmd"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    <Image
+                        Source="{Binding ElementName=BtnAddFlow, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Flow/AddFlow.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Button ToolTip="Add an option at the end of the currently active block. ([ or to insert: Ctrl+[)"
+                        Command="self:App.AddFlowOptionCmd"
+                        x:Name="BtnAddOption"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    <Image
+                        Source="{Binding ElementName=BtnAddOption, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Flow/Option.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Button ToolTip="Add a loop at the end of the currently active block. ({ or to insert: Ctrl+{)"
+                        Command="self:App.AddFlowLoopCmd"
+                        x:Name="BtnAddLoop"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    <Image
+                        Source="{Binding ElementName=BtnAddLoop, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Flow/Loop.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Button ToolTip="Add a conditional part at the end of the currently active block. (Shift+Ctrl+|)"
+                        Command="self:App.AddFlowCondPartCmd"
+                        x:Name="BtnAddConditionalPart"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    <Image
+                        Source="{Binding ElementName=BtnAddConditionalPart, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Flow/ConditionalPart.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Separator />
+                <ToggleButton
+                    ToolTip="Change the requirement of an option/loop to have a part selected during parsing. (R)"
+                    x:Name="BtnToggleSelection"
+                    Command="self:App.ToggleFlowLoopSelectionRequirementCmd"
+                    Style="{StaticResource TlbToggleButtonsStyle}">
+                    R
+                </ToggleButton>
+                <Separator />
+                <Button ToolTip="Display the delete dialog (Ctrl+Del)"
+                        x:Name="BtnRemove"
+                        Command="self:App.DeleteSpecialCmd"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    <Image
+                        Source="{Binding ElementName=BtnRemove, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/Remove.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+
+                <Button ToolTip="Delete the selected item from the brain (Del)"
+                        x:Name="BtnDelete"
+                        Command="Delete"
+                        Style="{StaticResource TlbButtonsStyle}">
+                    <Image
+                        Source="{Binding ElementName=BtnDelete, Path=IsEnabled, Converter={StaticResource BtnImgConv}, ConverterParameter=/Images/delete.png, Mode=OneWay}"
+                        Style="{StaticResource TlbImageStyle}" />
+                </Button>
+                <Separator />
+                <ComboBox
+                    SelectedIndex="{Binding Source={x:Static self:Properties.Settings.Default}, Path=FlowItemDisplayMode, Mode=TwoWay}"
+                    x:Name="CmbStaticItemDisplayMode"
+                    SelectionChanged="CmbStaticItemDisplayMode_SelectionChanged">
+                    <ComboBoxItem>
+                        Normal text
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{StaticResource ImgNeuron}"
+                                   Width="16"
+                                   Height="16"
+                                   IsHitTestVisible="False" />
+                            <TextBlock>Image in front</TextBlock>
+                        </StackPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Grid>
+                            <Image Source="{StaticResource ImgNeuron}"
+                                   IsHitTestVisible="False"
+                                   Height="20"
+                                   HorizontalAlignment="Stretch" />
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center">
+                                Image below
+                            </TextBlock>
+                        </Grid>
+                    </ComboBoxItem>
+                </ComboBox>
+                <ToggleButton Checked="BtnOverlayVisibility_Checked"
+                              x:Name="BtnOverlayVisibility"
+                              Unchecked="BtnOverlayVisibility_UnChecked">
+                    <Image Source="/Images/Flow/ShowOverlays.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+                <ToggleButton IsChecked="{Binding Path=DisplayAsList}"
+                              Style="{StaticResource TlbToggleButtonsStyle}"
+                              ToolTip="Toggle between single or list view.">
+                    <Image Source="/Images/Flow/Flow_ViewList.png"
+                           Style="{StaticResource TlbImageStyle}" />
+                </ToggleButton>
+                <Separator />
+                <TextBox MinWidth="120"
+                         x:Name="TxtToSearch"
+                         KeyDown="TxtToSearch_KeyDown" />
+                <Button Command="self:App.FindNextCmd"
+                        Style="{StaticResource TlbButtonsStyle}"
+                        ToolTip="Find next flow item">
+                    <Image Height="16" Source="/Images/FindNextHS.png" />
+                </Button>
+            </ToolBar>
+        </Expander>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="170" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <ListBox x:Name="LstItems"
+                     Loaded="LstItems_Loaded"
+                     cf:FocusManager.IsFocused="True"
+                     ItemsSource="{Binding Path=Flows}"
+                     SelectionChanged="LstItems_SelectionChanged"
+                     dd:DragDropManager.DropTarget="{StaticResource FlowEditorDropAdv}"><!--SelectedItem="{Binding Path=SelectedFlow, Mode=OneWay}"-->
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=OneWay}" />
+                        <Setter Property="ContextMenu" Value="{StaticResource FlowContextMenu}" />
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border x:Name="bd"
+                                BorderThickness="2,0,0,0"
+                                BorderBrush="Transparent"
+                                dd:DragDropManager.DragSource="{StaticResource FlowEditorItemDragAdv}">
+                            <Border.ToolTip>
+                                <TextBlock>
+                                    When blue, the flow is floating, so it can be allowed aneywhere in the input.
+                                    <LineBreak />
+                                    When green, it's also floating, but won't be allowed between 2 statics.
+                                    <LineBreak />
+                                    If the right side is also colored, the floating flow's result will not be dropped but included in the final result.
+                                </TextBlock>
+                            </Border.ToolTip>
+                            <StackPanel Orientation="Horizontal">
+                                <ItemsControl Style="{StaticResource OverlayItemsControlStyle}"
+                                              ItemsSource="{Binding Path=NeuronInfo.Overlays, Mode=OneWay}"
+                                              ItemTemplate="{StaticResource FlowItemOverlayTemplate}"
+                                              Visibility="{Binding ElementName=this, Path=OverlayVisibility}" />
+                                <ContentControl Focusable="False"
+                                                Margin="3,0,3,0">
+                                    <ContentControl.ToolTip>
+                                        <ToolTip Height="200"
+                                                 Width="350"
+                                                 StaysOpen="True">
+                                            <FlowDocumentReader Document="{Binding Path=Description, Mode=OneTime}"
+                                                                IsFindEnabled="False"
+                                                                IsPageViewEnabled="False"
+                                                                IsPrintEnabled="False"
+                                                                IsTwoPageViewEnabled="False"
+                                                                ViewingMode="Scroll" />
+                                        </ToolTip>
+                                    </ContentControl.ToolTip>
+                                    <!--We use a seperate contentpresenter for the title so we can make it editable-->
+                                    <ContentPresenter x:Name="PART_TITLE" Content="{Binding}">
+                                        <ContentPresenter.ContentTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Path=Name}" TextTrimming="CharacterEllipsis" />
+                                            </DataTemplate>
+                                        </ContentPresenter.ContentTemplate>
+                                    </ContentPresenter>
+                                </ContentControl>
+                            </StackPanel>
+                        </Border>
+                        <DataTemplate.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=this, Path=IsEditing}" Value="True" />
+                                    <Condition Value="True">
+                                        <Condition.Binding>
+                                            <Binding Path="IsSelected">
+                                                <Binding.RelativeSource>
+                                                    <RelativeSource Mode="FindAncestor"
+                                                                    AncestorType="{x:Type ListBoxItem}" />
+                                                </Binding.RelativeSource>
+                                            </Binding>
+                                        </Condition.Binding>
+                                    </Condition>
+                                </MultiDataTrigger.Conditions>
+                                <Setter TargetName="PART_TITLE" Property="ContentTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}"
+                                                     cf:FocusManager.IsFocused="True"
+                                                     PreviewLostKeyboardFocus="TxtTitle_LostKeybFocus"
+                                                     LostFocus="TxtTitle_LostFocus"
+                                                     PreviewKeyDown="TxtTitle_PrvKeyDown"
+                                                     BorderThickness="0"
+                                                     Margin="-1" />
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </MultiDataTrigger>
+                            <DataTrigger Binding="{Binding Path=IsFloating}" Value="True">
+                                <Setter TargetName="bd" Property="BorderBrush" Value="Green" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=IsNDFloating}" Value="True">
+                                <Setter TargetName="bd" Property="BorderBrush" Value="Blue" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=KeepsData}" Value="True">
+                                <Setter TargetName="bd" Property="BorderThickness" Value="2,0,2,0" />
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <GridSplitter Grid.Column="1"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Stretch"
+                          ShowsPreview="True"
+                          Width="6" />
+
+            <ContentControl x:Name="ContentSelector"
+                            Grid.Column="2">
+                <ContentControl.Style>
+                    <Style TargetType="{x:Type ContentControl}">
+                        <Setter Property="Content" Value="{Binding}" />
+                        <Setter Property="ContentTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <Border BorderBrush="#828790"
+                                            BorderThickness="1">
+                                        <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                                      VerticalScrollBarVisibility="Auto">
+                                            <self:FlowView DataContext="{Binding Path=SelectedFlow}"
+                                                           NeedsFocus="{Binding Path=IsFocused, Mode=TwoWay}"
+                                                           PopupIsOpen="{Binding Path=PopupIsOpen, Mode=TwoWay}" />
+                                        </ScrollViewer>
+                                    </Border>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ContentControl}">
+                                    <ContentPresenter VerticalAlignment="Stretch"
+                                                      HorizontalAlignment="Stretch" />
+                                    <ControlTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding Path=DisplayAsList}" Value="True">
+                                            <Setter Property="ContentTemplate">
+                                                <Setter.Value>
+                                                    <DataTemplate>
+                                                        <ListBox AlternationCount="2"
+                                                                 ScrollViewer.IsDeferredScrollingEnabled="True"
+                                                                 ScrollViewer.CanContentScroll="False"
+                                                                 ItemsSource="{Binding Path=Flows}"
+                                                                 HorizontalContentAlignment="Stretch"
+                                                                 VerticalContentAlignment="Stretch"
+                                                                 SelectedItem="{Binding Path=SelectedFlow}">
+                                                            <ListBox.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <Border BorderThickness="0,0,0,1"
+                                                                            BorderBrush="#828790">
+                                                                        <self:FlowView
+                                                                            PopupIsOpen="{Binding Path=PopupIsOpen, Mode=TwoWay}"
+                                                                            NeedsFocus="{Binding Path=IsFocused, Mode=TwoWay}"
+                                                                            DataContext="{Binding}"
+                                                                            Background="{Binding RelativeSource={RelativeSource Self}, Path=(ItemsControl.AlternationIndex), Converter={StaticResource FlowListBackgroundConverter}}"
+                                                                            BorderThickness="0"
+                                                                            MinHeight="24"
+                                                                            MinWidth="24" />
+                                                                    </Border>
+                                                                </DataTemplate>
+                                                            </ListBox.ItemTemplate>
+                                                        </ListBox>
+                                                    </DataTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ContentControl.Style>
+
+            </ContentControl>
+        </Grid>
+    </DockPanel>
+</self:CtrlEditorBase>

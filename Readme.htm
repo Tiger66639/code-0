@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Build and release instructions</title>
+</head>
+<body>
+
+   <p>
+      Please read carefully:</p>
+   <ul>
+      <li><p>Use 'BuildAll.bat' to build the entire project. Before you can do this though, there are a couple of applications required.</p>
+         <p>For the android application, it is expected that the mondroid development sdk is installed. The script expects the sdk at C:\Users\Esus\AppData\Local\Xamarin\MonoForAndroid\AndroidSDK\android-sdk-windows\tools\'. 
+         If this can't be found, the build will fail. Note that the installation script also expects the sdk at this location.</p>
+         <p>The buildAll script also starts visual studio at one point for the web-application. The purpose for this is to perform a publish (to disk), which couldn't
+         be automated (any solution is more than welcome). The first time you do this, you have to update the publish location: open the 'publish web' dialog and make 
+         certain that the target location is in your development path.</p>
+         <p>7-zip is used to create a zip archive of the web application, which is also required for a full build (the installer expects it). 7-zip is expected to be at
+         'C:\Program Files\7-Zip\7z'. Please update the script if it's at a different location or you want to use a different zipper.</p>
+         <p>Inno setup 5 is used to build the setup application. This is expected to be at 'C:\Program Files\Inno Setup 5'. Please update the script if you installed it somewhere else. </p>
+      </li>
+      <li>
+         Use 'buildwebsite.bat' if you only want to build the website section (including the libs it depends on) without building the android app or designer.
+      </li>
+      <li>
+         The 'designer.sln' visual studio project is the main development project. Both the designer and all the essential libraries are included in this project. This
+         builds the entire designer + library (including the android lib).
+      </li>
+      <li>
+         The 'hosts' sub-directory contains a number of 
+      </li>
+      <li>
+         The android library is a seperat project, but most files are simply linked from the windows library, so that the source code only has to be maintained in 1 location.
+         Whenever you add a new file to the main library, it will automatically be included in the android lib (Visual studio provides a link between the 2 projects using a 
+         visual studio plugin).
+      </li>
+      
+   </ul>
+
+   <p>Most of the headers containing the copyright notices for the source files are auto generated using the  'code header designer' (free download from internet)
+   The file 'GenerateCopyrightHeaders.headerx' defines how to generate these copyright notices.</p>
+   <p>
+   The help file is created with the open source project 'helpmaker'.
+   </p>
+</body>
+</html>

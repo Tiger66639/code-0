@@ -1,0 +1,25 @@
+class ML
+{
+   using common;
+   
+   //A distribution tree creates a tree for each variable, that only goes 1 deep: the value.
+   //this is not so great for results, but good for analyzing the data.
+   Neuron DistributionTree
+   {
+      var Root;
+      
+      
+      Train(var data, var result)
+      {
+         if(Count(root) == 0)
+            Root = MakeCluster(DistributionTree);     //give it a meaning.
+         
+      }
+      
+      
+      //important: call this function with 'waitfor'
+      Test(var data): var
+      {
+      }
+   }
+}

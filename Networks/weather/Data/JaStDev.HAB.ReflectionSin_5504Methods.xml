@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<ArrayOfReflectionSinEntryPoint xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ReflectionSinEntryPoint>
+    <MethodName>OpenScraper</MethodName>
+    <ParameterTypes>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>CmdShell.Scraping</TypeName>
+    <ID>9627</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>ScrapeText</MethodName>
+    <ParameterTypes>
+      <string>System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>CmdShell.Scraping</TypeName>
+    <ID>9633</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>CloseScraper</MethodName>
+    <ParameterTypes>
+      <string>System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>CmdShell.Scraping</TypeName>
+    <ID>9629</ID>
+  </ReflectionSinEntryPoint>
+  <ReflectionSinEntryPoint>
+    <MethodName>AddXmlNamespace</MethodName>
+    <ParameterTypes>
+      <string>System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+      <string>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
+    </ParameterTypes>
+    <TypeName>CmdShell.Scraping</TypeName>
+    <ID>9634</ID>
+  </ReflectionSinEntryPoint>
+</ArrayOfReflectionSinEntryPoint>

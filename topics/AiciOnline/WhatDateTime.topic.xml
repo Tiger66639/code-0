@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topic>
+  <Name>WhatDateTime</Name>
+  <Rules>
+    <Rule>
+      <Name>What time is it</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>What time is it [^n:adv.(of time).now]</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>what is the time [^n:adv.(of time).now]</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>you have the time [^n:adv.(of time).now] </Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>tell me the time [^n:adv.(of time).now] </Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>It is $time:hour\:$time:minute\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>The time is $time:hour\:$time:minute\. </Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>I have $time:hour\:$time:minute\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>My clock says $time:hour\:$time:minute\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Rule>
+    <Rule>
+      <Name>What hour is it</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>what hour is it [^n:adv.(of time).now]</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>what is the hour [^n:adv.(of time).now]</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>you have the hour [^n:adv.(of time).now]</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>tell me the hour [^n:adv.(of time).now]</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals>
+        <Conditional>
+          <Condition>
+            <Expression>$IsExact == True</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>It is almost $result o'clock.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+      </Conditionals>
+      <Outputs>
+        <Output>
+          <Expression>It's currently $result o'clock.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>I have $result o'clock.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>The short arm of my watch is pointing at $result\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>var iMinutes = $time:minute;
+if(iMinutes &gt; 450)
+{
+   $result = $time:hour + 1;
+   $isExact = false;
+}
+else
+{
+   $isExact = true;
+   $result = $time:hour + 1;   
+}</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>Is it day or night</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>is it [day or night | night or day] [^n:adv.(of time).now]</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>you think it is [day or night | night or day] [^n:adv.(of time).now]</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals>
+        <Conditional>
+          <Condition>
+            <Expression>$time:hour &gt;=8 &amp;&amp; $time:hour &lt;=20</Expression>
+          </Condition>
+          <Outputs>
+            <Output>
+              <Expression>It's day time.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+            <Output>
+              <Expression>It's between 8 in the morning and evening, that makes it day for me.</Expression>
+              <QuestionCanFollow>True</QuestionCanFollow>
+            </Output>
+          </Outputs>
+          <IsOutputSequenced />
+        </Conditional>
+      </Conditionals>
+      <Outputs>
+        <Output>
+          <Expression>It's night time, my favorite part of the day!</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>nighty night it is for me.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Rule>
+    <Rule>
+      <Name>What month is it</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>what month is it [^n:adv.(of time).now]</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>what is the month [^n:adv.(of time).now]</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>tell me (the month | which month it is) [^n:adv.(of time).now]</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>do you know (the month | which month it is) [^n:adv.(of time).now]</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>We are in ^noun.month[$time:month-1]\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>I think it's currently ^noun.month[$time:month-1]\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Rule>
+    <Rule>
+      <Name>What year is it</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>What year is it [^n:adv.(of time).now]</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>What is the [current] year [^n:adv.(of time).now]</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>tell me (the year | which year it is) [^n:adv.(of time).now]</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>do you know (the year | which year it is) [^n:adv.(of time).now]</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>It is currently $time:year\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>This is $time:year\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+        <Output>
+          <Expression>$time:year, I think.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Rule>
+    <Rule>
+      <Name>What is the date</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>What is the date [^n:adv.(of time).now]</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>tell me the date [^n:adv.(of time).now]</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>what date is it [^n:adv.(of time).now]</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>do you know the date [^n:adv.(of time).now]</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>It is ^noun.month[$time:month-1], $time:day $time:year\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Rule>
+    <Rule>
+      <Name>What day is it</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>what day is it [^n:adv.(of time).now]</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>which day of the week is it [^n:adv.(of time).now]</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>tell me the day of (the [current] |this) week</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>what day is [it] today</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>It is ^noun.day[$time:DayOfWeek-1]</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+    </Rule>
+    <Rule>
+      <Name>What day was it yesterday</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>What day was [it] yesterday</Expression>
+        </Pattern>
+        <Pattern>
+          <Expression>yesterday was what day</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>That was $result\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>int iDay = $time:dayofWeek;
+if(iDay == 1)
+   $result = ^noun.day[6];
+else
+   $result = ^noun.day[@iDay - 2];</Expression>
+      </ToCal>
+    </Rule>
+    <Rule>
+      <Name>what day was it x ago</Name>
+      <Patterns>
+        <Pattern>
+          <Expression>what day was it ~Numbers days ago</Expression>
+        </Pattern>
+      </Patterns>
+      <Conditionals />
+      <Outputs>
+        <Output>
+          <Expression>That was a $result\.</Expression>
+          <QuestionCanFollow>True</QuestionCanFollow>
+        </Output>
+      </Outputs>
+      <IsOutputSequenced />
+      <ToCal>
+        <Expression>int iDay = $time:dayofWeek;
+int iOffset = #bot.mem.amount;
+iOffset = iOffset % 7;  //only need a single week
+if(iDay == iOffset)
+   $result = ^noun.day[6];
+else if(iDay &lt; iOffset)
+{
+   iOffset = 6 - (iOffset - iDay);  //6 cause it's 0 based
+   $result = ^noun.day[@iOffset];   
+}
+else
+{
+   iOffset = iDay - iOffset - 1;
+   $result = ^noun.day[@iOffset]; 
+}</Expression>
+      </ToCal>
+    </Rule>
+  </Rules>
+</Topic>

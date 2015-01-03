@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <string name="BrainPrefKey">Brain</string>
+   <string name="BrainPrefTitle">Brain</string>
+   <string name="BrainPrefSummary">Select the brain to talk with.</string>
+   
+   <string name="LanguagePrefKey">Language</string>
+   <string name="LanguagePrefTitle">Language</string>
+   <string name="LanguagePrefSummary">Select the input and output language.</string>
+
+   <string name="SpeedOptPrefTitle">Speed optimizations</string>
+   <string name="SpeedOptPrefSummary">Extra settings that have an influance on system performance.</string>
+
+   <string name="InputVarCountPrefKey">InputVarCount</string>
+   <string name="InputVarCountPrefTitle">Max input variations</string>
+   <string name="InputVarCountPrefSummary">Specify the maximum nr of input variations that the system should try to process for each voice command.</string>
+
+   <string name="MinReservedBlockedProcPrefKey">MinReservedBlockedProcessors</string>
+   <string name="MinReservedBlockedProcPrefTitle">Min reserved threads</string>
+   <string name="MinReservedBlockedProcPrefSummary">The minimum of threads that the systems keeps in reserve for blocked threads.</string>
+
+   <string name="MaxConcurrentProcPrefKey">MaxConcurrentProcessors</string>
+   <string name="MaxConcurrentProcPrefTitle">Max concurrent threads</string>
+   <string name="MaxConcurrentProcPrefSummary">The maximum of threads that the system allows to run simultaneously.</string>
+
+   <string name="InitStackSizePrefKey">InitProcessorStackSize</string>
+   <string name="InitStackSizePrefTitle">Init stack size</string>
+   <string name="InitStackSizePrefSummary">The initial stack size for each processor when it is first created.</string>
+
+   <!--<string name="UserFirstResolvesInputPrefKey">UserFirstResolvesInput</string>
+   <string name="UserFirstResolvesInputPrefTitle">always ask </string>
+   <string name="UserFirstResolvesInputPrefSummary">The initial stack size for each processor when it is first created.</string>-->
+   
+    <string name="ApplicationName">AiciAndroid</string>
+
+   <string name="MenuPanicTitle">Panic</string>
+   <string name="MenuPrefTitle">Preferences</string>
+   <!--<string name="MenuListenTitle">Speak</string>-->
+
+   <string name="AddCalWhere">Where:</string>
+   <string name="AddCalWhen">When:</string>
+   <string name="AddCalUntil">Until:</string>
+   <string name="AddCalWhat">What:</string>
+   <string name="AddCalExtra">Extra:</string>
+   <!--<string name="AddCalRecurring">Is recurring</string>-->
+   <string name="AddCalOk">Ok</string>
+   <string name="AddCalSpeak">Speak</string>
+
+
+   <string name="Info_availableCommands_Title">
+      <u><b>Available commands</b></u>
+   </string>
+
+   <string name="Info_Chatting_Title">
+      <u>
+         <b>Chat features</b>
+      </u>
+   </string>
+
+   <string name="Info_About_Title">
+      <u>
+         <b>About</b>
+      </u>
+   </string>
+
+   <string name="Info_By_Title">
+      by <i>Jan Bogaerts</i>
+   </string>
+
+  
+</resources>

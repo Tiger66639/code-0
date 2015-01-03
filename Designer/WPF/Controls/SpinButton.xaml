@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.WPF.Controls.SpinButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:Ctrls="clr-namespace:JaStDev.HAB.Designer.WPF.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="12" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBox x:Name="TxtNrVer"
+                 Grid.Column="0"
+                 Grid.Row="0"
+                 Grid.RowSpan="2"
+                 TextAlignment="Right"
+                 HorizontalAlignment="Stretch"
+                 Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Ctrls:SpinButton}}, Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 Style="{StaticResource {x:Static ToolBar.TextBoxStyleKey}}" />
+        <RepeatButton Name="RepeatUp"
+                      Grid.Column="1"
+                      Grid.Row="0"
+                      Style="{StaticResource ToolbarRepeatButtonStyle}"
+                      Click="RepeatUp_Click">
+            5
+        </RepeatButton>
+        <RepeatButton Name="RepeatDown"
+                      Grid.Column="1"
+                      Grid.Row="1"
+                      VerticalAlignment="Bottom"
+                      Style="{StaticResource ToolbarRepeatButtonStyle}"
+                      Click="RepeatDown_Click">
+            6
+        </RepeatButton>
+    </Grid>
+</UserControl>

@@ -1,0 +1,146 @@
+﻿<ResourceDictionary x:Class="JaStDev.HAB.Designer.ToolsResourceDict"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:log="clr-namespace:JaStDev.WPFLog;assembly=JaStDev.WPFLog"
+                    xmlns:profiler="clr-namespace:JaStDev.HAB.Designer.Profiler"
+                    xmlns:search="clr-namespace:JaStDev.HAB.Designer.Search">
+
+    <!--The data for the neuron explorer-->
+    <self:NeuronExplorer x:Key="ExplorerData" />
+
+    <!--The data for the timers view.-->
+    <self:Timers x:Key="TimersData" />
+
+    <ContextMenu x:Key="LogContextmenu">
+        <MenuItem Header="Clear" Click="MnuItemClear_Click"
+                  ToolTip="Clear the entire log." />
+        <MenuItem Header="Copy" Click="MnuItemCopyLogItem_Click"
+                  ToolTip="Copy the currently selected log item to the clipboard as text." />
+    </ContextMenu>
+
+    <Style x:Key="LogListViewItem" TargetType="{x:Type ListViewItem}">
+        <Setter Property="Foreground" Value="Blue" />
+        <Setter Property="ContextMenu" Value="{StaticResource LogContextmenu}" />
+        <EventSetter Event="MouseDoubleClick" Handler="LogItem_MouseDoubleClick" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=Tag}" Value="{x:Null}">
+                <Setter Property="Foreground" Value="Black" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <self:ToolsList x:Key="Tools">
+
+        <self:ToolViewItem Title="Thesaurus"
+                           IconSource="/Images/Tools/thesaurus.png"
+                           ID="Thesaurus">
+            <self:ToolViewItem.DataTemplate>
+                <DataTemplate>
+                    <self:ThesaurusView x:Name="VwThesaurus"
+                                        DataContext="{Binding Source={x:Static self:BrainData.Current}, Path=Thesaurus}" />
+                </DataTemplate>
+            </self:ToolViewItem.DataTemplate>
+        </self:ToolViewItem>
+
+        <self:ToolViewItem Title="Toolbox"
+                           IconSource="/Images/Tools/tools.png"
+                           ID="Toolbox">
+            <self:ToolViewItem.DataTemplate>
+                <DataTemplate>
+                    <self:ToolBox x:Name="VwToolBox" />
+                </DataTemplate>
+            </self:ToolViewItem.DataTemplate>
+        </self:ToolViewItem>
+
+        <self:ToolViewItem Title="Explorer"
+                           ID="Explorer"
+                           IconSource="/Images/Tools/explorer.png">
+            <self:ToolViewItem.DataTemplate>
+                <DataTemplate>
+                    <self:NeuronExplorerView x:Name="MainExplorer"
+                                             DataContext="{StaticResource ExplorerData}" />
+                </DataTemplate>
+            </self:ToolViewItem.DataTemplate>
+        </self:ToolViewItem>
+
+        <self:ToolViewItem Title="Project"
+                           ID="Project"
+                           IconSource="/Images/Tools/Project.png">
+            <self:ToolViewItem.DataTemplate>
+                <DataTemplate>
+                    <self:EditorsOverview x:Name="VwEditorsOverview" />
+                </DataTemplate>
+            </self:ToolViewItem.DataTemplate>
+        </self:ToolViewItem>
+
+        <self:ToolViewItem Title="Neuron profiler"
+                           ID="MemProfiler"
+                           IconSource="/Images/Tools/MemProfiler.png">
+            <self:ToolViewItem.DataTemplate>
+                <DataTemplate>
+                    <profiler:MemprofilerView x:Name="VwMemProfiler" />
+                </DataTemplate>
+            </self:ToolViewItem.DataTemplate>
+        </self:ToolViewItem>
+
+        <self:ToolViewItem Title="Search results"
+                           ID="SearchResults"
+                           IconSource="/Images/CodeSearch_Enabled.png">
+            <self:ToolViewItem.DataTemplate>
+                <DataTemplate>
+                    <TabControl ItemsSource="{Binding Source={x:Static search:SearchResults.Default}, Path=Items}"
+                                SelectedIndex="{Binding Source={x:Static search:SearchResults.Default}, Path=SelectedIndex}"
+                                ItemTemplate="{StaticResource SearchResultSetHeaderTemplate}"
+                                ItemContainerStyle="{StaticResource SearchResultSetStyle}" />
+                </DataTemplate>
+            </self:ToolViewItem.DataTemplate>
+        </self:ToolViewItem>
+
+        <self:ToolViewItem Title="Log"
+                           IconSource="/Images/Tools/log.png"
+                           ID="Log">
+            <self:ToolViewItem.DataTemplate>
+                <DataTemplate>
+                    <log:LogListView x:Name="VwLog" ItemContainerStyle="{StaticResource LogListViewItem}"
+                                     BorderThickness="0" />
+                </DataTemplate>
+            </self:ToolViewItem.DataTemplate>
+        </self:ToolViewItem>
+
+        <self:ToolViewItem Title="Description"
+                           IconSource="/Images/Tools/Description.png"
+                           ID="Description">
+            <self:ToolViewItem.DataTemplate>
+                <DataTemplate>
+                    <self:DescriptionView x:Name="VwDescription" />
+                </DataTemplate>
+            </self:ToolViewItem.DataTemplate>
+        </self:ToolViewItem>
+
+        <self:ToolViewItem Title="Timers"
+                           IconSource="/Images/Tools/Timers.png"
+                           ID="Timers">
+            <self:ToolViewItem.DataTemplate>
+                <DataTemplate>
+                    <self:TimersView x:Name="VwTimers"
+                                     DataContext="{StaticResource TimersData}" />
+                </DataTemplate>
+            </self:ToolViewItem.DataTemplate>
+        </self:ToolViewItem>
+
+        <self:ToolViewItem Title="Debugger"
+                           ID="Debugger"
+                           IconSource="/Images/Tools/Debug.png">
+            <self:ToolViewItem.DataTemplate>
+                <DataTemplate>
+                    <self:ProcessorsOverview />
+                </DataTemplate>
+            </self:ToolViewItem.DataTemplate>
+        </self:ToolViewItem>
+
+
+    </self:ToolsList>
+
+</ResourceDictionary>

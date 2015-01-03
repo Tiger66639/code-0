@@ -1,0 +1,891 @@
+﻿<UserControl x:Class="JaStDev.HAB.Designer.ChatbotPropertiesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:self="clr-namespace:JaStDev.HAB.Designer"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:cf="http://schemas.jastdev.ControlFramework/winfx/2007/xaml/presentation"
+             xmlns:dd="clr-namespace:DnD"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300"
+             Background="White"
+             cf:Help.Topic="Projectproperties.html"
+             DataContextChanged="UserControl_DataContextChanged">
+    <UserControl.CommandBindings>
+        <CommandBinding Command="Delete" CanExecute="DeleteItem_CanExecute" Executed="DeleteItem_Executed" />
+        <CommandBinding Command="Cut" PreviewCanExecute="Cut_CanExecute" Executed="Cut_Executed" />
+        <CommandBinding Command="Copy" PreviewCanExecute="Copy_CanExecute" Executed="Copy_Executed" />
+        <CommandBinding Command="Paste" CanExecute="Paste_CanExecute" Executed="Paste_Executed" />
+        <CommandBinding Command="self:App.InsertItemCmd" CanExecute="InsertItem_CanExecute"
+                        Executed="InsertItem_Executed" />
+    </UserControl.CommandBindings>
+    <UserControl.InputBindings>
+        <KeyBinding Modifiers="Ctrl" Key="I" Command="self:App.InsertItemCmd" />
+    </UserControl.InputBindings>
+    <UserControl.Resources>
+        <Style x:Key="ChatbotLabelStyle" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,0,4,0" />
+        </Style>
+        <Style x:Key="ChatobTextBoxStyle" TargetType="TextBox">
+            <Setter Property="BorderThickness" Value="0,0,0,1" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="0,2,0,2" />
+            <Setter Property="IsUndoEnabled" Value="False" />
+            <EventSetter Event="PreviewTextInput" Handler="TextBox_PreviewTextInput" />
+            <EventSetter Event="SelectionChanged" Handler="TextBox_SelectionChanged" />
+        </Style>
+
+        <Style x:Key="ChatbotComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Margin" Value="0,2,0,2" />
+        </Style>
+
+        <Style x:Key="ModulePropsGroupItemStyle" TargetType="{x:Type GroupItem}">
+            <Setter Property="Margin" Value="0,0,0,5" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                        <Expander BorderBrush="#FFA4B97F"
+                                  BorderThickness="0,0,0,1">
+                            <Expander.Header>
+                                <DockPanel>
+                                    <TextBlock FontWeight="Bold"
+                                               Text="{Binding Path=Name}"
+                                               Margin="8,0,0,0" />
+                                </DockPanel>
+                            </Expander.Header>
+                            <Expander.Content>
+                                <ItemsPresenter />
+                            </Expander.Content>
+                        </Expander>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <self:ParseMapDropAdvisor x:Key="ParseMapDropAdv" />
+
+        <!--BoolBotPropDecl template-->
+        <DataTemplate DataType="{x:Type self:BoolBotPropDecl}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Cola" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <CheckBox ToolTip="{Binding Path=ToolTip}"
+                          Grid.Column="1"
+                          IsChecked="{Binding Path=Value}">
+                    <TextBlock TextWrapping="Wrap"
+                               Text="{Binding Path=Title}" />
+                </CheckBox>
+            </Grid>
+        </DataTemplate>
+
+        <!--ValueBotPropDecl template-->
+        <DataTemplate DataType="{x:Type self:ValueBotPropDecl}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Cola" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Path=Title, StringFormat={}{0}:}"
+                           HorizontalAlignment="Right"
+                           Margin="0,0,4,0"
+                           ToolTip="{Binding Path=ToolTip}" />
+                <TextBox ToolTip="{Binding Path=ToolTip}"
+                         Style="{StaticResource ChatobTextBoxStyle}"
+                         Text="{Binding Path=NeuronInfo.DisplayTitle}"
+                         Grid.Column="1" />
+            </Grid>
+        </DataTemplate>
+
+
+        <!--ListBotPropDecl template-->
+        <DataTemplate DataType="{x:Type self:ListBotPropDecl}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Cola" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Path=Title, StringFormat={}{0}:}"
+                           HorizontalAlignment="Right"
+                           ToolTip="{Binding Path=ToolTip}"
+                           Margin="0,0,4,0" />
+                <ListBox ItemsSource="{Binding Path=Values}"
+                         Grid.Column="1"
+                         Padding="2"
+                         HorizontalAlignment="Stretch"
+                         Style="{StaticResource NoScrollViewListBox}"
+                         ToolTip="Add by dropping a neuron in the list, delete with the 'del' key."
+                         MinHeight="24"
+                         Name="LstMappings"
+                         dd:DragDropManager.DropTarget="{StaticResource ParseMapDropAdv}">
+                    <ListBox.CommandBindings>
+                        <CommandBinding Command="Delete" CanExecute="DeleteMapItem_CanExecute"
+                                        Executed="DeleteListPropItem_Executed" />
+                    </ListBox.CommandBindings>
+                    <ListBox.InputBindings>
+                        <KeyBinding Key="Del" Command="Delete" />
+                    </ListBox.InputBindings>
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <ContentPresenter Content="{Binding Path=NeuronInfo}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </DataTemplate>
+
+        <!--This is applied to all textboxes in the DatePicker objects.-->
+        <Style TargetType="DatePickerTextBox">
+            <Setter Property="IsUndoEnabled" Value="False" />
+            <EventSetter Event="PreviewTextInput" Handler="TextBox_PreviewTextInput" />
+        </Style>
+
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="1"
+                BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"
+                BorderThickness="1,0,0,0"
+                Padding="4">
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="Auto">
+
+                <StackPanel>
+
+                    <!--settings and preferences-->
+                    <Grid Margin="4"
+                          Visibility="{Binding Path=IsPrefSelected, Converter={StaticResource BoolToVisConv}}">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <GridSplitter Grid.Row="0"
+                                      Grid.Column="1"
+                                      Width="6"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Stretch"
+                                      x:Name="SplitVertical"
+                                      Margin="4,0,4,0"
+                                      Style="{StaticResource PatternEditorVerSplitter}" />
+
+                        <Grid Grid.Row="0"
+                              VerticalAlignment="Top">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Margin="4"
+                                       Grid.ColumnSpan="2">
+                                <Underline>
+                                    <Bold>User preferences:</Bold>
+                                </Underline>
+                            </TextBlock>
+
+                            <TextBlock Style="{StaticResource ChatbotLabelStyle}"
+                                       Grid.Row="1">
+                                Name:
+                            </TextBlock>
+                            <TextBox Style="{StaticResource ChatobTextBoxStyle}"
+                                     Text="{Binding Path=UserName, UpdateSourceTrigger=PropertyChanged}"
+                                     cf:FocusManager.IsFocused="{Binding Path=FocusUserName, Mode=OneWay}"
+                                     Tag="FocusUserName"
+                                     Grid.Row="1"
+                                     Grid.Column="1" />
+
+
+                            <TextBlock Style="{StaticResource ChatbotLabelStyle}"
+                                       Grid.Row="2">
+                                Birthday:
+                            </TextBlock>
+                            <DatePicker SelectedDateFormat="Short"
+                                        SelectedDate="{Binding Path=UserBirthday, Mode=OneWay}"
+                                        LostFocus="DateUserBDay_LostFocus"
+                                        CalendarClosed="DateUserBDay_CalendarClosed"
+                                        DisplayDateStart="1900/01/01"
+                                        DisplayDateEnd="2100/12/31"
+                                        FirstDayOfWeek="Monday"
+                                        BorderThickness="0,0,0,1"
+                                        Grid.Column="1"
+                                        Grid.Row="2"
+                                        Margin="0,2,0,2"
+                                        Name="DateUserBDay"
+                                        KeyUp="DatePicker_KeyUp"
+                                        cf:FocusManager.IsFocused="{Binding Path=FocusUserBDay, Mode=OneWay}"
+                                        Tag="FocusUserBDay" />
+
+                            <TextBlock Style="{StaticResource ChatbotLabelStyle}"
+                                       Grid.Row="3">
+                                Gender:
+                            </TextBlock>
+                            <ComboBox Grid.Column="1"
+                                      Grid.Row="3"
+                                      Style="{StaticResource ChatbotComboBoxStyle}"
+                                      SelectedIndex="{Binding Path=UserGender}"
+                                      cf:FocusManager.IsFocused="{Binding Path=FocusUserGender, Mode=OneWay}"
+                                      Tag="FocusUserGender">
+                                <ComboBoxItem>Male</ComboBoxItem>
+                                <ComboBoxItem>Female</ComboBoxItem>
+                                <ComboBoxItem>Hermaphrodite</ComboBoxItem>
+                            </ComboBox>
+                        </Grid>
+
+                        <Grid Grid.Column="2"
+                              Grid.Row="0"
+                              VerticalAlignment="Top"
+                              Margin="0,0,0,8">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+
+                            <TextBlock Margin="4"
+                                       Grid.ColumnSpan="2"
+                                       HorizontalAlignment="Left">
+                                <Underline>
+                                    <Bold>Bot preferences:</Bold>
+                                </Underline>
+                            </TextBlock>
+
+                            <TextBlock Style="{StaticResource ChatbotLabelStyle}"
+                                       Grid.Row="1">
+                                Name:
+                            </TextBlock>
+                            <TextBox Style="{StaticResource ChatobTextBoxStyle}"
+                                     Text="{Binding Path=BotName, UpdateSourceTrigger=PropertyChanged}"
+                                     Grid.Column="1"
+                                     Grid.Row="1"
+                                     cf:FocusManager.IsFocused="{Binding Path=FocusBotName, Mode=OneWay}"
+                                     Tag="FocusBotName" />
+
+
+                            <TextBlock Style="{StaticResource ChatbotLabelStyle}"
+                                       Grid.Row="2">
+                                Birthday:
+                            </TextBlock>
+                            <DatePicker SelectedDateFormat="Short"
+                                        SelectedDate="{Binding Path=BotBirthday, Mode=OneWay}"
+                                        LostFocus="DateBotBDay_LostFocus"
+                                        CalendarClosed="DateBotBirthday_CalendarClosed"
+                                        DisplayDateStart="0001/01/01"
+                                        DisplayDateEnd="9999/12/31"
+                                        FirstDayOfWeek="Monday"
+                                        BorderThickness="0,0,0,1"
+                                        Margin="0,2,0,2"
+                                        Grid.Column="1"
+                                        Grid.Row="2"
+                                        Name="DateBotBirthday"
+                                        KeyUp="DateBotBirthday_KeyDown"
+                                        cf:FocusManager.IsFocused="{Binding Path=FocusBotBDay, Mode=OneWay}"
+                                        Tag="FocusBotBDay" />
+
+
+                            <TextBlock Style="{StaticResource ChatbotLabelStyle}"
+                                       Grid.Row="3">
+                                Gender:
+                            </TextBlock>
+
+                            <ComboBox Grid.Column="1"
+                                      Grid.Row="3"
+                                      Style="{StaticResource ChatbotComboBoxStyle}"
+                                      SelectedIndex="{Binding Path=BotGender}"
+                                      cf:FocusManager.IsFocused="{Binding Path=FocusBotGender, Mode=OneWay}"
+                                      Tag="FocusBotGender">
+                                <ComboBoxItem>Male</ComboBoxItem>
+                                <ComboBoxItem>Female</ComboBoxItem>
+                                <ComboBoxItem>Hermaphrodite</ComboBoxItem>
+                            </ComboBox>
+
+
+                            <TextBlock Style="{StaticResource ChatbotLabelStyle}"
+                                       Grid.Row="4"
+                                       Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=ProVisibility, Mode=OneTime}">
+                                Bot type:
+                            </TextBlock>
+
+                            <ComboBox Grid.Column="1"
+                                      Grid.Row="4"
+                                      Style="{StaticResource ChatbotComboBoxStyle}"
+                                      SelectedIndex="{Binding Path=ChatbotMode}"
+                                      Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=ProVisibility, Mode=OneTime}"
+                                      ToolTip="Select the Bot type.">
+                                <ComboBoxItem>Desktop</ComboBoxItem>
+                                <ComboBoxItem>Online</ComboBoxItem>
+                            </ComboBox>
+                        </Grid>
+
+                        <Separator Grid.ColumnSpan="3"
+                                   Grid.Row="1"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Stretch" />
+
+                        <TextBlock Margin="4"
+                                   Grid.Row="1">
+                            <Underline>
+                                <Bold>Module properties:</Bold>
+                            </Underline>
+                        </TextBlock>
+
+                        <ItemsControl Grid.Row="2"
+                                      Grid.ColumnSpan="3"
+                                      BorderThickness="0"
+                                      Name="LstModuleProps"
+                                      ItemsSource="{Binding Path=ModulePropsView}"
+                                      Margin="0,8,0,0"
+                                      MinHeight="24"
+                                      Grid.IsSharedSizeScope="True">
+                            <ItemsControl.GroupStyle>
+                                <GroupStyle ContainerStyle="{StaticResource ModulePropsGroupItemStyle}" />
+                            </ItemsControl.GroupStyle>
+                            <ItemsControl.ItemContainerStyle>
+                                <Style TargetType="ContentPresenter">
+                                    <Setter Property="Margin" Value="2" />
+                                </Style>
+                            </ItemsControl.ItemContainerStyle>
+                        </ItemsControl>
+
+                    </Grid>
+
+                    <TextBlock Margin="4"
+                               Visibility="{Binding Path=IsDoAfterSelected, Converter={StaticResource BoolToVisConv}}">
+                        <Underline>
+                            <Bold>Do after every input/output pair:</Bold>
+                        </Underline>
+                    </TextBlock>
+
+                    <!--Do after-->
+                    <Border Margin="4,0,4,0"
+                            Visibility="{Binding Path=IsDoAfterSelected, Converter={StaticResource BoolToVisConv}}"
+                            IsKeyboardFocusWithinChanged="Do_IsKeyboardFocusWithinChanged"
+                            Focusable="False">
+                        <ContentPresenter ContentTemplate="{StaticResource DoPatternTemplate}"
+                                          Content="{Binding Path=DoAfter}" />
+                    </Border>
+
+
+                    <!--Do on startup-->
+                    <TextBlock Margin="4"
+                               Visibility="{Binding Path=IsDoOnStartupSelected, Converter={StaticResource BoolToVisConv}}">
+                        <Underline>
+                            <Bold>Do after the chatbot has started:</Bold>
+                        </Underline>
+                    </TextBlock>
+
+                    <!--Do on startup-->
+                    <Border Margin="4,0,4,0"
+                            Visibility="{Binding Path=IsDoOnStartupSelected, Converter={StaticResource BoolToVisConv}}"
+                            IsKeyboardFocusWithinChanged="DoStartup_IsKeyboardFocusWithinChanged"
+                            Focusable="False">
+                        <ContentPresenter ContentTemplate="{StaticResource DoPatternTemplate}"
+                                          Content="{Binding Path=DoStartup}" />
+                    </Border>
+
+                    <!--Context-->
+                    <TextBlock Margin="4"
+                               Visibility="{Binding Path=IsContextSelected, Converter={StaticResource BoolToVisConv}}">
+                        <Underline>
+                            <Bold>Calculate context with:</Bold>
+                        </Underline>
+                    </TextBlock>
+
+                    <!--Context-->
+                    <StackPanel Margin="4,0,4,0"
+                                Visibility="{Binding Path=IsContextSelected, Converter={StaticResource BoolToVisConv}}">
+                        <ItemsControl ItemsSource="{Binding Path=Context}"
+                                      ItemTemplate="{StaticResource ConvStartPatternTemplate}"
+                                      IsTabStop="False"
+                                      MinWidth="40" />
+                        <Control Template="{StaticResource TextPatternNewContextTemplate}"
+                                 DataContext="{Binding Path=Context}"
+                                 Focusable="False" />
+                    </StackPanel>
+
+                    <TextBlock Margin="4"
+                               Visibility="{Binding Path=IsOpeningStatSelected, Converter={StaticResource BoolToVisConv}}">
+                        <Underline>
+                            <Bold>Say on startup:</Bold>
+                        </Underline>
+                    </TextBlock>
+
+                    <!--conversation starts-->
+                    <StackPanel Margin="4,0,4,0"
+                                Visibility="{Binding Path=IsOpeningStatSelected, Converter={StaticResource BoolToVisConv}}">
+                        <ItemsControl ItemsSource="{Binding Path=ConversationStarts}"
+                                      ItemTemplate="{StaticResource ConvStartPatternTemplate}"
+                                      IsTabStop="False"
+                                      MinWidth="40" />
+                        <Control Template="{StaticResource TextPatternNewStartTemplate}"
+                                 DataContext="{Binding Path=ConversationStarts}"
+                                 Focusable="False" />
+                    </StackPanel>
+
+                    <TextBlock Margin="4"
+                               Visibility="{Binding Path=IsFallbackSelected, Converter={StaticResource BoolToVisConv}}">
+                        <Underline>
+                            <Bold>Fallback responses:</Bold>
+                        </Underline>
+                    </TextBlock>
+
+                    <!--Fallbacks-->
+                    <StackPanel Margin="4,0,4,0"
+                                Visibility="{Binding Path=IsFallbackSelected, Converter={StaticResource BoolToVisConv}}">
+                        <ItemsControl ItemsSource="{Binding Path=FallBacks}"
+                                      ItemTemplate="{StaticResource ConvStartPatternTemplate}"
+                                      IsTabStop="False"
+                                      MinWidth="40" />
+                        <Control Template="{StaticResource TextPatternNewFallBackTemplate}"
+                                 DataContext="{Binding Path=FallBacks}"
+                                 Focusable="False" />
+                    </StackPanel>
+
+                    <TextBlock Margin="4"
+                               Visibility="{Binding Path=IsRepetetitionSelected, Converter={StaticResource BoolToVisConv}}">
+                        <Underline>
+                            <Bold>Repeat responses:</Bold>
+                        </Underline>
+                    </TextBlock>
+
+                    <!--Repeat-->
+                    <StackPanel Margin="4,0,4,0"
+                                Visibility="{Binding Path=IsRepetetitionSelected, Converter={StaticResource BoolToVisConv}}">
+                        <ItemsControl ItemsSource="{Binding Path=ResponsesOnRepeat}"
+                                      ItemTemplate="{StaticResource RepeatsPatternTemplate}"
+                                      IsTabStop="False"
+                                      MinWidth="40" />
+                        <Control Template="{StaticResource TextPatternNewRepeatTemplate}"
+                                 DataContext="{Binding Path=ResponsesOnRepeat}"
+                                 Focusable="False" />
+                    </StackPanel>
+
+
+                    <!--Mappings: asset pronouns & person-->
+                    <Grid Margin="4"
+                          Visibility="{Binding Path=IsMappgingSelected, Converter={StaticResource BoolToVisConv}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="6" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock>
+                            <Underline>
+                                <Bold>Asset pronouns:</Bold>
+                            </Underline>
+                        </TextBlock>
+                        <TextBlock Grid.Column="2">
+                            <Underline>
+                                <Bold>Person mapppings:</Bold>
+                            </Underline>
+                        </TextBlock>
+
+                        <ListBox ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=AssetPronounIds}"
+                                 ToolTip="Add by dropping a neuron in the list, delete with the 'del' key."
+                                 MinHeight="60"
+                                 Style="{StaticResource NoScrollViewListBox}"
+                                 Name="LstPronouns"
+                                 dd:DragDropManager.DropTarget="{StaticResource ParseMapDropAdv}"
+                                 Grid.Row="2">
+                            <ListBox.CommandBindings>
+                                <CommandBinding Command="Delete" CanExecute="DeleteMapItem_CanExecute"
+                                                Executed="DeleteMapItem_Executed" />
+                            </ListBox.CommandBindings>
+                            <ListBox.InputBindings>
+                                <KeyBinding Key="Del" Command="Delete" />
+                            </ListBox.InputBindings>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <ContentPresenter Content="{Binding Converter={StaticResource NeuronIdToInfoConv}}" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                        </ListBox>
+
+                        <ListBox ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=PersonMapIds}"
+                                 ToolTip="Add by dropping a neuron in the list, delete with the 'del' key."
+                                 MinHeight="60"
+                                 Name="LstPersons"
+                                 dd:DragDropManager.DropTarget="{StaticResource ParseMapDropAdv}"
+                                 Style="{StaticResource NoScrollViewListBox}"
+                                 Grid.Row="2"
+                                 Grid.Column="2">
+                            <ListBox.CommandBindings>
+                                <CommandBinding Command="Delete" CanExecute="DeleteMapItem_CanExecute"
+                                                Executed="DeleteMapItem_Executed" />
+                            </ListBox.CommandBindings>
+                            <ListBox.InputBindings>
+                                <KeyBinding Key="Del" Command="Delete" />
+                            </ListBox.InputBindings>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <ContentPresenter Content="{Binding Converter={StaticResource NeuronIdToInfoConv}}" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                        </ListBox>
+
+                    </Grid>
+
+
+                    <TextBlock Margin="4"
+                               Visibility="{Binding Path=IsMappgingSelected, Converter={StaticResource BoolToVisConv}}">
+                        <Underline>
+                            <Bold>Parser mappings:</Bold>
+                        </Underline>
+                    </TextBlock>
+
+                    <ListBox
+                        ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=DesignerData.Chatbotdata.ParserMap}"
+                        ToolTip="Add by dropping a neuron in the list, delete with the 'del' key."
+                        MinHeight="100"
+                        Name="LstMappings"
+                        Margin="4, 0, 4,0"
+                        Visibility="{Binding Path=IsMappgingSelected, Converter={StaticResource BoolToVisConv}}"
+                        dd:DragDropManager.DropTarget="{StaticResource ParseMapDropAdv}"
+                        Style="{StaticResource NoScrollViewListBox}">
+                        <ListBox.CommandBindings>
+                            <CommandBinding Command="Delete" CanExecute="DeleteMapItem_CanExecute"
+                                            Executed="DeleteMapItem_Executed" />
+                        </ListBox.CommandBindings>
+                        <ListBox.InputBindings>
+                            <KeyBinding Key="Del" Command="Delete" />
+                        </ListBox.InputBindings>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <ContentPresenter Content="{Binding Converter={StaticResource NeuronIdToInfoConv}}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                    </ListBox>
+
+
+                    <TextBlock Margin="4"
+                               Visibility="{Binding Path=IsMappgingSelected, Converter={StaticResource BoolToVisConv}}">
+                        <Underline>
+                            <Bold>Function mappings:</Bold>
+                        </Underline>
+                    </TextBlock>
+
+                    <!--function mappings-->
+                    <ListBox
+                        ItemsSource="{Binding Source={x:Static self:BrainData.Current}, Path=DesignerData.Chatbotdata.DoFunctionMap}"
+                        ToolTip="Add by dropping a neuron in the list, delete with the 'del' key."
+                        MinHeight="100"
+                        Name="LstFunctionMappings"
+                        Margin="4, 0, 4,0"
+                        Visibility="{Binding Path=IsMappgingSelected, Converter={StaticResource BoolToVisConv}}"
+                        dd:DragDropManager.DropTarget="{StaticResource ParseMapDropAdv}"
+                        Style="{StaticResource NoScrollViewListBox}">
+                        <ListBox.CommandBindings>
+                            <CommandBinding Command="Delete" CanExecute="DeleteMapItem_CanExecute"
+                                            Executed="DeleteMapItem_Executed" />
+                        </ListBox.CommandBindings>
+                        <ListBox.InputBindings>
+                            <KeyBinding Key="Del" Command="Delete" />
+                        </ListBox.InputBindings>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <ContentPresenter Content="{Binding Converter={StaticResource NeuronIdToInfoConv}}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                    </ListBox>
+
+
+                    <!---->
+                    <TextBlock Margin="4"
+                               Visibility="{Binding Path=IsMappgingSelected, Converter={StaticResource BoolToVisConv}}">
+                        <Underline>
+                            <Bold>Module property bindings:</Bold>
+                        </Underline>
+                    </TextBlock>
+
+                    <StackPanel Grid.IsSharedSizeScope="True"
+                                Visibility="{Binding Path=IsMappgingSelected, Converter={StaticResource BoolToVisConv}}"><!--so we can make a shared size scope-->
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="col1" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Style="{StaticResource ChatbotLabelStyle}"
+                                       Grid.Row="0"
+                                       ToolTip="The id of the neuron that represents the bot-asset cluster.">
+                                BotID:
+                            </TextBlock>
+                            <TextBox Style="{StaticResource ChatobTextBoxStyle}"
+                                     Text="{Binding Source={x:Static self:BrainData.Current}, Path=DesignerData.Chatbotdata.BotID, UpdateSourceTrigger=PropertyChanged}"
+                                     ToolTip="The id of the neuron that represents the bot-asset cluster."
+                                     Grid.Row="0"
+                                     Grid.Column="1" />
+
+
+                            <TextBlock Style="{StaticResource ChatbotLabelStyle}"
+                                       Grid.Row="1"
+                                       ToolTip="The id of the neuron that represents the creator-asset cluster.">
+                                CreatorID:
+                            </TextBlock>
+                            <TextBox Style="{StaticResource ChatobTextBoxStyle}"
+                                     Text="{Binding Source={x:Static self:BrainData.Current}, Path=DesignerData.Chatbotdata.CreatorID, UpdateSourceTrigger=PropertyChanged}"
+                                     ToolTip="The id of the neuron that represents the creator-asset cluster."
+                                     Grid.Row="1"
+                                     Grid.Column="1" />
+
+                            <TextBlock Style="{StaticResource ChatbotLabelStyle}"
+                                       Grid.Row="2"
+                                       ToolTip="The id of the neuron used as the meaning for the link between the chatbot's backing text-sin and the asset that represents the current chatbot user.">
+                                RefToUserID:
+                            </TextBlock>
+                            <TextBox Style="{StaticResource ChatobTextBoxStyle}"
+                                     Text="{Binding Source={x:Static self:BrainData.Current}, Path=DesignerData.Chatbotdata.RefToUserID, UpdateSourceTrigger=PropertyChanged}"
+                                     ToolTip="The id of the neuron used as the meaning for the link between the chatbot's backing text-sin and the asset that represents the current chatbot user."
+                                     Grid.Row="2"
+                                     Grid.Column="1" />
+
+                            <TextBlock Style="{StaticResource ChatbotLabelStyle}"
+                                       Grid.Row="3"
+                                       ToolTip="The id of the object cluster that represents the 'name' attribute in an asset.">
+                                NameID:
+                            </TextBlock>
+                            <TextBox Style="{StaticResource ChatobTextBoxStyle}"
+                                     Text="{Binding Source={x:Static self:BrainData.Current}, Path=DesignerData.Chatbotdata.NameID, UpdateSourceTrigger=PropertyChanged}"
+                                     ToolTip="The id of the object cluster that represents the 'name' attribute in an asset."
+                                     Grid.Row="3"
+                                     Grid.Column="1" />
+
+                            <TextBlock Style="{StaticResource ChatbotLabelStyle}"
+                                       Grid.Row="4"
+                                       ToolTip="The id of the object cluster that represents the 'birthday' attribute in an asset.">
+                                BirthdayID:
+                            </TextBlock>
+                            <TextBox Style="{StaticResource ChatobTextBoxStyle}"
+                                     Text="{Binding Source={x:Static self:BrainData.Current}, Path=DesignerData.Chatbotdata.BirthdayID, UpdateSourceTrigger=PropertyChanged}"
+                                     ToolTip="The id of the object cluster that represents the 'birthday' attribute in an asset."
+                                     Grid.Row="4"
+                                     Grid.Column="1" />
+
+                            <TextBlock Style="{StaticResource ChatbotLabelStyle}"
+                                       Grid.Row="5"
+                                       ToolTip="The id of the object cluster that represents the 'Gender' attribute in an asset.">
+                                GenderID:
+                            </TextBlock>
+                            <TextBox Style="{StaticResource ChatobTextBoxStyle}"
+                                     Text="{Binding Source={x:Static self:BrainData.Current}, Path=DesignerData.Chatbotdata.GenderID, UpdateSourceTrigger=PropertyChanged}"
+                                     ToolTip="The id of the object cluster that represents the 'Gender' attribute in an asset."
+                                     Grid.Row="5"
+                                     Grid.Column="1" />
+                        </Grid>
+
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="col1" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+
+                            <TextBlock Style="{StaticResource ChatbotLabelStyle}"
+                                       Grid.Row="1"
+                                       ToolTip="The id of the object cluster that represents the 'male' value in an asset.">
+                                MaleID:
+                            </TextBlock>
+                            <TextBox Style="{StaticResource ChatobTextBoxStyle}"
+                                     Text="{Binding Source={x:Static self:BrainData.Current}, Path=DesignerData.Chatbotdata.MaleID, UpdateSourceTrigger=PropertyChanged}"
+                                     ToolTip="The id of the object cluster that represents the 'male' value in an asset."
+                                     Grid.Row="1"
+                                     Grid.Column="1" />
+
+                            <TextBlock Style="{StaticResource ChatbotLabelStyle}"
+                                       Grid.Row="2"
+                                       ToolTip="The id of the object cluster that represents the 'female' value in an asset.">
+                                FemaleID:
+                            </TextBlock>
+                            <TextBox Style="{StaticResource ChatobTextBoxStyle}"
+                                     Text="{Binding Source={x:Static self:BrainData.Current}, Path=DesignerData.Chatbotdata.FemaleID, UpdateSourceTrigger=PropertyChanged}"
+                                     ToolTip="The id of the object cluster that represents the 'female' value in an asset."
+                                     Grid.Row="2"
+                                     Grid.Column="1" />
+
+                            <TextBlock Style="{StaticResource ChatbotLabelStyle}"
+                                       Grid.Row="3"
+                                       ToolTip="The id of the object cluster that represents the 'hermaphrodite' value in an asset.">
+                                HermaID:
+                            </TextBlock>
+                            <TextBox Style="{StaticResource ChatobTextBoxStyle}"
+                                     Text="{Binding Source={x:Static self:BrainData.Current}, Path=DesignerData.Chatbotdata.HermaID, UpdateSourceTrigger=PropertyChanged}"
+                                     ToolTip="The id of the object cluster that represents the 'hermaphrodite' value in an asset."
+                                     Grid.Row="3"
+                                     Grid.Column="1" />
+
+
+                        </Grid>
+                    </StackPanel>
+
+
+                </StackPanel>
+
+
+            </ScrollViewer>
+        </Border>
+
+        <ItemsControl Grid.Column="0"
+                      Margin="4,4,0,4">
+            <RadioButton Style="{StaticResource LeftToggleTab}"
+                         IsChecked="{Binding Path=IsPrefSelected, Mode=TwoWay}"
+                         ToolTip="Edit the bot's preferences."
+                         BorderThickness="1,1,0,1">
+                <TextBlock Margin="4,0,4,0"
+                           HorizontalAlignment="Right">
+                    <Run>Preferences</Run>
+                </TextBlock>
+            </RadioButton>
+
+            <RadioButton Style="{StaticResource LeftToggleTab}"
+                         IsChecked="{Binding Path=IsDoOnStartupSelected, Mode=TwoWay}"
+                         ToolTip="Edit the 'do' pattern that are executed when the chatbot has started.">
+                <TextBlock Margin="4,0,4,0"
+                           HorizontalAlignment="Right">
+                    <Run>Do on startup</Run>
+                </TextBlock>
+            </RadioButton>
+
+            <RadioButton Style="{StaticResource LeftToggleTab}"
+                         IsChecked="{Binding Path=IsOpeningStatSelected, Mode=TwoWay}"
+                         ToolTip="Edit the statements that can be used when the conversation starts.">
+                <TextBlock Margin="4,0,4,0"
+                           HorizontalAlignment="Right">
+                    <Run>Say on startup</Run>
+                </TextBlock>
+            </RadioButton>
+
+            <RadioButton Style="{StaticResource LeftToggleTab}"
+                         IsChecked="{Binding Path=IsDoAfterSelected, Mode=TwoWay}"
+                         ToolTip="Edit the 'do' pattern that are executed after each input/output.">
+                <TextBlock Margin="4,0,4,0"
+                           HorizontalAlignment="Right">
+                    <Run>Do after output</Run>
+                </TextBlock>
+            </RadioButton>
+
+            <RadioButton Style="{StaticResource LeftToggleTab}"
+                         IsChecked="{Binding Path=IsFallbackSelected, Mode=TwoWay}"
+                         ToolTip="Edit the statements used as fallback values in case no pattern can be matched.">
+                <TextBlock Margin="4,0,4,0"
+                           HorizontalAlignment="Right">
+                    <Run>Fall back</Run>
+                </TextBlock>
+            </RadioButton>
+
+            <RadioButton Style="{StaticResource LeftToggleTab}"
+                         IsChecked="{Binding Path=IsRepetetitionSelected, Mode=TwoWay}"
+                         ToolTip="Edit the statements that need to be used when repetition is encountered in the input.">
+                <TextBlock Margin="4,0,4,0"
+                           HorizontalAlignment="Right">
+                    <Run>Repetition</Run>
+                </TextBlock>
+            </RadioButton>
+
+            <RadioButton Style="{StaticResource LeftToggleTab}"
+                         IsChecked="{Binding Path=IsContextSelected, Mode=TwoWay}"
+                         ToolTip="Edit the queries used to calculate the context of the input.">
+                <TextBlock Margin="4,0,4,0"
+                           HorizontalAlignment="Right">
+                    <Run>Context</Run>
+                </TextBlock>
+            </RadioButton>
+
+            <RadioButton Style="{StaticResource LeftToggleTab}"
+                         IsChecked="{Binding Path=IsMappgingSelected, Mode=TwoWay}"
+                         ToolTip="Edit the mappings between the parsers and the network."
+                         Visibility="{Binding Source={x:Static self:WindowMain.Current}, Path=DesignerVisibility, Mode=OneTime}">
+                <TextBlock Margin="4,0,4,0"
+                           HorizontalAlignment="Right">
+                    <Run>Mappings</Run>
+                </TextBlock>
+            </RadioButton>
+
+
+        </ItemsControl>
+
+    </Grid>
+</UserControl>

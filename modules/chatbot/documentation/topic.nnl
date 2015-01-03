@@ -1,0 +1,29 @@
+bind ~
+{
+   //sends the value back to the patternmatcher and returns the result of the patternmatch
+   //this is equivalent to AIML's srai element.
+   srai(var value): var
+   //root
+   {
+      //returns the topic with the specified name (if there is any).
+      get(var topicName): var
+      //all the functions that can come after a topic 'get'
+      :TopicFunctions
+      {
+         //renders the 'questions' section of the specified topic.
+         Render(var topic): var
+      }
+      //everything that can come after a get.
+      .AfterTopic
+      {
+         //returns the rule with the specified name in the specified topic.
+         get(var topic, var ruleName): var
+         //all the functions that can come after a rule 'get'
+         :RuleFunctions
+         {
+            //renders the content of the specified rule
+            Render(var rule): var
+         }
+      }
+   }
+}
