@@ -2,15 +2,15 @@
 <settings>
   <versionedSettings rootId="Code0_HttpsGithubComTiger66639code0gitRefsHeadsMaster" enabled="true" showChanges="false" />
   <project-graphs>
+    <graph title="Chart title" defaultFilters="" hideFilters="" seriesTitle="Serie">
+      <valueType key="BuildDuration" title="Build Duration (all stages)" sourceBuildTypeId="Code0_Build" />
+      <valueType key="BuildDurationNetTime" title="Build Duration (excluding Checkout Time)" sourceBuildTypeId="Code0_Build" />
+    </graph>
     <graph title="New chart title" defaultFilters="" hideFilters="" seriesTitle="Serie">
       <valueType key="BuildDurationNetTime" title="Build Duration (excluding Checkout Time)" sourceBuildTypeId="Code0_Build" />
       <valueType key="BuildCheckoutTime" title="Build Checkout Time" sourceBuildTypeId="Code0_Build" />
       <valueType key="ArtifactsResolvingTime" title="Artifact Dependencies Resolving Time" sourceBuildTypeId="Code0_Build" />
       <valueType key="BuildArtifactsPublishingTime" title="Build Artifacts Publishing Time" sourceBuildTypeId="Code0_Build" />
-    </graph>
-    <graph title="Chart title" defaultFilters="" hideFilters="" seriesTitle="Serie">
-      <valueType key="BuildDuration" title="Build Duration (all stages)" sourceBuildTypeId="Code0_Build" />
-      <valueType key="BuildDurationNetTime" title="Build Duration (excluding Checkout Time)" sourceBuildTypeId="Code0_Build" />
     </graph>
   </project-graphs>
 </settings>
