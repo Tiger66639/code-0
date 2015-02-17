@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
     <script src="javascripts/scale.fix.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -16,18 +17,14 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1 class="header">Code-0</h1>
-        <p class="header">Please read carefully:•Use &#39;BuildAll.bat&#39; to build the entire project. Before you can do this though, there are a couple of applications required.For the android application, it is expected that the mondroid development sdk is installed. The script expects the sdk at C:\Users\Esus\AppData\Local\Xamarin\MonoForAndroid\AndroidSDK\android-sdk-windows\tools\&#39;. If this can&#39;t be found, the build will fail. Note that the installation script also expects the sdk at this location.The buildAll script also starts visual studio at one point for the web-application. The purpose for this is to perform a publish (to disk), which couldn&#39;t be automated (any solution is more than welcome). The first time you do this, you have to update the publish location: open the &#39;publish web&#39; dialog and make certain that the target location is in your development path.7-zip is used to create a zip archive of the web application, which is also required for a full build (the installer expects it). 7-zip is expected to be at &#39;C:\Program Files\7-Zip\7z&#39;. Please update the script if it&#39;s at a different location or you want to use a different zipper.Inno setup 5 is used to build the setup application. This is expected to be at &#39;C:\Program Files\Inno Setup 5&#39;. Please update the script if you installed it somewhere else. • Use &#39;buildwebsite.bat&#39; if you only want to build the website section (including the libs it depends on) without building the android app or designer. • The &#39;designer.sln&#39; visual studio project is the main development project. Both the designer and all the essential libraries are included in this project. This builds the entire designer + library (including the android lib). • The &#39;hosts&#39; sub-directory contains a number of • The android library is a seperat project, but most files are simply linked from the windows library, so that the source code only has to be maintained in 1 location. Whenever you add a new file to the main library, it will automatically be included in the android lib (Visual studio provides a link between the 2 projects using a visual studio plugin). Most of the headers containing the copyright notices for the source files are auto generated using the &#39;code header designer&#39; (free download from internet) The file &#39;GenerateCopyrightHeaders.headerx&#39; defines how to generate these copyright notices.The help file is created with the open source project &#39;helpmaker&#39;.</p>
-
+        <h1>Code-0</h1>
+        <p>Please read carefully:•Use &#39;BuildAll.bat&#39; to build the entire project. Before you can do this though, there are a couple of applications required.For the android application, it is expected that the mondroid development sdk is installed. The script expects the sdk at C:\Users\Esus\AppData\Local\Xamarin\MonoForAndroid\AndroidSDK\android-sdk-windows\tools\&#39;. If this can&#39;t be found, the build will fail. Note that the installation script also expects the sdk at this location.The buildAll script also starts visual studio at one point for the web-application. The purpose for this is to perform a publish (to disk), which couldn&#39;t be automated (any solution is more than welcome). The first time you do this, you have to update the publish location: open the &#39;publish web&#39; dialog and make certain that the target location is in your development path.7-zip is used to create a zip archive of the web application, which is also required for a full build (the installer expects it). 7-zip is expected to be at &#39;C:\Program Files\7-Zip\7z&#39;. Please update the script if it&#39;s at a different location or you want to use a different zipper.Inno setup 5 is used to build the setup application. This is expected to be at &#39;C:\Program Files\Inno Setup 5&#39;. Please update the script if you installed it somewhere else. • Use &#39;buildwebsite.bat&#39; if you only want to build the website section (including the libs it depends on) without building the android app or designer. • The &#39;designer.sln&#39; visual studio project is the main development project. Both the designer and all the essential libraries are included in this project. This builds the entire designer + library (including the android lib). • The &#39;hosts&#39; sub-directory contains a number of • The android library is a seperat project, but most files are simply linked from the windows library, so that the source code only has to be maintained in 1 location. Whenever you add a new file to the main library, it will automatically be included in the android lib (Visual studio provides a link between the 2 projects using a visual studio plugin). Most of the headers containing the copyright notices for the source files are auto generated using the &#39;code header designer&#39; (free download from internet) The file &#39;GenerateCopyrightHeaders.headerx&#39; defines how to generate these copyright notices.The help file is created with the open source project &#39;helpmaker&#39;.</p>
+        <p class="view"><a href="https://github.com/Tiger66639/code-0">View the Project on GitHub <small>Tiger66639/code-0</small></a></p>
         <ul>
-          <li class="download"><a class="buttons" href="https://github.com/Tiger66639/code-0/zipball/master">Download ZIP</a></li>
-          <li class="download"><a class="buttons" href="https://github.com/Tiger66639/code-0/tarball/master">Download TAR</a></li>
-          <li><a class="buttons github" href="https://github.com/Tiger66639/code-0">View On GitHub</a></li>
+          <li><a href="https://github.com/Tiger66639/code-0/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/Tiger66639/code-0/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/Tiger66639/code-0">View On <strong>GitHub</strong></a></li>
         </ul>
-
-        <p class="header">This project is maintained by <a class="header name" href="https://github.com/Tiger66639">Tiger66639</a></p>
-
-
       </header>
       <section>
         <h3>
@@ -62,11 +59,12 @@ $ git checkout gh-pages
 
 <p>Having trouble with Pages? Check out the documentation at <a href="https://help.github.com/pages">https://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
       </section>
-      <footer>
-        <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
-      </footer>
     </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/Tiger66639">Tiger66639</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-		
+    
   </body>
 </html>
