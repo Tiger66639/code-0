@@ -27,6 +27,12 @@
           <param name="quietPeriodMode" value="DO_NOT_USE" />
         </parameters>
       </build-trigger>
+      <build-trigger id="retryBuildTrigger" type="retryBuildTrigger">
+        <parameters>
+          <param name="enqueueTimeout" value="15" />
+          <param name="retryAttempts" value="0" />
+        </parameters>
+      </build-trigger>
     </build-triggers>
     <cleanup />
   </settings>
