@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings>
-  <versionedSettings rootId="Code0_HttpsGithubComTiger66639code0gitRefsHeadsMaster" enabled="true" showChanges="false" />
+  <versionedSettings rootId="Code0_HttpsGithubComTiger66639code0gitRefsHeadsMaster" enabled="true" showChanges="true" />
   <project-graphs>
     <graph title="Chart title" defaultFilters="" hideFilters="" seriesTitle="Serie">
       <valueType key="BuildDuration" title="Build Duration (all stages)" sourceBuildTypeId="Code0_Build" />
