@@ -33,6 +33,12 @@
           <param name="retryAttempts" value="0" />
         </parameters>
       </build-trigger>
+      <build-trigger id="remoteRunOnBranch" type="remoteRunOnBranch">
+        <parameters>
+          <param name="branchy:jetbrains.git" value="pattern:jetbrains.git" />
+          <param name="pattern:jetbrains.git" value="refs/heads/remote-run/*" />
+        </parameters>
+      </build-trigger>
     </build-triggers>
     <cleanup />
   </settings>
