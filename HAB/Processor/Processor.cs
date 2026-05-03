@@ -142,7 +142,7 @@ namespace JaStDev.HAB
     ///         When a processor is finished, the <see cref="Processor.Finished" /> event is raised.
     ///     </para>
     /// </remarks>
-    public class Processor
+    public class ProcessorX
     {
         /// <summary>
         ///     resets all the data in the processor so that it can be reused again.

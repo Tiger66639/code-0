@@ -1,4 +1,0 @@
-/workspaces/code-0/Characters/obj/Debug/net8.0/Characters.GeneratedMSBuildEditorConfig.editorconfig
-/workspaces/code-0/Characters/obj/Debug/net8.0/Characters.csproj.CoreCompileInputs.cache
-/workspaces/code-0/Characters/obj/Debug/net8.0/Characters.sourcelink.json
-/workspaces/code-0/Characters/obj/Debug/net8.0/Characters.csproj.AssemblyReference.cache
