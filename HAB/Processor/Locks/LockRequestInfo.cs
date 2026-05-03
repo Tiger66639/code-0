@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace JaStDev.HAB
+namespace JaStDev.HAB.Processor.Locks
 {
    /// <summary>
    /// A simple class to pass along multiple lock requests at once (for thread safety) to the 

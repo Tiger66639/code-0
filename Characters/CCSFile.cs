@@ -9,6 +9,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace JaStDev.HAB.Characters
 {
+    using JaStDev.Data;
     /// <summary>
     ///     Defines the content of a conversave character studio file, so we can
     ///     import it.

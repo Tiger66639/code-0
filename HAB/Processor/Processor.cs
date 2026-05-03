@@ -61,58 +61,58 @@ namespace JaStDev.HAB
 
     #endregion
 
-    #region Exceptions
+    // #region Exceptions
 
-    /// <summary>
-    ///     Used to allow a processor to terminate processing quickly from anywhere in the code: simply raise the exception.
-    /// </summary>
-    /// <remarks>
-    ///     Using an exception to let all the processors stop is ok since this is a situation that shouldn't happen to often
-    ///     and
-    ///     is only time critical to set up, not to call.  By using the exception system for this, we can also handle this
-    ///     gracefully
-    ///     with respect to frozen neurons and others.
-    /// </remarks>
-    [System.Serializable]
-    public class ProcessorStopException : System.Exception
-    {
-        // For guidelines regarding the creation of new exception types, see
-        // http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpgenref/html/cpconerrorraisinghandlingguidelines.asp
-        // and
-        // http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dncscol/html/csharp07192001.asp
+    // /// <summary>
+    // ///     Used to allow a processor to terminate processing quickly from anywhere in the code: simply raise the exception.
+    // /// </summary>
+    // /// <remarks>
+    // ///     Using an exception to let all the processors stop is ok since this is a situation that shouldn't happen to often
+    // ///     and
+    // ///     is only time critical to set up, not to call.  By using the exception system for this, we can also handle this
+    // ///     gracefully
+    // ///     with respect to frozen neurons and others.
+    // /// </remarks>
+    // [System.Serializable]
+    // public class StopException : System.Exception
+    // {
+    //     // For guidelines regarding the creation of new exception types, see
+    //     // http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpgenref/html/cpconerrorraisinghandlingguidelines.asp
+    //     // and
+    //     // http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dncscol/html/csharp07192001.asp
 
-        /// <summary>Initializes a new instance of the <see cref="ProcessorStopException"/> class.</summary>
-        public ProcessorStopException()
-        {
-        }
+    //     /// <summary>Initializes a new instance of the <see cref="ProcessorStopException"/> class.</summary>
+    //     public StopException()
+    //     {
+    //     }
 
-        /// <summary>Initializes a new instance of the <see cref="ProcessorStopException"/> class.</summary>
-        /// <param name="message">The message.</param>
-        public ProcessorStopException(string message)
-            : base(message)
-        {
-        }
+    //     /// <summary>Initializes a new instance of the <see cref="ProcessorStopException"/> class.</summary>
+    //     /// <param name="message">The message.</param>
+    //     public StopException(string message)
+    //         : base(message)
+    //     {
+    //     }
 
-        /// <summary>Initializes a new instance of the <see cref="ProcessorStopException"/> class.</summary>
-        /// <param name="message">The message.</param>
-        /// <param name="inner">The inner.</param>
-        public ProcessorStopException(string message, System.Exception inner)
-            : base(message, inner)
-        {
-        }
+    //     /// <summary>Initializes a new instance of the <see cref="ProcessorStopException"/> class.</summary>
+    //     /// <param name="message">The message.</param>
+    //     /// <param name="inner">The inner.</param>
+    //     public StopException(string message, System.Exception inner)
+    //         : base(message, inner)
+    //     {
+    //     }
 
-        /// <summary>Initializes a new instance of the <see cref="ProcessorStopException"/> class.</summary>
-        /// <param name="info">The info.</param>
-        /// <param name="context">The context.</param>
-        protected ProcessorStopException(
-            System.Runtime.Serialization.SerializationInfo info, 
-            System.Runtime.Serialization.StreamingContext context)
-            : base(info, context)
-        {
-        }
-    }
+    //     /// <summary>Initializes a new instance of the <see cref="ProcessorStopException"/> class.</summary>
+    //     /// <param name="info">The info.</param>
+    //     /// <param name="context">The context.</param>
+    //     protected StopException(
+    //         System.Runtime.Serialization.SerializationInfo info, 
+    //         System.Runtime.Serialization.StreamingContext context)
+    //         : base(info, context)
+    //     {
+    //     }
+    // }
 
-    #endregion
+    // #endregion
 
     /// <summary>
     ///     Used by the <see cref="Brain" /> object to perform translations from 1 type of <see cref="Neuron" /> to another
@@ -224,7 +224,7 @@ namespace JaStDev.HAB
         ///     This is used to build a buffer, so the processor can remember all the links while processing them (this way,
         ///     they can be changed, while preserving the execution order of the current run.
         /// </summary>
-        internal class LinkContent
+        internal class LinkContentTemp
         {
             /// <summary>Gets or sets the info.</summary>
             public System.Collections.Generic.List<Neuron> Info { get; set; }
@@ -236,18 +236,18 @@ namespace JaStDev.HAB
             public Neuron Meaning { get; set; }
         }
 
-        /// <summary>
-        ///     This class is used as a temp store for all the arguments that are required when this processor is cloned to other
-        ///     processors.
-        /// </summary>
-        public class ProcessorCloneData
-        {
-            /// <summary>The frames.</summary>
-            public System.Collections.Generic.List<CallFrame> Frames;
+        // /// <summary>
+        // ///     This class is used as a temp store for all the arguments that are required when this processor is cloned to other
+        // ///     processors.
+        // /// </summary>
+        // public class Temp
+        // {
+        //     /// <summary>The frames.</summary>
+        //     public System.Collections.Generic.List<CallFrame> Frames;
 
-            /// <summary>The stack.</summary>
-            public System.Collections.Generic.List<Neuron> Stack;
-        }
+        //     /// <summary>The stack.</summary>
+        //     public System.Collections.Generic.List<Neuron> Stack;
+        // }
 
         /// <summary>
         ///     a delegate type for calling a function when an entire tree of processors is done. This is a delegate and not an
@@ -679,7 +679,7 @@ namespace JaStDev.HAB
         ///     These are stored at the class level so we can pass them along during a split.  If we don't do this, a sub processor
         ///     could get screwed up if the currently executing neuron gets changed when he is picking up after the split.
         /// </remarks>
-        internal System.Collections.Generic.List<LinkContent> CurrentLinks { get; set; }
+        internal System.Collections.Generic.List<LinkContentTemp> CurrentLinks { get; set; }
 
         #endregion
 
@@ -1479,7 +1479,7 @@ namespace JaStDev.HAB
         /// <returns>The <see cref="bool"/>.</returns>
         private bool CurrentLinkIsValid()
         {
-            LinkContent iContent;
+            LinkContentTemp iContent;
             if (CurrentLink < CurrentLinks.Count)
             {
                 iContent = CurrentLinks[CurrentLink];
@@ -1509,9 +1509,9 @@ namespace JaStDev.HAB
         /// <summary>The build exec list.</summary>
         /// <param name="toSolve">The to solve.</param>
         /// <returns>The <see cref="List"/>.</returns>
-        private System.Collections.Generic.List<LinkContent> BuildExecList(Neuron toSolve)
+        private System.Collections.Generic.List<LinkContentTemp> BuildExecList(Neuron toSolve)
         {
-            var iRes = new System.Collections.Generic.List<LinkContent>();
+            var iRes = new System.Collections.Generic.List<LinkContentTemp>();
             var iToProcess = Factories.Default.LinkLists.GetBuffer();
             try
             {
@@ -1526,7 +1526,7 @@ namespace JaStDev.HAB
                 var iMemFac = Factories.Default;
                 foreach (var i in iToProcess)
                 {
-                    var iNew = new LinkContent();
+                    var iNew = new LinkContentTemp();
                     iNew.Meaning = i.Meaning;
                     iNew.To = i.To;
                     if (i.InfoIdentifier != null)
@@ -1548,7 +1548,7 @@ namespace JaStDev.HAB
 
         /// <summary>Sets the current pos (meaning, info, to</summary>
         /// <param name="link">The link.</param>
-        private void SetCurrentPos(LinkContent link)
+        private void SetCurrentPos(LinkContentTemp link)
         {
             CurrentMeaning = link.Meaning;
 

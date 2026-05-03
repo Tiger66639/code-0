@@ -10,6 +10,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace JaStDev.HAB.Characters
 {
+    using System.Data;
     /// <summary>
     ///     Base class for objects that represent a character. This is a base class,
     ///     so we can share among silverlight and WPF the same import code for CCS

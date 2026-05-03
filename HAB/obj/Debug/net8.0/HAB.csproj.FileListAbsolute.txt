@@ -1,0 +1,4 @@
+/workspaces/code-0/HAB/obj/Debug/net8.0/HAB.csproj.AssemblyReference.cache
+/workspaces/code-0/HAB/obj/Debug/net8.0/HAB.GeneratedMSBuildEditorConfig.editorconfig
+/workspaces/code-0/HAB/obj/Debug/net8.0/HAB.csproj.CoreCompileInputs.cache
+/workspaces/code-0/HAB/obj/Debug/net8.0/HAB.sourcelink.json

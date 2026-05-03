@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace JaStDev.HAB
+namespace JaStDev.HAB.Processor.Locks
 {
    class LinkInfoLock: LockObject
    {

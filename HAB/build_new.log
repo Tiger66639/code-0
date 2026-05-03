@@ -1,0 +1,11 @@
+  Determining projects to restore...
+  Restored /workspaces/code-0/HAB/HAB.csproj (in 406 ms).
+/workspaces/code-0/HAB/Processor/Processor.cs(145,18): error CS0101: The namespace 'JaStDev.HAB' already contains a definition for 'Processor' [/workspaces/code-0/HAB/HAB.csproj]
+
+Build FAILED.
+
+/workspaces/code-0/HAB/Processor/Processor.cs(145,18): error CS0101: The namespace 'JaStDev.HAB' already contains a definition for 'Processor' [/workspaces/code-0/HAB/HAB.csproj]
+    0 Warning(s)
+    1 Error(s)
+
+Time Elapsed 00:00:02.18
