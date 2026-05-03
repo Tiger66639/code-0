@@ -47,7 +47,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;PRO</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
@@ -58,7 +58,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;PRO</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
@@ -937,7 +937,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Tools\Processing\SearchResources.xaml">
+    <Page Include="Tools\processing\SearchResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <Generator>MSBuild:Compile</Generator>
@@ -1185,7 +1185,7 @@
     <Compile Include="Tools\DisplayPath\DPITopicQuestionsSelect.cs" />
     <Compile Include="Tools\DisplayPath\ISelectDisplayPathForThes.cs" />
     <Compile Include="Tools\DisplayPath\roots\DPIThesaurusRoot.cs" />
-    <Compile Include="Tools\Processing\ProcessTrackerItem.cs" />
+    <Compile Include="Tools\processing\ProcessTrackerItem.cs" />
     <Compile Include="Tools\TextPosition\CaretMonitor.cs" />
     <Compile Include="Tools\Thesaurus\browsing\ThesaurusEnumerator.cs" />
     <Compile Include="Tools\Thesaurus\browsing\ThesItemEnumerator.cs" />
@@ -1287,8 +1287,8 @@
       <DependentUpon>DebugResources.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tools\Debugger\Testcases\Items\ITesteable.cs" />
-    <Compile Include="Tools\Processing\search\BaseDisplayPathSet.cs" />
-    <Compile Include="Tools\Processing\search\DisplayPathSetFolder.cs" />
+    <Compile Include="Tools\processing\search\BaseDisplayPathSet.cs" />
+    <Compile Include="Tools\processing\search\DisplayPathSetFolder.cs" />
     <Compile Include="Tools\DisplayPath\roots\DPIChatbotPropsRoot.cs" />
     <Compile Include="Tools\DisplayPath\roots\DPITextPatternEditorRoot.cs" />
     <Compile Include="Tools\DisplayPath\DPITextRange.cs" />
@@ -1554,7 +1554,7 @@
     <Compile Include="Tools\Explorer\ExplorerSelection.cs" />
     <Compile Include="Tools\Explorer\NeuronExplorer.cs" />
     <Compile Include="Tools\Navigation\NavigationStore.cs" />
-    <Compile Include="Tools\Processing\search\DisplayPathSet.cs" />
+    <Compile Include="Tools\processing\search\DisplayPathSet.cs" />
     <Compile Include="Tools\DisplayPath\DisplayPath.cs" />
     <Compile Include="Tools\DisplayPath\DisplayPathItem.cs" />
     <Compile Include="Tools\DisplayPath\DPIChild.cs" />
@@ -1566,14 +1566,14 @@
     <Compile Include="Tools\DisplayPath\DPILinkOut.cs" />
     <Compile Include="Tools\DisplayPath\DPIParent.cs" />
     <Compile Include="Tools\DisplayPath\DPIRoot.cs" />
-    <Compile Include="Tools\Processing\search\ISearchDataProvider.cs" />
-    <Compile Include="Tools\Processing\ProcessTracker.cs" />
-    <Compile Include="Tools\Processing\search\SearcherProcess.cs" />
-    <Compile Include="Tools\Processing\SearchResources.xaml.cs">
+    <Compile Include="Tools\processing\search\ISearchDataProvider.cs" />
+    <Compile Include="Tools\processing\ProcessTracker.cs" />
+    <Compile Include="Tools\processing\search\SearcherProcess.cs" />
+    <Compile Include="Tools\processing\SearchResources.xaml.cs">
       <DependentUpon>SearchResources.xaml</DependentUpon>
     </Compile>
     <Compile Include="Editors\CodeEditor\Functions\Search\CodeSearchResults.cs" />
-    <Compile Include="Tools\Processing\search\SearchResults.cs" />
+    <Compile Include="Tools\processing\search\SearchResults.cs" />
     <Compile Include="Tools\Thesaurus\DragDrop\SubRelationshipsDropAdvisor.cs" />
     <Compile Include="Tools\Thesaurus\DragDrop\SubThesaurusCollectionDropAdvisor.cs" />
     <Compile Include="Tools\Thesaurus\DragDrop\SubThesaurusItemDragAdvisor.cs" />
@@ -2016,12 +2016,7 @@
     <Resource Include="Images\Commchannel\Highlight_Enabled.png" />
     <Resource Include="Images\VisualF\VisualFrame.png" />
     <Resource Include="Images\VisualF\VisualFrame_Enabled.png" />
-    <EmbeddedResource Include="Properties\Resources.qps-ploc.resx">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.qps-ploc.xlf</DependentUpon>
-      <culture>qps-ploc</culture>
-    </EmbeddedResource>
+
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -2166,10 +2161,7 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CharacterEngine\CharacterEngine.csproj">
-      <Project>{C944651B-300A-41A2-B76D-DF305E0E2937}</Project>
-      <Name>CharacterEngine</Name>
-    </ProjectReference>
+
     <ProjectReference Include="..\Characters\Characters.csproj">
       <Project>{27E6A73D-BA6B-4DF5-B93A-010D6FD83157}</Project>
       <Name>Characters</Name>
@@ -2178,30 +2170,15 @@
       <Project>{8FA7FD26-5535-4573-A273-258678C83DBC}</Project>
       <Name>CmdShell</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CustomImportSupport\CustomConduitSupport.csproj">
-      <Project>{3D466A01-0201-4158-95BA-7C51D2C3A8DC}</Project>
-      <Name>CustomConduitSupport</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FrameNetSin\FrameNetProvider.csproj">
-      <Project>{F75AC765-2774-40F6-AA6B-EA538BD68055}</Project>
-      <Name>FrameNetProvider</Name>
-    </ProjectReference>
+
+
     <ProjectReference Include="..\HAB\HAB.csproj">
       <Project>{2CDD4836-1AC7-47C8-B878-5AF7EA721B2B}</Project>
       <Name>HAB</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Lobes\Sensory Interfaces.csproj">
-      <Project>{941A6023-577E-498D-83F0-D0DDE573F8D3}</Project>
-      <Name>Sensory Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NNLFrontEnd\Parser.csproj">
-      <Project>{C0BDE6FB-9270-42B9-AD14-6CC3C915D089}</Project>
-      <Name>Parser</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\QuerySupport\QuerySupport.csproj">
-      <Project>{0C610E2C-ECC2-4551-AC99-10192F08B85A}</Project>
-      <Name>QuerySupport</Name>
-    </ProjectReference>
+
+
+
     <ProjectReference Include="..\Tokenizer\Tokenizer.csproj">
       <Project>{47E9938B-7C5D-48DD-A896-CBB4EF9CE913}</Project>
       <Name>Tokenizer</Name>
@@ -2210,10 +2187,7 @@
       <Project>{D4BA0CF2-728B-4E7B-90AC-2D6A1124C93A}</Project>
       <Name>VerbNetProvider</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WordNetSin\WordNetSin.csproj">
-      <Project>{B88AABCC-F255-4518-9E82-E51FF64C8E0D}</Project>
-      <Name>WordNetSin</Name>
-    </ProjectReference>
+
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\FindNextHS.png" />
@@ -2381,13 +2355,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <XliffResource Include="Properties\Resources.qps-ploc.xlf">
-      <Generator>XliffResxGenerator</Generator>
-      <LastGenOutput>Resources.qps-ploc.resx</LastGenOutput>
-    </XliffResource>
+
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.ResxResources.targets" Label="MultilingualAppToolkit" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

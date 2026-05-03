@@ -1447,10 +1447,10 @@ namespace JaStDev.HAB
                 return GetCompoundWord(iTexts);
             }
 
-            TextNeuron iTextNeuron;
-            if (TextSin.Words.TryGetNeuron(text, out iTextNeuron))
+            TextNeuron iTextNeuron2;
+            if (TextSin.Words.TryGetNeuron(text, out iTextNeuron2))
             {
-                return iTextNeuron;
+                return iTextNeuron2;
             }
 
             return null;

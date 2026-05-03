@@ -83,8 +83,6 @@ namespace JaStDev.HAB.Designer
             }
         }
 
-        #endregion
-
         /// <summary>
         ///     Gets or sets a value indicating whether this instance is expanded.
         /// </summary>

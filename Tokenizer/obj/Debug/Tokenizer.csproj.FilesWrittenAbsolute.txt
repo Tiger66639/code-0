@@ -1,0 +1,6 @@
+/workspaces/code-0/Tokenizer/obj/Debug/.NETFramework,Version=v4.0.AssemblyAttribute.cs
+/workspaces/code-0/Tokenizer/bin/Debug/Tokenizer.dll.mdb
+/workspaces/code-0/Tokenizer/bin/Debug/Tokenizer.dll
+/workspaces/code-0/Tokenizer/obj/Debug/Tokenizer.dll
+/workspaces/code-0/Tokenizer/obj/Debug/Tokenizer.dll.mdb
+/workspaces/code-0/Tokenizer/bin/Debug/JaStDev.LogService.dll

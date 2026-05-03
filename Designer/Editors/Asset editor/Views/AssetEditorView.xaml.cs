@@ -690,4 +690,6 @@ namespace JaStDev.HAB.Designer
             }
         }
     }
+
+    #endregion
 }

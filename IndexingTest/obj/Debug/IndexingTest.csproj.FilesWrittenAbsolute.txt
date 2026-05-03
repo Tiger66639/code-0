@@ -1,0 +1,1 @@
+/workspaces/code-0/IndexingTest/obj/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs

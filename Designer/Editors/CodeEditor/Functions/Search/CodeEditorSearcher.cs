@@ -295,13 +295,13 @@ namespace JaStDev.HAB.Designer.Search
 
             iFound++;
             indexes[cluster] = iFound;
-            IDListAccessor iChildren = cluster.Children;
-            iChildren.Lock();
+            IDListAccessor iChildren2 = cluster.Children;
+            iChildren2.Lock();
             try
             {
-                for (var i = 0; i < iChildren.CountUnsafe; i++)
+                for (var i = 0; i < iChildren2.CountUnsafe; i++)
                 {
-                    if (iChildren.GetUnsafe(i) == child.ID)
+                    if (iChildren2.GetUnsafe(i) == child.ID)
                     {
                         if (iFound == 0)
                         {
@@ -316,7 +316,7 @@ namespace JaStDev.HAB.Designer.Search
             }
             finally
             {
-                iChildren.Dispose(); // also unlocks
+                iChildren2.Dispose(); // also unlocks
             }
 
             return -1;

@@ -1,0 +1,6 @@
+/workspaces/code-0/CmdShell/obj/Debug/.NETFramework,Version=v4.0.AssemblyAttribute.cs
+/workspaces/code-0/CmdShell/bin/Debug/CmdShell.dll.mdb
+/workspaces/code-0/CmdShell/bin/Debug/CmdShell.dll
+/workspaces/code-0/CmdShell/obj/Debug/CmdShell.dll
+/workspaces/code-0/CmdShell/obj/Debug/CmdShell.dll.mdb
+/workspaces/code-0/CmdShell/bin/Debug/SgmlReaderDll.dll

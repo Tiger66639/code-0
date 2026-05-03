@@ -1,0 +1,6 @@
+/workspaces/code-0/Lobes/obj/Debug/.NETFramework,Version=v4.0,Profile=Client.AssemblyAttribute.cs
+/workspaces/code-0/Lobes/bin/Debug/JaStDev.LogService.dll
+/workspaces/code-0/Lobes/bin/Debug/JaStDev.HabCore.dll
+/workspaces/code-0/Lobes/bin/Debug/JaStDev.HabCore.dll.mdb
+/workspaces/code-0/Lobes/bin/Debug/Tokenizer.dll
+/workspaces/code-0/Lobes/bin/Debug/Tokenizer.dll.mdb

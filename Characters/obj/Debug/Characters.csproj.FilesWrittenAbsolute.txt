@@ -1,0 +1,12 @@
+/workspaces/code-0/Characters/obj/Debug/.NETFramework,Version=v4.0.AssemblyAttribute.cs
+/workspaces/code-0/Characters/bin/Debug/Characters.dll.mdb
+/workspaces/code-0/Characters/bin/Debug/Characters.dll
+/workspaces/code-0/Characters/obj/Debug/Characters.dll
+/workspaces/code-0/Characters/obj/Debug/Characters.dll.mdb
+/workspaces/code-0/Characters/bin/Debug/JaStDev.DataCore.dll
+/workspaces/code-0/Characters/bin/Debug/JaStDev.LogService.dll
+/workspaces/code-0/Characters/bin/Debug/JaStDev.UndoSystem.dll
+/workspaces/code-0/Characters/bin/Debug/JaStDev.HabCore.dll
+/workspaces/code-0/Characters/bin/Debug/JaStDev.HabCore.dll.mdb
+/workspaces/code-0/Characters/bin/Debug/Tokenizer.dll
+/workspaces/code-0/Characters/bin/Debug/Tokenizer.dll.mdb

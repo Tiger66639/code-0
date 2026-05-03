@@ -2211,10 +2211,10 @@ namespace JaStDev.HAB
                 return true;
             }
 
-            System.Collections.Generic.IEnumerable<Neuron> iCond = Neuron.SolveResultExpNoStackChange(iCondNeuron, this);
-            if (iCond != null)
+            System.Collections.Generic.IEnumerable<Neuron> iCond2 = Neuron.SolveResultExpNoStackChange(iCondNeuron, this);
+            if (iCond2 != null)
             {
-                var iRes = Enumerable.SequenceEqual(compareTo, iCond);
+                var iRes = Enumerable.SequenceEqual(compareTo, iCond2);
                 Mem.ArgumentStack.Pop();
                 return iRes;
             }

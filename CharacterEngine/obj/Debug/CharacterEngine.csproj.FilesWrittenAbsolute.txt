@@ -1,0 +1,11 @@
+/workspaces/code-0/CharacterEngine/obj/Debug/.NETFramework,Version=v4.0.AssemblyAttribute.cs
+/workspaces/code-0/CharacterEngine/bin/Debug/JaStDev.DataCore.dll
+/workspaces/code-0/CharacterEngine/bin/Debug/JaStDev.LogService.dll
+/workspaces/code-0/CharacterEngine/bin/Debug/JaStDev.UndoSystem.dll
+/workspaces/code-0/CharacterEngine/bin/Debug/SpeechSynth.dll
+/workspaces/code-0/CharacterEngine/bin/Debug/Characters.dll
+/workspaces/code-0/CharacterEngine/bin/Debug/Characters.dll.mdb
+/workspaces/code-0/CharacterEngine/bin/Debug/JaStDev.HabCore.dll
+/workspaces/code-0/CharacterEngine/bin/Debug/JaStDev.HabCore.dll.mdb
+/workspaces/code-0/CharacterEngine/bin/Debug/Tokenizer.dll
+/workspaces/code-0/CharacterEngine/bin/Debug/Tokenizer.dll.mdb

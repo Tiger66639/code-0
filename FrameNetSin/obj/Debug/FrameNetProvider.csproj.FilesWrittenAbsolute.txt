@@ -1,0 +1,1 @@
+/workspaces/code-0/FrameNetSin/obj/Debug/.NETFramework,Version=v4.0,Profile=Client.AssemblyAttribute.cs

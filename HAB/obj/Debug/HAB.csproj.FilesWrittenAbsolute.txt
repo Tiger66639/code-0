@@ -1,0 +1,9 @@
+/workspaces/code-0/HAB/obj/Debug/.NETFramework,Version=v4.0,Profile=Client.AssemblyAttribute.cs
+/workspaces/code-0/HAB/bin/Debug/JaStDev.LogService.dll
+/workspaces/code-0/HAB/bin/Debug/Tokenizer.dll
+/workspaces/code-0/HAB/bin/Debug/Tokenizer.dll.mdb
+/workspaces/code-0/HAB/bin/Debug/JaStDev.HabCore.dll.config
+/workspaces/code-0/HAB/bin/Debug/JaStDev.HabCore.dll.mdb
+/workspaces/code-0/HAB/bin/Debug/JaStDev.HabCore.dll
+/workspaces/code-0/HAB/obj/Debug/JaStDev.HabCore.dll
+/workspaces/code-0/HAB/obj/Debug/JaStDev.HabCore.dll.mdb

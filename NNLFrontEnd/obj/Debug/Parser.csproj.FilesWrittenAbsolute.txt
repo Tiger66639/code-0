@@ -1,0 +1,1 @@
+/workspaces/code-0/NNLFrontEnd/obj/Debug/.NETFramework,Version=v4.0.AssemblyAttribute.cs
