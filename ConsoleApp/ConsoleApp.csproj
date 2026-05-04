@@ -6,18 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="JaStDev.HabCore">
-      <HintPath>../HAB/bin/Debug/JaStDev.HabCore.dll</HintPath>
-    </Reference>
-    <Reference Include="Characters">
-      <HintPath>../Characters/bin/Debug/Characters.dll</HintPath>
-    </Reference>
-    <Reference Include="Tokenizer">
-      <HintPath>../Tokenizer/bin/Debug/Tokenizer.dll</HintPath>
-    </Reference>
-    <Reference Include="CmdShell">
-      <HintPath>../CmdShell/bin/Debug/CmdShell.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="../HAB/HAB.csproj" />
   </ItemGroup>
 
 </Project>

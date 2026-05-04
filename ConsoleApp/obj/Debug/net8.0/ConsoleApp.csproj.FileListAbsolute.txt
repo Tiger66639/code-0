@@ -3,14 +3,7 @@
 /workspaces/code-0/ConsoleApp/bin/Debug/net8.0/ConsoleApp.runtimeconfig.json
 /workspaces/code-0/ConsoleApp/bin/Debug/net8.0/ConsoleApp.dll
 /workspaces/code-0/ConsoleApp/bin/Debug/net8.0/ConsoleApp.pdb
-/workspaces/code-0/ConsoleApp/bin/Debug/net8.0/Characters.dll
-/workspaces/code-0/ConsoleApp/bin/Debug/net8.0/CmdShell.dll
 /workspaces/code-0/ConsoleApp/bin/Debug/net8.0/JaStDev.HabCore.dll
-/workspaces/code-0/ConsoleApp/bin/Debug/net8.0/Tokenizer.dll
-/workspaces/code-0/ConsoleApp/bin/Debug/net8.0/JaStDev.LogService.dll
-/workspaces/code-0/ConsoleApp/bin/Debug/net8.0/JaStDev.DataCore.dll
-/workspaces/code-0/ConsoleApp/bin/Debug/net8.0/SgmlReaderDll.dll
-/workspaces/code-0/ConsoleApp/bin/Debug/net8.0/JaStDev.UndoSystem.dll
 /workspaces/code-0/ConsoleApp/bin/Debug/net8.0/JaStDev.HabCore.dll.config
 /workspaces/code-0/ConsoleApp/obj/Debug/net8.0/ConsoleApp.csproj.AssemblyReference.cache
 /workspaces/code-0/ConsoleApp/obj/Debug/net8.0/ConsoleApp.GeneratedMSBuildEditorConfig.editorconfig
@@ -24,3 +17,9 @@
 /workspaces/code-0/ConsoleApp/obj/Debug/net8.0/ConsoleApp.pdb
 /workspaces/code-0/ConsoleApp/obj/Debug/net8.0/ConsoleApp.genruntimeconfig.cache
 /workspaces/code-0/ConsoleApp/obj/Debug/net8.0/ref/ConsoleApp.dll
+/workspaces/code-0/ConsoleApp/bin/Debug/net8.0/System.Configuration.ConfigurationManager.dll
+/workspaces/code-0/ConsoleApp/bin/Debug/net8.0/System.Diagnostics.EventLog.dll
+/workspaces/code-0/ConsoleApp/bin/Debug/net8.0/System.Security.Cryptography.ProtectedData.dll
+/workspaces/code-0/ConsoleApp/bin/Debug/net8.0/runtimes/win/lib/net8.0/System.Diagnostics.EventLog.Messages.dll
+/workspaces/code-0/ConsoleApp/bin/Debug/net8.0/runtimes/win/lib/net8.0/System.Diagnostics.EventLog.dll
+/workspaces/code-0/ConsoleApp/bin/Debug/net8.0/JaStDev.HabCore.pdb

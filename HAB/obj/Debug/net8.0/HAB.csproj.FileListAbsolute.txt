@@ -2,3 +2,11 @@
 /workspaces/code-0/HAB/obj/Debug/net8.0/HAB.GeneratedMSBuildEditorConfig.editorconfig
 /workspaces/code-0/HAB/obj/Debug/net8.0/HAB.csproj.CoreCompileInputs.cache
 /workspaces/code-0/HAB/obj/Debug/net8.0/HAB.sourcelink.json
+/workspaces/code-0/HAB/bin/Debug/net8.0/JaStDev.HabCore.dll.config
+/workspaces/code-0/HAB/bin/Debug/net8.0/JaStDev.HabCore.deps.json
+/workspaces/code-0/HAB/bin/Debug/net8.0/JaStDev.HabCore.dll
+/workspaces/code-0/HAB/bin/Debug/net8.0/JaStDev.HabCore.pdb
+/workspaces/code-0/HAB/obj/Debug/net8.0/JaStDev.HabCore.dll
+/workspaces/code-0/HAB/obj/Debug/net8.0/refint/JaStDev.HabCore.dll
+/workspaces/code-0/HAB/obj/Debug/net8.0/JaStDev.HabCore.pdb
+/workspaces/code-0/HAB/obj/Debug/net8.0/ref/JaStDev.HabCore.dll

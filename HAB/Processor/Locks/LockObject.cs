@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace JaStDev.HAB.Processor.Locks
+namespace JaStDev.HAB.ProcessorLocks
 {
    /// <summary>
    /// Base class for lock objects like the <see cref="NeuronLock"/> and the <see cref="LinkInfoLock"/>

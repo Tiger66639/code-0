@@ -4,6 +4,10 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultPageItems>false</EnableDefaultPageItems>
+    <EnableDefaultApplicationDefinitionItems>false</EnableDefaultApplicationDefinitionItems>
     <RootNamespace>JaStDev.HAB.Designer</RootNamespace>
     <AssemblyName>HAB.Designer</AssemblyName>
     <ApplicationIcon>Images\Icon\redCBD.ico</ApplicationIcon>

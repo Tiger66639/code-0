@@ -11,5 +11,13 @@
 
   <ItemGroup>
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+    <Reference Include="JaStDev.LogService">
+      <HintPath>../external libs/JaStDev.LogService.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Tokenizer">
+      <HintPath>../Tokenizer/bin/Debug/Tokenizer.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
   </ItemGroup>
 </Project>

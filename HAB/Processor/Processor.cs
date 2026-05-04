@@ -61,58 +61,42 @@ namespace JaStDev.HAB
 
     #endregion
 
-    // #region Exceptions
+    #region Exceptions
 
-    // /// <summary>
-    // ///     Used to allow a processor to terminate processing quickly from anywhere in the code: simply raise the exception.
-    // /// </summary>
-    // /// <remarks>
-    // ///     Using an exception to let all the processors stop is ok since this is a situation that shouldn't happen to often
-    // ///     and
-    // ///     is only time critical to set up, not to call.  By using the exception system for this, we can also handle this
-    // ///     gracefully
-    // ///     with respect to frozen neurons and others.
-    // /// </remarks>
-    // [System.Serializable]
-    // public class StopException : System.Exception
-    // {
-    //     // For guidelines regarding the creation of new exception types, see
-    //     // http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpgenref/html/cpconerrorraisinghandlingguidelines.asp
-    //     // and
-    //     // http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dncscol/html/csharp07192001.asp
+    /// <summary>
+    ///     Used to allow a processor to terminate processing quickly from anywhere in the code: simply raise the exception.
+    /// </summary>
+    /// <remarks>
+    ///     Using an exception to let all the processors stop is ok since this is a situation that shouldn't happen too often
+    ///     and is only time critical to set up, not to call.  By using the exception system for this, we can also handle this
+    ///     gracefully with respect to frozen neurons and others.
+    /// </remarks>
+    [System.Serializable]
+    public class ProcessorStopException : System.Exception
+    {
+        public ProcessorStopException()
+        {
+        }
 
-    //     /// <summary>Initializes a new instance of the <see cref="ProcessorStopException"/> class.</summary>
-    //     public StopException()
-    //     {
-    //     }
+        public ProcessorStopException(string message)
+            : base(message)
+        {
+        }
 
-    //     /// <summary>Initializes a new instance of the <see cref="ProcessorStopException"/> class.</summary>
-    //     /// <param name="message">The message.</param>
-    //     public StopException(string message)
-    //         : base(message)
-    //     {
-    //     }
+        public ProcessorStopException(string message, System.Exception inner)
+            : base(message, inner)
+        {
+        }
 
-    //     /// <summary>Initializes a new instance of the <see cref="ProcessorStopException"/> class.</summary>
-    //     /// <param name="message">The message.</param>
-    //     /// <param name="inner">The inner.</param>
-    //     public StopException(string message, System.Exception inner)
-    //         : base(message, inner)
-    //     {
-    //     }
+        protected ProcessorStopException(
+            System.Runtime.Serialization.SerializationInfo info,
+            System.Runtime.Serialization.StreamingContext context)
+            : base(info, context)
+        {
+        }
+    }
 
-    //     /// <summary>Initializes a new instance of the <see cref="ProcessorStopException"/> class.</summary>
-    //     /// <param name="info">The info.</param>
-    //     /// <param name="context">The context.</param>
-    //     protected StopException(
-    //         System.Runtime.Serialization.SerializationInfo info, 
-    //         System.Runtime.Serialization.StreamingContext context)
-    //         : base(info, context)
-    //     {
-    //     }
-    // }
-
-    // #endregion
+    #endregion
 
     /// <summary>
     ///     Used by the <see cref="Brain" /> object to perform translations from 1 type of <see cref="Neuron" /> to another
@@ -142,7 +126,7 @@ namespace JaStDev.HAB
     ///         When a processor is finished, the <see cref="Processor.Finished" /> event is raised.
     ///     </para>
     /// </remarks>
-    public class ProcessorX
+    public class Processor
     {
         /// <summary>
         ///     resets all the data in the processor so that it can be reused again.

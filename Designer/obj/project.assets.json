@@ -1,0 +1,460 @@
+{
+  "version": 3,
+  "targets": {
+    "net8.0-windows7.0": {
+      "System.Configuration.ConfigurationManager/8.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Diagnostics.EventLog": "8.0.0",
+          "System.Security.Cryptography.ProtectedData": "8.0.0"
+        },
+        "compile": {
+          "lib/net8.0/System.Configuration.ConfigurationManager.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/System.Configuration.ConfigurationManager.dll": {}
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Diagnostics.EventLog/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Diagnostics.EventLog.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/System.Diagnostics.EventLog.dll": {}
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net8.0/System.Diagnostics.EventLog.Messages.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          },
+          "runtimes/win/lib/net8.0/System.Diagnostics.EventLog.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
+      "System.Security.Cryptography.ProtectedData/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Security.Cryptography.ProtectedData.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/System.Security.Cryptography.ProtectedData.dll": {}
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "CharacterEngine/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "Characters": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/CharacterEngine.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CharacterEngine.dll": {}
+        }
+      },
+      "Characters/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/Characters.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Characters.dll": {}
+        }
+      },
+      "Indexing/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "JaStDev.HabCore": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Indexing.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Indexing.dll": {}
+        }
+      },
+      "JaStDev.HabCore/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "System.Configuration.ConfigurationManager": "8.0.0"
+        },
+        "compile": {
+          "bin/placeholder/JaStDev.HabCore.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/JaStDev.HabCore.dll": {}
+        }
+      },
+      "ML/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "JaStDev.HabCore": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/ML.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ML.dll": {}
+        }
+      },
+      "Parser/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "JaStDev.HabCore": "1.0.0",
+          "Sensory Interfaces": "1.0.0",
+          "Tokenizer": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Parser.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Parser.dll": {}
+        }
+      },
+      "QuerySupport/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "JaStDev.HabCore": "1.0.0",
+          "Parser": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/QuerySupport.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/QuerySupport.dll": {}
+        }
+      },
+      "Sensory Interfaces/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "JaStDev.HabCore": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Sensory Interfaces.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Sensory Interfaces.dll": {}
+        }
+      },
+      "Tokenizer/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/Tokenizer.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Tokenizer.dll": {}
+        }
+      },
+      "VerbNetProvider/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "JaStDev.HabCore": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/VerbNetProvider.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/VerbNetProvider.dll": {}
+        }
+      },
+      "WordNetSin/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "JaStDev.HabCore": "1.0.0",
+          "QuerySupport": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/WordNetSin.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WordNetSin.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "System.Configuration.ConfigurationManager/8.0.0": {
+      "sha512": "JlYi9XVvIREURRUlGMr1F6vOFLk7YSY4p1vHo4kX3tQ0AGrjqlRWHDi66ImHhy6qwXBG3BJ6Y1QlYQ+Qz6Xgww==",
+      "type": "package",
+      "path": "system.configuration.configurationmanager/8.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/System.Configuration.ConfigurationManager.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net6.0/_._",
+        "buildTransitive/netcoreapp2.0/System.Configuration.ConfigurationManager.targets",
+        "lib/net462/System.Configuration.ConfigurationManager.dll",
+        "lib/net6.0/System.Configuration.ConfigurationManager.dll",
+        "lib/net7.0/System.Configuration.ConfigurationManager.dll",
+        "lib/net8.0/System.Configuration.ConfigurationManager.dll",
+        "lib/netstandard2.0/System.Configuration.ConfigurationManager.dll",
+        "system.configuration.configurationmanager.8.0.0.nupkg.sha512",
+        "system.configuration.configurationmanager.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "System.Diagnostics.EventLog/8.0.0": {
+      "sha512": "fdYxcRjQqTTacKId/2IECojlDSFvp7LP5N78+0z/xH7v/Tuw5ZAxu23Y6PTCRinqyu2ePx+Gn1098NC6jM6d+A==",
+      "type": "package",
+      "path": "system.diagnostics.eventlog/8.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/System.Diagnostics.EventLog.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net6.0/_._",
+        "buildTransitive/netcoreapp2.0/System.Diagnostics.EventLog.targets",
+        "lib/net462/System.Diagnostics.EventLog.dll",
+        "lib/net6.0/System.Diagnostics.EventLog.dll",
+        "lib/net7.0/System.Diagnostics.EventLog.dll",
+        "lib/net8.0/System.Diagnostics.EventLog.dll",
+        "lib/netstandard2.0/System.Diagnostics.EventLog.dll",
+        "runtimes/win/lib/net6.0/System.Diagnostics.EventLog.Messages.dll",
+        "runtimes/win/lib/net6.0/System.Diagnostics.EventLog.dll",
+        "runtimes/win/lib/net6.0/System.Diagnostics.EventLog.xml",
+        "runtimes/win/lib/net7.0/System.Diagnostics.EventLog.Messages.dll",
+        "runtimes/win/lib/net7.0/System.Diagnostics.EventLog.dll",
+        "runtimes/win/lib/net7.0/System.Diagnostics.EventLog.xml",
+        "runtimes/win/lib/net8.0/System.Diagnostics.EventLog.Messages.dll",
+        "runtimes/win/lib/net8.0/System.Diagnostics.EventLog.dll",
+        "runtimes/win/lib/net8.0/System.Diagnostics.EventLog.xml",
+        "system.diagnostics.eventlog.8.0.0.nupkg.sha512",
+        "system.diagnostics.eventlog.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "System.Security.Cryptography.ProtectedData/8.0.0": {
+      "sha512": "+TUFINV2q2ifyXauQXRwy4CiBhqvDEDZeVJU7qfxya4aRYOKzVBpN+4acx25VcPB9ywUN6C0n8drWl110PhZEg==",
+      "type": "package",
+      "path": "system.security.cryptography.protecteddata/8.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/System.Security.Cryptography.ProtectedData.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net6.0/_._",
+        "buildTransitive/netcoreapp2.0/System.Security.Cryptography.ProtectedData.targets",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net462/System.Security.Cryptography.ProtectedData.dll",
+        "lib/net6.0/System.Security.Cryptography.ProtectedData.dll",
+        "lib/net7.0/System.Security.Cryptography.ProtectedData.dll",
+        "lib/net8.0/System.Security.Cryptography.ProtectedData.dll",
+        "lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "system.security.cryptography.protecteddata.8.0.0.nupkg.sha512",
+        "system.security.cryptography.protecteddata.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "CharacterEngine/1.0.0": {
+      "type": "project",
+      "path": "../CharacterEngine/CharacterEngine.csproj",
+      "msbuildProject": "../CharacterEngine/CharacterEngine.csproj"
+    },
+    "Characters/1.0.0": {
+      "type": "project",
+      "path": "../Characters/Characters.csproj",
+      "msbuildProject": "../Characters/Characters.csproj"
+    },
+    "Indexing/1.0.0": {
+      "type": "project",
+      "path": "../Indexing/Indexing.csproj",
+      "msbuildProject": "../Indexing/Indexing.csproj"
+    },
+    "JaStDev.HabCore/1.0.0": {
+      "type": "project",
+      "path": "../HAB/HAB.csproj",
+      "msbuildProject": "../HAB/HAB.csproj"
+    },
+    "ML/1.0.0": {
+      "type": "project",
+      "path": "../ML/ML.csproj",
+      "msbuildProject": "../ML/ML.csproj"
+    },
+    "Parser/1.0.0": {
+      "type": "project",
+      "path": "../NNLFrontEnd/Parser.csproj",
+      "msbuildProject": "../NNLFrontEnd/Parser.csproj"
+    },
+    "QuerySupport/1.0.0": {
+      "type": "project",
+      "path": "../QuerySupport/QuerySupport.csproj",
+      "msbuildProject": "../QuerySupport/QuerySupport.csproj"
+    },
+    "Sensory Interfaces/1.0.0": {
+      "type": "project",
+      "path": "../Lobes/Sensory Interfaces.csproj",
+      "msbuildProject": "../Lobes/Sensory Interfaces.csproj"
+    },
+    "Tokenizer/1.0.0": {
+      "type": "project",
+      "path": "../Tokenizer/Tokenizer.csproj",
+      "msbuildProject": "../Tokenizer/Tokenizer.csproj"
+    },
+    "VerbNetProvider/1.0.0": {
+      "type": "project",
+      "path": "../VerbNetProvider/VerbNetProvider.csproj",
+      "msbuildProject": "../VerbNetProvider/VerbNetProvider.csproj"
+    },
+    "WordNetSin/1.0.0": {
+      "type": "project",
+      "path": "../WordNetSin/WordNetSin.csproj",
+      "msbuildProject": "../WordNetSin/WordNetSin.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net8.0-windows7.0": [
+      "CharacterEngine >= 1.0.0",
+      "Characters >= 1.0.0",
+      "Indexing >= 1.0.0",
+      "JaStDev.HabCore >= 1.0.0",
+      "ML >= 1.0.0",
+      "QuerySupport >= 1.0.0",
+      "Tokenizer >= 1.0.0",
+      "VerbNetProvider >= 1.0.0",
+      "WordNetSin >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "/home/codespace/.nuget/packages/": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "/workspaces/code-0/Designer/Designer.csproj",
+      "projectName": "HAB.Designer",
+      "projectPath": "/workspaces/code-0/Designer/Designer.csproj",
+      "packagesPath": "/home/codespace/.nuget/packages/",
+      "outputPath": "/workspaces/code-0/Designer/obj/",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "/home/codespace/.nuget/NuGet/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net8.0-windows"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net8.0-windows7.0": {
+          "targetAlias": "net8.0-windows",
+          "projectReferences": {
+            "/workspaces/code-0/CharacterEngine/CharacterEngine.csproj": {
+              "projectPath": "/workspaces/code-0/CharacterEngine/CharacterEngine.csproj"
+            },
+            "/workspaces/code-0/Characters/Characters.csproj": {
+              "projectPath": "/workspaces/code-0/Characters/Characters.csproj"
+            },
+            "/workspaces/code-0/HAB/HAB.csproj": {
+              "projectPath": "/workspaces/code-0/HAB/HAB.csproj"
+            },
+            "/workspaces/code-0/Indexing/Indexing.csproj": {
+              "projectPath": "/workspaces/code-0/Indexing/Indexing.csproj"
+            },
+            "/workspaces/code-0/ML/ML.csproj": {
+              "projectPath": "/workspaces/code-0/ML/ML.csproj"
+            },
+            "/workspaces/code-0/QuerySupport/QuerySupport.csproj": {
+              "projectPath": "/workspaces/code-0/QuerySupport/QuerySupport.csproj"
+            },
+            "/workspaces/code-0/Tokenizer/Tokenizer.csproj": {
+              "projectPath": "/workspaces/code-0/Tokenizer/Tokenizer.csproj"
+            },
+            "/workspaces/code-0/VerbNetProvider/VerbNetProvider.csproj": {
+              "projectPath": "/workspaces/code-0/VerbNetProvider/VerbNetProvider.csproj"
+            },
+            "/workspaces/code-0/WordNetSin/WordNetSin.csproj": {
+              "projectPath": "/workspaces/code-0/WordNetSin/WordNetSin.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "10.0.200"
+    },
+    "frameworks": {
+      "net8.0-windows7.0": {
+        "targetAlias": "net8.0-windows",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[8.0.25, 8.0.25]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.linux-x64",
+            "version": "[8.0.25, 8.0.25]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[8.0.25, 8.0.25]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[8.0.25, 8.0.25]"
+          }
+        ],
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          },
+          "Microsoft.WindowsDesktop.App.WPF": {
+            "privateAssets": "none"
+          }
+        },
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.200/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}
